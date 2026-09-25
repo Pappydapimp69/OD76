@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B111: Start at the ranch
+
+The splash screen's Start (A / Cross) now takes you straight to the ranch; battle tests start from the Arena gate. The separate Pip Ranch button on the splash screen is gone.
+
 ## B110: Bag on Select
 
 On a controller, the Select / View / Share button opens the ranch bag and closes it again. The Bag button reads "Bag · Select" while a controller is connected.

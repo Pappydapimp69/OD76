@@ -20,7 +20,7 @@ function runLaunchChecksB75(){
     $('closeSettingsB61').click();assertB75(!mainSettingsOpenB61&&$('mainSettingsB61').classList.contains('hidden'),'settings did not close');
   });
   test('Compressed Start action still enters the authoritative run path',()=>{
-    reset();S.run=false;$('start').classList.remove('hidden');$('begin').click();
+    reset();S.run=false;$('start').classList.remove('hidden');startBattleTestB99();
     assertB75(S.run&&$('start').classList.contains('hidden')&&S.wave===1,'start route changed');
     reset();S.run=false;$('start').classList.remove('hidden');
   });

@@ -58,12 +58,12 @@ application-state injection from `evaluate`.
 
 ## Current state
 
-B110 Bag on Select (`b21-98.js`) is the head; B109 Pip actions (`b21-97.js`); B108 Stage curve and ranks (`b21-96.js`); B107 Gate refinery timer (`b21-95.js`); B106 Overgrowth (`b21-94.js`); B105 Ranch farm (`b21-93.js`); B104 Pip needs (`b21-92.js`); B103 Ranch music (`b21-91.js`); B102 Heart Refinery (`b21-90.js`); B100 Ranch world (`b21-89.js`): OD76's Monster Rancher core is a
+B111 Start at the ranch (`b21-99.js`) is the head; B110 Bag on Select (`b21-98.js`); B109 Pip actions (`b21-97.js`); B108 Stage curve and ranks (`b21-96.js`); B107 Gate refinery timer (`b21-95.js`); B106 Overgrowth (`b21-94.js`); B105 Ranch farm (`b21-93.js`); B104 Pip needs (`b21-92.js`); B103 Ranch music (`b21-91.js`); B102 Heart Refinery (`b21-90.js`); B100 Ranch world (`b21-89.js`): OD76's Monster Rancher core is a
 walkable pastel ranch (B99 `b21-88.js` holds the save, banking and stage-end
 gate). B91 Wave Closeout remains loop 15 of 50; B92–B100 were separate direct user requests. B93 release commit
 `429b435c1459f8f0356821d380cf11476c53e295` deployed successfully in Pages
 run `36095439314`; the public stamp, cache key and normalized assembled bundle
-matched. No gameplay implementation is unfinished; select loop 16 / B111 next.
+matched. No gameplay implementation is unfinished; select loop 16 / B112 next.
 
 Suggested first action: read `TASKS.md`, check `git status` and the current
 Pages run, and continue the listed step.

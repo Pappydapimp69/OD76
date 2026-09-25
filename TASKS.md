@@ -26,7 +26,9 @@
 - B108 Stage curve and ranks: stage-driven difficulty curve (sublinear past 10), ≤15% heart nudge, arena ranks E–S with reward multipliers.
 - B109 Pip actions: X runs Pip jobs (chop 3s, cut, till, water, harvest) with animation; A is info.
 - B110 Bag on Select: controller Select toggles the ranch bag.
-- 234 automated checks pass across all 98 ordered modules.
+- B111 Start at the ranch: splash Start opens the ranch; runs start at the Arena gate.
+- 235 automated checks pass across all 99 ordered modules.
+- Module numbering reaches `b21-99.js`; the next module needs the build, test and workflow patterns widened to three digits.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

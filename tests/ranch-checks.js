@@ -166,7 +166,7 @@ function runRanchChecksB99(){
   test('B104 low needs lower solo odds and add fatigue; starving and filthy Pips start battle tests weaker',()=>{
     fresh({fatigue:0});const ok=soloChanceB100();fresh({fatigue:0,hunger:30,hygiene:30});assert(Math.abs(soloChanceB100()-(ok-.25))<1e-9,'need penalty wrong');
     fresh({stones:5,hunger:30});soloDrillB100('guard',0);assert(ranchB99.fatigue===B99_DRILL_FATIGUE+10,'hungry fatigue missing');
-    fresh({stats:{range:2,speed:2,power:2,guard:2},hunger:10,hygiene:10});reset();$('begin').click();
+    fresh({stats:{range:2,speed:2,power:2,guard:2},hunger:10,hygiene:10});startBattleTestB99();
     assert(S.pipSpeedLv===1&&S.pipPowerLv===1&&S.pipRangeLv===1&&S.pipGuardLv===1&&S.b104Notes.length===2,'battle penalty wrong');
   });
   test('B104 pressing A at Pip opens his care menu and feeding works from it',()=>{
@@ -197,8 +197,8 @@ function runRanchChecksB99(){
     fresh({areas:{garden:true,kitchen:false,orchard:true}});addItemB104('carrot',2);addItemB104('pumpkin',1);assert(!cookB105('stew'),'cooked without kitchen');
     ranchB99.areas.kitchen=true;assert(cookB105('stew')&&!itemCountB104('carrot')&&itemCountB104('meal_stew')===1,'cook failed');assert(!cookB105('stew'),'cooked twice');
     ranchB99.hunger=10;feedB104('meal_stew');assert(ranchB99.hunger===70&&ranchB99.buffs.battle==='stew','meal effect wrong');
-    reset();$('begin').click();assert(S.maxHealth===120&&S.health===120&&!ranchB99.buffs.battle,'stew buff wrong');
-    reset();$('begin').click();assert(S.maxHealth===100,'buff applied twice');
+    startBattleTestB99();assert(S.maxHealth===120&&S.health===120&&!ranchB99.buffs.battle,'stew buff wrong');
+    startBattleTestB99();assert(S.maxHealth===100,'buff applied twice');
   });
   test('B105 ranch meals boost the next three drills',()=>{
     fresh({stones:20,fatigue:0});ranchB99.buffs.ranch={id:'tart',drills:3};let r=soloDrillB100('power',0);assert(r.gain===B100_BASE+3&&ranchB99.buffs.ranch.drills===2,'tart wrong');
@@ -332,6 +332,11 @@ function runRanchChecksB99(){
       pad.buttons[8].pressed=false;updateRanchB100(.016);pad.buttons[8].pressed=true;updateRanchB100(.016);assert(!ranchWorldB100.sheet,'select did not close the bag');
       pad.buttons[8].pressed=false;updateRanchB100(.016);stallSheetB104();pad.buttons[8].pressed=true;updateRanchB100(.016);assert(ranchWorldB100.sheet&&!ranchWorldB100.sheet.bag,'select replaced another menu');
     }finally{if(orig)Object.defineProperty(navigator,'getGamepads',{configurable:true,value:orig});else delete navigator.getGamepads;closeSheetB100()}
+  });
+  test('B111 the splash Start opens the ranch and runs only start from the gate',()=>{
+    fresh();reset();assert(!$('openRanchB99')&&$('begin').textContent.includes('A / CROSS'),'splash ranch button still there');
+    $('begin').click();assert(ranchWorldB100.active&&!S.run&&$('start').classList.contains('hidden'),'Start did not open the ranch');
+    at('gate');press();press();assert(S.run&&!ranchWorldB100.active&&S.wave===1,'gate did not start the run');
   });
   fresh();reset();
   return out;

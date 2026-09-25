@@ -61,6 +61,8 @@ B109 adds `b21-97.js`: X-button Pip actions with timed animations; A stays for i
 
 B110 adds `b21-98.js`: controller Select toggles the ranch bag.
 
+B111 adds `b21-99.js`: splash Start opens the ranch; runs start only from the Arena gate. This is the last two-digit module: widen `b21-\d{2}` and `b21-{01..99}` before adding b21-100.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.
