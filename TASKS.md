@@ -19,7 +19,9 @@
 - B101 Unspent hearts: only hearts not spent on in-run upgrades bank at the ranch.
 - B102 Heart Refinery: hearts → Heart Stones on the real clock, star dust → Star Stones, drills cost stones, refinery and station upgrades.
 - B103 Ranch music: soft 66 bpm F-major loop while at the ranch.
-- 206 automated checks pass across all 91 ordered modules.
+- B104 Pip needs: hunger and hygiene, food stall, wash tub, bag, Pip care menu, battle-test week.
+- B105 Ranch farm: garden/kitchen/orchard unlocks, tools, seeds, crops by ranch week, meals with battle and ranch buffs.
+- 217 automated checks pass across all 93 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

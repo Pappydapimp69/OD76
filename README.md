@@ -2,6 +2,12 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B104–B105: Pip's needs and the ranch farm
+
+Pip now has **hunger** and **hygiene** alongside fatigue. Every ranch week (a drill, a rest or a battle test) makes him hungrier and messier. Buy Pip Pellets, Berry Buns and Bubble Soap at the **food stall**, wash him at the **wash tub**, and press A at Pip to pet or feed him. A hungry or grubby Pip trains worse; a starving or filthy one starts battle tests with lower abilities.
+
+Unlock new areas: the **Garden** (◆ 2) with six plots, the **Kitchen** (◆ 3) and the **Orchard** (★ 1). Buy a hoe, watering can and seeds at the stall, then till, plant and water. Watered crops grow one stage per ranch week: carrots (2 weeks), strawberries (3) and pumpkins (4). The orchard fruits every two weeks. Sell spare crops for hearts, or cook meals in the kitchen. Battle meals buff the next test (+20 max HP, 50% starting HEAT, Swift +1); ranch meals boost the next three drills. See [the B104](docs/B104-pip-needs.md) and [B105](docs/B105-ranch-farm.md) blueprints.
+
 ## B103: Ranch music
 
 The ranch has its own soft, slow soundtrack: a 66 bpm loop in F major with warm pads, a gentle music-box arpeggio, a light bass and a simple melody every other pass. It plays on its own clock with a warmer, slightly echoey mix, and hands back to the arena music when a battle test starts. Mute still silences it. See [the B103 blueprint](docs/B103-ranch-music.md).

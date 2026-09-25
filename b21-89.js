@@ -290,7 +290,7 @@ function drawRanchB100(){
  X.fillStyle=c.grass2;for(let i=0;i<220;i++){const x=(i*397)%B100_WORLD.w,y=(i*733)%B100_WORLD.h;X.beginPath();X.ellipse(x,y,9,4,0,0,Math.PI*2);X.fill()}
  // paths to the plaza
  X.lineCap="round";const plaza={x:900,y:470};
- for(const st of B100_STATIONS){X.strokeStyle=c.pathEdge;X.lineWidth=44;X.beginPath();X.moveTo(plaza.x,plaza.y);X.lineTo(st.x,st.y);X.stroke();X.strokeStyle=c.path;X.lineWidth=36;X.beginPath();X.moveTo(plaza.x,plaza.y);X.lineTo(st.x,st.y);X.stroke()}
+ for(const st of B100_STATIONS){if(st.noPath)continue;X.strokeStyle=c.pathEdge;X.lineWidth=44;X.beginPath();X.moveTo(plaza.x,plaza.y);X.lineTo(st.x,st.y);X.stroke();X.strokeStyle=c.path;X.lineWidth=36;X.beginPath();X.moveTo(plaza.x,plaza.y);X.lineTo(st.x,st.y);X.stroke()}
  X.fillStyle=c.path;X.beginPath();X.arc(plaza.x,plaza.y,70,0,Math.PI*2);X.fill();
  // fence
  X.strokeStyle=c.fence;X.lineWidth=6;X.strokeRect(20,20,B100_WORLD.w-40,B100_WORLD.h-40);

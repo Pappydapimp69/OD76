@@ -87,7 +87,7 @@ function runRanchChecksB99(){
     assert(!ranchWorldB100.game&&ranchB99.points.range===B100_BASE+B100_BONUS,'4 of 5 did not win');
   });
   test('B100 petting Pip and resting at the bed',()=>{
-    fresh({fatigue:80});openRanchB99();const w=ranchWorldB100;w.pip.x=w.px+10;w.pip.y=w.py;w.pip.state='idle';w.idle=1;press();
+    fresh({fatigue:80});openRanchB99();const w=ranchWorldB100;w.pip.x=w.px+10;w.pip.y=w.py;w.pip.state='idle';w.idle=1;press();assert(w.sheet&&$('ranchSheetB100').textContent.includes('Pet Pip'),'pip menu missing');press();
     assert(w.pip.happy>0&&w.hearts.length>0,'pet failed');
     at('home');press();assert(w.sheet&&$('ranchSheetB100').textContent.includes('Rest'),'bed sheet missing');press();
     assert(ranchB99.fatigue===80-B99_REST&&ranchB99.week===2&&w.pip.state==='sleep','rest failed');
@@ -150,6 +150,70 @@ function runRanchChecksB99(){
     const n=fake.b103Eighth,span=fake.b103Next-10.06;assert(Math.abs(span-n*B103_EIGHTH)<1e-6&&Math.abs(B103_EIGHTH-60/66/2)<1e-9,'ranch tempo wrong');
     S.audioEnabled=false;const before=calls.length;fake.scheduleStep(20);assert(calls.length===before,'muted ranch still played');S.audioEnabled=true;
     reset();fake.scheduleStep(21);assert(!Number.isFinite(fake.b103Next),'ranch loop did not reset after leaving');
+  });
+  test('B104 each ranch week makes Pip hungrier and messier; drills dirty him more',()=>{
+    fresh({stones:10,hunger:80,hygiene:80});soloDrillB100('power',0);assert(ranchB99.hunger===80-B104_WEEK_HUNGER&&ranchB99.hygiene===80-B104_WEEK_DIRT.drill,'drill week wrong');
+    fresh({hunger:80,hygiene:80});restB99();assert(ranchB99.hunger===68&&ranchB99.hygiene===74&&ranchB99.week===2,'rest week wrong');
+    fresh({hunger:80,hygiene:80});S.run=true;S.heartCurrency=10;finish(true);assert(ranchB99.week===2&&ranchB99.hunger===68&&ranchB99.hygiene===60,'battle week wrong');
+  });
+  test('B104 the stall sells food and soap for hearts; feeding and washing refill the meters',()=>{
+    fresh({hearts:50,hunger:30,hygiene:10,fatigue:20});assert(buyItemB104('bun')&&ranchB99.hearts===20&&itemCountB104('bun')===1,'buy failed');
+    assert(!buyItemB104('bun'),'bought without hearts');assert(feedB104('bun')&&ranchB99.hunger===70&&ranchB99.fatigue===15&&!itemCountB104('bun'),'feeding wrong');
+    assert(!washB104(),'washed without soap');buyItemB104('soap');assert(washB104()&&ranchB99.hygiene===60,'wash wrong');
+    assert(loadRanchB99().hunger===70&&loadRanchB99().hygiene===60,'needs not saved');
+  });
+  test('B104 low needs lower solo odds and add fatigue; starving and filthy Pips start battle tests weaker',()=>{
+    fresh({fatigue:0});const ok=soloChanceB100();fresh({fatigue:0,hunger:30,hygiene:30});assert(Math.abs(soloChanceB100()-(ok-.25))<1e-9,'need penalty wrong');
+    fresh({stones:5,hunger:30});soloDrillB100('guard',0);assert(ranchB99.fatigue===B99_DRILL_FATIGUE+10,'hungry fatigue missing');
+    fresh({stats:{range:2,speed:2,power:2,guard:2},hunger:10,hygiene:10});reset();$('begin').click();
+    assert(S.pipSpeedLv===1&&S.pipPowerLv===1&&S.pipRangeLv===1&&S.pipGuardLv===1&&S.b104Notes.length===2,'battle penalty wrong');
+  });
+  test('B104 pressing A at Pip opens his care menu and feeding works from it',()=>{
+    fresh({hunger:20});addItemB104('pellets',2);openRanchB99();const w=ranchWorldB100;w.pip.x=w.px+10;w.pip.y=w.py;w.idle=1;press();
+    const i=w.sheet.options.findIndex(o=>o.label.startsWith('Feed'));assert(i>0,'feed option missing');focusSheetB100(i);press();
+    assert(ranchB99.hunger===45&&itemCountB104('pellets')===1,'feed from menu failed');
+  });
+  test('B105 areas unlock with Heart Stones or Star Stones',()=>{
+    fresh({stones:4,starStones:0});assert(unlockAreaB105('garden')&&ranchB99.stones===2,'garden unlock');assert(!unlockAreaB105('kitchen'),'kitchen too cheap');
+    assert(!unlockAreaB105('orchard'),'orchard without star');ranchB99.starStones=1;assert(unlockAreaB105('orchard')&&!ranchB99.starStones,'orchard unlock');
+    assert(!unlockAreaB105('garden'),'unlocked twice');assert(loadRanchB99().areas.garden&&loadRanchB99().areas.orchard,'areas not saved');
+  });
+  test('B105 garden: till, plant, water each week, grow and harvest',()=>{
+    fresh({hearts:500,areas:{garden:true,kitchen:false,orchard:false}});
+    assert(!tillB105(0),'tilled without hoe');buyToolB105('hoe');buyToolB105('can');buyItemB104('seed_carrot');
+    assert(tillB105(0)&&plantB105(0,'carrot')&&!itemCountB104('seed_carrot'),'plant failed');
+    restB99();assert(plotB105(0).stage===0,'grew unwatered');
+    assert(waterB105(0)&&!waterB105(0),'water twice');restB99();assert(plotB105(0).stage===1&&!plotB105(0).watered,'watered crop did not grow');
+    waterAllB105();restB99();assert(plotRipeB105(plotB105(0)),'carrot not ripe after 2 watered weeks');assert(!waterB105(0),'watered ripe crop');
+    const h=harvestB105(0);assert(h.n===2&&itemCountB104('carrot')===2&&!plotB105(0).crop&&plotB105(0).tilled,'harvest wrong');
+    assert(sellItemB104('carrot')&&ranchB99.hearts===500-80-60-10+8,'sell wrong');
+  });
+  test('B105 the orchard fruits every two ranch weeks up to a cap',()=>{
+    fresh({areas:{garden:false,kitchen:false,orchard:true}});restB99();assert(!ranchB99.orchard.apples,'fruited early');restB99();assert(ranchB99.orchard.apples===B105_ORCHARD_APPLES,'no apples');
+    for(let i=0;i<6;i++)restB99();assert(ranchB99.orchard.apples===B105_ORCHARD_MAX,'apple cap');assert(pickApplesB105()===B105_ORCHARD_MAX&&itemCountB104('apple')===B105_ORCHARD_MAX,'pick wrong');
+  });
+  test('B105 kitchen cooks meals from ingredients; battle meals buff the next test once',()=>{
+    fresh({areas:{garden:true,kitchen:false,orchard:true}});addItemB104('carrot',2);addItemB104('pumpkin',1);assert(!cookB105('stew'),'cooked without kitchen');
+    ranchB99.areas.kitchen=true;assert(cookB105('stew')&&!itemCountB104('carrot')&&itemCountB104('meal_stew')===1,'cook failed');assert(!cookB105('stew'),'cooked twice');
+    ranchB99.hunger=10;feedB104('meal_stew');assert(ranchB99.hunger===70&&ranchB99.buffs.battle==='stew','meal effect wrong');
+    reset();$('begin').click();assert(S.maxHealth===120&&S.health===120&&!ranchB99.buffs.battle,'stew buff wrong');
+    reset();$('begin').click();assert(S.maxHealth===100,'buff applied twice');
+  });
+  test('B105 ranch meals boost the next three drills',()=>{
+    fresh({stones:20,fatigue:0});ranchB99.buffs.ranch={id:'tart',drills:3};let r=soloDrillB100('power',0);assert(r.gain===B100_BASE+3&&ranchB99.buffs.ranch.drills===2,'tart wrong');
+    fresh({stones:20,fatigue:0});ranchB99.buffs.ranch={id:'pie',drills:1};soloDrillB100('power',0);assert(ranchB99.fatigue===B99_DRILL_FATIGUE-15&&!ranchB99.buffs.ranch,'pie wrong');
+  });
+  test('B105 locked areas explain their cost and plots are only reachable once the garden opens',()=>{
+    fresh({stones:0});openRanchB99();const g=stationB100('garden');ranchWorldB100.px=g.x;ranchWorldB100.py=g.y+10;press();
+    assert($('ranchSheetB100').textContent.includes('Unlock for ◆ 2'),'lock sheet');press();
+    const q=B105_PLOT_POS[0];ranchWorldB100.px=q.x;ranchWorldB100.py=q.y;assert(!(nearestInteractB100()?.st?.plot===0),'locked plot reachable');
+    ranchB99.areas.garden=true;assert(nearestInteractB100()?.st?.plot===0,'open plot unreachable');draw();
+  });
+  test('B105 corrupt farm saves fall back safely',()=>{
+    localStorage.setItem(B99_RANCH_KEY,JSON.stringify({hunger:500,items:{carrot:-4,'bad key!':3,pumpkin:2.9},plots:[{crop:'tomato',stage:9},{crop:'carrot',stage:99,watered:true}],orchard:{apples:99},buffs:{battle:'cake',ranch:{id:'pie',drills:9}}}));
+    const r=loadRanchB99();assert(r.hunger===100&&!r.items.carrot&&r.items.pumpkin===2&&!r.items['bad key!'],'bad items');
+    assert(!r.plots[0].crop&&r.plots[1].crop==='carrot'&&r.plots[1].stage===2&&r.plots[1].tilled&&r.orchard.apples===B105_ORCHARD_MAX,'bad plots');
+    assert(r.buffs.battle===null&&r.buffs.ranch.drills===3,'bad buffs');
   });
   fresh();reset();
   return out;

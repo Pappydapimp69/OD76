@@ -47,6 +47,10 @@ B102 adds `b21-90.js`: the Heart Refinery (real-time hearts → Heart Stones, st
 
 B103 adds `b21-91.js`: the ranch's own soft music loop on the shared audio engine.
 
+B104 adds `b21-92.js`: hunger and hygiene, the week hook, food stall, wash tub, bag and Pip's care menu.
+
+B105 adds `b21-93.js`: unlockable garden, kitchen and orchard; tools, seeds, crops and meals.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.
