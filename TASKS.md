@@ -17,7 +17,8 @@
 - B99 Pip Ranch: OD76's Monster Rancher core. Ranch drills/rest, battle tests, Return to ranch after stage clears, half-bank on death.
 - B100 Ranch world: walkable pastel ranch, stations, solo drills or together mini-games (±5 bonus), petting Pip.
 - B101 Unspent hearts: only hearts not spent on in-run upgrades bank at the ranch.
-- 198 automated checks pass across all 89 ordered modules.
+- B102 Heart Refinery: hearts → Heart Stones on the real clock, star dust → Star Stones, drills cost stones, refinery and station upgrades.
+- 205 automated checks pass across all 90 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

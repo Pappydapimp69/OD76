@@ -43,6 +43,8 @@ B99 adds `b21-88.js`: the Pip Ranch, OD76's core change. Ranch drills set Pip's 
 
 B100 adds `b21-89.js`: the ranch becomes a walkable pastel world with stations, Pip following you, drill points, solo drills and together mini-games.
 
+B102 adds `b21-90.js`: the Heart Refinery (real-time hearts → Heart Stones, star dust → Star Stones), stone-priced drills, and refinery/station upgrades.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

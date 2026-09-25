@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B102: Heart Refinery
+
+A Heart Refinery now stands on the ranch. Load hearts from battle tests: every 50 hearts refine into one Heart Stone on the real clock, 15 minutes each at refinery Lv 1 down to 10 seconds at Lv 10, even while you play the arena or are away. Each refining task has a 10% chance to add star dust; fuse 5 star dust into a Star Stone. Collect finished stones from the tray. Drills now cost Heart Stones. Star Stones upgrade the refinery (faster refining) and drill stations (+2 points per drill and +1 ranch cap per level, up to Lv 3). See [the B102 blueprint](docs/B102-heart-refinery.md).
+
 ## B101: Unspent hearts go home
 
 Only hearts left unspent after in-run upgrades reach the ranch. The stage-end gate shows what Pip is carrying and what went into upgrades, and the ability shop reminds you that unspent hearts go home. Falling in battle still banks half of what is unspent. See [the B101 blueprint](docs/B101-unspent-hearts.md).
