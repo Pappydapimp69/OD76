@@ -3,6 +3,7 @@ function runRanchChecksB99(){
   const fresh=over=>{ranchB99=Object.assign(ranchDefaultB99(),over||{});ensurePointsB100(ranchB99);syncCapsB102();saveRanchB99()};
   const test=(name,fn)=>{try{keys.clear();fresh();reset();fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}finally{keys.clear()}};
   const clearStage=()=>{reset();S.run=true;S.stage=2;S.runHearts=40;S.heartCurrency=40;S.stageEnding=true;openStageUpgrade();continueSoundLabB41()};
+  const clearStageStones=()=>{reset();S.run=true;S.stage=2;S.runStones=2;S.stageEnding=true;openStageUpgrade();continueSoundLabB41()};
   const press=(key=' ')=>{updateRanchB100(.016);keys.add(key);updateRanchB100(.016);keys.delete(key);updateRanchB100(.016)};
   const at=id=>{const st=stationB100(id);ranchWorldB100.px=st.x;ranchWorldB100.py=st.y+20;ranchWorldB100.pip.x=st.x+400;ranchWorldB100.pip.y=st.y};
   test('B99 ranch levels start every run and in-run upgrades are priced from them',()=>{
@@ -214,6 +215,46 @@ function runRanchChecksB99(){
     const r=loadRanchB99();assert(r.hunger===100&&!r.items.carrot&&r.items.pumpkin===2&&!r.items['bad key!'],'bad items');
     assert(!r.plots[0].crop&&r.plots[1].crop==='carrot'&&r.plots[1].stage===2&&r.plots[1].tilled&&r.orchard.apples===B105_ORCHARD_MAX,'bad plots');
     assert(r.buffs.battle===null&&r.buffs.ranch.drills===3,'bad buffs');
+  });
+  test('B106 drill sites start ringed by obstacles the player cannot walk through',()=>{
+    openRanchB99();const st=stationB100('power'),o=B106_OBSTACLES.find(q=>q.site==='power'),w=ranchWorldB100;
+    assert(B106_OBSTACLES.filter(q=>q.site==='power').length===8&&!siteOpenB106('power'),'site not overgrown');
+    w.px=st.x;w.py=st.y+B106_OBSTACLE_RING+60;keys.add('w');for(let i=0;i<60;i++)updateRanchB100(.05);keys.delete('w');
+    assert(hyp(w.px-st.x,w.py-st.y)>B106_OBSTACLE_RING-5,'walked through the overgrowth');
+    const below=B106_OBSTACLES.filter(q=>q.site==='power').sort((a,b)=>hyp(a.x-st.x,a.y-st.y-B106_OBSTACLE_RING)-hyp(b.x-st.x,b.y-st.y-B106_OBSTACLE_RING))[0];ranchB99.cleared[below.id]=true;
+    w.px=below.x;w.py=st.y+B106_OBSTACLE_RING+60;keys.add('w');for(let i=0;i<14;i++)updateRanchB100(.05);keys.delete('w');
+    assert(hyp(w.px-st.x,w.py-st.y)<60,'cleared gap still blocked');draw();
+  });
+  test('B106 only Pip clears obstacles with the right tool, and it tires him',()=>{
+    fresh({hearts:200,fatigue:0});const tree=B106_OBSTACLES.find(o=>o.tree),shrub=B106_OBSTACLES.find(o=>!o.tree);
+    assert(!clearObstacleB106(tree.id),'chopped without an axe');
+    openRanchB99();ranchWorldB100.px=shrub.x;ranchWorldB100.py=shrub.y+shrub.r+16;press();
+    assert($('ranchSheetB100').textContent.includes('needs a Sickle'),'tool hint missing');press();
+    assert(buyToolB105('axe')&&buyToolB105('sickle')&&ranchB99.hearts===125,'tool prices wrong');
+    assert(clearObstacleB106(tree.id)&&ranchB99.fatigue===15&&clearObstacleB106(shrub.id)&&ranchB99.fatigue===23,'clear fatigue wrong');
+    assert(!clearObstacleB106(tree.id),'cleared twice');ranchB99.fatigue=B99_TIRED;assert(!clearObstacleB106(B106_OBSTACLES.find(o=>o.tree&&o!==tree).id),'tired Pip chopped');
+    assert(loadRanchB99().cleared[tree.id]&&siteOpenB106(tree.site),'clearing not saved');
+  });
+  test('B106 tilling and watering tire Pip and stop when he is tired',()=>{
+    fresh({fatigue:0,areas:{garden:true,kitchen:false,orchard:false},tools:{hoe:true,can:true,axe:false,sickle:false}});addItemB104('seed_carrot',2);
+    assert(tillB105(0)&&ranchB99.fatigue===8,'till fatigue');plantB105(0,'carrot');assert(waterB105(0)&&ranchB99.fatigue===12,'water fatigue');
+    ranchB99.fatigue=B99_TIRED;assert(!tillB105(1),'tired Pip tilled');
+  });
+  test('B106 the stall sells the axe and sickle before any area opens',()=>{
+    fresh({hearts:100});openRanchB99();stallSheetB104();const labels=ranchWorldB100.sheet.options.map(o=>o.label).join('|');
+    assert(labels.includes('Axe')&&labels.includes('Sickle')&&!labels.includes('Hoe'),'early tools wrong');closeSheetB100();
+  });
+  test('B106 Heart Stones fall in the arena, bosses drop one, and they bank like hearts',()=>{
+    fresh({stones:0});reset();S.run=true;S.waveState='active';spawnHeartStoneB106();assert(heartStoneDropsB106.length===1,'no stone drop');
+    const n=heartStoneDropsB106[0];n.fall=0;P.x=n.x;P.y=n.y;updateB26Drops(.016);assert(S.runStones===1&&!heartStoneDropsB106.length,'stone not collected');
+    dropBossExplorationRewardsB30(0,0);assert(heartStoneDropsB106.some(q=>q.bossDrop),'boss stone missing');
+    S.runStones=3;S.heartCurrency=0;finish(true);assert(ranchB99.stones===1,'death did not bank half the stones');
+    fresh({stones:0});clearStageStones();$('returnRanchB99').click();assert(ranchB99.stones===2,'return did not bank every stone');
+    reset();assert(!heartStoneDropsB106.length&&S.runStones===0,'stones leaked into the next run');
+  });
+  test('B106 corrupt overgrowth saves keep only real obstacles',()=>{
+    localStorage.setItem(B99_RANCH_KEY,JSON.stringify({cleared:{power0:true,power1:'yes',bogus:true},tools:{axe:1}}));
+    const r=loadRanchB99();assert(r.cleared.power0&&!r.cleared.power1&&!r.cleared.bogus&&r.tools.axe===true,'bad overgrowth save');
   });
   fresh();reset();
   return out;

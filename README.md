@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B106: Overgrowth and arena Heart Stones
+
+Each drill site starts ringed by trees and shrubs you can't walk through; clear enough of them to open a path. Only Pip uses tools: he chops trees with an axe (♥ 50, +15 fatigue), cuts shrubs with a sickle (♥ 25, +8), tills (+8) and waters (+4). A Pip at 70+ fatigue won't do tool work, so each week's progress is limited. Heart Stones now fall in the arena too: a 10% roll at each 30-kill checkpoint and one from every boss. They bank like hearts: all of them when you go home, half after a fall. See [the B106 blueprint](docs/B106-overgrowth.md).
+
 ## B104–B105: Pip's needs and the ranch farm
 
 Pip now has **hunger** and **hygiene** alongside fatigue. Every ranch week (a drill, a rest or a battle test) makes him hungrier and messier. Buy Pip Pellets, Berry Buns and Bubble Soap at the **food stall**, wash him at the **wash tub**, and press A at Pip to pet or feed him. A hungry or grubby Pip trains worse; a starving or filthy one starts battle tests with lower abilities.
