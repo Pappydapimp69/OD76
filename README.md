@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B101: Unspent hearts go home
+
+Only hearts left unspent after in-run upgrades reach the ranch. The stage-end gate shows what Pip is carrying and what went into upgrades, and the ability shop reminds you that unspent hearts go home. Falling in battle still banks half of what is unspent. See [the B101 blueprint](docs/B101-unspent-hearts.md).
+
 ## B100: Ranch world
 
 The ranch is now a pastel place you walk around. Walk up to a station and press A: Pip's bed to rest, the Arena gate for a battle test, or one of four drill stations. Pip drills solo (10 points on success, 5 on a stumble; tired Pips stumble more) or you train together in a short mini-game (15 points for a win, 5 for a loss). Ten points is one ranch level. Stand still near Pip to pet him. See [the B100 blueprint](docs/B100-ranch-world.md).

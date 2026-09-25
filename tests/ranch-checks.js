@@ -2,7 +2,7 @@ function runRanchChecksB99(){
   const out=[],assert=(v,m)=>{if(!v)throw Error(m)};
   const fresh=over=>{ranchB99=Object.assign(ranchDefaultBeforeB100(),over||{});ensurePointsB100(ranchB99);saveRanchB99()};
   const test=(name,fn)=>{try{keys.clear();fresh();reset();fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}finally{keys.clear()}};
-  const clearStage=()=>{reset();S.run=true;S.stage=2;S.runHearts=40;S.stageEnding=true;openStageUpgrade();continueSoundLabB41()};
+  const clearStage=()=>{reset();S.run=true;S.stage=2;S.runHearts=40;S.heartCurrency=40;S.stageEnding=true;openStageUpgrade();continueSoundLabB41()};
   const press=(key=' ')=>{updateRanchB100(.016);keys.add(key);updateRanchB100(.016);keys.delete(key);updateRanchB100(.016)};
   const at=id=>{const st=stationB100(id);ranchWorldB100.px=st.x;ranchWorldB100.py=st.y+20;ranchWorldB100.pip.x=st.x+400;ranchWorldB100.pip.y=st.y};
   test('B99 ranch levels start every run and in-run upgrades are priced from them',()=>{
@@ -22,10 +22,18 @@ function runRanchChecksB99(){
     finish(true);assert(ranchB99.hearts===45&&ranchB99.tests===1,'ended run banked twice');
   });
   test('B99 falling in battle banks half and sends Pip home worn out, once',()=>{
-    fresh({hearts:1,fatigue:10});S.run=true;S.runHearts=31;finish(true);
+    fresh({hearts:1,fatigue:10});S.run=true;S.runHearts=31;S.heartCurrency=31;finish(true);
     assert(ranchB99.hearts===16&&ranchB99.fatigue===B99_DEATH_FATIGUE&&ranchB99.tests===1,'death banking wrong');
     assert($('endText').textContent.includes('♥ 15'),'end text missing ranch line');finish(true);assert(ranchB99.hearts===16,'death banked twice');
     $('endRanchB99').click();assert(ranchWorldB100.active&&$('end').classList.contains('hidden'),'end ranch button');
+  });
+  test('B101 hearts spent on in-run upgrades never reach the ranch',()=>{
+    fresh({hearts:0});clearStage();$('returnRanchB99').click();assert(ranchB99.hearts===40,'unspent baseline');
+    fresh({hearts:0});reset();S.run=true;S.stage=2;S.runHearts=40;S.heartCurrency=40;S.stageEnding=true;openStageUpgrade();
+    openAbilityStep();buyPipAbility('range');const spent=40-S.heartCurrency;assert(spent>0,'upgrade not bought');
+    continueSoundLabB41();assert($('ranchGateTextB99').textContent.includes(`♥ ${40-spent} unspent`),'gate shows collected, not unspent');
+    $('returnRanchB99').click();assert(ranchB99.hearts===40-spent,'spent hearts reached the ranch');
+    fresh({hearts:0});reset();S.run=true;S.runHearts=30;S.heartCurrency=11;finish(true);assert(ranchB99.hearts===5,'death banked spent hearts');
   });
   test('B99 corrupt ranch saves fall back to safe values',()=>{
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({week:-4,hearts:'x',fatigue:900,stats:{range:99,power:-3},points:{range:'q',speed:1e9}}));

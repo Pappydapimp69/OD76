@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B100 ${{ github.sha }}
+run-name: OD76 B101 ${{ github.sha }}
 
 on:
   push:
@@ -146,7 +146,8 @@ jobs:
               'const B99_RANCH_KEY="overdrive76_ranch_v1"',
               'function returnToRanchB99()',
               'const B100_BASE=10,B100_BONUS=5',
-              'function drawRanchB100()'
+              'function drawRanchB100()',
+              'function unspentHeartsB99()'
           ]:
               assert marker in s, marker
           assert s.rfind('pipWithPlayer=function()') > s.find('function pipWithPlayer()')
@@ -248,10 +249,10 @@ jobs:
           assert s.rfind('draw=function()') > s.index('// B100 Ranch world')
           assert s.rfind('chooseSpawn=function()') > s.index('// B82 Stages seven')
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-25-B100-RANCH-WORLD/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B100-RANCH-WORLD/g' _site/index.html
-          grep -Fq 'OD76-2026-09-25-B100-RANCH-WORLD' _site/index.html
-          grep -Fq 'game.js?v=B100-RANCH-WORLD' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-25-B101-UNSPENT-HEARTS/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B101-UNSPENT-HEARTS/g' _site/index.html
+          grep -Fq 'OD76-2026-09-25-B101-UNSPENT-HEARTS' _site/index.html
+          grep -Fq 'game.js?v=B101-UNSPENT-HEARTS' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

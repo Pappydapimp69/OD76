@@ -16,7 +16,8 @@
 - B98 Storm Cloud Cost: each cloud costs 8% HEAT, gathering pauses below 8%, start/full flashes and storm visuals.
 - B99 Pip Ranch: OD76's Monster Rancher core. Ranch drills/rest, battle tests, Return to ranch after stage clears, half-bank on death.
 - B100 Ranch world: walkable pastel ranch, stations, solo drills or together mini-games (±5 bonus), petting Pip.
-- 197 automated checks pass across all 89 ordered modules.
+- B101 Unspent hearts: only hearts not spent on in-run upgrades bank at the ranch.
+- 198 automated checks pass across all 89 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

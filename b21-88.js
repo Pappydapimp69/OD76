@@ -64,15 +64,17 @@ pipAbilityCost=function(kind){
  return base+lv*growth;
 };
 
+function unspentHeartsB99(){return Math.max(0,Math.floor(S?.heartCurrency||0))}
 function bankRunB99(dead){
  if(!S||S.b99Banked)return 0;
  S.b99Banked=true;
- const collected=Math.max(0,Math.floor(S.runHearts||0)),earned=dead?Math.floor(collected/2):collected;
+ // Only hearts left unspent after in-run upgrades go home to the ranch.
+ const unspent=unspentHeartsB99(),earned=dead?Math.floor(unspent/2):unspent;
  ranchB99.hearts+=earned;ranchB99.tests++;
  if(dead)ranchB99.fatigue=Math.max(ranchB99.fatigue,B99_DEATH_FATIGUE);
  ranchB99.report=dead
-   ?`Battle test ${ranchB99.tests}: fell on stage ${S.stage}. Pip brought home ♥ ${earned} of ${collected} and came back worn out.`
-   :`Battle test ${ranchB99.tests}: came home after clearing stage ${S.stage}. Pip brought home all ♥ ${earned}.`;
+   ?`Battle test ${ranchB99.tests}: fell on stage ${S.stage}. Pip brought home ♥ ${earned} of ♥ ${unspent} unspent and came back worn out.`
+   :`Battle test ${ranchB99.tests}: came home after clearing stage ${S.stage}. Pip brought home all ♥ ${earned} unspent.`;
  saveRanchB99();
  return earned;
 }
@@ -153,8 +155,8 @@ function stageStepsB99(){return["overdriveStep","bossRewardStep","emotionStep","
 function openRanchGateB99(){
  for(const el of stageStepsB99())el.classList.add("stagehidden");
  const kicker=$("stageUp").querySelector(".kicker");if(kicker)kicker.textContent=`STAGE ${S.stage} CLEAR · BATTLE TEST`;
- const n=Math.max(0,Math.floor(S.runHearts||0));
- $("ranchGateTextB99").textContent=`Pip has collected ♥ ${n} this test. Go home now and the ranch banks all of it. Fall in battle and it banks half.`;
+ const n=unspentHeartsB99(),spent=Math.max(0,Math.floor(S.runHearts||0)-n);
+ $("ranchGateTextB99").textContent=`Pip is carrying ♥ ${n} unspent${spent?` (♥ ${spent} went into upgrades)`:""}. Go home now and the ranch banks all of it. Fall in battle and it banks half.`;
  $("ranchGateStepB99").classList.remove("stagehidden");
  $("stageUp").classList.remove("hidden");
 }
@@ -174,6 +176,9 @@ function returnToRanchB99(){
  S.stagePending=false;S.end=true;S.run=false;
  openRanchB99();
 }
+
+const renderAbilityShopBeforeB99=renderAbilityShop;
+renderAbilityShop=function(){renderAbilityShopBeforeB99();const el=$("abilityBalance");if(el&&el.textContent.includes("Heart Bits"))el.textContent+=" · unspent hearts go home to the ranch"};
 
 const advanceBeforeB99=advanceToNextStage;
 advanceToNextStage=function(){
