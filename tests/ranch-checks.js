@@ -28,13 +28,12 @@ function runRanchChecksB99(){
     assert($('endText').textContent.includes('♥ 15'),'end text missing ranch line');finish(true);assert(ranchB99.hearts===16,'death banked twice');
     $('endRanchB99').click();assert(ranchWorldB100.active&&$('end').classList.contains('hidden'),'end ranch button');
   });
-  test('B101 hearts spent on in-run upgrades never reach the ranch',()=>{
-    fresh({hearts:0});clearStage();$('returnRanchB99').click();assert(ranchB99.hearts===40,'unspent baseline');
+  test('Hearts spent on in-run upgrades still bank at the ranch',()=>{
     fresh({hearts:0});reset();S.run=true;S.stage=2;S.runHearts=40;S.heartCurrency=40;S.stageEnding=true;openStageUpgrade();
-    openAbilityStep();buyPipAbility('range');const spent=40-S.heartCurrency;assert(spent>0,'upgrade not bought');
-    continueSoundLabB41();assert($('ranchGateTextB99').textContent.includes(`♥ ${40-spent} unspent`),'gate shows collected, not unspent');
-    $('returnRanchB99').click();assert(ranchB99.hearts===40-spent,'spent hearts reached the ranch');
-    fresh({hearts:0});reset();S.run=true;S.runHearts=30;S.heartCurrency=11;finish(true);assert(ranchB99.hearts===5,'death banked spent hearts');
+    openAbilityStep();buyPipAbility('range');assert(S.heartCurrency<40,'upgrade not bought');
+    continueSoundLabB41();assert($('ranchGateTextB99').textContent.includes('♥ 40 this test'),'gate hid spent hearts');
+    $('returnRanchB99').click();assert(ranchB99.hearts===40,'spent hearts were subtracted');
+    fresh({hearts:0});reset();S.run=true;S.runHearts=30;S.heartCurrency=0;finish(true);assert(ranchB99.hearts===15,'death did not bank half of everything collected');
   });
   test('B99 corrupt ranch saves fall back to safe values',()=>{
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({week:-4,hearts:'x',fatigue:900,stats:{range:99,power:-3},points:{range:'q',speed:1e9}}));
@@ -287,10 +286,10 @@ function runRanchChecksB99(){
     fresh({rankUnlocked:3,rank:1});reset();S.run=true;S.stage=5;openStageUpgrade();assert(ranchB99.rankUnlocked===3,'lower rank unlocked the next');
   });
   test('B108 higher ranks multiply banked hearts and stones',()=>{
-    fresh({rankUnlocked:5,rank:5});reset();S.run=true;S.stage=2;S.heartCurrency=40;S.runStones=2;S.stageEnding=true;openStageUpgrade();continueSoundLabB41();
+    fresh({rankUnlocked:5,rank:5});reset();S.run=true;S.stage=2;S.runHearts=40;S.heartCurrency=40;S.runStones=2;S.stageEnding=true;openStageUpgrade();continueSoundLabB41();
     assert($('ranchGateTextB99').textContent.includes('Rank S pays ×2'),'gate reward note');$('returnRanchB99').click();
     assert(ranchB99.hearts===80&&ranchB99.stones===4&&ranchB99.report.includes('Rank S bonus'),'rank S did not double rewards');
-    fresh({rankUnlocked:1,rank:1});reset();S.run=true;S.heartCurrency=21;finish(true);assert(ranchB99.hearts===12,'rank D death bank wrong: '+ranchB99.hearts+' '+ranchB99.report);
+    fresh({rankUnlocked:1,rank:1});reset();S.run=true;S.runHearts=21;S.heartCurrency=21;finish(true);assert(ranchB99.hearts===12,'rank D death bank wrong: '+ranchB99.hearts+' '+ranchB99.report);
   });
   test('B108 corrupt rank saves clamp to what is unlocked',()=>{
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({rank:9,rankUnlocked:-3}));let r=loadRanchB99();assert(r.rank===0&&r.rankUnlocked===0,'bad rank');

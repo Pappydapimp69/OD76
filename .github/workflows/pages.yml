@@ -148,7 +148,7 @@ jobs:
               'function returnToRanchB99()',
               'const B100_BASE=10,B100_BONUS=5',
               'function drawRanchB100()',
-              'function unspentHeartsB99()',
+              'function runHeartsB99()',
               'const B102_REFINE_SECONDS=[900,600,480,300,240,180,120,60,30,10]',
               'function tickRefineryB102(',
               'const B103_RANCH_BPM=66',

@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## Spent hearts still go home
+
+This reverses B101: every heart Pip banks during a battle test goes home to the ranch, even hearts spent on upgrades between stages. Returning home banks all of them; falling in battle banks half. The stage-end gate shows the total collected.
+
 ## B113: No cap on ranch training
 
 Ranch drills can now raise Heart Sense, Swift Pip, Star Power and Guardian Glow with no level limit, matching in-run upgrades. Drill station upgrades (★) still add +2 points per drill; there is no longer a cap for them to raise. Drill costs keep rising by one Heart Stone every three levels.

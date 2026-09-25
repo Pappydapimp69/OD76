@@ -33,6 +33,7 @@
 - Modules now assemble in numeric order (b21-99 before b21-100) in build, tests and workflow.
 - Swift default: +5 per level for Lv 1–10, then +1% per level (tiered pattern).
 - B113 Uncapped ranch training: no level cap on ranch drills; station upgrades add points only.
+- B101 reversed: all hearts collected in a test bank at the ranch, spent or not.
 - 240 automated checks pass across all 101 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 

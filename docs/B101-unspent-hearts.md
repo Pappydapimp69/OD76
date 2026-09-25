@@ -1,5 +1,7 @@
 # B101 — Unspent hearts go home
 
+> **Reversed.** By request, banking is back to every heart collected in the run (`runHeartsB99()`); spending between stages no longer reduces it.
+
 ## Problem
 
 Heart Bits spent on in-run upgrades (emotion and ability steps) still counted toward what Pip banked at the ranch, because banking used every heart collected in the run.
