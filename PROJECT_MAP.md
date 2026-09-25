@@ -67,6 +67,8 @@ B112 adds `b21-100.js`: no level cap on Swift, Star Power or Guardian Glow; Guar
 
 B113 adds `b21-101.js`: no level cap on ranch training; station upgrades add +2 points per drill only.
 
+B114 adds `b21-102.js`: Pip can't enter the arena above 60 fatigue.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

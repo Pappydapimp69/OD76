@@ -365,6 +365,13 @@ function runRanchChecksB99(){
     reset();assert(S.pipSpeedLv===13&&S.pipRangeLv===31,'high ranch levels not applied to the run');
     openRanchB99();at('speed');press();assert(!$('ranchSheetB100').textContent.includes('Infinity')&&!$('ranchSheetB100').textContent.includes('cap +1'),'sheet still mentions caps');press();
   });
+  test('B114 Pip cannot enter the arena with fatigue over 60',()=>{
+    fresh({fatigue:61});openRanchB99();at('gate');press();
+    assert($('ranchSheetB100').textContent.includes('too tired')&&ranchWorldB100.sheet.options.length===1,'tired gate still offers battle');press();
+    assert(ranchWorldB100.active&&!S.run,'tired Pip entered the arena');assert(startBattleTestB99()===false&&!S.run,'direct start ignored fatigue');draw();
+    ranchB99.fatigue=60;at('gate');press();assert(ranchWorldB100.sheet.options[0].label.startsWith('Enter at'),'fatigue 60 was blocked');press();
+    assert(S.run&&!ranchWorldB100.active,'rested Pip could not enter');
+  });
   fresh();reset();
   return out;
 }

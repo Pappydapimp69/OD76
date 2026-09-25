@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B114: Rested for battle
+
+Pip can't enter the arena while his fatigue is over 60. The Arena gate says so and shows his fatigue; rest him at his bed (a Berry Bun helps a little) and try again.
+
 ## Spent hearts still go home
 
 This reverses B101: every heart Pip banks during a battle test goes home to the ranch, even hearts spent on upgrades between stages. Returning home banks all of them; falling in battle banks half. The stage-end gate shows the total collected.
