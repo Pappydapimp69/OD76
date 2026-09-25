@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B107: Refinery timer at the stage gate
+
+When a stage ends and you choose Next stage or Return to ranch, a live line shows the Heart Refinery back home: time to the next stone, how many batches are queued and when they will all be done, plus anything waiting in the tray.
+
 ## B106: Overgrowth and arena Heart Stones
 
 Each drill site starts ringed by trees and shrubs you can't walk through; clear enough of them to open a path. Only Pip uses tools: he chops trees with an axe (♥ 50, +15 fatigue), cuts shrubs with a sickle (♥ 25, +8), tills (+8) and waters (+4). A Pip at 70+ fatigue won't do tool work, so each week's progress is limited. Heart Stones now fall in the arena too: a 10% roll at each 30-kill checkpoint and one from every boss. They bank like hearts: all of them when you go home, half after a fall. See [the B106 blueprint](docs/B106-overgrowth.md).

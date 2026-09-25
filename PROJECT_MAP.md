@@ -53,6 +53,8 @@ B105 adds `b21-93.js`: unlockable garden, kitchen and orchard; tools, seeds, cro
 
 B106 adds `b21-94.js`: overgrowth around drill sites with collision, Pip-only tool fatigue, and arena Heart Stone drops.
 
+B107 adds `b21-95.js`: a live Heart Refinery status line on the stage-end gate.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

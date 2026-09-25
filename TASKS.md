@@ -22,7 +22,8 @@
 - B104 Pip needs: hunger and hygiene, food stall, wash tub, bag, Pip care menu, battle-test week.
 - B105 Ranch farm: garden/kitchen/orchard unlocks, tools, seeds, crops by ranch week, meals with battle and ranch buffs.
 - B106 Overgrowth: obstacle rings around drill sites, Pip-only tool work with fatigue, arena Heart Stone drops.
-- 223 automated checks pass across all 94 ordered modules.
+- B107 Gate refinery timer: live refinery status on the stage-end gate.
+- 224 automated checks pass across all 95 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

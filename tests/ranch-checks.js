@@ -256,6 +256,13 @@ function runRanchChecksB99(){
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({cleared:{power0:true,power1:'yes',bogus:true},tools:{axe:1}}));
     const r=loadRanchB99();assert(r.cleared.power0&&!r.cleared.power1&&!r.cleared.bogus&&r.tools.axe===true,'bad overgrowth save');
   });
+  test('B107 the stage-end gate shows the refinery timer while it works',()=>{
+    fresh({hearts:0});clearStage();assert($('ranchGateRefineB107').style.display==='none','idle refinery shown');$('nextStageB99').click();
+    fresh({hearts:150});loadHeartsB102(3);clearStage();const line=$('ranchGateRefineB107');
+    assert(line.style.display!=='none'&&/next ◆ in 1[45]:\d\d · 3 batches, all done in 4[45]:\d\d/.test(line.textContent),'timer missing: '+line.textContent);
+    ranchB99.refinery.startedAt-=901e3;renderGateRefineryB107();assert(line.textContent.includes('Tray ready: ◆ 1')&&line.textContent.includes('2 batches'),'tray/progress not live');
+    $('nextStageB99').click();
+  });
   fresh();reset();
   return out;
 }
