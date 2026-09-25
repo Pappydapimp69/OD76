@@ -65,6 +65,8 @@ B111 adds `b21-99.js`: splash Start opens the ranch; runs start only from the Ar
 
 B112 adds `b21-100.js`: no level cap on Swift, Star Power or Guardian Glow; Guardian Glow gains diminishing returns past Lv 12. Modules now assemble in numeric order.
 
+B113 adds `b21-101.js`: no level cap on ranch training; station upgrades add +2 points per drill only.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

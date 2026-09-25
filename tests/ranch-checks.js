@@ -38,8 +38,8 @@ function runRanchChecksB99(){
   });
   test('B99 corrupt ranch saves fall back to safe values',()=>{
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({week:-4,hearts:'x',fatigue:900,stats:{range:99,power:-3},points:{range:'q',speed:1e9}}));
-    const r=loadRanchB99();assert(r.week===1&&r.hearts===0&&r.fatigue===100&&r.stats.range===B99_DRILLS.range.cap&&r.stats.power===0&&r.stats.speed===0,'bad save accepted');
-    assert(r.points.range===B99_DRILLS.range.cap*10&&r.points.speed===9&&r.points.power===0,'bad points accepted');
+    const r=loadRanchB99();assert(r.week===1&&r.hearts===0&&r.fatigue===100&&r.stats.range===99&&r.stats.power===0&&r.stats.speed===0,'bad save accepted');
+    assert(r.points.range===990&&r.points.speed===9&&r.points.power===0,'bad points accepted');
     localStorage.setItem(B99_RANCH_KEY,'{');assert(loadRanchB99().week===1,'unparseable save');
   });
   test('B100 ranch world hides the arena HUD, moves the player and keeps them inside the fence',()=>{
@@ -126,11 +126,11 @@ function runRanchChecksB99(){
     fresh({hearts:999,stones:0});assert(drillBlockB99('power')==='stones'&&!soloDrillB100('power',0),'hearts bought a drill');
     fresh({stones:3,stats:{range:0,speed:0,power:3,guard:0}});assert(drillCostB99('power')===2,'stone cost wrong');soloDrillB100('power',0);assert(ranchB99.stones===1,'stones not spent');
   });
-  test('B102 station upgrades cost Star Stones, add drill points and raise the cap across reloads',()=>{
-    fresh({stones:10,starStones:3,stats:{range:0,speed:B99_DRILLS.speed.cap,power:0,guard:0}});
-    assert(drillBlockB99('speed')==='capped','cap not reached');assert(upgradeStationB102('speed')&&ranchB99.starStones===2&&B99_DRILLS.speed.cap===B102_BASE_CAPS.speed+1,'upgrade wrong');
-    assert(!drillBlockB99('speed'),'cap not raised');const r=soloDrillB100('speed',0);assert(r.gain===B100_BASE+B102_STATION_POINTS,'station points missing');
-    const saved=loadRanchB99();assert(saved.stations.speed===1&&saved.stats.speed===B102_BASE_CAPS.speed+1,'raised level clamped on reload');
+  test('B102 station upgrades cost Star Stones and add drill points across reloads',()=>{
+    fresh({stones:10,starStones:3,stats:{range:0,speed:4,power:0,guard:0}});
+    assert(upgradeStationB102('speed')&&ranchB99.starStones===2,'upgrade wrong');
+    const r=soloDrillB100('speed',0);assert(r.gain===B100_BASE+B102_STATION_POINTS,'station points missing');
+    const saved=loadRanchB99();assert(saved.stations.speed===1&&saved.stats.speed===5,'station or level lost on reload');
     ranchB99.starStones=1;assert(!upgradeStationB102('speed'),'second upgrade too cheap');
   });
   test('B102 the refinery station opens its sheet and loads hearts from it',()=>{
@@ -357,6 +357,14 @@ function runRanchChecksB99(){
     assert(S.shieldRegenDelay<d12&&S.shieldRegenRate<r12&&S.shieldRegenDelay>=B112_MIN_REGEN,'Guardian Glow stopped helping past its floor');
     S.pipGuardLv=12;applyPipPower();assert(S.shieldRegenDelay===d12,'levels under the knee changed');
     openAbilityStep();for(const id of ['abilitySpeed','abilityPower','abilityGuard'])assert(!$(id).textContent.includes('MAX'),'shop still shows MAX on '+id);
+  });
+  test('B113 ranch training has no level cap for any heart skill',()=>{
+    for(const k in B99_DRILLS)assert(B99_DRILLS[k].cap===Infinity,'cap left on '+k);
+    fresh({stones:999,stats:{range:30,speed:12,power:15,guard:12}});
+    for(const k in B99_DRILLS){const before=ranchB99.stats[k];assert(!drillBlockB99(k),'blocked '+k);soloDrillB100(k,0);ranchB99.fatigue=0;assert(ranchB99.stats[k]===before+1,'no level from drill on '+k)}
+    const saved=loadRanchB99();assert(saved.stats.range===31&&saved.stats.speed===13,'high levels clamped on reload');
+    reset();assert(S.pipSpeedLv===13&&S.pipRangeLv===31,'high ranch levels not applied to the run');
+    openRanchB99();at('speed');press();assert(!$('ranchSheetB100').textContent.includes('Infinity')&&!$('ranchSheetB100').textContent.includes('cap +1'),'sheet still mentions caps');press();
   });
   fresh();reset();
   return out;

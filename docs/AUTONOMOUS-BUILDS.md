@@ -79,7 +79,9 @@ Direct build after B110: B111 Start at the ranch in `b21-99.js`. User-requested;
 
 Direct build after B111: B112 Uncapped heart skills in `b21-100.js`. User-requested; does not increment the loop count.
 
-Next: select loop 16 / B113 from the B112 baseline. No gameplay implementation is currently unfinished.
+Direct build after B112: B113 Uncapped ranch training in `b21-101.js`. User-requested; does not increment the loop count.
+
+Next: select loop 16 / B114 from the B113 baseline. No gameplay implementation is currently unfinished.
 
 Validation notes: use `rg -uuu` with an explicit path to find ignored numbered modules. On Windows/Codex set `NODE_PATH=C:/Users/Kompooter/Documents/OD76/node_modules` for the existing JSDOM dependency; on Linux `npm ci` needs no override. `HANDOFF.md` carries the full per-environment toolchain. Check the entire test outcome, not only the final passing lines. `scripts/serve.mjs` serves `_site` at port 8176 and local fixtures at `/qa`; inspect whether a server is already running before starting one. Update build version, test module count/order, both workflow module lists and stamp/cache key together. Browser tests use CUA and production-path fixture buttons, never application-state injection from evaluate.
 

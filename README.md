@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B113: No cap on ranch training
+
+Ranch drills can now raise Heart Sense, Swift Pip, Star Power and Guardian Glow with no level limit, matching in-run upgrades. Drill station upgrades (★) still add +2 points per drill; there is no longer a cap for them to raise. Drill costs keep rising by one Heart Stone every three levels.
+
 ## Swift: +5 to Lv 10, then +1%
 
 Swift Pip now adds +5 flight speed for each of levels 1–10, then +1% of current speed for every level after: 170 at Lv 0, 220 at Lv 10, 243 at Lv 20, 268 at Lv 30. This is the new default "tiered" pattern in Settings; the older flat and alternating patterns are still selectable. Saves still on the old +34 flat default switch over; custom settings are kept. The Settings preview now shows levels up to 30.

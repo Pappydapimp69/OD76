@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B112 ${{ github.sha }}
+run-name: OD76 B113 ${{ github.sha }}
 
 on:
   push:
@@ -33,11 +33,11 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-fund --no-audit
           npm test
-      - name: Verify B112 Uncapped heart skills and previous build contracts
+      - name: Verify B113 Uncapped ranch training and previous build contracts
         run: |
           test -f index.html
           for f in $(ls b21-*.js | sort -V); do node --check "$f"; done
-          test "$(ls b21-*.js | sort -V | tail -1)" = b21-100.js
+          test "$(ls b21-*.js | sort -V | tail -1)" = b21-101.js
           ! grep -q 'payload-' index.html
           ! grep -q 'DecompressionStream' index.html
           grep -Fq 'const B50_BOSS_TELEGRAPH_START=.55' b21-37.js
@@ -164,7 +164,8 @@ jobs:
               'function pipActionForB109(near)',
               'function toggleBagB110()',
               'let battleLaunchB111=false',
-              'function guardFactorB112('
+              'function guardFactorB112(',
+              '// B113 Uncapped ranch training'
           ]:
               assert marker in s, marker
           assert s.rfind('pipWithPlayer=function()') > s.find('function pipWithPlayer()')
@@ -276,10 +277,10 @@ jobs:
           assert s.index('// B112 Uncapped heart skills') > s.index('// B111 Start at the ranch')
           assert s.rfind('chooseSpawn=function()') > s.index('// B82 Stages seven')
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-25-B112-UNCAPPED-SKILLS/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B112-UNCAPPED-SKILLS/g' _site/index.html
-          grep -Fq 'OD76-2026-09-25-B112-UNCAPPED-SKILLS' _site/index.html
-          grep -Fq 'game.js?v=B112-UNCAPPED-SKILLS' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-25-B113-UNCAPPED-RANCH/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B113-UNCAPPED-RANCH/g' _site/index.html
+          grep -Fq 'OD76-2026-09-25-B113-UNCAPPED-RANCH' _site/index.html
+          grep -Fq 'game.js?v=B113-UNCAPPED-RANCH' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6
