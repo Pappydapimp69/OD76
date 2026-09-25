@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B99: Pip Ranch
+
+Raise Pip between runs. At the ranch, drills spend ranch hearts to raise the level Pip starts every run at for Heart Sense, Swift Pip, Star Power and Guardian Glow; each drill tires him and resting recovers. Battle test starts a run. After each stage's growth steps, choose Next stage or Return to ranch: going home banks every heart collected that test, falling in battle banks half and leaves Pip worn out. See [the B99 blueprint](docs/B99-pip-ranch.md).
+
 ## B98: Storm cloud cost
 
 Each Thunderstorm cloud costs 8% of maximum HEAT; gathering pauses below 8%. Starting, each cloud and a full charge now flash and ring on screen, and the sky darkens as clouds gather. See [the B98 blueprint](docs/B98-storm-cloud-cost.md).

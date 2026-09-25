@@ -39,6 +39,8 @@ B97 adds `b21-86.js`: the Sound Lab wallet row pins again while scrolling down, 
 
 B98 adds `b21-87.js`: Thunderstorm clouds cost 8% HEAT each, gathering pauses below 8%, and charging gets start/cloud/full flashes, a darkening sky and arcing lightning.
 
+B99 adds `b21-88.js`: the Pip Ranch, OD76's core change. Ranch drills set Pip's starting ability levels, stage clears offer Return to ranch, and deaths bank half the run's hearts. `tests/ranch-checks.js` covers it.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

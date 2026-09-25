@@ -14,7 +14,8 @@
 - B96 Sound Lab Scroll is a direct user-requested build: the wallet row scrolls with the Sound Lab instead of sticking. Deployed.
 - B97 Sound Lab Wallet Home: the wallet row pins while scrolling down and returns home when the top Pip Sounds row is selected or scrolled back into. Deployed.
 - B98 Storm Cloud Cost: each cloud costs 8% HEAT, gathering pauses below 8%, start/full flashes and storm visuals.
-- 182 automated checks pass across all 87 ordered modules.
+- B99 Pip Ranch: OD76's Monster Rancher core. Ranch drills/rest, battle tests, Return to ranch after stage clears, half-bank on death.
+- 190 automated checks pass across all 88 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next
