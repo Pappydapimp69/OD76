@@ -350,7 +350,7 @@ function runRanchChecksB99(){
   test('B112 Swift, Star Power and Guardian Glow have no level cap and keep improving',()=>{
     fresh();reset();S.stagePending=true;S.heartCurrency=99999;
     S.pipSpeedLv=8;applyPipPower();const s8=S.pipMoveSpeed;buyPipAbility('speed');assert(S.pipSpeedLv===9&&S.pipMoveSpeed===s8+settingsB61.swiftFlat,'Swift stopped at 8');
-    S.pipSpeedLv=30;applyPipPower();assert(S.pipMoveSpeed===swiftSpeedB61(29)+settingsB61.swiftFlat,'Swift capped late');
+    S.pipSpeedLv=30;applyPipPower();assert(Math.abs(S.pipMoveSpeed-swiftSpeedB61(29)*1.01)<1e-9,'Swift capped late');
     S.pipPowerLv=10;applyPipPower();const p10=S.weaponPower;buyPipAbility('power');assert(S.pipPowerLv===11&&S.weaponPower>p10,'Star Power capped');
     S.pipGuardLv=8;buyPipAbility('guard');assert(S.pipGuardLv===9,'Guardian Glow stopped at 8');
     S.pipGuardLv=12;applyPipPower();const d12=S.shieldRegenDelay,r12=S.shieldRegenRate;S.pipGuardLv=20;applyPipPower();

@@ -24,7 +24,7 @@ function runTransportChecksB60(){
     transportFixtureB60();const values=[];
     for(const lv of [0,9,10,11,20,100]){S.pipRangeLv=lv;applyPipPower();values.push(S.pipDetectRange);assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase,"Sense changes flight speed");assert(S.pipCarryCapacity===10+lv*2,"capacity progression");}
     assert(values.join() === [82,154,162,164,182,200].join(),"wrong range curve");
-    S.pipSpeedLv=2;applyPipPower();assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase+68,"Swift altered by Sense");
+    S.pipSpeedLv=2;applyPipPower();assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase+2*B61_DEFAULTS.swiftFlat,"Swift altered by Sense");
   });
   test("Remote pickups become cargo without crediting currency or lifetime totals",()=>{
     transportFixtureB60();const h=heartFixtureB60();heartBits=[h];updatePipCompanion(.02);
@@ -50,8 +50,8 @@ function runTransportChecksB60(){
   test("Cargo weight smoothly halves flight speed, including overflow",()=>{
     transportFixtureB60();const state=transportB60();
     for(const [n,factor] of [[0,1],[1,.85],[3,.55],[4,.5]]){state.cargo=Array.from({length:n},()=>heartFixtureB60());assert(Math.abs(carrySpeedB60()-B61_DEFAULTS.pipBase*factor)<1e-8,"incorrect loaded speed");}
-    S.pipSpeedLv=2;applyPipPower();assert(carrySpeedB60()===(B61_DEFAULTS.pipBase+68)/2,"Swift not applied to loaded flight");
-    S.pipRangeLv=1;applyPipPower();state.cargo.length=3;assert(carrySpeedB60()>(B61_DEFAULTS.pipBase+68)*.55,"capacity does not reduce burden");
+    S.pipSpeedLv=2;applyPipPower();assert(carrySpeedB60()===(B61_DEFAULTS.pipBase+2*B61_DEFAULTS.swiftFlat)/2,"Swift not applied to loaded flight");
+    S.pipRangeLv=1;applyPipPower();state.cargo.length=3;assert(carrySpeedB60()>(B61_DEFAULTS.pipBase+2*B61_DEFAULTS.swiftFlat)*.55,"capacity does not reduce burden");
   });
   test("Meeting a loaded Pip banks every heart exactly once and restores bond",()=>{
     transportFixtureB60();heartBits=[heartFixtureB60()];gatherHeartB60(heartBits[0]);P.x=130;S.b51PipBond=0;

@@ -4,7 +4,7 @@ function runSettingsChecksB61(){
   const preset={...B61_DEFAULTS,pipBase:140,swiftFlat:10,swiftMode:'alternating',fullSpeed:35};
   const test=(name,fn)=>{try{applySettingsB61(B61_DEFAULTS);transportFixtureB60();fn();results.push({name,ok:true})}catch(e){results.push({name,ok:false,error:e.message})}};
   test('Default settings preserve B60 movement at every Swift level',()=>{
-    for(let lv=0;lv<=8;lv++){S.pipSpeedLv=lv;applyPipPower();assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase+34*lv,'Swift default changed')}
+    for(let lv=0;lv<=8;lv++){S.pipSpeedLv=lv;applyPipPower();assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase+B61_DEFAULTS.swiftFlat*lv,'Swift default changed')}
     assert(playerSpeedB61()===205,'player default changed');
   });
   test('Alternating Swift compounds the proposed sequence through level 8',()=>{
@@ -114,6 +114,13 @@ function runSettingsChecksB61(){
     assert(B61_DEFAULTS.pipBase===170,'default not lowered');
     localStorage.setItem(B61_SETTINGS_KEY,JSON.stringify({...B61_DEFAULTS,pipBase:285}));assert(loadSettingsB61().pipBase===170,'old default kept');
     localStorage.setItem(B61_SETTINGS_KEY,JSON.stringify({...B61_DEFAULTS,pipBase:300}));assert(loadSettingsB61().pipBase===300,'custom speed overwritten');
+  });
+  test('Swift is +5 for Lv 1-10, then +1% per level; old +34 flat saves follow, custom patterns stay',()=>{
+    const d=B61_DEFAULTS,near=(a,b)=>Math.abs(a-b)<1e-9;
+    assert(d.swiftMode==='tiered'&&d.swiftFlat===5&&d.swiftPercent===1,'defaults wrong');
+    assert(swiftSpeedB61(10,d)===220&&near(swiftSpeedB61(11,d),222.2)&&near(swiftSpeedB61(20,d),220*1.01**10),'tiered curve wrong');
+    localStorage.setItem(B61_SETTINGS_KEY,JSON.stringify({...d,swiftMode:'flat',swiftFlat:34}));let v=loadSettingsB61();assert(v.swiftMode==='tiered'&&v.swiftFlat===5,'old default kept');
+    localStorage.setItem(B61_SETTINGS_KEY,JSON.stringify({...d,swiftMode:'alternating',swiftFlat:10}));v=loadSettingsB61();assert(v.swiftMode==='alternating'&&v.swiftFlat===10,'custom pattern overwritten');
   });
   applySettingsB61(saved);if(stored===null)localStorage.removeItem(B61_SETTINGS_KEY);else localStorage.setItem(B61_SETTINGS_KEY,stored);
   reset();S.audioEnabled=false;return results;

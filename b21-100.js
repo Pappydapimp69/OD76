@@ -5,7 +5,11 @@ for(const kind of ["speed","power","guard"])PIP_ABILITY_INFO[kind].max=Infinity;
 // Swift: each level keeps adding its increase past 8.
 swiftSpeedB61=function(level,config=settingsB61){
  let speed=config.pipBase;
- for(let lv=1;lv<=Math.max(0,Math.floor(level));lv++)speed=config.swiftMode==="alternating"&&lv%2===0?speed*(1+config.swiftPercent/100):speed+config.swiftFlat;
+ // Tiered (the default): +flat for levels 1-10, then +percent of current speed every level after.
+ for(let lv=1;lv<=Math.max(0,Math.floor(level));lv++){
+   const pct=config.swiftMode==="alternating"?lv%2===0:config.swiftMode==="tiered"&&lv>10;
+   speed=pct?speed*(1+config.swiftPercent/100):speed+config.swiftFlat;
+ }
  return speed;
 };
 // Star Power's damage already grows every level. Guardian Glow's shield recovery hits its old

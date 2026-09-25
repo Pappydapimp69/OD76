@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## Swift: +5 to Lv 10, then +1%
+
+Swift Pip now adds +5 flight speed for each of levels 1–10, then +1% of current speed for every level after: 170 at Lv 0, 220 at Lv 10, 243 at Lv 20, 268 at Lv 30. This is the new default "tiered" pattern in Settings; the older flat and alternating patterns are still selectable. Saves still on the old +34 flat default switch over; custom settings are kept. The Settings preview now shows levels up to 30.
+
 ## B112: No cap on heart skills
 
 Swift Pip, Star Power and Guardian Glow can now be bought at every stage with no level cap, like Heart Sense. Swift keeps adding its increase every level. Star Power keeps adding damage. Guardian Glow keeps speeding up shield recovery past its old floor with diminishing returns: past Lv 12, each level makes recovery about 5% faster than at Lv 12, down to a 0.25 s minimum.
