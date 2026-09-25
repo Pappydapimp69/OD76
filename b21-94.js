@@ -2,13 +2,16 @@
 // B106 Overgrowth: drill sites start ringed by trees and shrubs you cannot walk through.
 // Only Pip uses tools, and every tool use tires him. Heart Stones also fall in the arena.
 const B106_TOOL_FATIGUE={chop:15,cut:8,till:8,water:4};
-const B106_OBSTACLE_RING=100,B106_PLAYER_R=14;
+const B106_OBSTACLE_RING=100,B106_OUTER_RING=165,B106_OUTER_COUNT=14,B106_PLAYER_R=14;
 Object.assign(B105_TOOLS,{axe:{name:"Axe",icon:"🪓",price:50,use:"Pip chops trees"},sickle:{name:"Sickle",icon:"🌾",price:25,use:"Pip cuts shrubs"}});
 const B106_EARLY_TOOLS=["axe","sickle"];
 const B106_OBSTACLES=[];
 for(const id of ["range","speed","power","guard"]){
  const st=B100_STATIONS.find(s=>s.id===id);
  for(let i=0;i<8;i++){const a=i/8*Math.PI*2+.2,tree=i%4===0;B106_OBSTACLES.push({id:`${id}${i}`,site:id,tree,x:st.x+Math.cos(a)*B106_OBSTACLE_RING,y:st.y+Math.sin(a)*B106_OBSTACLE_RING*(id==="speed"?.9:1),r:tree?34:28})}
+ // Outer ring (B106 follow-up): 14 more, offset from the inner gaps, spaced tightly enough that nobody squeezes through.
+ const outerR=id==="guard"?145:B106_OUTER_RING; // the pond sits just below the plaza
+ for(let i=0;i<B106_OUTER_COUNT;i++){const a=i/B106_OUTER_COUNT*Math.PI*2+.45,tree=i%3===0;B106_OBSTACLES.push({id:`${id}${8+i}`,site:id,tree,x:st.x+Math.cos(a)*outerR,y:st.y+Math.sin(a)*outerR*(id==="speed"?.9:1),r:tree?34:28})}
 }
 
 function overgrowthDefaultsB106(r,raw){
@@ -43,8 +46,14 @@ waterB105=function(i){if(!toolReadyB106())return false;if(!waterBeforeB106(i))re
 // ---- collision: standing obstacles block the player ----
 function pushOutB106(){
  const w=ranchWorldB100;
- for(const o of B106_OBSTACLES){if(!obstacleStandingB106(o))continue;const dx=w.px-o.x,dy=w.py-o.y,d=hyp(dx,dy),min=o.r+B106_PLAYER_R;if(d<min){const k=d>.01?min/d:0;w.px=d>.01?o.x+dx*k:o.x+min;w.py=d>.01?o.y+dy*k:w.py}}
+ // Several passes so being pushed out of one bush can't leave you wedged inside its neighbour.
+ for(let pass=0;pass<4;pass++){let moved=false;
+   for(const o of B106_OBSTACLES){if(!obstacleStandingB106(o))continue;const dx=w.px-o.x,dy=w.py-o.y,d=hyp(dx,dy),min=o.r+B106_PLAYER_R;if(d<min){const k=d>.01?min/d:0;w.px=d>.01?o.x+dx*k:o.x+min;w.py=d>.01?o.y+dy*k:w.py;moved=true}}
+   if(!moved)break}
 }
+// Spawn a little north of the plaza centre, clear of the Glow Pond's outer ring.
+const enterRanchBeforeB106=enterRanchB100;
+enterRanchB100=function(){enterRanchBeforeB106();const w=ranchWorldB100;w.py=420;w.cam.y=420;w.pip.y=390};
 const updateRanchBeforeB106=updateRanchB100;
 updateRanchB100=function(dt){updateRanchBeforeB106(dt);if(ranchWorldB100.active)pushOutB106()};
 
@@ -85,6 +94,13 @@ drawStationB100=function(st,t){
  X.fillStyle="#00000014";X.beginPath();X.ellipse(x,y+o.r*.7,o.r*.9,o.r*.3,0,0,Math.PI*2);X.fill();
  if(o.tree){X.fillStyle="#d9bfa3";X.fillRect(x-7,y,14,28);X.fillStyle="#9fd8b4";X.beginPath();X.arc(x,y-10,o.r,0,Math.PI*2);X.fill();X.fillStyle="#b8e6c8";X.beginPath();X.arc(x-10,y-20,o.r*.45,0,Math.PI*2);X.fill()}
  else{X.fillStyle="#a8dcb2";X.beginPath();X.arc(x-10,y,o.r*.62,0,Math.PI*2);X.arc(x+10,y,o.r*.62,0,Math.PI*2);X.arc(x,y-10,o.r*.66,0,Math.PI*2);X.fill();X.fillStyle="#ff9fb7";for(const [a,b] of [[-8,-6],[6,-12],[10,2]]){X.beginPath();X.arc(x+a,y+b,2.6,0,Math.PI*2);X.fill()}}
+};
+// Overgrowth covers the site art, but the drill site names stay readable on top.
+const B106_LABEL_Y={range:90,speed:110,power:70,guard:95};
+const drawPipBeforeB106=drawPipB100;
+drawPipB100=function(t){
+ for(const id in B106_LABEL_Y){if(siteOpenB106(id)&&!B106_OBSTACLES.some(o=>o.site===id&&obstacleStandingB106(o)))continue;const st=stationB100(id);labelB100(st.x,st.y-B106_LABEL_Y[id],B100_GAMES[id].title,`${B99_DRILLS[id].stat} Lv ${ranchB99.stats[id]}`)}
+ drawPipBeforeB106(t);
 };
 // Draw obstacles after the stations they surround so they overlap the site art.
 {const obs=B100_STATIONS.filter(s=>s.obstacle);for(const s of obs)B100_STATIONS.splice(B100_STATIONS.indexOf(s),1);B100_STATIONS.push(...obs)}

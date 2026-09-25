@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B111 follow-up: Thicker overgrowth
+
+Each drill site now has a second, outer ring of 14 trees and shrubs (22 in all), offset from the inner ring so you have to cut a path through both. Site names draw on top of the growth, and you start a little north of the plaza.
+
 ## B111: Start at the ranch
 
 The splash screen's Start (A / Cross) now takes you straight to the ranch; battle tests start from the Arena gate. The separate Pip Ranch button on the splash screen is gone.

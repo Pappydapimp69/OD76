@@ -20,6 +20,15 @@ Every drill site was open from the first minute, and ranch work cost nothing but
   - They fall with a marker and beacon like prisms, and show as a pink ♦ in the arena currency row.
   - Banked at the ranch like hearts: all on Return to ranch, half after a fall. The stage-end gate and the test report mention them.
 
+## Follow-up: thicker overgrowth
+
+- **Outer ring:** each drill site gains 14 more obstacles (every third a tree) at radius 165, or 145 at the Glow Pond, which sits just below the plaza. That makes 22 per site. The ring is offset from the inner gaps and spaced tightly enough that the player can't squeeze through.
+- **Collision:** resolves in up to 4 passes, so being pushed out of one bush can't wedge you into the next.
+- **Spawn:** the player now spawns at (900, 420), clear of the pond's outer ring.
+- **Labels:** site name labels draw above the growth.
+- **Existing saves:** the outer obstacles are new, so they start uncleared.
+- **Tests:** a sweep walks at every drill site from 24 directions and never reaches it while fully overgrown.
+
 ## Verified
 
 223 full-bundle checks pass across 94 modules: obstacle blocking and cleared gaps, tool requirements and fatigue, tired refusal, early stall tools, stone drops/collection/boss drop/banking, and corrupt-save recovery. A desktop browser run showed an overgrown Star Target site and a falling Heart Stone in the arena, with no errors.

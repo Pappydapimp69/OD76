@@ -216,13 +216,22 @@ function runRanchChecksB99(){
     assert(!r.plots[0].crop&&r.plots[1].crop==='carrot'&&r.plots[1].stage===2&&r.plots[1].tilled&&r.orchard.apples===B105_ORCHARD_MAX,'bad plots');
     assert(r.buffs.battle===null&&r.buffs.ranch.drills===3,'bad buffs');
   });
+  test('B106 no drill site can be walked into from any direction while fully overgrown',()=>{
+    openRanchB99();const w=ranchWorldB100;
+    for(const site of ['range','speed','power','guard']){const st=stationB100(site),R=Math.max(...B106_OBSTACLES.filter(q=>q.site===site).map(q=>hyp(q.x-st.x,q.y-st.y)));
+      for(let k=0;k<24;k++){const a=k/24*Math.PI*2;w.px=st.x+Math.cos(a)*(R+60);w.py=st.y+Math.sin(a)*(R+60);
+        for(let i=0;i<60;i++){const dx=st.x-w.px,dy=st.y-w.py;keys.clear();if(dx<-5)keys.add('a');if(dx>5)keys.add('d');if(dy<-5)keys.add('w');if(dy>5)keys.add('s');updateRanchB100(.05)}
+        keys.clear();assert(hyp(w.px-st.x,w.py-st.y)>st.r,`reached ${site} from angle ${k}`)}}
+  });
   test('B106 drill sites start ringed by obstacles the player cannot walk through',()=>{
     openRanchB99();const st=stationB100('power'),o=B106_OBSTACLES.find(q=>q.site==='power'),w=ranchWorldB100;
-    assert(B106_OBSTACLES.filter(q=>q.site==='power').length===8&&!siteOpenB106('power'),'site not overgrown');
-    w.px=st.x;w.py=st.y+B106_OBSTACLE_RING+60;keys.add('w');for(let i=0;i<60;i++)updateRanchB100(.05);keys.delete('w');
-    assert(hyp(w.px-st.x,w.py-st.y)>B106_OBSTACLE_RING-5,'walked through the overgrowth');
+    assert(B106_OBSTACLES.filter(q=>q.site==='power').length===8+B106_OUTER_COUNT&&!siteOpenB106('power'),'site not overgrown');
+    for(let k=0;k<24;k++){const a=k/24*Math.PI*2;w.px=st.x+Math.cos(a)*(B106_OUTER_RING+60);w.py=st.y+Math.sin(a)*(B106_OUTER_RING+60);
+      for(let i=0;i<60;i++){const dx=st.x-w.px,dy=st.y-w.py,d=hyp(dx,dy);keys.clear();if(dx<-5)keys.add('a');if(dx>5)keys.add('d');if(dy<-5)keys.add('w');if(dy>5)keys.add('s');updateRanchB100(.05)}
+      keys.clear();assert(hyp(w.px-st.x,w.py-st.y)>B106_OUTER_RING-45,`walked through the outer ring from angle ${k}`)}
+    const outer=B106_OBSTACLES.filter(q=>q.site==='power'&&hyp(q.x-st.x,q.y-st.y)>B106_OBSTACLE_RING+20).sort((a,b)=>hyp(a.x-st.x,a.y-st.y-B106_OUTER_RING)-hyp(b.x-st.x,b.y-st.y-B106_OUTER_RING))[0];ranchB99.cleared[outer.id]=true;
     const below=B106_OBSTACLES.filter(q=>q.site==='power').sort((a,b)=>hyp(a.x-st.x,a.y-st.y-B106_OBSTACLE_RING)-hyp(b.x-st.x,b.y-st.y-B106_OBSTACLE_RING))[0];ranchB99.cleared[below.id]=true;
-    w.px=below.x;w.py=st.y+B106_OBSTACLE_RING+60;keys.add('w');for(let i=0;i<14;i++)updateRanchB100(.05);keys.delete('w');
+    w.px=outer.x;w.py=st.y+B106_OUTER_RING+50;for(let i=0;i<40;i++){keys.clear();const tx=hyp(w.px-st.x,w.py-st.y)>B106_OBSTACLE_RING+30?outer.x:below.x;if(w.px<tx-4)keys.add('d');if(w.px>tx+4)keys.add('a');if(w.py>st.y+10)keys.add('w');updateRanchB100(.05)}keys.clear();
     assert(hyp(w.px-st.x,w.py-st.y)<60,'cleared gap still blocked');draw();
   });
   test('B106 only Pip clears obstacles with the right tool, and it tires him',()=>{
