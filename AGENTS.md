@@ -36,4 +36,10 @@ Do not summarize the whole project unless explicitly asked.
 through Codex through B83 and is worked on in Claude Code from B84; the build
 rules below are the same either way. `HANDOFF.md` carries the toolchain each
 environment needs.
+
+Engine upstream: `Pappydapimp69/Od00` is the shared core engine. OD76 (and
+later OD78, OD79, ...) builds on it. Pull engine updates with
+`git remote add engine https://github.com/Pappydapimp69/od00` (once), then
+`git fetch engine main && git merge engine/main`. Put engine-wide fixes in Od00
+first; keep OD76-only features (the Pip ranch) here.
 The numbered `b21-*.js` files assemble in lexical order; preserve late-module authority and update the complete regression suite when adding a build.
