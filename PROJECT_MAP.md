@@ -41,6 +41,8 @@ B98 adds `b21-87.js`: Thunderstorm clouds cost 8% HEAT each, gathering pauses be
 
 B99 adds `b21-88.js`: the Pip Ranch, OD76's core change. Ranch drills set Pip's starting ability levels, stage clears offer Return to ranch, and deaths bank half the run's hearts. `tests/ranch-checks.js` covers it.
 
+B100 adds `b21-89.js`: the ranch becomes a walkable pastel world with stations, Pip following you, drill points, solo drills and together mini-games.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

@@ -1,19 +1,10 @@
 function runRanchChecksB99(){
   const out=[],assert=(v,m)=>{if(!v)throw Error(m)};
-  const fresh=over=>{ranchB99=Object.assign(ranchDefaultB99(),over||{});saveRanchB99()};
-  const test=(name,fn)=>{try{fresh();reset();fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}};
+  const fresh=over=>{ranchB99=Object.assign(ranchDefaultBeforeB100(),over||{});ensurePointsB100(ranchB99);saveRanchB99()};
+  const test=(name,fn)=>{try{keys.clear();fresh();reset();fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}finally{keys.clear()}};
   const clearStage=()=>{reset();S.run=true;S.stage=2;S.runHearts=40;S.stageEnding=true;openStageUpgrade();continueSoundLabB41()};
-  test('B99 a drill spends ranch hearts, raises the stat, tires Pip, advances the week and persists',()=>{
-    fresh({hearts:50});assert(trainB99('power'),'drill refused');
-    assert(ranchB99.stats.power===1&&ranchB99.hearts===40&&ranchB99.fatigue===B99_DRILL_FATIGUE&&ranchB99.week===2,'drill effects wrong');
-    const saved=loadRanchB99();assert(saved.stats.power===1&&saved.hearts===40&&saved.week===2,'drill not saved');
-  });
-  test('B99 fatigue, hearts and caps block drills and rest recovers',()=>{
-    fresh({hearts:500,fatigue:B99_TIRED});assert(!trainB99('speed')&&ranchB99.stats.speed===0,'tired Pip trained');
-    restB99();assert(ranchB99.fatigue===B99_TIRED-B99_REST&&ranchB99.week===2,'rest wrong');assert(trainB99('speed'),'rested Pip refused');
-    fresh({hearts:5});assert(drillBlockB99('range')==='hearts','unaffordable drill allowed');
-    fresh({hearts:500,stats:{range:0,speed:B99_DRILLS.speed.cap,power:0,guard:0}});assert(drillBlockB99('speed')==='capped','cap ignored');
-  });
+  const press=(key=' ')=>{updateRanchB100(.016);keys.add(key);updateRanchB100(.016);keys.delete(key);updateRanchB100(.016)};
+  const at=id=>{const st=stationB100(id);ranchWorldB100.px=st.x;ranchWorldB100.py=st.y+20;ranchWorldB100.pip.x=st.x+400;ranchWorldB100.pip.y=st.y};
   test('B99 ranch levels start every run and in-run upgrades are priced from them',()=>{
     fresh({stats:{range:3,speed:2,power:4,guard:1}});reset();
     assert(S.pipRangeLv===3&&S.pipSpeedLv===2&&S.pipPowerLv===4&&S.pipGuardLv===1,'ranch levels not applied');
@@ -24,27 +15,83 @@ function runRanchChecksB99(){
     clearStage();assert(S.stage===2&&S.stagePending&&!$('ranchGateStepB99').classList.contains('stagehidden')&&!$('stageUp').classList.contains('hidden'),'gate missing');
     $('nextStageB99').click();assert(S.stage===3&&!S.stagePending&&S.run&&$('stageUp').classList.contains('hidden'),'next stage failed');
   });
-  test('B99 Return to ranch banks every run heart, ends the run and opens the ranch',()=>{
+  test('B99 Return to ranch banks every run heart, ends the run and walks into the ranch',()=>{
     fresh({hearts:5});clearStage();$('returnRanchB99').click();
     assert(ranchB99.hearts===45&&ranchB99.tests===1&&S.end&&!S.run&&!S.stagePending,'return banking wrong');
-    assert(!$('ranchB99').classList.contains('hidden')&&$('stageUp').classList.contains('hidden'),'ranch not shown');
-    assert(stageUpgradeVisibleB35()&&gamepadMenuButtonsB35().includes($('ranchBattleB99')),'ranch not controller reachable');
+    assert(ranchWorldB100.active&&document.body.classList.contains('ranchB100')&&$('stageUp').classList.contains('hidden'),'ranch world not entered');
     finish(true);assert(ranchB99.hearts===45&&ranchB99.tests===1,'ended run banked twice');
-  });
-  test('B99 Battle test starts a fresh run with ranch levels',()=>{
-    fresh({stats:{range:0,speed:0,power:2,guard:0}});openRanchB99();$('ranchBattleB99').click();
-    assert(S.run&&!S.end&&S.stage===1&&S.pipPowerLv===2&&$('ranchB99').classList.contains('hidden')&&$('start').classList.contains('hidden'),'battle test did not start');
   });
   test('B99 falling in battle banks half and sends Pip home worn out, once',()=>{
     fresh({hearts:1,fatigue:10});S.run=true;S.runHearts=31;finish(true);
     assert(ranchB99.hearts===16&&ranchB99.fatigue===B99_DEATH_FATIGUE&&ranchB99.tests===1,'death banking wrong');
     assert($('endText').textContent.includes('♥ 15'),'end text missing ranch line');finish(true);assert(ranchB99.hearts===16,'death banked twice');
-    $('endRanchB99').click();assert(!$('ranchB99').classList.contains('hidden')&&$('end').classList.contains('hidden'),'end ranch button');
+    $('endRanchB99').click();assert(ranchWorldB100.active&&$('end').classList.contains('hidden'),'end ranch button');
   });
   test('B99 corrupt ranch saves fall back to safe values',()=>{
-    localStorage.setItem(B99_RANCH_KEY,JSON.stringify({week:-4,hearts:'x',fatigue:900,stats:{range:99,power:-3}}));
+    localStorage.setItem(B99_RANCH_KEY,JSON.stringify({week:-4,hearts:'x',fatigue:900,stats:{range:99,power:-3},points:{range:'q',speed:1e9}}));
     const r=loadRanchB99();assert(r.week===1&&r.hearts===0&&r.fatigue===100&&r.stats.range===B99_DRILLS.range.cap&&r.stats.power===0&&r.stats.speed===0,'bad save accepted');
+    assert(r.points.range===B99_DRILLS.range.cap*10&&r.points.speed===9&&r.points.power===0,'bad points accepted');
     localStorage.setItem(B99_RANCH_KEY,'{');assert(loadRanchB99().week===1,'unparseable save');
+  });
+  test('B100 ranch world hides the arena HUD, moves the player and keeps them inside the fence',()=>{
+    openRanchB99();assert(ranchWorldB100.active&&document.body.classList.contains('ranchB100')&&$('start').classList.contains('hidden'),'ranch not open');
+    const x=ranchWorldB100.px;keys.add('d');for(let i=0;i<10;i++)updateRanchB100(.05);keys.delete('d');assert(ranchWorldB100.px>x+100,'player did not walk');
+    keys.add('a');for(let i=0;i<400;i++)updateRanchB100(.05);keys.delete('a');assert(ranchWorldB100.px===40,'left the ranch');
+    draw();
+  });
+  test('B100 a solo drill costs a week and succeeds for base points or fails for base minus bonus',()=>{
+    fresh({hearts:100});openRanchB99();
+    let r=soloDrillB100('power',0);assert(r.ok&&r.gain===B100_BASE&&ranchB99.points.power===10&&ranchB99.stats.power===1&&r.levelUp,'solo success wrong');
+    assert(ranchB99.hearts===90&&ranchB99.fatigue===B99_DRILL_FATIGUE&&ranchB99.week===2,'solo cost wrong');
+    r=soloDrillB100('power',.999);assert(!r.ok&&r.gain===B100_BASE-B100_BONUS&&ranchB99.points.power===15&&ranchB99.stats.power===1,'solo failure wrong');
+    fresh({fatigue:0});const rested=soloChanceB100();fresh({fatigue:60});assert(soloChanceB100()<rested,'fatigue did not lower solo odds');
+    assert(loadRanchB99().points.power===0,'fresh save kept points');
+  });
+  test('B100 walking to a station and pressing A opens its drill sheet; solo runs from the sheet',()=>{
+    fresh({hearts:100});openRanchB99();at('guard');press();
+    assert(ranchWorldB100.sheet&&$('ranchSheetB100').classList.contains('on')&&$('ranchSheetB100').textContent.includes('Glow Pond'),'station sheet missing');
+    press();assert(!ranchWorldB100.sheet&&ranchB99.week===2&&ranchB99.points.guard>=5,'solo from sheet failed');
+  });
+  test('B100 blocked drills explain why and never charge',()=>{
+    fresh({hearts:0});openRanchB99();at('speed');press();
+    assert($('ranchSheetB100').textContent.includes('Battle tests earn hearts')&&ranchWorldB100.sheet.options.length===1,'no-heart reason missing');
+    press();assert(ranchB99.week===1&&!ranchWorldB100.game,'blocked drill ran');
+    fresh({hearts:99,fatigue:B99_TIRED});openRanchB99();at('speed');press();assert($('ranchSheetB100').textContent.includes('too tired'),'tired reason missing');
+  });
+  test('B100 timing mini-game: 3 of 4 wins base plus bonus, fewer loses the bonus',()=>{
+    fresh({hearts:100});openRanchB99();assert(startGameB100('power'),'game refused');const g=ranchWorldB100.game;assert(g&&ranchB99.hearts===90&&ranchB99.week===2,'game cost wrong');
+    const hit=()=>{g.zone=.5-.5*Math.cos(g.phase);g.cool=0;gameInputB100(g,0,true,true)},miss=()=>{const pos=.5-.5*Math.cos(g.phase);g.zone=pos>.5?pos-.4:pos+.4;g.cool=0;gameInputB100(g,0,true,true)};
+    hit();hit();miss();hit();assert(!ranchWorldB100.game&&ranchB99.points.power===B100_BASE+B100_BONUS,'win did not award bonus');
+    startGameB100('power');const h=ranchWorldB100.game;const m=()=>{const pos=.5-.5*Math.cos(h.phase);h.zone=pos>.5?pos-.4:pos+.4;h.cool=0;gameInputB100(h,0,true,true)};
+    m();m();h.zone=.5-.5*Math.cos(h.phase);h.cool=0;gameInputB100(h,0,true,true);m();
+    assert(ranchB99.points.power===B100_BASE+B100_BONUS+B100_BASE-B100_BONUS,'loss did not subtract bonus');
+  });
+  test('B100 hold mini-game scores releases inside the band and overflow as a miss',()=>{
+    fresh({hearts:100});openRanchB99();startGameB100('guard');const g=ranchWorldB100.game;
+    const release=f=>{g.cool=0;g.holding=true;g.fill=f;gameInputB100(g,0,false,false)};
+    release(g.lo+.01);assert(g.hits===1,'band release missed');release(.1);assert(g.hits===1&&g.attempts===2,'early release scored');
+    g.cool=0;g.fill=1.01;gameInputB100(g,.1,true,true);assert(!ranchWorldB100.game&&ranchB99.points.guard===B100_BASE-B100_BONUS,'overflow not a miss');
+  });
+  test('B100 Scent Hunt lets the player walk over sparkles and times out',()=>{
+    fresh({hearts:100});openRanchB99();startGameB100('range');const g=ranchWorldB100.game;
+    for(const s of g.sparks.slice(0,4)){ranchWorldB100.px=s.x;ranchWorldB100.py=s.y;gameInputB100(g,.01,false,false)}
+    assert(g.hits===4&&ranchWorldB100.game===g,'pickups wrong');g.time=0;gameInputB100(g,.01,false,false);
+    assert(!ranchWorldB100.game&&ranchB99.points.range===B100_BASE+B100_BONUS,'4 of 5 did not win');
+  });
+  test('B100 petting Pip and resting at the bed',()=>{
+    fresh({fatigue:80});openRanchB99();const w=ranchWorldB100;w.pip.x=w.px+10;w.pip.y=w.py;w.pip.state='idle';w.idle=1;press();
+    assert(w.pip.happy>0&&w.hearts.length>0,'pet failed');
+    at('home');press();assert(w.sheet&&$('ranchSheetB100').textContent.includes('Rest'),'bed sheet missing');press();
+    assert(ranchB99.fatigue===80-B99_REST&&ranchB99.week===2&&w.pip.state==='sleep','rest failed');
+  });
+  test('B100 the arena gate starts a battle test with ranch levels and leaves the ranch',()=>{
+    fresh({stats:{range:0,speed:0,power:2,guard:0}});openRanchB99();at('gate');press();press();
+    assert(!ranchWorldB100.active&&!document.body.classList.contains('ranchB100')&&S.run&&!S.end&&S.stage===1&&S.pipPowerLv===2&&$('start').classList.contains('hidden'),'gate did not start a test');
+  });
+  test('B100 sheet navigation and back close without acting',()=>{
+    fresh({hearts:100});openRanchB99();at('power');press();focusSheetB100(0);keys.add('ArrowDown');updateRanchB100(.016);keys.delete('ArrowDown');updateRanchB100(.016);
+    assert(ranchWorldB100.sheet.focus===1,'nav failed');keys.add('Escape');updateRanchB100(.016);keys.delete('Escape');
+    assert(!ranchWorldB100.sheet&&ranchB99.week===1,'back acted');
   });
   fresh();reset();
   return out;

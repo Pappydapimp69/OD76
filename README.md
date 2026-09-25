@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B100: Ranch world
+
+The ranch is now a pastel place you walk around. Walk up to a station and press A: Pip's bed to rest, the Arena gate for a battle test, or one of four drill stations. Pip drills solo (10 points on success, 5 on a stumble; tired Pips stumble more) or you train together in a short mini-game (15 points for a win, 5 for a loss). Ten points is one ranch level. Stand still near Pip to pet him. See [the B100 blueprint](docs/B100-ranch-world.md).
+
 ## B99: Pip Ranch
 
 Raise Pip between runs. At the ranch, drills spend ranch hearts to raise the level Pip starts every run at for Heart Sense, Swift Pip, Star Power and Guardian Glow; each drill tires him and resting recovers. Battle test starts a run. After each stage's growth steps, choose Next stage or Return to ranch: going home banks every heart collected that test, falling in battle banks half and leaves Pip worn out. See [the B99 blueprint](docs/B99-pip-ranch.md).
