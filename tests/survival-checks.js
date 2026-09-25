@@ -10,32 +10,37 @@ function runSurvivalChecksB63(){
       startBossBattle();assert(S.bossMaxHp===79&&enemies.at(-1).bossStage===1,'opening boss scaled');
     }
   });
-  test('Stages 4 to 10 scale only with banked run hearts in capped 20-heart tiers',()=>{
-    for(const stage of [4,7,10])for(const hearts of [0,19,20,79,80,179,180,999]){
-      S.stage=stage;S.wave=99;S.runHearts=hearts;S.heartCurrency=0;S.heartTotal=99999;
-      const tier=Math.min(10,1+Math.floor(hearts/20)),w=1+(tier-1)*3;
+  const curveB108=(stage,hearts)=>{const base=stage<=10?1+(stage-3)*9/7:10+9/7*4*(Math.sqrt(1+(stage-10)/2)-1);return Math.max(1,Math.floor(base*(1+.15*Math.min(1,hearts/(30*(stage-3))))+1e-9))};
+  test('B108 stages 4+ follow the stage curve and hearts nudge it by at most 15%',()=>{
+    for(const stage of [4,7,10,11,14,20,30])for(const hearts of [0,30,999]){
+      S.stage=stage;S.wave=99;S.earlyRunHearts=0;S.runHearts=hearts;S.heartCurrency=0;S.heartTotal=99999;
+      const tier=curveB108(stage,hearts),w=1+(tier-1)*3;
       const expected=.88+Math.min(1.1,(w-1)*.12)+(tier>=5?.16+Math.min(.34,(tier-5)*.045):0);
-      assert(difficultyStageB63()===tier&&near(difficulty(),expected),'wrong heart tier');
-      assert(waveGoalFor(99)===8+Math.floor((tier-1)*2/3),'wrong heart kill target');
+      assert(difficultyStageB63()===tier&&near(difficulty(),expected),`wrong tier at stage ${stage} hearts ${hearts}`);
+      assert(waveGoalFor(99)===Math.min(16,8+Math.floor((tier-1)*2/3)),'wrong kill target');
     }
+  });
+  test('B108 the curve never cliffs: at most two tiers per stage even with every heart',()=>{
+    let prev=1;for(let stage=1;stage<=40;stage++){S.stage=stage;S.earlyRunHearts=0;S.runHearts=99999;const t=difficultyStageB63();assert(t>=prev&&t-prev<=2,`cliff at stage ${stage}: ${prev}→${t}`);prev=t}
+    S.stage=10;S.runHearts=0;const calm=difficultyStageB63();S.runHearts=99999;assert(difficultyStageB63()<=Math.floor(calm*1.15)+1,'hearts moved difficulty too far');
   });
   test('Stage 4 discounts only opening hearts once, then counts new hearts normally',()=>{
     S.stage=3;S.wave=9;S.runHearts=60;S.stageEnding=false;advanceToNextStage();
-    assert(S.stage===4&&S.earlyRunHearts===60&&difficultyHeartsB63()===20&&difficultyStageB63()===2,'entry discount wrong');
+    assert(S.stage===4&&S.earlyRunHearts===60&&difficultyHeartsB63()===20&&difficultyStageB63()===curveB108(4,20),'entry discount wrong');
     assert(S.waveGoal===waveGoalFor(S.wave),'first wave used undiscounted hearts');
-    S.runHearts+=20;assert(difficultyHeartsB63()===40&&difficultyStageB63()===3,'new hearts discounted');
+    S.runHearts+=20;assert(difficultyHeartsB63()===40,'new hearts discounted');
     advanceToNextStage();assert(S.earlyRunHearts===60&&difficultyHeartsB63()===40,'discount repeated next stage');
-    S.stage=11;assert(difficultyStageB63()===11,'discount leaked into legacy scaling');
+    S.stage=11;assert(difficultyStageB63()===curveB108(11,40),'curve past 10 wrong');
     reset();assert(S.earlyRunHearts===0&&S.runHearts===0,'discount survived new run');
   });
-  test('Stage 11 restores exact legacy speed, cap, health, wave and boss formulas',()=>{
+  test('B108 stages past 10 extend the curve into capped enemy stats',()=>{
     for(const stage of [11,13,17,30]){
-      S.stage=stage;S.wave=(stage-1)*3+2;S.stageWaveCount=2;S.runHearts=0;S.bossCount=3;
-      const d=.88+Math.min(1.1,(S.wave-1)*.12)+.16+Math.min(.34,(stage-5)*.045);
-      assert(near(difficulty(),d),'legacy speed mismatch');assert(enemyCap()===(H>W?15:18),'legacy cap mismatch');
-      assert(waveGoalFor(S.wave)===Math.min(16,10+Math.min(2,Math.floor((stage-1)/8))),'legacy kill target mismatch');
-      spawnEnemy('charger');assert(enemies.at(-1).hp===3+Math.min(5,1+Math.floor((stage-5)/2)),'legacy HP mismatch');
-      startBossBattle();assert(S.bossMaxHp===54+stage*7+4*18&&enemies.at(-1).bossStage===stage+6,'legacy boss mismatch');
+      S.stage=stage;S.wave=(stage-1)*3+2;S.stageWaveCount=2;S.earlyRunHearts=0;S.runHearts=0;S.bossCount=3;
+      const tier=curveB108(stage,0),boss=Math.floor((tier-1)/3);
+      assert(difficultyWaveB63()===1+(tier-1)*3&&difficultyBossCountB63()===boss,'wave or boss count wrong');
+      assert(enemyCap()===(H>W?15:18),'cap not saturated');
+      spawnEnemy('charger');assert(enemies.at(-1).hp===3+Math.min(5,1+Math.floor((tier-5)/2)),'HP wrong');
+      startBossBattle();assert(S.bossMaxHp===Math.round(54+tier*7+(1+boss)*18)&&enemies.at(-1).bossStage===tier+boss*2,'boss wrong');
     }
   });
   test('Run hearts count only banked pickups, survive spending and stages, and reset independently of lifetime',()=>{
@@ -91,12 +96,12 @@ function runSurvivalChecksB63(){
     assert($('b39CoreList').textContent.includes('2.0 seconds away')&&emotionalNextText('compassion').includes('2.0 → 2.5')&&emotionalNextText('support').includes('Below 2 shields'),'copy stale');
     closeAscendedPauseB39();
   });
-  test('Difficulty HUD reports opening, heart-tier progress, max and legacy bands',()=>{
+  test('B108 difficulty HUD reports opening, tier, rank and heart nudge',()=>{
     S.stage=2;updateUI();assert($('difficultyHudB65').textContent==='DIFF · OPENING','opening HUD wrong');
-    S.stage=4;S.earlyRunHearts=30;S.runHearts=30;updateUI();assert($('difficultyHudB65').textContent==='DIFF · ♥ T1 · 10/20','discount HUD wrong');
-    S.runHearts=40;updateUI();assert($('difficultyHudB65').textContent==='DIFF · ♥ T2 · 0/20'&&$('difficultyHudB65').getAttribute('aria-label').includes('toward tier 3'),'boundary HUD wrong');
-    S.runHearts=220;updateUI();assert($('difficultyHudB65').textContent==='DIFF · ♥ T10 MAX','max HUD wrong');
-    S.stage=11;updateUI();assert($('difficultyHudB65').textContent==='DIFF · STAGE SCALE','legacy HUD wrong');
+    S.stage=4;S.earlyRunHearts=30;S.runHearts=30;updateUI();assert($('difficultyHudB65').textContent==='DIFF · T2 · ♥+5%','nudge HUD wrong: '+$('difficultyHudB65').textContent);
+    S.runHearts=0;S.earlyRunHearts=0;updateUI();assert($('difficultyHudB65').textContent==='DIFF · T2','plain HUD wrong');
+    S.stage=11;updateUI();assert($('difficultyHudB65').textContent==='DIFF · T11','late HUD wrong');
+    S.stage=2;S.b108Rank=2;updateUI();assert($('difficultyHudB65').textContent==='DIFF · T5 · RANK C','rank HUD wrong');
     reset();assert($('difficultyHudB65').textContent==='DIFF · OPENING','reset HUD stale');
   });
   test('Supportive emergency announces once, labels return and guard, then clears at two shields',()=>{
@@ -155,9 +160,9 @@ function runSurvivalChecksB63(){
     S.pipState='return';S.b51PipBond=0;assert(pipBondSecondsRemainingB72()===0,'empty timer did not reach zero');
   });
   test('Banking a heart-tier boundary pulses the difficulty pill and obeys pause',()=>{
-    S.stage=4;S.earlyRunHearts=0;S.runHearts=19;collectHeartBit(heartFixtureB60());updateUI();
-    assert(S.b73DifficultyTier===2&&near(S.b73DifficultyPulse,1)&&difficultyHudB65.classList.contains('b73-tier-up'),'tier cue missing');
-    assert(difficultyHudB65.textContent==='DIFF · ♥ T2 · 0/20'&&difficultyHudB65.getAttribute('aria-label').includes('Tier 2 reached'),'new tier not reported');
+    S.stage=7;S.earlyRunHearts=0;S.runHearts=111;assert(difficultyStageB63()===6,'fixture tier');collectHeartBit(heartFixtureB60());updateUI();
+    assert(S.b73DifficultyTier===7&&near(S.b73DifficultyPulse,1)&&difficultyHudB65.classList.contains('b73-tier-up'),'tier cue missing');
+    assert(difficultyHudB65.textContent==='DIFF · T7 · ♥+14%'&&difficultyHudB65.getAttribute('aria-label').includes('Tier 7 reached'),'new tier not reported: '+difficultyHudB65.textContent);
     S.b39Paused=true;update(.4);assert(near(S.b73DifficultyPulse,1),'pause consumed cue');S.b39Paused=false;update(.4);assert(S.b73DifficultyPulse<1,'active play did not consume cue');
     S.b73DifficultyPulse=.01;update(.02);updateUI();assert(!difficultyHudB65.classList.contains('b73-tier-up'),'expired cue stayed lit');
     for(const stage of [3,11]){transportFixtureB60();S.stage=stage;S.runHearts=19;collectHeartBit(heartFixtureB60());assert(!S.b73DifficultyPulse,`stage ${stage} triggered heart-tier cue`)}

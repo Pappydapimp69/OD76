@@ -46,7 +46,7 @@ function runHeartfieldChecksB74(){
     S.stage=4;S.runHearts=19;S.stageCurrency=0;S.pipBossPowers.relay=1;transportB60().cargo=Array.from({length:4},()=>makeHeartSourceB74(1,0,0));
     const beforePopup=popup,seen=[];popup=(...args)=>seen.push(args);
     try{assert(deliverCargoB60()===4,'batch count wrong')}finally{popup=beforePopup}
-    assert(S.runHearts===23&&S.heartCurrency===4&&S.stageCurrency===4&&S.b73DifficultyTier===2,'batch accounting or tier wrong');
+    assert(S.runHearts===23&&S.heartCurrency===4&&S.stageCurrency===4,'batch accounting wrong');
     assert(seen.filter(args=>String(args[2]).includes('♥ +4')).length===1&&transportB60().relayCd===8,'feedback or Relay repeated');
   });
   test('Emergency cargo remains singleton protected value and releases mining',()=>{

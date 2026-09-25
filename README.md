@@ -2,6 +2,12 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B108: Stage curve and arena ranks
+
+Difficulty after stage 3 now follows the stage number instead of hearts collected: it climbs steadily through stage 10 (tier ~2.3 to 10), then keeps rising more slowly (tier ~11 at stage 11, ~17 at stage 20). Hearts collected since stage 4 only nudge it, by at most 15%, so greedy runs feel hotter without hitting a wall. Stages 1–3 are unchanged at rank E.
+
+Pick an **arena rank** at the Arena gate: E, D, C, B, A or S. Each rank adds 0, 2, 4, 6, 8 or 10 difficulty tiers from stage 1 and multiplies the hearts and Heart Stones banked at the ranch by ×1.0 to ×2.0. Clear stage 5 at your highest rank to unlock the next. The difficulty pill shows the tier, rank and heart nudge. See [the B108 blueprint](docs/B108-stage-curve-ranks.md).
+
 ## B107: Refinery timer at the stage gate
 
 When a stage ends and you choose Next stage or Return to ranch, a live line shows the Heart Refinery back home: time to the next stone, how many batches are queued and when they will all be done, plus anything waiting in the tray.

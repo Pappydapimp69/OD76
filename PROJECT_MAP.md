@@ -55,6 +55,8 @@ B106 adds `b21-94.js`: overgrowth around drill sites with collision, Pip-only to
 
 B107 adds `b21-95.js`: a live Heart Refinery status line on the stage-end gate.
 
+B108 adds `b21-96.js`: the stage-driven difficulty curve, bounded heart nudge and arena ranks. It supersedes B63's heart tiers and the stage-11 legacy formulas.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

@@ -263,6 +263,30 @@ function runRanchChecksB99(){
     ranchB99.refinery.startedAt-=901e3;renderGateRefineryB107();assert(line.textContent.includes('Tray ready: ◆ 1')&&line.textContent.includes('2 batches'),'tray/progress not live');
     $('nextStageB99').click();
   });
+  test('B108 ranks: E by default, gate offers unlocked ranks, rank offsets difficulty from stage 1',()=>{
+    fresh();reset();assert(S.b108Rank===0&&difficultyStageB63()===1,'default rank');
+    fresh({rankUnlocked:2});openRanchB99();at('gate');press();const labels=ranchWorldB100.sheet.options.map(o=>o.label).join('|');
+    assert(labels.includes('Switch to Rank C')&&labels.includes('Switch to Rank D')&&!labels.includes('Rank B'),'gate rank list wrong');
+    const i=ranchWorldB100.sheet.options.findIndex(o=>o.label.startsWith('Switch to Rank C'));focusSheetB100(i);press();
+    assert(ranchB99.rank===2&&ranchWorldB100.sheet.options[0].label.includes('Rank C'),'switch failed');focusSheetB100(0);press();
+    assert(S.run&&S.b108Rank===2&&S.stage===1&&difficultyStageB63()===5,'rank C stage 1 not tier 5');
+  });
+  test('B108 clearing stage 5 at the highest rank unlocks the next, once',()=>{
+    fresh();reset();S.run=true;S.stage=4;S.stageEnding=true;openStageUpgrade();assert(ranchB99.rankUnlocked===0,'unlocked early');
+    reset();S.run=true;S.stage=5;S.stageEnding=true;openStageUpgrade();assert(ranchB99.rankUnlocked===1,'no unlock at stage 5');
+    S.stage=6;openStageUpgrade();assert(ranchB99.rankUnlocked===1,'unlocked twice in one run');
+    fresh({rankUnlocked:3,rank:1});reset();S.run=true;S.stage=5;openStageUpgrade();assert(ranchB99.rankUnlocked===3,'lower rank unlocked the next');
+  });
+  test('B108 higher ranks multiply banked hearts and stones',()=>{
+    fresh({rankUnlocked:5,rank:5});reset();S.run=true;S.stage=2;S.heartCurrency=40;S.runStones=2;S.stageEnding=true;openStageUpgrade();continueSoundLabB41();
+    assert($('ranchGateTextB99').textContent.includes('Rank S pays ×2'),'gate reward note');$('returnRanchB99').click();
+    assert(ranchB99.hearts===80&&ranchB99.stones===4&&ranchB99.report.includes('Rank S bonus'),'rank S did not double rewards');
+    fresh({rankUnlocked:1,rank:1});reset();S.run=true;S.heartCurrency=21;finish(true);assert(ranchB99.hearts===12,'rank D death bank wrong: '+ranchB99.hearts+' '+ranchB99.report);
+  });
+  test('B108 corrupt rank saves clamp to what is unlocked',()=>{
+    localStorage.setItem(B99_RANCH_KEY,JSON.stringify({rank:9,rankUnlocked:-3}));let r=loadRanchB99();assert(r.rank===0&&r.rankUnlocked===0,'bad rank');
+    localStorage.setItem(B99_RANCH_KEY,JSON.stringify({rank:4,rankUnlocked:2}));r=loadRanchB99();assert(r.rank===2&&r.rankUnlocked===2,'rank above unlocked');
+  });
   fresh();reset();
   return out;
 }
