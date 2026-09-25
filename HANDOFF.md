@@ -37,7 +37,7 @@ Node 22 or newer. `npm ci` installs the one dependency (jsdom).
   `npm install --no-save playwright` and launch via `executablePath`; do not
   run `playwright install`. Keep the driver script out of the repo — the
   committed browser artifacts are the `tests/*-browser.js` fixtures.
-- `node scripts/serve.mjs` serves `_site` on port 8175 and the local fixtures
+- `node scripts/serve.mjs` serves `_site` on port 8176 and the local fixtures
   at `/qa`. Check whether a server is already running before starting one.
 - The dev server has no favicon, so every page load logs one
   `/favicon.ico` 404. It is server noise, not an application error — filter it

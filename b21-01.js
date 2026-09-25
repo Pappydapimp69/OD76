@@ -7,8 +7,8 @@ let keys=new Set(),joy={active:false,id:null,originX:0,originY:0,dx:0,dy:0},game
 audioCtx=null,audioEngine=null,audioUnlocked=false,audioUnlocking=false,seed=0xA11CE;
 function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}
 function rr(a,b){return a+rnd()*(b-a)}
-const PIP_SAVE_KEY="overdrive75_pip_v2";
-const STAR_ECHO_KEY="overdrive75_star_echo_v1";
+const PIP_SAVE_KEY="overdrive76_pip_v2";
+const STAR_ECHO_KEY="overdrive76_star_echo_v1";
 function loadStarEcho(){try{return Math.max(0,Math.floor(Number(localStorage.getItem(STAR_ECHO_KEY)||0)||0))}catch(_){return 0}}
 function clearStarEcho(){try{localStorage.removeItem(STAR_ECHO_KEY)}catch(_){}}
 function bankStarEcho(){

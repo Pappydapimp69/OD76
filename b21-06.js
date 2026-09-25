@@ -81,7 +81,7 @@ function hitEnemy(e,power=1,source="player"){
  if(e.hp<=0)kill(e,false);
 }
 function dropHeartBits(e){const count=e.type==="charger"?2:e.type==="core"?2:1;for(let i=0;i<count;i++)heartBits.push({x:e.x+rr(-11,11),y:e.y+rr(-11,11),vx:rr(-52,52),vy:rr(-52,52),r:7,life:11,bob:rr(0,6.28),dead:false})}
-const HEART_TOTAL_KEY="overdrive75_player_heart_total_v1";
+const HEART_TOTAL_KEY="overdrive76_player_heart_total_v1";
 function loadHeartTotal(){try{const n=Number(localStorage.getItem(HEART_TOTAL_KEY)||0);return Number.isFinite(n)?Math.max(0,Math.floor(n)):0}catch(_){return 0}}
 function saveHeartTotal(){try{localStorage.setItem(HEART_TOTAL_KEY,String(Math.max(0,Math.floor(S.heartTotal||0))))}catch(_){}}
 function collectHeartBit(h){

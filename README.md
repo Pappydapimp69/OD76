@@ -1,4 +1,4 @@
-# OVERDRIVE 75
+# OVERDRIVE 76
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
@@ -117,7 +117,7 @@ npm run build
 npm run dev
 ```
 
-Open `http://127.0.0.1:8175/` for the assembled game. `/qa` adds local-only boss,
+Open `http://127.0.0.1:8176/` for the assembled game. `/qa` adds local-only boss,
 trait and input fixtures, plus the same checks used by CI. QA controls are never
 included in the deployed site.
 

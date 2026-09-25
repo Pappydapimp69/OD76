@@ -6,7 +6,7 @@ let keys=new Set(),joy={active:false,id:null,originX:0,originY:0,dx:0,dy:0},game
 audioCtx=null,audioEngine=null,audioUnlocked=false,audioUnlocking=false,seed=0xA11CE;
 function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}
 function rr(a,b){return a+rnd()*(b-a)}
-const PIP_SAVE_KEY="overdrive75_pip_v2";
+const PIP_SAVE_KEY="overdrive76_pip_v2";
 function loadPip(){
  try{
    const v=JSON.parse(localStorage.getItem(PIP_SAVE_KEY)||"null");

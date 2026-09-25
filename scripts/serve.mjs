@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const site = path.join(root, '_site');
 http.createServer((req, res) => {
-  const url = new URL(req.url, 'http://127.0.0.1:8175');
+  const url = new URL(req.url, 'http://127.0.0.1:8176');
   if (url.pathname === '/qa.js') {
     res.setHeader('Content-Type', 'text/javascript');
     res.end(['partnership-checks.js', 'transport-checks.js', 'settings-checks.js', 'survival-checks.js', 'browser-qa.js', 'audio-qa.js', 'feelings-checks.js', 'feelings-browser.js', 'autonomy-checks.js', 'autonomy-browser.js'].map(file => fs.readFileSync(path.join(root, 'tests', file), 'utf8')).join('\n')); return;
@@ -18,4 +18,4 @@ http.createServer((req, res) => {
   let content = fs.readFileSync(file);
   if (url.pathname === '/qa') content = content.toString().replace('</body>', '<script src="/qa.js"></script></body>');
   res.end(content);
-}).listen(8175, '127.0.0.1', () => console.log('OD76 local: http://127.0.0.1:8175'));
+}).listen(8176, '127.0.0.1', () => console.log('OD76 local: http://127.0.0.1:8176'));

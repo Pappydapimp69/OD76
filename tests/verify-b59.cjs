@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const { JSDOM } = require('jsdom');
 const root = path.resolve(__dirname, '..');
 const dom = new JSDOM(fs.readFileSync(path.join(root, 'index.html'), 'utf8'), {
-  url: 'http://127.0.0.1:8175/', runScripts: 'outside-only', pretendToBeVisual: true
+  url: 'http://127.0.0.1:8176/', runScripts: 'outside-only', pretendToBeVisual: true
 });
 const win = dom.window;
 win.requestAnimationFrame = () => 0;

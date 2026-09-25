@@ -442,7 +442,7 @@ function dropHeartBits(e){
    });
  }
 }
-const HEART_TOTAL_KEY="overdrive75_player_heart_total_v1";
+const HEART_TOTAL_KEY="overdrive76_player_heart_total_v1";
 function loadHeartTotal(){try{const n=Number(localStorage.getItem(HEART_TOTAL_KEY)||0);return Number.isFinite(n)?Math.max(0,Math.floor(n)):0}catch(_){return 0}}
 function saveHeartTotal(){try{localStorage.setItem(HEART_TOTAL_KEY,String(Math.max(0,Math.floor(S.heartTotal||0))))}catch(_){}}
 function collectHeartBit(h){
