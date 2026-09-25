@@ -28,7 +28,8 @@
 - B110 Bag on Select: controller Select toggles the ranch bag.
 - B111 Start at the ranch: splash Start opens the ranch; runs start at the Arena gate.
 - Thicker overgrowth: 22 obstacles per drill site (outer ring of 14).
-- 236 automated checks pass across all 99 ordered modules.
+- Pip default starting speed 170 (was 285); old-default saves migrate.
+- 237 automated checks pass across all 99 ordered modules.
 - Module numbering reaches `b21-99.js`; the next module needs the build, test and workflow patterns widened to three digits.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 

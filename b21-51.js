@@ -1,6 +1,6 @@
 // B61 Saved movement tuning, shared between main-menu settings and the pause tab.
 const B61_SETTINGS_KEY="od76_movement_settings_v1";
-const B61_DEFAULTS=Object.freeze({pipBase:285,swiftFlat:34,swiftPercent:1,swiftMode:"flat",fullSpeed:50,playerSpeed:205});
+const B61_DEFAULTS=Object.freeze({pipBase:170,swiftFlat:34,swiftPercent:1,swiftMode:"flat",fullSpeed:50,playerSpeed:205});
 const B61_FIELDS=[
   ["pipBase","Pip starting speed",20,1000,1,"Pixels per second before Swift upgrades."],
   ["swiftFlat","Swift flat increase",0,200,1,"Speed added on each flat-increase level."],
@@ -17,7 +17,8 @@ function validateSettingsB61(raw){
   }
   return result;
 }
-function loadSettingsB61(){try{return validateSettingsB61(JSON.parse(localStorage.getItem(B61_SETTINGS_KEY)))||{...B61_DEFAULTS}}catch(_){return {...B61_DEFAULTS}}}
+// OD76 lowered Pip's default starting speed from 285 to 170. A save still holding the old default follows the new one.
+function loadSettingsB61(){try{const v=validateSettingsB61(JSON.parse(localStorage.getItem(B61_SETTINGS_KEY)));if(v&&v.pipBase===285)v.pipBase=B61_DEFAULTS.pipBase;return v||{...B61_DEFAULTS}}catch(_){return {...B61_DEFAULTS}}}
 let settingsB61=loadSettingsB61();
 function swiftSpeedB61(level,config=settingsB61){
   let speed=config.pipBase;
@@ -95,7 +96,7 @@ function tabKeyB61(key){
   @media(max-width:550px){#pipPauseB39,#mainSettingsB61{padding:6px}#settingsFormB61 .b61Fields{grid-template-columns:1fr}#settingsFormB61{font-size:13px}.b61Tabs button{flex:1}#pipPauseB39 .b39-footer .small{display:none}}
   @media(max-height:560px){#pipPauseB39 .b39-card{grid-template-rows:auto minmax(0,1fr) auto}}
   `;document.head.appendChild(style);
-  const form=document.createElement('form');form.id='settingsFormB61';form.innerHTML='<p>Tune movement without restarting. Settings are saved on this device. Values below are pixels per second unless marked %.</p><div class="b61Fields">'+B61_FIELDS.map(([key,label,min,max,step,help])=>`<label for="setting-${key}">${label}<input id="setting-${key}" type="number" min="${min}" max="${max}" step="${step}" required><small>${help} Range: ${min}–${max}.</small></label>`).join('')+'<label for="setting-swiftMode">Swift upgrade pattern<select id="setting-swiftMode"><option value="flat">Flat increase every level (B60)</option><option value="alternating">Alternate: +flat, then +% of current speed</option></select><small>Alternating starts with the flat increase at level 1.</small></label></div><div class="b61Actions"><button type="button" id="settingsDefaultsB61">Load B60 defaults</button><button type="button" id="settingsPresetB61">Load 140 / +10 / 1% / 35% preset</button><button type="submit">Apply settings</button></div><p id="settingsStatusB61" role="status"></p><table id="settingsPreviewB61" aria-label="Speed preview by Swift level"></table>';
+  const form=document.createElement('form');form.id='settingsFormB61';form.innerHTML='<p>Tune movement without restarting. Settings are saved on this device. Values below are pixels per second unless marked %.</p><div class="b61Fields">'+B61_FIELDS.map(([key,label,min,max,step,help])=>`<label for="setting-${key}">${label}<input id="setting-${key}" type="number" min="${min}" max="${max}" step="${step}" required><small>${help} Range: ${min}–${max}.</small></label>`).join('')+'<label for="setting-swiftMode">Swift upgrade pattern<select id="setting-swiftMode"><option value="flat">Flat increase every level (B60)</option><option value="alternating">Alternate: +flat, then +% of current speed</option></select><small>Alternating starts with the flat increase at level 1.</small></label></div><div class="b61Actions"><button type="button" id="settingsDefaultsB61">Load defaults</button><button type="button" id="settingsPresetB61">Load 140 / +10 / 1% / 35% preset</button><button type="submit">Apply settings</button></div><p id="settingsStatusB61" role="status"></p><table id="settingsPreviewB61" aria-label="Speed preview by Swift level"></table>';
   const modal=document.createElement('div');modal.id='mainSettingsB61';modal.className='modal hidden';modal.setAttribute('role','dialog');modal.setAttribute('aria-label','Game settings');modal.innerHTML='<div class="card"><h2>Game settings</h2><div id="mainSettingsContentB61"></div><button type="button" class="primary" id="closeSettingsB61">Back to main screen</button></div>';$("app").appendChild(modal);$("mainSettingsContentB61").appendChild(form);
   const main=document.createElement('button');main.id='openSettingsB61';main.type='button';main.className='primary';main.textContent='Game settings · Y / Triangle';$("begin").after(main);main.addEventListener('click',openMainSettingsB61);$("closeSettingsB61").addEventListener('click',closeMainSettingsB61);
   const card=$("pipPauseB39").querySelector('.b39-card'),body=card.querySelector('.b39-body'),content=document.createElement('div');content.className='b61PauseContent';content.innerHTML='<div id="buildPaneB61" role="tabpanel" aria-labelledby="buildTabB61"></div><div id="settingsPaneB61" role="tabpanel" aria-labelledby="settingsTabB61" hidden></div>';body.before(content);$("buildPaneB61").appendChild(body);

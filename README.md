@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## Pip starting speed 170
+
+Pip's default flight speed drops from 285 to 170, a bit slower than you (205), so Swift upgrades and ranch Sky Laps training matter. Each Swift level still adds +34. Saves still on the old 285 default follow the new one; a custom speed set in Settings is kept.
+
 ## B111 follow-up: Thicker overgrowth
 
 Each drill site now has a second, outer ring of 14 trees and shrubs (22 in all), offset from the inner ring so you have to cut a path through both. Site names draw on top of the growth, and you start a little north of the plaza.

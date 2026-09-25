@@ -4,7 +4,7 @@ function runSettingsChecksB61(){
   const preset={...B61_DEFAULTS,pipBase:140,swiftFlat:10,swiftMode:'alternating',fullSpeed:35};
   const test=(name,fn)=>{try{applySettingsB61(B61_DEFAULTS);transportFixtureB60();fn();results.push({name,ok:true})}catch(e){results.push({name,ok:false,error:e.message})}};
   test('Default settings preserve B60 movement at every Swift level',()=>{
-    for(let lv=0;lv<=8;lv++){S.pipSpeedLv=lv;applyPipPower();assert(S.pipMoveSpeed===285+34*lv,'Swift default changed')}
+    for(let lv=0;lv<=8;lv++){S.pipSpeedLv=lv;applyPipPower();assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase+34*lv,'Swift default changed')}
     assert(playerSpeedB61()===205,'player default changed');
   });
   test('Alternating Swift compounds the proposed sequence through level 8',()=>{
@@ -43,15 +43,15 @@ function runSettingsChecksB61(){
   });
   test('Presets remain drafts until Apply, persist, and survive a new run',()=>{
     S.run=false;openMainSettingsB61();$('settingsPresetB61').click();
-    assert(settingsB61.pipBase===285&&$('setting-pipBase').value==='140','preset applied without confirmation');
+    assert(settingsB61.pipBase===B61_DEFAULTS.pipBase&&$('setting-pipBase').value==='140','preset applied without confirmation');
     $('settingsFormB61').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
     assert(loadSettingsB61().pipBase===140&&settingsB61.swiftMode==='alternating','Apply did not save');
     closeMainSettingsB61();reset();assert(S.pipMoveSpeed===140&&settingsB61.fullSpeed===35,'reset lost tuning');
     openMainSettingsB61();$('settingsDefaultsB61').click();assert(settingsB61.pipBase===140,'defaults applied prematurely');
-    $('settingsFormB61').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));assert(S.pipMoveSpeed===285,'defaults failed');closeMainSettingsB61();
+    $('settingsFormB61').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase,'defaults failed');closeMainSettingsB61();
   });
   test('Corrupt or out-of-range saved tuning safely falls back to B60',()=>{
-    for(const data of ['{bad',JSON.stringify({...preset,fullSpeed:300}),'null']){localStorage.setItem(B61_SETTINGS_KEY,data);assert(loadSettingsB61().pipBase===285,'corrupt storage accepted')}
+    for(const data of ['{bad',JSON.stringify({...preset,fullSpeed:300}),'null']){localStorage.setItem(B61_SETTINGS_KEY,data);assert(loadSettingsB61().pipBase===B61_DEFAULTS.pipBase,'corrupt storage accepted')}
   });
   test('Settings keyboard input stays paused; tab arrows and Escape remain usable',()=>{
     openAscendedPauseB39();$('buildTabB61').dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));
@@ -67,8 +67,8 @@ function runSettingsChecksB61(){
     const press=i=>{pad.buttons[i]={pressed:true,value:1};updateGamepadInput()},release=i=>{pad.buttons[i]={pressed:false,value:0};updateGamepadInput()};
     try{
       S.run=false;$('start').classList.remove('hidden');updateGamepadInput();press(3);release(3);assert(mainSettingsOpenB61,'Y did not open settings');
-      press(15);release(15);assert($('setting-pipBase').value==='286','D-pad did not adjust');
-      $('settingsFormB61').querySelector('[type=submit]').focus();press(0);release(0);assert(settingsB61.pipBase===286&&!S.run,'A failed Apply or started game');
+      press(15);release(15);assert($('setting-pipBase').value===String(B61_DEFAULTS.pipBase+1),'D-pad did not adjust');
+      $('settingsFormB61').querySelector('[type=submit]').focus();press(0);release(0);assert(settingsB61.pipBase===B61_DEFAULTS.pipBase+1&&!S.run,'A failed Apply or started game');
       press(1);release(1);assert(!mainSettingsOpenB61&&!S.run,'B started gameplay');
       $('start').classList.add('hidden');S.run=true;press(9);release(9);assert(b39Pause.open,'Start did not pause');
       press(15);release(15);assert(!$('settingsPaneB61').hidden,'controller tab failed');
@@ -109,6 +109,11 @@ function runSettingsChecksB61(){
     const before=JSON.stringify([P.pipX,P.pipY,S.t,cargoWeightB60(),pipBondB51(),carrySpeedB60()]);stepB59(.5);
     assert(JSON.stringify([P.pipX,P.pipY,S.t,cargoWeightB60(),pipBondB51(),carrySpeedB60()])===before,'pause advanced lonely trip');
     assert($('b39CoreList').textContent.includes('another 10% slower')&&$('lonelyNoteB62').textContent.includes('after cargo slowdown'),'inspection missing penalty');closeAscendedPauseB39();
+  });
+  test('Pip starts at 170 and saves holding the old 285 default follow it; custom speeds stay',()=>{
+    assert(B61_DEFAULTS.pipBase===170,'default not lowered');
+    localStorage.setItem(B61_SETTINGS_KEY,JSON.stringify({...B61_DEFAULTS,pipBase:285}));assert(loadSettingsB61().pipBase===170,'old default kept');
+    localStorage.setItem(B61_SETTINGS_KEY,JSON.stringify({...B61_DEFAULTS,pipBase:300}));assert(loadSettingsB61().pipBase===300,'custom speed overwritten');
   });
   applySettingsB61(saved);if(stored===null)localStorage.removeItem(B61_SETTINGS_KEY);else localStorage.setItem(B61_SETTINGS_KEY,stored);
   reset();S.audioEnabled=false;return results;

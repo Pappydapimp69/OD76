@@ -22,9 +22,9 @@ function runTransportChecksB60(){
   });
   test("Heart Sense grows slower after 10, caps range, and never multiplies Swift",()=>{
     transportFixtureB60();const values=[];
-    for(const lv of [0,9,10,11,20,100]){S.pipRangeLv=lv;applyPipPower();values.push(S.pipDetectRange);assert(S.pipMoveSpeed===285,"Sense changes flight speed");assert(S.pipCarryCapacity===10+lv*2,"capacity progression");}
+    for(const lv of [0,9,10,11,20,100]){S.pipRangeLv=lv;applyPipPower();values.push(S.pipDetectRange);assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase,"Sense changes flight speed");assert(S.pipCarryCapacity===10+lv*2,"capacity progression");}
     assert(values.join() === [82,154,162,164,182,200].join(),"wrong range curve");
-    S.pipSpeedLv=2;applyPipPower();assert(S.pipMoveSpeed===353,"Swift altered by Sense");
+    S.pipSpeedLv=2;applyPipPower();assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase+68,"Swift altered by Sense");
   });
   test("Remote pickups become cargo without crediting currency or lifetime totals",()=>{
     transportFixtureB60();const h=heartFixtureB60();heartBits=[h];updatePipCompanion(.02);
@@ -49,9 +49,9 @@ function runTransportChecksB60(){
   });
   test("Cargo weight smoothly halves flight speed, including overflow",()=>{
     transportFixtureB60();const state=transportB60();
-    for(const [n,factor] of [[0,1],[1,.85],[3,.55],[4,.5]]){state.cargo=Array.from({length:n},()=>heartFixtureB60());assert(Math.abs(carrySpeedB60()-285*factor)<1e-8,"incorrect loaded speed");}
-    S.pipSpeedLv=2;applyPipPower();assert(carrySpeedB60()===353/2,"Swift not applied to loaded flight");
-    S.pipRangeLv=1;applyPipPower();state.cargo.length=3;assert(carrySpeedB60()>353*.55,"capacity does not reduce burden");
+    for(const [n,factor] of [[0,1],[1,.85],[3,.55],[4,.5]]){state.cargo=Array.from({length:n},()=>heartFixtureB60());assert(Math.abs(carrySpeedB60()-B61_DEFAULTS.pipBase*factor)<1e-8,"incorrect loaded speed");}
+    S.pipSpeedLv=2;applyPipPower();assert(carrySpeedB60()===(B61_DEFAULTS.pipBase+68)/2,"Swift not applied to loaded flight");
+    S.pipRangeLv=1;applyPipPower();state.cargo.length=3;assert(carrySpeedB60()>(B61_DEFAULTS.pipBase+68)*.55,"capacity does not reduce burden");
   });
   test("Meeting a loaded Pip banks every heart exactly once and restores bond",()=>{
     transportFixtureB60();heartBits=[heartFixtureB60()];gatherHeartB60(heartBits[0]);P.x=130;S.b51PipBond=0;
@@ -89,7 +89,7 @@ function runTransportChecksB60(){
   test("Rally returns weighted cargo without teleporting or discarding it",()=>{
     transportFixtureB60();S.pipLove=2;S.b51PipBond=.1;transportB60().cargo=Array.from({length:4},()=>heartFixtureB60());
     assert(requestRallyB59(),"Rally not started");assert(P.pipX===150&&S.heartCurrency===0,"Rally teleported cargo");
-    stepB59(1);assert(S.b59.stats.rally===1&&S.heartCurrency===4&&cargoWeightB60()===0,"Rally cargo delivery failed");
+    stepB59(2);assert(S.b59.stats.rally===1&&S.heartCurrency===4&&cargoWeightB60()===0,"Rally cargo delivery failed");
   });
   test("Ascension respects capacity and delivers through the same cargo route",()=>{
     transportFixtureB60();S.overType="pip";S.over=5;S.overLevels.pip=1;

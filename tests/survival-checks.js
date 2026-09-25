@@ -54,7 +54,7 @@ function runSurvivalChecksB63(){
       transportFixtureB60();S.pipCompassion=lv;S.pipGuardLv=2;applyPipPower();P.pipX=10000;S.pipState='return';
       assert(heartSecondsB63()===1+lv*.5&&near(S.shieldRegenDelay,3.6),'duration or Guard delay wrong');
       stepB59(.5);assert(near(pipBondB51(),1-.5/(1+lv*.5)),'actual decay ignored Compassion');
-      stepB59(1+lv*.5);assert(pipBondB51()===0&&near(carrySpeedB60(),285*.9),'empty meter penalty missing');
+      stepB59(1+lv*.5);assert(pipBondB51()===0&&near(carrySpeedB60(),B61_DEFAULTS.pipBase*.9),'empty meter penalty missing');
     }
   });
   test('Shield loss immediately drops cargo without banking and starts a physical emergency return',()=>{
@@ -80,7 +80,7 @@ function runSurvivalChecksB63(){
     updatePipCombat(.02);assert(shots.length===0,'granted an unlearned attack');
     S.pipBossPowers.starshot=1;updatePipCombat(.02);
     assert(shots.some(s=>s.source==='pip'&&near(s.power,.86)),'return attack missing or bond-scaled');
-    assert(pipBondB51()===0&&!pipWithPlayer()&&near(carrySpeedB60(),256.5),'support restored bond or removed loneliness');
+    assert(pipBondB51()===0&&!pipWithPlayer()&&near(carrySpeedB60(),B61_DEFAULTS.pipBase*.9),'support restored bond or removed loneliness');
   });
   test('Unlearned Support and two healthy shields preserve cargo gathering',()=>{
     for(const [support,shields] of [[0,1],[1,2]]){
