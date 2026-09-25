@@ -1,5 +1,5 @@
 {
-  "name": "od75",
+  "name": "od76",
   "private": true,
   "scripts": {
     "build": "node scripts/build.mjs",

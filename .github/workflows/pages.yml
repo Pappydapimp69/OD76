@@ -1,5 +1,5 @@
-name: Deploy OD75 to Pages
-run-name: OD75 B98 ${{ github.sha }}
+name: Deploy OD76 to Pages
+run-name: OD76 B98 ${{ github.sha }}
 
 on:
   push:
@@ -238,9 +238,9 @@ jobs:
           assert s.rfind('releaseStormB93=function()') > s.index('// B98 Thunderstorm clouds cost HEAT')
           assert s.rfind('chooseSpawn=function()') > s.index('// B82 Stages seven')
           PY
-          sed -i 's/OD75-2026-08-12-B21-STARDRIVE/OD75-2026-09-25-B98-STORM-CLOUD-COST/g' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-25-B98-STORM-CLOUD-COST/g' _site/index.html
           sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B98-STORM-CLOUD-COST/g' _site/index.html
-          grep -Fq 'OD75-2026-09-25-B98-STORM-CLOUD-COST' _site/index.html
+          grep -Fq 'OD76-2026-09-25-B98-STORM-CLOUD-COST' _site/index.html
           grep -Fq 'game.js?v=B98-STORM-CLOUD-COST' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages

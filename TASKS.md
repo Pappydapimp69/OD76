@@ -1,11 +1,11 @@
-# OD75 Active State
+# OD76 Active State
 
 ## Ready
 
 - Brain installed and linked in full mode.
 - Brain stance set to brief.
 - `AGENTS.md` and `HANDOFF.md` cover both Codex and Claude Code; work moved to Claude Code at B84.
-- Canonical OD75 `main` imported at B74 commit `4ff9a11`.
+- Canonical OD76 `main` imported at B74 commit `4ff9a11`.
 - B75 Immediate Launch published and verified at `457fb14`.
 - Fifteen additional ZaneGPT loops are publicly verified through B91 Wave Closeout.
 - B93 Thunderstorm Charge is publicly verified as a direct user-requested build.
@@ -21,7 +21,7 @@
 
 1. Continue the authorized **50 additional ZaneGPT build loops**. `docs/AUTONOMOUS-BUILDS.md` is the progress authority; 15 of 50 loops are verified.
 2. Select loop 16 / B99 from the B98 baseline. No gameplay implementation is currently unfinished.
-3. The continuation heartbeat is `od75-finish-50-zanegpt-build-loops`; pause it after 50 verified loops. Do not add controls, persistent affection scores or a live model without further design discussion.
+3. The continuation heartbeat is `od76-finish-50-zanegpt-build-loops`; pause it after 50 verified loops. Do not add controls, persistent affection scores or a live model without further design discussion.
 
 ## Constraints
 

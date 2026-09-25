@@ -1,6 +1,6 @@
 # Handoff
 
-You are taking over OD75. It tracks `https://github.com/Pappydapimp69/OD75`
+You are taking over OD76. It tracks `https://github.com/Pappydapimp69/OD76`
 on `main`; GitHub Pages deploys every push to `main`.
 
 Read first:
@@ -13,7 +13,7 @@ Then run:
 
 ```
 brain status
-brain query OD75
+brain query OD76
 ```
 
 Use Brain through the CLI only. Do not read Brain node repos directly.
@@ -49,7 +49,7 @@ Node 22 or newer. `npm ci` installs the one dependency (jsdom).
 
 **Codex / Windows** — how B77 to B83 were built.
 
-- Set `NODE_PATH=C:/Users/Kompooter/Documents/OD75/node_modules` for the
+- Set `NODE_PATH=C:/Users/Kompooter/Documents/OD76/node_modules` for the
   existing JSDOM dependency.
 - Browser checks used CUA against the same `/qa` fixture buttons.
 

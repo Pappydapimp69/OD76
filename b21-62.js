@@ -1,5 +1,5 @@
 // B74 Heartfield integration: Pip routing/mining, batched delivery and live tuning.
-const B74_SETTINGS_KEY='od75_heartfield_settings_v1';
+const B74_SETTINGS_KEY='od76_heartfield_settings_v1';
 const B74_DEFAULTS=Object.freeze({radius:220,settle:2.25,cap:8,mine:.18});
 const B74_PRESETS={
   sparse:{radius:160,settle:3,cap:6,mine:.22},

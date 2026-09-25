@@ -32,7 +32,7 @@ Do not summarize the whole project unless explicitly asked.
 
 ## Current Project
 
-`OD75` is its own workspace and tracks `Pappydapimp69/OD75`. It was built
+`OD76` is its own workspace and tracks `Pappydapimp69/OD76`. It was built
 through Codex through B83 and is worked on in Claude Code from B84; the build
 rules below are the same either way. `HANDOFF.md` carries the toolchain each
 environment needs.

@@ -11,7 +11,7 @@ nowhere in the 74 modules before this build.
 This is `mirage#E10`, recorded first-hand from the MIRAGE build and retrieved
 by `brain query`: *"`devicePixelRatio` cached at construction goes stale on
 scaling/zoom/monitor changes … re-read DPR on resize plus a re-arming
-`(resolution: Ndppx)` query."* OD75 had the resize half and not the query.
+`(resolution: Ndppx)` query."* OD76 had the resize half and not the query.
 
 `b21-75.js` arms `matchMedia('(resolution: <live ratio>dppx)')`, rebuilds the
 backing store when it stops matching, and re-arms at the new ratio. The query

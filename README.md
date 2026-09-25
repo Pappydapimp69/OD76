@@ -1,6 +1,6 @@
 # OVERDRIVE 75
 
-[Play OD75](https://pappydapimp69.github.io/OD75/)
+[Play OD76](https://pappydapimp69.github.io/OD76/)
 
 ## B98: Storm cloud cost
 

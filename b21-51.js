@@ -1,5 +1,5 @@
 // B61 Saved movement tuning, shared between main-menu settings and the pause tab.
-const B61_SETTINGS_KEY="od75_movement_settings_v1";
+const B61_SETTINGS_KEY="od76_movement_settings_v1";
 const B61_DEFAULTS=Object.freeze({pipBase:285,swiftFlat:34,swiftPercent:1,swiftMode:"flat",fullSpeed:50,playerSpeed:205});
 const B61_FIELDS=[
   ["pipBase","Pip starting speed",20,1000,1,"Pixels per second before Swift upgrades."],

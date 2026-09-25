@@ -9,7 +9,7 @@ new vm.Script(source, { filename: 'game.js' });
 const version = 'B98-STORM-CLOUD-COST';
 const date = '2026-09-25';
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
-  .replaceAll('OD75-2026-08-12-B21-STARDRIVE', `OD75-${date}-${version}`)
+  .replaceAll('OD76-2026-08-12-B21-STARDRIVE', `OD76-${date}-${version}`)
   .replaceAll('game.js?v=B21-STARDRIVE', `game.js?v=${version}`);
 fs.mkdirSync(path.join(root, '_site'), { recursive: true });
 fs.writeFileSync(path.join(root, '_site/game.js'), source);

@@ -1,8 +1,8 @@
-# OD75 Project Map
+# OD76 Project Map
 
 ## Purpose
 
-Standalone OD75 game workspace with Brain/GitHub workflow intact and compact agent context. Built through Codex to B83, worked on in Claude Code from B84.
+Standalone OD76 game workspace with Brain/GitHub workflow intact and compact agent context. Built through Codex to B83, worked on in Claude Code from B84.
 
 ## Source Map
 
