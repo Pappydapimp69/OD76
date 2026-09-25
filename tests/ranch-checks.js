@@ -287,6 +287,41 @@ function runRanchChecksB99(){
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({rank:9,rankUnlocked:-3}));let r=loadRanchB99();assert(r.rank===0&&r.rankUnlocked===0,'bad rank');
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({rank:4,rankUnlocked:2}));r=loadRanchB99();assert(r.rank===2&&r.rankUnlocked===2,'rank above unlocked');
   });
+  const standBy=o=>{const c=stationB100(o.site),d=hyp(o.x-c.x,o.y-c.y);ranchWorldB100.px=o.x+(o.x-c.x)/d*(o.r+18);ranchWorldB100.py=o.y+(o.y-c.y)/d*(o.r+18)};
+  const pressX=()=>{updateRanchB100(.016);ranchWorldB100.b109XTap=true;updateRanchB100(.016)};
+  const runFor=sec=>{for(let i=0;i<Math.ceil(sec/.05);i++)updateRanchB100(.05)};
+  test('B109 without the tool only A shows; with it X starts a 3-second chop that animates Pip and the tree',()=>{
+    fresh({hearts:200,fatigue:0});openRanchB99();const tree=B106_OBSTACLES.find(o=>o.tree);standBy(tree);
+    assert(!pipActionForB109(nearestInteractB100())&&nearestInteractB100().label==='Clear','X offered without an axe');
+    pressX();assert(!ranchWorldB100.b109Action&&obstacleStandingB106(tree),'X chopped without an axe');
+    ranchB99.tools.axe=true;updateRanchB100(.016);assert(nearestInteractB100().label==='Info'&&$('ranchPipBtnB109').classList.contains('on')&&$('ranchPipBtnB109').textContent==='Chop','X prompt missing');
+    pressX();const a=ranchWorldB100.b109Action;assert(a&&a.kind==='chop'&&a.dur===3,'chop did not start');
+    runFor(B109_APPROACH_MAX+.1);assert(a.phase==='work'&&obstacleStandingB106(tree)&&ranchB99.fatigue===0,'finished before working');
+    const leavesBefore=ranchWorldB100.b109Leaves.length;runFor(1);assert(ranchWorldB100.b109Leaves.length>leavesBefore,'no chips flying');
+    draw();assert(!nearestInteractB100(),'other interactions open mid-chop');
+    runFor(2.1);assert(!ranchWorldB100.b109Action&&!obstacleStandingB106(tree)&&ranchB99.fatigue===B106_TOOL_FATIGUE.chop,'chop did not finish at 3s');
+    assert(ranchWorldB100.b109Fx.some(f=>f.kind==='fall'),'tree did not topple');draw();
+  });
+  test('B109 A still opens the info sheet near a job, and its option plays the animation',()=>{
+    fresh({fatigue:0,tools:{axe:false,sickle:true,hoe:false,can:false}});openRanchB99();const shrub=B106_OBSTACLES.find(o=>!o.tree);standBy(shrub);press();
+    assert(ranchWorldB100.sheet&&$('ranchSheetB100').textContent.includes('Shrub'),'A did not open info');
+    const i=ranchWorldB100.sheet.options.findIndex(o=>o.label.startsWith('Let Pip'));focusSheetB100(i);press();
+    assert(ranchWorldB100.b109Action?.kind==='cut'&&obstacleStandingB106(shrub),'sheet option skipped the animation');runFor(B109_APPROACH_MAX+2.2);assert(!obstacleStandingB106(shrub),'cut never finished');
+  });
+  test('B109 X tills, waters and harvests garden plots; tired Pips only get A',()=>{
+    fresh({fatigue:0,areas:{garden:true,kitchen:false,orchard:false},tools:{hoe:true,can:true,axe:false,sickle:false}});openRanchB99();
+    const q=B105_PLOT_POS[0];ranchWorldB100.px=q.x;ranchWorldB100.py=q.y;updateRanchB100(.016);
+    assert(pipActionForB109(nearestInteractB100())?.kind==='till','till not offered');pressX();runFor(B109_APPROACH_MAX+2.1);assert(plotB105(0).tilled,'till failed');
+    addItemB104('seed_carrot');plantB105(0,'carrot');updateRanchB100(.016);assert(pipActionForB109(nearestInteractB100())?.kind==='water','water not offered');
+    ranchB99.fatigue=B99_TIRED;assert(!pipActionForB109(nearestInteractB100()),'tired Pip offered water');ranchB99.fatigue=0;
+    pressX();runFor(B109_APPROACH_MAX+1.3);assert(plotB105(0).watered,'water failed');
+    plotB105(0).stage=2;updateRanchB100(.016);assert(pipActionForB109(nearestInteractB100())?.kind==='harvest','harvest not offered');pressX();runFor(B109_APPROACH_MAX+1.1);assert(itemCountB104('carrot')===2,'harvest failed');
+  });
+  test('B109 the keyboard X key and leaving mid-job both behave',()=>{
+    fresh({fatigue:0,tools:{axe:true,sickle:true,hoe:false,can:false}});openRanchB99();const tree=B106_OBSTACLES.find(o=>o.tree);standBy(tree);updateRanchB100(.016);
+    window.dispatchEvent(new KeyboardEvent('keydown',{key:'x'}));updateRanchB100(.016);assert(ranchWorldB100.b109Action,'X key ignored');
+    reset();assert(!ranchWorldB100.b109Action&&!obstacleStandingB106(tree),'leaving lost the job');
+  });
   fresh();reset();
   return out;
 }

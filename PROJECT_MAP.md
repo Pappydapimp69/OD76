@@ -57,6 +57,8 @@ B107 adds `b21-95.js`: a live Heart Refinery status line on the stage-end gate.
 
 B108 adds `b21-96.js`: the stage-driven difficulty curve, bounded heart nudge and arena ranks. It supersedes B63's heart tiers and the stage-11 legacy formulas.
 
+B109 adds `b21-97.js`: X-button Pip actions with timed animations; A stays for info.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B109: Pip actions on X
+
+On the ranch, **A** is for information and menus, and **X** tells Pip to do the work. Stand by a tree with an axe and the prompt shows **X · Chop**; without one, only **A** shows and explains what you need. Pip walks over and works it out on screen: chopping takes 3 seconds of swings, with the tree jolting, chips flying and the tree toppling; cutting shrubs, tilling, watering and harvesting have their own shorter animations. Keyboard X, gamepad X/Square, or the green on-screen button on touch.
+
 ## B108: Stage curve and arena ranks
 
 Difficulty after stage 3 now follows the stage number instead of hearts collected: it climbs steadily through stage 10 (tier ~2.3 to 10), then keeps rising more slowly (tier ~11 at stage 11, ~17 at stage 20). Hearts collected since stage 4 only nudge it, by at most 15%, so greedy runs feel hotter without hitting a wall. Stages 1–3 are unchanged at rank E.

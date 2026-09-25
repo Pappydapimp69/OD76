@@ -24,7 +24,8 @@
 - B106 Overgrowth: obstacle rings around drill sites, Pip-only tool work with fatigue, arena Heart Stone drops.
 - B107 Gate refinery timer: live refinery status on the stage-end gate.
 - B108 Stage curve and ranks: stage-driven difficulty curve (sublinear past 10), ≤15% heart nudge, arena ranks E–S with reward multipliers.
-- 229 automated checks pass across all 96 ordered modules.
+- B109 Pip actions: X runs Pip jobs (chop 3s, cut, till, water, harvest) with animation; A is info.
+- 233 automated checks pass across all 97 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next
