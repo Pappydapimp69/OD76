@@ -322,6 +322,17 @@ function runRanchChecksB99(){
     window.dispatchEvent(new KeyboardEvent('keydown',{key:'x'}));updateRanchB100(.016);assert(ranchWorldB100.b109Action,'X key ignored');
     reset();assert(!ranchWorldB100.b109Action&&!obstacleStandingB106(tree),'leaving lost the job');
   });
+  test('B110 the controller Select button opens and closes the bag',()=>{
+    const orig=navigator.getGamepads,pad={connected:true,index:0,axes:[0,0],buttons:Array.from({length:17},()=>({pressed:false,value:0}))};
+    Object.defineProperty(navigator,'getGamepads',{configurable:true,value:()=>[pad]});
+    try{
+      fresh();addItemB104('pellets',2);openRanchB99();updateRanchB100(.016);assert($('ranchBagB104').textContent==='🎒 Bag · Select','select hint missing');
+      pad.buttons[8].pressed=true;updateRanchB100(.016);assert(ranchWorldB100.sheet?.bag&&$('ranchSheetB100').textContent.includes('Pip Pellets ×2'),'select did not open the bag');
+      updateRanchB100(.016);assert(ranchWorldB100.sheet?.bag,'held select toggled again');
+      pad.buttons[8].pressed=false;updateRanchB100(.016);pad.buttons[8].pressed=true;updateRanchB100(.016);assert(!ranchWorldB100.sheet,'select did not close the bag');
+      pad.buttons[8].pressed=false;updateRanchB100(.016);stallSheetB104();pad.buttons[8].pressed=true;updateRanchB100(.016);assert(ranchWorldB100.sheet&&!ranchWorldB100.sheet.bag,'select replaced another menu');
+    }finally{if(orig)Object.defineProperty(navigator,'getGamepads',{configurable:true,value:orig});else delete navigator.getGamepads;closeSheetB100()}
+  });
   fresh();reset();
   return out;
 }

@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B110: Bag on Select
+
+On a controller, the Select / View / Share button opens the ranch bag and closes it again. The Bag button reads "Bag · Select" while a controller is connected.
+
 ## B109: Pip actions on X
 
 On the ranch, **A** is for information and menus, and **X** tells Pip to do the work. Stand by a tree with an axe and the prompt shows **X · Chop**; without one, only **A** shows and explains what you need. Pip walks over and works it out on screen: chopping takes 3 seconds of swings, with the tree jolting, chips flying and the tree toppling; cutting shrubs, tilling, watering and harvesting have their own shorter animations. Keyboard X, gamepad X/Square, or the green on-screen button on touch.

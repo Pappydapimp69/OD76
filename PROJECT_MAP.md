@@ -59,6 +59,8 @@ B108 adds `b21-96.js`: the stage-driven difficulty curve, bounded heart nudge an
 
 B109 adds `b21-97.js`: X-button Pip actions with timed animations; A stays for info.
 
+B110 adds `b21-98.js`: controller Select toggles the ranch bag.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.
