@@ -61,7 +61,9 @@ Direct build after B100: B101 Unspent hearts, a fix in `b21-88.js`. User-request
 
 Direct build after B101: B102 Heart Refinery in `b21-90.js`. User-requested; does not increment the loop count.
 
-Next: select loop 16 / B103 from the B102 baseline. No gameplay implementation is currently unfinished.
+Direct build after B102: B103 Ranch music in `b21-91.js`. User-requested; does not increment the loop count.
+
+Next: select loop 16 / B104 from the B103 baseline. No gameplay implementation is currently unfinished.
 
 Validation notes: use `rg -uuu` with an explicit path to find ignored numbered modules. On Windows/Codex set `NODE_PATH=C:/Users/Kompooter/Documents/OD76/node_modules` for the existing JSDOM dependency; on Linux `npm ci` needs no override. `HANDOFF.md` carries the full per-environment toolchain. Check the entire test outcome, not only the final passing lines. `scripts/serve.mjs` serves `_site` at port 8176 and local fixtures at `/qa`; inspect whether a server is already running before starting one. Update build version, test module count/order, both workflow module lists and stamp/cache key together. Browser tests use CUA and production-path fixture buttons, never application-state injection from evaluate.
 

@@ -45,6 +45,8 @@ B100 adds `b21-89.js`: the ranch becomes a walkable pastel world with stations, 
 
 B102 adds `b21-90.js`: the Heart Refinery (real-time hearts → Heart Stones, star dust → Star Stones), stone-priced drills, and refinery/station upgrades.
 
+B103 adds `b21-91.js`: the ranch's own soft music loop on the shared audio engine.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

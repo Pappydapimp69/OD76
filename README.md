@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B103: Ranch music
+
+The ranch has its own soft, slow soundtrack: a 66 bpm loop in F major with warm pads, a gentle music-box arpeggio, a light bass and a simple melody every other pass. It plays on its own clock with a warmer, slightly echoey mix, and hands back to the arena music when a battle test starts. Mute still silences it. See [the B103 blueprint](docs/B103-ranch-music.md).
+
 ## B102: Heart Refinery
 
 A Heart Refinery now stands on the ranch. Load hearts from battle tests: every 50 hearts refine into one Heart Stone on the real clock, 15 minutes each at refinery Lv 1 down to 10 seconds at Lv 10, even while you play the arena or are away. Each refining task has a 10% chance to add star dust; fuse 5 star dust into a Star Stone. Collect finished stones from the tray. Drills now cost Heart Stones. Star Stones upgrade the refinery (faster refining) and drill stations (+2 points per drill and +1 ranch cap per level, up to Lv 3). See [the B102 blueprint](docs/B102-heart-refinery.md).

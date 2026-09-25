@@ -142,6 +142,15 @@ function runRanchChecksB99(){
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({stones:-3,dust:'x',starStones:2.7,refinery:{level:40,queue:-1,trayStones:'q'},stations:{speed:9,power:-2}}));
     const r=loadRanchB99();assert(r.stones===0&&r.dust===0&&r.starStones===2&&r.refinery.level===10&&r.refinery.queue===0&&r.refinery.trayStones===0&&r.stations.speed===3&&r.stations.power===0,'bad economy accepted');
   });
+  test('B103 the ranch plays its own soft loop at 66 bpm and the arena loop elsewhere',()=>{
+    const calls=[],fake=Object.create(PipAudioEngine.prototype);fake.ctx={currentTime:10};fake.music={};
+    fake.voice=(f,t,d,v)=>calls.push({t,v});fake.fmBell=(f,t,d,v)=>calls.push({t,v});
+    openRanchB99();fake.b103Next=NaN;for(let i=0;i<60;i++)fake.scheduleStep(10+i*.1);
+    assert(calls.length>20&&calls.every(c=>c.v<=.03),'ranch loop missing or too loud');
+    const n=fake.b103Eighth,span=fake.b103Next-10.06;assert(Math.abs(span-n*B103_EIGHTH)<1e-6&&Math.abs(B103_EIGHTH-60/66/2)<1e-9,'ranch tempo wrong');
+    S.audioEnabled=false;const before=calls.length;fake.scheduleStep(20);assert(calls.length===before,'muted ranch still played');S.audioEnabled=true;
+    reset();fake.scheduleStep(21);assert(!Number.isFinite(fake.b103Next),'ranch loop did not reset after leaving');
+  });
   fresh();reset();
   return out;
 }
