@@ -1,0 +1,256 @@
+name: Deploy OD75 to Pages
+run-name: OD75 B98 ${{ github.sha }}
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node for gameplay checks
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Verify complete gameplay state and input routes
+        run: |
+          npm ci --ignore-scripts --no-fund --no-audit
+          npm test
+      - name: Verify B98 storm cloud cost and previous build contracts
+        run: |
+          test -f index.html
+          for f in b21-{01..87}.js; do test -f "$f"; node --check "$f"; done
+          ! grep -q 'payload-' index.html
+          ! grep -q 'DecompressionStream' index.html
+          grep -Fq 'const B50_BOSS_TELEGRAPH_START=.55' b21-37.js
+          grep -Fq 'const B51_PIP_BOND_SECONDS=1.0' b21-38.js
+          grep -Fq 'drawPipPresenceB49=function(){}' b21-38.js
+          grep -Fq 'S.b51PipBond=1' b21-38.js
+          grep -Fq 'S.b51PipBondVisual' b21-38.js
+          grep -Fq 'S.weaponPower=1+(saved.weaponPower-1)*b' b21-38.js
+          grep -Fq 'shots[i].power*=b' b21-38.js
+          grep -Fq 'function drawPipBondHeartB51()' b21-38.js
+          grep -Fq 'heartPathB51' b21-38.js
+          grep -Fq '!S?.b52HeartOnlyBond' b21-08.js
+          grep -Fq 'function enableHeartOnlyBondB52()' b21-39.js
+          grep -Fq 'tip.textContent.startsWith("PIP COLLECTING")' b21-39.js
+          ! grep -q 'BONUSES OFF' b21-39.js
+          grep -Fq 'function ensureSoundLabWalletB53()' b21-40.js
+          grep -Fq 'function explainSoundLabBlockB53(kind,id,index)' b21-40.js
+          grep -Fq 'btn.disabled=false' b21-40.js
+          grep -Fq 'beginSoundLabHoldB45=function(btn,e)' b21-40.js
+          grep -Fq 'renderAudioChoicesB41=function()' b21-40.js
+          ! grep -q 'PAIRS ONLY' b21-40.js
+          grep -Fq 'function startKeyboardSoundLabHoldB54(e)' b21-41.js
+          grep -Fq 'beginSoundLabHoldB45(btn,syntheticSoundLabHoldEventB54("keyboard"))' b21-41.js
+          grep -Fq 'pressGamepadMenuA_B35=function()' b21-41.js
+          grep -Fq 'soundLabHold.pointerId==="gamepad"' b21-41.js
+          grep -Fq 'const B55_CHARGER_COMMIT_WINDOW=.22' b21-42.js
+          grep -Fq 'function lockChargerLaneB55(e)' b21-42.js
+          grep -Fq 'e.vx=Math.cos(a)*340' b21-42.js
+          grep -Fq 'function drawCommittedChargerLanesB55()' b21-42.js
+          grep -Fq 'drawThreatTelegraphsB50=function()' b21-42.js
+          grep -Fq 'const B56_BOND_CUE_SECONDS=.34' b21-43.js
+          grep -Fq 'function initBondCueB56()' b21-43.js
+          grep -Fq 'S.b56BondCueKind="empty"' b21-43.js
+          grep -Fq 'S.b56BondCueKind="full"' b21-43.js
+          grep -Fq 'function drawBondEndpointPulseB56()' b21-43.js
+          grep -Fq 'function installStickySoundLabWalletB57()' b21-44.js
+          grep -Fq 'position:sticky' b21-44.js
+          grep -Fq 'wallet.setAttribute("role","status")' b21-44.js
+          grep -Fq 'const B58_ASCENDED_BASE_SECONDS=8' b21-45.js
+          grep -Fq 'if(S?.overType==="pip"&&S.over>0)return true' b21-45.js
+          grep -Fq 'if(S.b58AscTime<=0){S.heat=0;stopOverdriveB38(true)}' b21-45.js
+          grep -Fq 'function mixPairingCopyB58(layer)' b21-45.js
+          grep -Fq 'BOOSTED BY' b21-45.js
+          grep -Fq 'function installLaunchScreenB75()' b21-64.js
+      - name: Assemble direct site
+        run: |
+          rm -rf _site; mkdir _site
+          cp index.html _site/
+          cat b21-{01..87}.js > _site/game.js
+          node --check _site/game.js
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('_site/game.js').read_text(encoding='utf-8')
+          for marker in [
+              'const B50_BOSS_TELEGRAPH_START=.55',
+              'const B51_PIP_BOND_SECONDS=1.0',
+              'drawPipPresenceB49=function(){}',
+              'function pipBondB51()',
+              'function drawPipBondHeartB51()',
+              '!S?.b52HeartOnlyBond',
+              'function enableHeartOnlyBondB52()',
+              'tip.textContent.startsWith("PIP COLLECTING")',
+              'function ensureSoundLabWalletB53()',
+              'function explainSoundLabBlockB53(kind,id,index)',
+              'beginSoundLabHoldB45=function(btn,e)',
+              'renderAudioChoicesB41=function()',
+              'function startKeyboardSoundLabHoldB54(e)',
+              'pressGamepadMenuA_B35=function()',
+              'const B55_CHARGER_COMMIT_WINDOW=.22',
+              'function drawCommittedChargerLanesB55()',
+              'const B56_BOND_CUE_SECONDS=.34',
+              'function drawBondEndpointPulseB56()',
+              'function installStickySoundLabWalletB57()',
+              'position:sticky',
+              'const B58_ASCENDED_BASE_SECONDS=8',
+              'function mixPairingCopyB58(layer)',
+              'BOOSTED BY',
+              'function saferSourceB80(current)',
+              "X.fillText('REROUTING'",
+              'const B81_DUCK_ATTACK=.018,B81_DUCK_RELEASE=.11',
+              'function scheduleMusicEnvelopeB81(engine',
+              'const B82_ROSTERS=Object.freeze',
+              'function enemyRosterB82()',
+              'function escalatingBossB84(e)',
+              'function threatEntryB85(rx,ry,vx,vy,radius)',
+              'function armDprWatchB86()',
+              'function releaseTransientInputB87()',
+              'function perimeterSpawnPointB88(',
+              'function arrivalCueB89(',
+              'function dashReadyCueB90()',
+              'function waveCloseCueB91()',
+              'function installAudioEngineB92(engine)',
+              'const B92_BEAM_IGNITION_PERCENT=50',
+              'const B93_STORM_MAX_CLOUDS=5',
+              'function releaseStormB93()',
+              'const B94_IGNITION_PERCENT=25',
+              'const B94_PIP_IGNITION_PERCENT=70',
+              'function releaseChargeB94()',
+              '#mixAuditionsB60 button{background:#142132',
+              'function heatReadoutB95()',
+              '#overdrive.b95gauge::before',
+              '#stageUp #soundLabWalletB53{position:static',
+              'function homeSoundLabB97()',
+              'function firstPipSoundRowB97()',
+              'const B98_STORM_CLOUD_COST=8',
+              'function gatherStormCloudB98(charge)'
+          ]:
+              assert marker in s, marker
+          assert s.rfind('pipWithPlayer=function()') > s.find('function pipWithPlayer()')
+          assert s.rfind('update=function(dt)') > s.find('// B51 Pip bond meter')
+          assert s.rfind('attack=function()') > s.find('// B51 Pip bond meter')
+          assert s.rfind('draw=function()') > s.find('// B51 Pip bond meter')
+          assert s.rfind('drawPipBondHeartB51()') > s.rfind('drawThreatTelegraphsB50()')
+          assert s.rfind('updateUI=function()') > s.find('// B52 Heart-only Pip bond clarity')
+          assert 'BONUSES OFF' not in s[s.find('// B52 Heart-only Pip bond clarity'):]
+          assert s.rfind('beginSoundLabHoldB45=function(btn,e)') > s.find('// B53 Sound Lab usability')
+          assert s.rfind('renderPipSoundStepB26=function()') > s.find('// B53 Sound Lab usability')
+          assert s.rfind('renderAudioChoicesB41=function()') > s.find('// B53 Sound Lab usability')
+          assert 'PAIRS ONLY' not in s[s.find('// B53 Sound Lab usability'):]
+          assert s.rfind('pressGamepadMenuA_B35=function()') > s.find('// B54 Sound Lab input parity')
+          assert s.rfind('releaseGamepadMenuA_B35=function()') > s.find('// B54 Sound Lab input parity')
+          assert s.rfind('updateEnemy=function(e,dt)') > s.find('// B55 Committed charger lanes')
+          assert s.rfind('drawThreatTelegraphsB50=function()') > s.find('// B55 Committed charger lanes')
+          assert s.rfind('update=function(dt)') > s.find('// B56 Pip bond endpoint pulse')
+          assert s.rfind('drawPipBondHeartB51=function()') > s.find('// B56 Pip bond endpoint pulse')
+          assert s.rfind('stickySoundLabWalletStyleB57') > s.find('// B57 Sticky Sound Lab resources')
+          assert s.rfind('triggerOverdrive=function()') > s.find('// B58 Ascended control')
+          assert s.rfind('simplifyPipSoundCardsB53=function()') > s.find('// B58 Ascended control')
+          assert s.rfind('simplifyMixCardsB53=function()') > s.find('// B58 Ascended control')
+          assert s.index('// B59 Pip partnership') < s.index('// B59 Boss personalities') < s.index('// B59 Presentation')
+          assert s.rfind('const updateBeforeB59=update;') > s.index('// B59 Boss personalities')
+          assert 'function consumeSetupB59(' in s
+          assert 'function incomingThreatB59()' in s
+          assert s.index('// B60 Heart transport') > s.index('// B59 Presentation')
+          assert s.index('// B60 Audible mix') > s.index('// B60 Heart transport')
+          assert 'function updatePipTransportB60(dt)' in s
+          assert s.index('// B61 Saved movement tuning') > s.index('// B60 Audible mix')
+          assert 'function swiftSpeedB61(' in s and 'const maxSpeed=playerSpeedB61()' in s
+          assert 'const B62_LONELY_SPEED_FACTOR=.9' in s
+          assert s.index('// B63 Partnership survival') > s.index('// B61 Saved movement tuning')
+          assert 'runHearts:0' in s and 'function emergencyRecallB63()' in s
+          assert 'pipDetectRange:82' in s and 'earlyRunHearts:0' in s
+          assert s.index('// B65 Difficulty HUD') > s.index('// B63 Partnership survival')
+          assert s.index('// B66 Supportive emergency return clarity') > s.index('// B65 Difficulty HUD')
+          assert s.index('// B67 Preserve Supportive-dropped cargo') > s.index('// B66 Supportive emergency return clarity')
+          assert s.index('// B68 One visual recovery marker') > s.index('// B67 Preserve Supportive-dropped cargo')
+          assert s.index('// B69 Compact mobile resource HUD') > s.index('// B68 One visual recovery marker')
+          assert s.index('// B70 Give Pip dialogue') > s.index('// B69 Compact mobile resource HUD')
+          assert s.index('// B72 Make Pip') > s.index('// B70 Give Pip dialogue')
+          assert 'function pipBondSecondsRemainingB72()' in s
+          assert s.index('// B73 Pulse the existing difficulty pill') > s.index('// B72 Make Pip')
+          assert 'const B73_DIFFICULTY_PULSE_SECONDS=1' in s
+          assert s.index('// B74 Heartfield authority') > s.index('// B73 Pulse the existing difficulty pill')
+          assert s.index('// B74 Heartfield integration') > s.index('// B74 Heartfield authority')
+          assert s.index('// B74 Heartfield presentation') > s.index('// B74 Heartfield integration')
+          assert 'function scanHeartNodesB74()' in s and 'function tickMiningB74(source,dt)' in s
+          assert s.index('// B75 Compress the launch screen') > s.index('// B74 Heartfield presentation')
+          assert 'function installLaunchScreenB75()' in s and 'b75LaunchActions' in s
+          assert s.index('// B76 Pip notices') > s.index('// B75 Compress the launch screen')
+          assert 'function decidePipB76()' in s and 'function observePipB76(dt)' in s
+          assert s.index('// B77 Read movement') > s.index('// B76 Pip notices')
+          assert s.index('// B78 Specific experiences') > s.index('// B77 Read movement')
+          assert s.index('// B79 A missed commitment') > s.index('// B78 Specific experiences')
+          assert s.index('// B80 Pip may reconsider') > s.index('// B79 A missed commitment')
+          assert s.rfind('updatePipTransportB60=function(dt)') > s.index('// B80 Pip may reconsider')
+          assert s.index('// B81 Sound ducking') > s.index('// B80 Pip may reconsider')
+          assert s.rfind('duckMusicB42=function(factor') > s.index('// B81 Sound ducking')
+          assert s.index('// B82 Stages seven') > s.index('// B81 Sound ducking')
+          assert s.index('// B84 The mid-fight cue') > s.index('// B82 Stages seven')
+          assert s.rfind('hitEnemy=function(e,power=1,source="player")') > s.index('// B84 The mid-fight cue')
+          assert s.index('// B85 The Cover arc') > s.index('// B84 The mid-fight cue')
+          assert s.rfind('incomingThreatB59=function()') > s.index('// B85 The Cover arc')
+          assert s.index('// B86 A monitor change') > s.index('// B85 The Cover arc')
+          assert s.rfind('resizeArena=function()') > s.index('// B86 A monitor change')
+          assert s.index('// B87 Leaving the game') > s.index('// B86 A monitor change')
+          assert 'window.addEventListener("blur",releaseTransientInputB87)' in s
+          assert s.index('// B88 Perimeter pressure') > s.index('// B87 Leaving the game')
+          assert s.rfind('spawnEnemy=function(type)') > s.index('// B88 Perimeter pressure')
+          assert s.index('// B89 Arrival read') > s.index('// B88 Perimeter pressure')
+          assert s.rfind('draw=function()') > s.index('// B89 Arrival read')
+          assert s.index('// B90 Dash readiness') > s.index('// B89 Arrival read')
+          assert s.rfind('update=function(dt)') > s.index('// B90 Dash readiness')
+          assert s.index('// B91 Wave closeout') > s.index('// B90 Dash readiness')
+          assert s.index('// B92 Sound engine') > s.index('// B91 Wave closeout')
+          assert s.rfind('canIgniteOverdriveB38=function(id=') > s.index('// B92 Skill charge contract')
+          assert s.index('// B93 Thunderstorm charge') > s.index('// B92 Skill charge contract')
+          assert s.rfind('triggerOverdrive=function()') > s.index('// B93 Thunderstorm charge')
+          assert s.rfind('stopOverdriveB38=function(spent=false)') > s.index('// B93 Thunderstorm charge')
+          assert s.index('// B94 Overdrive hold contract') > s.index('// B93 Thunderstorm charge')
+          assert s.rfind('canIgniteOverdriveB38=function(id=') > s.index('// B94 Overdrive hold contract')
+          assert s.rfind('triggerOverdrive=function()') > s.index('// B94 Overdrive hold contract')
+          assert s.rfind('stopOverdriveB38=function(spent=false)') > s.index('// B94 Overdrive hold contract')
+          assert s.index('// B95 Heat readout') > s.index('// B94 Overdrive hold contract')
+          assert s.rfind('updateUI=function()') > s.index('// B95 Heat readout')
+          assert s.index('// B96 Sound Lab wallet') > s.index('// B95 Heat readout')
+          assert s.index('// B97 Sound Lab wallet') > s.index('// B96 Sound Lab wallet')
+          assert s.index('// B98 Thunderstorm clouds cost HEAT') > s.index('// B97 Sound Lab wallet')
+          assert s.rfind('tickStormB93=function(dt)') > s.index('// B98 Thunderstorm clouds cost HEAT')
+          assert s.rfind('releaseStormB93=function()') > s.index('// B98 Thunderstorm clouds cost HEAT')
+          assert s.rfind('chooseSpawn=function()') > s.index('// B82 Stages seven')
+          PY
+          sed -i 's/OD75-2026-08-12-B21-STARDRIVE/OD75-2026-09-25-B98-STORM-CLOUD-COST/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B98-STORM-CLOUD-COST/g' _site/index.html
+          grep -Fq 'OD75-2026-09-25-B98-STORM-CLOUD-COST' _site/index.html
+          grep -Fq 'game.js?v=B98-STORM-CLOUD-COST' _site/index.html
+          touch _site/.nojekyll
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
