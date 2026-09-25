@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B112: No cap on heart skills
+
+Swift Pip, Star Power and Guardian Glow can now be bought at every stage with no level cap, like Heart Sense. Swift keeps adding its increase every level. Star Power keeps adding damage. Guardian Glow keeps speeding up shield recovery past its old floor with diminishing returns: past Lv 12, each level makes recovery about 5% faster than at Lv 12, down to a 0.25 s minimum.
+
 ## Pip starting speed 170
 
 Pip's default flight speed drops from 285 to 170, a bit slower than you (205), so Swift upgrades and ranch Sky Laps training matter. Each Swift level still adds +34. Saves still on the old 285 default follow the new one; a custom speed set in Settings is kept.

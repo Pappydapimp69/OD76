@@ -29,8 +29,9 @@
 - B111 Start at the ranch: splash Start opens the ranch; runs start at the Arena gate.
 - Thicker overgrowth: 22 obstacles per drill site (outer ring of 14).
 - Pip default starting speed 170 (was 285); old-default saves migrate.
-- 237 automated checks pass across all 99 ordered modules.
-- Module numbering reaches `b21-99.js`; the next module needs the build, test and workflow patterns widened to three digits.
+- B112 Uncapped heart skills: Swift, Star Power and Guardian Glow have no level cap.
+- Modules now assemble in numeric order (b21-99 before b21-100) in build, tests and workflow.
+- 238 automated checks pass across all 100 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next
