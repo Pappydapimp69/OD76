@@ -105,9 +105,8 @@ function runRanchChecksB99(){
     assert(B102_REFINE_SECONDS.join()==='900,600,480,300,240,180,120,60,30,10','refine times wrong');
     fresh({hearts:120});const t0=1e12;assert(loadHeartsB102(9,t0)===2&&ranchB99.hearts===20&&ranchB99.refinery.queue===2,'loading wrong');
     const never=()=>.9;tickRefineryB102(t0+899e3,never);assert(ranchB99.refinery.trayStones===0,'finished early');
-    tickRefineryB102(t0+900e3,never);assert(ranchB99.refinery.trayStones===1&&ranchB99.refinery.queue===1,'first stone late');
-    tickRefineryB102(t0+1800e3,never);assert(ranchB99.refinery.trayStones===2&&!ranchB99.refinery.queue&&!ranchB99.refinery.startedAt,'second stone');
-    const g=collectTrayB102(t0+1800e3);assert(g.stones===2&&ranchB99.stones===2&&!ranchB99.refinery.trayStones,'collect wrong');
+    tickRefineryB102(t0+900e3,never);assert(ranchB99.refinery.trayStones===2&&!ranchB99.refinery.queue&&!ranchB99.refinery.startedAt,'B117: two slots did not finish together');
+    const g=collectTrayB102(t0+900e3);assert(g.stones===2&&ranchB99.stones===2&&!ranchB99.refinery.trayStones,'collect wrong');
     assert(loadRanchB99().stones===2,'stones not saved');
   });
   test('B102 each refining task has a 10% star dust chance and 5 dust fuse into a Star Stone',()=>{
@@ -116,9 +115,9 @@ function runRanchChecksB99(){
     fresh({dust:4});assert(!fuseStarB102(),'fused with 4 dust');ranchB99.dust=5;assert(fuseStarB102()&&ranchB99.dust===0&&ranchB99.starStones===1,'fuse wrong');
   });
   test('B102 refinery upgrades cost Star Stones, speed refining and keep finished work',()=>{
-    fresh({hearts:100,starStones:1});const t0=1e12;loadHeartsB102(2,Date.now());
+    fresh({hearts:150,starStones:1});const t0=1e12;loadHeartsB102(3,Date.now());
     const f=ranchB99.refinery;f.startedAt=Date.now()-900e3;assert(upgradeRefineryB102()&&f.level===2&&ranchB99.starStones===0,'upgrade failed');
-    assert(f.trayStones===1&&f.queue===1,'finished work lost on upgrade');assert(refineSecondsB102(2)===600&&refineSecondsB102(10)===10,'level times');
+    assert(f.trayStones===2&&f.queue===1,'finished work lost on upgrade');assert(refineSecondsB102(2)===600&&refineSecondsB102(10)===10,'level times');
     assert(!upgradeRefineryB102(),'upgraded without stars');ranchB99.starStones=99;f.level=10;assert(!upgradeRefineryB102(),'passed max level');
   });
   test('B102 drills cost Heart Stones, not hearts',()=>{
@@ -267,8 +266,8 @@ function runRanchChecksB99(){
   test('B107 the stage-end gate shows the refinery timer while it works',()=>{
     fresh({hearts:0});clearStage();assert($('ranchGateRefineB107').style.display==='none','idle refinery shown');$('nextStageB99').click();
     fresh({hearts:150});loadHeartsB102(3);clearStage();const line=$('ranchGateRefineB107');
-    assert(line.style.display!=='none'&&/next ◆ in 1[45]:\d\d · 3 batches, all done in 4[45]:\d\d/.test(line.textContent),'timer missing: '+line.textContent);
-    ranchB99.refinery.startedAt-=901e3;renderGateRefineryB107();assert(line.textContent.includes('Tray ready: ◆ 1')&&line.textContent.includes('2 batches'),'tray/progress not live');
+    assert(line.style.display!=='none'&&/next ◆ in 1[45]:\d\d · 3 batches, all done in (29|30):\d\d/.test(line.textContent),'timer missing: '+line.textContent);
+    ranchB99.refinery.startedAt-=901e3;renderGateRefineryB107();assert(line.textContent.includes('Tray ready: ◆ 2')&&line.textContent.includes('next ◆ in'),'tray/progress not live');
     $('nextStageB99').click();
   });
   test('B108 ranks: E by default, gate offers unlocked ranks, rank offsets difficulty from stage 1',()=>{

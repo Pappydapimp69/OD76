@@ -46,7 +46,8 @@
 - B117 Needs fix (`b21-118`): a ranch week that starts at 0 food or 0 clean adds +10 fatigue each.
 - B117 Survey fix (`b21-119`): ranch time split into idle, clearing obstacles, farming and training; solo vs together counts per drill station.
 - B117 Pet fix (`b21-120`): petting Pip can give a Star Stone, +1% per 15 arena min and per 500 kills since the last one.
-- 340 automated checks pass across all 120 ordered modules.
+- B117 Refinery fix (`b21-121`): 2 refining slots at Lv1, 3 at Lv5, 4 at Lv10.
+- 341 automated checks pass across all 121 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next
