@@ -24,3 +24,4 @@ B114 feedback shipped in B115; see README.
 4. **Beam** (pending build):
    - Can't trigger without an enemy in range (no HEAT spent with no effect).
    - Smaller at Lv 1, growing with each level (currently overpowered at Lv 1).
+   - Size/power by level: Lv 1 single narrow stream at 60% of the current damage; each level wider and stronger; Lv 3 = today's 3-way spread; Lv 5 wider spread at ~1.25x today's damage.
