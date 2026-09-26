@@ -1,4 +1,4 @@
-# Playtest notes (post-B115) — item 1 shipped as a B115 fix
+# Playtest notes (post-B115) — item 1 shipped as a B115 fix; item 2 pending
 
 B114 feedback shipped in B115; see README.
 
@@ -6,3 +6,10 @@ B114 feedback shipped in B115; see README.
    - Regen = 1 HEAT point every 3 seconds.
    - Regen only fills up to a ceiling: 20% of the meter, +1% per Constellation level (replaces the +1% regen speed per level). Combo and pickups can still push past the ceiling.
    - Regen pauses while a skill is held or charging, and for 3 seconds after any skill is used.
+
+2. **Thunderstorm levels** (pending build):
+   - Lv 1: 1 cloud. Lv 2: 2 clouds.
+   - Lv 3: adds a chain; each strike jumps to 1 nearby enemy within a short range.
+   - Lv 4: 3 clouds. Lv 5: 4 clouds.
+   - Charge delay: 2.2s for the first cloud, 1.8s for each one after.
+   - Lv 5: all clouds charge 25% faster (1.65s, then 1.35s each).
