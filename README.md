@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B117: Playtest survey
+
+At the ranch, open the Bag and choose **Playtest survey**. The game fills in your play stats by itself (time played, runs, highest stage, rank, most-used skill, best chain and more), so you only answer the opinion questions. Then tap **Copy answers** or **Share** to send them. Unsent answers are saved as a draft.
+
 ## B116: Playtest pass two
 
 - **Thunderstorm:**

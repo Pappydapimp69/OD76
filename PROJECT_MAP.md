@@ -83,6 +83,8 @@ B116 Playtest pass two adds five modules:
 - `b21-111.js` (stage appetite): food follows HEAT spent; cleanliness follows kills, hits and boss stages.
 - `b21-112.js` (ranch comforts): shop cursor, owned counts, ranch sounds, and 3 s feed/wash locks.
 
+B117 adds `b21-113.js`: an in-game playtest survey opened from the ranch Bag. It tracks play stats in localStorage, fills them in automatically, and lets the player copy or share the answers.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

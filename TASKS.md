@@ -38,7 +38,8 @@
 - B115 Playtest pass (`b21-103`–`b21-107`): softer spawn ramp after stage 3; HEAT auto-regen plus a basic-attack combo chain (tiers 1x–5x); per-stage fatigue, hunger and cleanliness toll with gate meters; themed need debuffs; sleep costs 15/15; drill sets of 10 with uncapped station upgrades.
 - B115 fix: HEAT regen is 1 point every 3 s up to 20% of the meter (+1% per Constellation level) and pauses 3 s after any skill.
 - B116 Playtest pass two (`b21-108`–`b21-112`): Thunderstorm levels and per-cloud charge with a Lv 3 chain; skill button fills toward the ignition line; Beam needs a target and scales with level; Fang's dash freeze; food follows HEAT spent and cleanliness follows kills, hits and bosses; shop cursor, owned counts, ranch sounds, timed feeding and washing.
-- 314 automated checks pass across all 112 ordered modules.
+- B117 Playtest survey (`b21-113`): in-game survey from the ranch Bag, stats tracked automatically, copy or share the answers.
+- 326 automated checks pass across all 113 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next
