@@ -39,3 +39,9 @@ Break ends Guardian: pulse fires, HEAT drain stops. Holding past the break does 
 - Broken by hits: Pip stunned 1.8s (can't move or use skills), with a stun animation around Pip (e.g. circling stars) and a cartoon stun sound (chirping birds).
 - Released before the break: Pip resumes duties and all skills immediately.
 - Pulse visuals differ, power/range identical: release = strong, clean, intentional ring; break = fractured, broken, incomplete-looking ring.
+
+### 2. Tier the remaining Overdrive skills (Beam/Storm/Guardian pattern)
+Give Nova, Gravity Well and Ascended Pip the same 5-level shape: Lv1-2 grow the base, Lv3 adds a new mechanic, Lv4 grows it, Lv5 adds a special. Per-level design to be proposed skill by skill, as Guardian was.
+
+### 3. Rank-up exams
+Ranks stop unlocking on their own. At the arena gate, once Pip qualifies, the next rank offers an exam: a boss fight at that rank. Winning unlocks the rank; losing costs the usual fatigue but nothing else. Details (qualify rule, exam boss per rank, rewards) to be proposed.
