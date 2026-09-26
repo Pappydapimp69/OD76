@@ -34,4 +34,4 @@ B114 feedback shipped in B115; see README.
 
 6. **Food/cleanliness per stage** (pending build; replaces 3 + ceil(stage/2) for both):
    - Food: 2 + max(1, 0.5 × stage#) + 1 per 25% HEAT spent in the stage.
-   - Cleanliness (proposed, unconfirmed): 2 + 1 per 15 kills + 1 per hit taken + 3 on boss stages.
+   - Cleanliness: 2 + 1 per 15 kills + 1 per hit taken + 3 on boss stages.
