@@ -44,7 +44,8 @@
 - B117 Hold fix (`b21-116`): boss rewards, Pip traits and heart skills buy on a completed hold.
 - B117 Input guard fix (`b21-117`): 0.7s of ignored input when a stage ends.
 - B117 Needs fix (`b21-118`): a ranch week that starts at 0 food or 0 clean adds +10 fatigue each.
-- 338 automated checks pass across all 118 ordered modules.
+- B117 Survey fix (`b21-119`): ranch time split into idle, clearing obstacles, farming and training; solo vs together counts per drill station.
+- 339 automated checks pass across all 119 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

@@ -37,7 +37,7 @@ jobs:
         run: |
           test -f index.html
           for f in $(ls b21-*.js | sort -V); do node --check "$f"; done
-          test "$(ls b21-*.js | sort -V | tail -1)" = b21-118.js
+          test "$(ls b21-*.js | sort -V | tail -1)" = b21-119.js
           ! grep -q 'payload-' index.html
           ! grep -q 'DecompressionStream' index.html
           grep -Fq 'const B50_BOSS_TELEGRAPH_START=.55' b21-37.js
@@ -292,10 +292,10 @@ jobs:
           assert s.index('// B116e Ranch comforts') > s.index('// B116d Stage appetite') > s.index('// B116c Boss dash freeze') > s.index('// B116b Skill readout and Beam') > s.index('// B116a Storm levels') > s.index('// B115e Stage toll')
           assert s.index('// B117 Playtest survey') > s.index('// B116e Ranch comforts')
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B117-PLAYTEST-SURVEY-3/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B117-PLAYTEST-SURVEY-3/g' _site/index.html
-          grep -Fq 'OD76-2026-09-26-B117-PLAYTEST-SURVEY-3' _site/index.html
-          grep -Fq 'game.js?v=B117-PLAYTEST-SURVEY-3' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B117-PLAYTEST-SURVEY-4/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B117-PLAYTEST-SURVEY-4/g' _site/index.html
+          grep -Fq 'OD76-2026-09-26-B117-PLAYTEST-SURVEY-4' _site/index.html
+          grep -Fq 'game.js?v=B117-PLAYTEST-SURVEY-4' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

@@ -103,5 +103,21 @@ function runSurveyChecksB117(){
     closeSurveyB117();openSurveyB117();assert(m().querySelector('#b117-bugs').value==='','cleared draft came back');
   });
   resetStatsB117();clearDraftB117();fresh();reset();
+  test('B117 survey splits ranch time into idle, clearing, farming and training, and counts solo vs together per drill',()=>{
+    fresh({hearts:999,stones:999,fatigue:0,hunger:100,hygiene:100});openRanchB99();
+    const runs=(sec)=>{for(let i=0;i<Math.round(sec/.05);i++)updateRanchB100(.05)};
+    const near=(a,b,m)=>assert(Math.abs(a-b)<.11,`${m}: ${a} vs ${b}`);
+    runs(1);near(statsB117.ranchIdle,1,'idle');
+    w().b109Action={kind:'chop',phase:'work',t:0,dur:99,wait:0,leafClock:9,target:{x:0,y:0},px:0,py:0};runs(1);near(statsB117.ranchClear,1,'clearing');
+    w().b109Action={kind:'water',phase:'work',t:0,dur:99,wait:0,leafClock:9,target:{x:0,y:0},px:0,py:0};runs(.5);near(statsB117.ranchFarm,.5,'farming');w().b109Action=null;
+    const solo=soloDrillB100('speed',0);assert(solo,'solo drill refused: '+drillBlockB99('speed'));
+    pipDoB100('drill',stationB100('speed'),2.4,'speed');runs(1);near(statsB117.ranchTrain,1,'training');
+    ranchB99.fatigue=0;assert(startGameB100('power'),'together drill refused: '+drillBlockB99('power'));w().game=null;w().pip.state='follow';
+    assert(statsB117.drillModes.speed.solo===1&&statsB117.drillModes.power.together===1&&statsB117.drillModes.range.solo===0,'drill modes wrong');
+    near(statsB117.ranch,statsB117.ranchIdle+statsB117.ranchClear+statsB117.ranchFarm+statsB117.ranchTrain,'buckets do not add up');
+    saveStatsB117();const r=reload();assert(r.drillModes.power.together===1&&r.ranchClear>0,'ranch detail lost on reload');
+    const txt=statsTextB117();assert(/Ranch time: idle \d+s, clearing obstacles \d+s, farming \d+s, training \d+s/.test(txt)&&txt.includes('Sky Laps 1 solo / 0 together')&&txt.includes('Star Target 0 solo / 1 together'),'report: '+txt);
+  });
+
   return out;
 }
