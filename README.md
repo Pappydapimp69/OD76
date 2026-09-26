@@ -2,6 +2,29 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B116: Playtest pass two
+
+- **Thunderstorm:**
+  - Clouds by level: Lv 1 has 1, Lv 2 and Lv 3 have 2, Lv 4 has 3, Lv 5 has 4.
+  - Each cloud charges on a delay: 2.2 s for the first and 1.8 s for each one after. At Lv 5 they charge 25% faster.
+  - A quick tap charges one cloud, which strikes by itself.
+  - From Lv 3, each strike chains to one nearby enemy. This replaces the old Constellation ricochet.
+  - Each cloud still costs 8% HEAT.
+- **Skill button:** below the ignition line the button is dim and fills toward that line. At or above it, the button is solid and full.
+- **Beam:**
+  - It won't fire without an enemy in reach, and a refused press costs nothing.
+  - It grows with level: one narrow stream at 0.6x damage at Lv 1, today's 3-way spread at Lv 3, and a 5-way spread at 1.25x at Lv 5.
+- **Boss freeze:** standing in Fang's dash lane when it turns yellow freezes you for 2.2 s. Everything but Pip is locked, HEAT regen pauses, and any held or charging skill is lost with no refund.
+- **Stage costs:**
+  - Food per stage: 2 + half the stage number (at least 1) + 1 per 25% HEAT spent.
+  - Cleanliness per stage: 2 + 1 per 15 kills + 1 per hit taken, plus 3 on boss stages.
+  - The gate says why.
+- **Ranch:**
+  - The shop cursor stays put after a purchase.
+  - Consumables show how many you own.
+  - Chopping, cutting, feeding and washing have their own sounds.
+  - Feeding and washing each take 3 s.
+
 ## B115: Playtest pass
 
 - **Spawns:** past stage 3, enemy spawn pressure climbs half as fast as before. Stages 1–3 are unchanged.

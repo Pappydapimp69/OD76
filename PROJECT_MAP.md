@@ -76,6 +76,13 @@ B115 Playtest pass adds five modules:
 - `b21-106.js` (drill sets): 10 trainings per station level; the upgrade unlocks at 10 and resets the set; station levels are uncapped.
 - `b21-107.js` (stage toll): per-stage fatigue, hunger and cleanliness costs, gate meters, a fatigue-100 stop, and themed debuffs.
 
+B116 Playtest pass two adds five modules:
+- `b21-108.js` (storm levels): clouds by level, per-cloud charge delay, tap auto-charge, and the Lv 3 chain.
+- `b21-109.js` (skill readout and Beam): the threshold readout on the skill button, the Beam target gate, and Beam scaling by level.
+- `b21-110.js` (boss dash freeze): Fang's yellow lane freezes the player for 2.2 s.
+- `b21-111.js` (stage appetite): food follows HEAT spent; cleanliness follows kills, hits and boss stages.
+- `b21-112.js` (ranch comforts): shop cursor, owned counts, ranch sounds, and 3 s feed/wash locks.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

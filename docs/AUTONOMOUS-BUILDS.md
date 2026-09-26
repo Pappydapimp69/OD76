@@ -85,7 +85,9 @@ Direct build after B113: B114 Rested for battle in `b21-102.js`. User-requested;
 
 Direct build after B114: B115 Playtest pass in `b21-103.js`–`b21-107.js`. User-requested playtest feedback; does not increment the loop count.
 
-Next: select loop 16 / B116 from the B115 baseline. No gameplay implementation is currently unfinished.
+Direct build after B115: B116 Playtest pass two in `b21-108.js`–`b21-112.js`. User-requested playtest feedback; does not increment the loop count.
+
+Next: select loop 16 / B117 from the B116 baseline. No gameplay implementation is currently unfinished.
 
 Validation notes: use `rg -uuu` with an explicit path to find ignored numbered modules. On Windows/Codex set `NODE_PATH=C:/Users/Kompooter/Documents/OD76/node_modules` for the existing JSDOM dependency; on Linux `npm ci` needs no override. `HANDOFF.md` carries the full per-environment toolchain. Check the entire test outcome, not only the final passing lines. `scripts/serve.mjs` serves `_site` at port 8176 and local fixtures at `/qa`; inspect whether a server is already running before starting one. Update build version, test module count/order, both workflow module lists and stamp/cache key together. Browser tests use CUA and production-path fixture buttons, never application-state injection from evaluate.
 
