@@ -45,7 +45,7 @@ function runFreezeChecksB116(){
     step(6.5);assert(S.heat>0,'regen never resumed after the thaw');
   });
   test('B116 a gathering Thunderstorm is cancelled with its HEAT lost',()=>{
-    const e=fang();skill('storm',60);assert(triggerOverdrive()&&S.b93StormCharge,'storm did not gather');step(.6);
+    const e=fang();skill('storm',60);assert(triggerOverdrive()&&S.b93StormCharge,'storm did not gather');S.b93StormCharge.prog=2.19;step(.1);
     const h=S.heat;assert(h<60,'storm took no HEAT');lock(e);calm(e);
     assert(!S.b93StormCharge&&!S.b38OverHeld&&S.over===0,'storm still gathering');near(S.heat,h,'storm HEAT refunded');
     stopOverdriveB38(false);assert(!(S.b93StormClouds?.length),'the release after the freeze struck');near(S.heat,h,'release refunded');
