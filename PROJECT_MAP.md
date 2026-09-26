@@ -91,6 +91,8 @@ The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks
 
 `b21-116.js` (B117 fix): hold to confirm for boss rewards, Pip traits and heart skills between stages.
 
+`b21-117.js` (B117 fix): pointer, keyboard and gamepad input is ignored for 0.7s when the stage-end upgrade screen opens.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

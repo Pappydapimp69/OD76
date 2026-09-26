@@ -75,5 +75,20 @@ function runFixChecksB117(){
     assert(!holdB117h.btn,'hold not cleared');
   });
 
+  test('B117i stage end ignores every input for 0.7s, then accepts it',()=>{
+    const saved=stageInputLockMsB117i;stageInputLockMsB117i=700;
+    try{
+      reset();S.run=true;openStageUpgrade();S.prismSeeds=2;renderEmotionButtons();$('stageUp').classList.remove('hidden');
+      let got=0;const probe=()=>got++;window.addEventListener('keydown',probe);
+      try{
+        window.dispatchEvent(new KeyboardEvent('keydown',{key:'x'}));assert(got===0,'keydown reached game during lock');
+        $('skipPipUpgrade').click();assert(!$('emotionStep').classList.contains('stagehidden'),'click skipped during lock');
+        assert(gamepadBackActionB35()===false,'gamepad back acted during lock');
+        stageInputLockB117i=performance.now()-1;
+        window.dispatchEvent(new KeyboardEvent('keydown',{key:'x'}));assert(got===1,'keydown blocked after lock');
+      }finally{window.removeEventListener('keydown',probe)}
+    }finally{stageInputLockMsB117i=saved;stageInputLockB117i=0}
+  });
+
   return out;
 }
