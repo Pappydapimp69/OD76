@@ -28,16 +28,16 @@ function runTollChecksB115(){
     S.end=true;tick();assert(S.b115Away===was,'finished run counted');live();
     S.stage=3;S.pipState='orbit';update(.04);assert(S.b115Away===0,'new stage kept old away time');
   });
-  test('B115 each stage clear costs 3 + half the stage (rounded up) of hunger and cleanliness',()=>{
-    fresh({hunger:50,hygiene:50});toGate(2);assert(ranchB99.hunger===46&&ranchB99.hygiene===46&&S.b115Toll.hunger===-4,'stage 2 toll');
-    fresh({hunger:50,hygiene:2});toGate(5);assert(ranchB99.hunger===44&&ranchB99.hygiene===0&&S.b115Toll.hygiene===-2,'stage 5 toll or floor');
-    assert(loadRanchB99().hunger===44&&loadRanchB99().hygiene===0,'need toll not saved');
+  test('B115 each stage clear costs hunger and cleanliness (B116d base: food 2 + half the stage, clean 2)',()=>{
+    fresh({hunger:50,hygiene:50});toGate(2);assert(ranchB99.hunger===47&&ranchB99.hygiene===48&&S.b115Toll.hunger===-3,'stage 2 toll');
+    fresh({hunger:50,hygiene:1});toGate(5);assert(ranchB99.hunger===46&&ranchB99.hygiene===0&&S.b115Toll.hygiene===-1,'stage 5 toll or floor');
+    assert(loadRanchB99().hunger===46&&loadRanchB99().hygiene===0,'need toll not saved');
   });
   test('B115 banking a test keeps the week and its hooks but no longer drains hunger and cleanliness again',()=>{
     fresh({hearts:0,hunger:80,hygiene:80});ranchB99.areas.orchard=true;ranchB99.orchard.weeks=0;
     toGate(2);$('returnRanchB99').click();
     assert(ranchB99.week===2&&ranchB99.tests===1&&ranchB99.orchard.weeks===1,'week or week hooks lost');
-    assert(ranchB99.hunger===76&&ranchB99.hygiene===76,'bank drained again: '+ranchB99.hunger+'/'+ranchB99.hygiene);
+    assert(ranchB99.hunger===77&&ranchB99.hygiene===78,'bank drained again: '+ranchB99.hunger+'/'+ranchB99.hygiene);
     fresh({hunger:80,hygiene:80,fatigue:10});reset();S.run=true;S.heartCurrency=10;finish(true);
     assert(ranchB99.week===2&&ranchB99.hunger===80&&ranchB99.hygiene===80&&ranchB99.fatigue===B99_DEATH_FATIGUE,'death week wrong');
     fresh({hunger:80,hygiene:80});restB99();assert(ranchB99.hunger===65&&ranchB99.hygiene===65,'rest week lost its drain');
@@ -45,10 +45,10 @@ function runTollChecksB115(){
   test('B115 the stage gate shows Pip\'s meters with this stage\'s change and the debuffs in words',()=>{
     fresh({fatigue:40,hunger:50,hygiene:30});toGate(2,12);
     const box=$('ranchGateMetersB115'),txt=box.textContent;
-    assert(txt.includes('Tired 48 (+8)')&&txt.includes('Food 46 (−4)')&&txt.includes('Clean 26 (−4)'),'meters: '+txt);
+    assert(txt.includes('Tired 48 (+8)')&&txt.includes('Food 47 (−3)')&&txt.includes('Clean 28 (−2)'),'meters: '+txt);
     assert(txt.includes('Pip is hungry: HEAT refills at 75% speed')&&txt.includes('Pip is dirty: Guardian Glow at 70% strength')&&txt.includes('12s away'),'debuffs: '+txt);
     assert(!txt.includes('exhausted')&&!$('nextStageB99').disabled,'rested Pip blocked');
-    assert(box.querySelector('.fat i').style.width==='48%'&&box.querySelector('.clean i').style.width==='26%','bars');
+    assert(box.querySelector('.fat i').style.width==='48%'&&box.querySelector('.clean i').style.width==='28%','bars');
     assert(box.compareDocumentPosition($('nextStageB99'))&Node.DOCUMENT_POSITION_FOLLOWING,'meters below the buttons');
     renderGateRefineryB107();assert($('ranchGateMetersB115').textContent===txt,'refinery refresh wiped the meters');
     fresh({fatigue:0,...fine});toGate(2);assert($('ranchGateMetersB115').textContent.includes('No penalties'),'no-debuff line missing');
