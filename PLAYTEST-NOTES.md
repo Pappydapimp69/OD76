@@ -13,3 +13,6 @@ B114 feedback shipped in B115; see README.
    - Lv 4: 3 clouds. Lv 5: 4 clouds.
    - Charge delay: 2.2s for the first cloud, 1.8s for each one after.
    - Lv 5: all clouds charge 25% faster (1.65s, then 1.35s each).
+   - Quick tap: charges exactly 1 cloud with the normal delay, then strikes; no need to hold.
+   - Each cloud still costs 8% HEAT.
+   - The Lv 3 chain replaces the old ricochet from the Constellation boss power.
