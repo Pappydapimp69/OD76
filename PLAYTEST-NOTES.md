@@ -35,3 +35,9 @@ B114 feedback shipped in B115; see README.
 6. **Food/cleanliness per stage** (pending build; replaces 3 + ceil(stage/2) for both):
    - Food: 2 + max(1, 0.5 × stage#) + 1 per 25% HEAT spent in the stage.
    - Cleanliness: 2 + 1 per 15 kills + 1 per hit taken + 3 on boss stages.
+
+7. **Ranch QoL** (pending build):
+   - Shop: after a purchase, keep the cursor on the same item. If it was a one-time buy (now gone), move to the next item; if there's no next item, the previous one.
+   - Shop: consumables show how many you own (e.g. "×3"); show nothing at 0.
+   - Sound effects: axe chop and sickle cut; an eating sound when feeding Pip; a happy jingle when washing.
+   - Feeding and washing each take 3s; no actions or movement until done.
