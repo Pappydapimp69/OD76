@@ -20,7 +20,7 @@ function completeHoldB117h(){
 function tickHoldB117h(now=performance.now()){
   const btn=holdB117h.btn;if(!btn)return;
   if(!stageUpgradeVisibleB35()||btn.disabled){cancelHoldB117h();return}
-  const p=clamp((now-holdB117h.start)/B117H_MS,0,1),pct=(p*100).toFixed(1)+'%';
+  const p=clamp((now-holdB117h.start)/(holdB117h.ms||B117H_MS),0,1),pct=(p*100).toFixed(1)+'%';
   btn.style.background=`linear-gradient(90deg, rgba(255,211,111,.34) 0%, rgba(255,211,111,.34) ${pct}, rgba(255,255,255,.04) ${pct}, rgba(255,255,255,.04) 100%)`;
   if(p>=1){completeHoldB117h();return}
   holdB117h.raf=requestAnimationFrame(()=>tickHoldB117h());

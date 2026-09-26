@@ -48,7 +48,8 @@
 - B117 Pet fix (`b21-120`): petting Pip can give a Star Stone, +1% per 15 arena min and per 500 kills since the last one.
 - B117 Refinery fix (`b21-121`): 2 refining slots at Lv1, 3 at Lv5, 4 at Lv10.
 - B117 Setup paused (`b21-122`): More Supportive no longer prepares openings; switch back on with `pipSetupOnB117u=true` when reintroduced.
-- 342 automated checks pass across all 122 ordered modules.
+- B117 Quick repeat holds (`b21-123`): re-holding the same upgrade right after it confirms takes 0.7s; any other input resets.
+- 343 automated checks pass across all 123 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

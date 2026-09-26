@@ -103,6 +103,8 @@ The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks
 
 `b21-122.js` (B117 fix): Setup (Pip prepares openings, gold diamond, flank lure) is paused behind `pipSetupOnB117u`; Emergency Return stays.
 
+`b21-123.js` (B117 fix): between stages, re-holding the same upgrade right after it confirms takes 0.7s (Overdrive, Sound Lab, boss rewards, traits, heart skills); any other input resets to the full hold.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

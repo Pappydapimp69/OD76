@@ -137,5 +137,22 @@ function runFixChecksB117(){
     S.pipSupport=2;renderAscendedPauseB39();assert(!/Setup/.test($('b39CoreList').textContent)&&/Rally/.test($('b39CoreList').textContent),'pause still lists Setup');
   });
 
+  test('B117q holding the same upgrade again takes 0.7s; any other input resets to the full hold',()=>{
+    reset();S.run=true;openStageUpgrade();S.prismSeeds=9;renderEmotionButtons();$('stageUp').classList.remove('hidden');
+    const love=$('upLove'),sup=$('upSupport'),t0=()=>performance.now();
+    const hold=(btn,ms)=>{beginHoldB117h(btn,'test');const need=holdB117h.ms;tickHoldB117h(t0()+ms);return need};
+    assert(hold(love,B117H_MS)===B117H_MS,'first hold not full');assert(repeatKeyB117q==='h:upLove','repeat not armed');
+    assert(hold(love,B117Q_REPEAT_MS)===B117Q_REPEAT_MS&&S.pipLove===2,'repeat hold not 0.7s');
+    love.dispatchEvent(new MouseEvent('pointerdown',{bubbles:true}));assert(repeatKeyB117q==='h:upLove','pressing the same card reset');cancelHoldB117h();
+    sup.dispatchEvent(new MouseEvent('pointerdown',{bubbles:true}));cancelHoldB117h();assert(repeatKeyB117q===null,'other card did not reset');
+    assert(hold(love,B117H_MS)===B117H_MS,'after reset not full');
+    window.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown'}));assert(repeatKeyB117q===null,'other key did not reset');
+    hold(love,B117H_MS);moveGamepadMenuFocusB35(0,1);assert(repeatKeyB117q===null,'gamepad move did not reset');
+    hold(love,B117H_MS);openStageUpgrade();assert(repeatKeyB117q===null,'new stage did not reset');
+    reset();S.run=true;openStageUpgrade();S.bossRewardPending=true;S.starPoints=99;S.overUnlocked.add('guardian');S.overLevels.guardian=1;
+    completeOverdriveHoldAction('guardian');assert(repeatKeyB117q==='o:guardian','overdrive repeat not armed');
+    beginOverdriveHold('guardian',{pointerId:1,preventDefault(){}});assert(performance.now()-overHold.start>=OVERDRIVE_HOLD_MS-B117Q_REPEAT_MS-5,'overdrive repeat not shortened');cancelOverdriveHold();
+  });
+
   return out;
 }
