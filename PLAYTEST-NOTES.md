@@ -28,3 +28,6 @@ B114 feedback shipped in B115; see README.
 
 5. **Boss dash freeze** (new mechanic, pending build):
    - Bosses with a telegraphed dash: when the path turns yellow, a player standing inside the path is frozen in place for 2.2s.
+   - While frozen: movement, auto-fire, dash and skills are all locked. Pip keeps acting normally.
+   - HEAT regen pauses during the freeze.
+   - Any skill being held or charged is cancelled and its HEAT is lost (no refund).
