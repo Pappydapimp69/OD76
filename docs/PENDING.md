@@ -16,11 +16,11 @@ Pip is the Guardian:
 - While Guardian is active Pip cannot collect resources or use any Pip skill.
 - On release Pip resumes normal behavior.
 
-Charge-up (Storm-cloud style):
-- Blocks charge one at a time while held, up to the level's block count.
-- First block ready after 1.8s, each further block 1.2s.
-- Each Guardian level trims delays ~10%.
-- Guardian Glow (heart skill) also shortens them, same factor it applies to shield recovery.
-- Timer starts once Pip reaches orbit.
+Charge-up (Pip's return is the wind-up):
+- Holding sends Pip to the player; Pip's flight time is the variable delay.
+- Once Pip is in orbit, the first block is ready after 0.4s. Further blocks 1.2s each.
+- Pip already with the player: only the 0.4s.
+- HEAT drains from the press, including while Pip is flying back, up to a cap (TBD).
+- Guardian levels and Guardian Glow shorten the post-orbit delays.
 
 Open: when blocks run out — Guardian breaks (auto-ends, keep HEAT) and/or a penalty (Pip stunned). Awaiting call.
