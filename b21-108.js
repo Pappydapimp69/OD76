@@ -71,15 +71,20 @@ triggerOverdrive=function(){
 releaseStormB93=function(){
   const c=S?.b93StormCharge;if(!c)return false;
   if(c.auto)return true; // repeat pointerup/lostpointercapture: the tap already counted
-  if(c.cancel||!S.run||S.end||S.b39Paused||S.waveState==='stage'||S.waveState==='break')return cancelStormChargeB93(true);
+  if(c.cancel||!S.run||S.end||S.b39Paused||S.waveState==='stage')return cancelStormChargeB93(true);
   S.b38OverHeld=false;S.over=0;
   if(c.clouds<1){c.auto=true;c.paused=false;c.full=false;announce('THUNDERSTORM · CLOUD CHARGING',600);updateUI();return true}
   S.b93StormCharge=null;S.b93StormCooldown=B93_STORM_COOLDOWN;stormFireB116a(c.clouds,c.level);updateUI();return true;
 };
 
+// A charged cloud with no target yet waits with the player (it never expires) and strikes once one appears.
+function stormHoverB116a(cloud,i,dt){
+  cloud.waiting=true;const a=S.t*1.4+i*2.1,tx=P.x+Math.cos(a)*34,ty=P.y-50+Math.sin(a)*6,dx=tx-cloud.x,dy=ty-cloud.y,d=hyp(dx,dy)||1,step=Math.min(d,420*dt);
+  cloud.x+=dx/d*step;cloud.y+=dy/d*step;
+}
 updateStormCloudsB93=function(dt){
   const clouds=S?.b93StormClouds||[];
-  for(let i=clouds.length-1;i>=0;i--){const cloud=clouds[i];cloud.age+=dt;if((cloud.delay-=dt)>0)continue;if(!cloud.target||cloud.target.dead)cloud.target=randomStormTargetB93();if(!cloud.target){if(cloud.age>2)clouds.splice(i,1);continue}
+  for(let i=clouds.length-1;i>=0;i--){const cloud=clouds[i];cloud.age+=dt;if((cloud.delay-=dt)>0)continue;if(!cloud.target||cloud.target.dead)cloud.target=randomStormTargetB93();if(!cloud.target){stormHoverB116a(cloud,i,dt);continue}cloud.waiting=false;
     const tx=cloud.target.x,ty=cloud.target.y-52,dx=tx-cloud.x,dy=ty-cloud.y,d=hyp(dx,dy)||1,step=Math.min(d,520*dt);cloud.x+=dx/d*step;cloud.y+=dy/d*step;
     if(d<=18){stormStrikeB116a(cloud.target,cloud.level,stormDamageB116a(cloud.level),{x:cloud.x,y:cloud.y});flash=Math.max(flash,.1);shake=Math.max(shake,4);clouds.splice(i,1)}
   }
@@ -90,7 +95,7 @@ tickStormB93=function(dt){
   if(S.b93StormCooldown>0&&S.run)S.b93StormCooldown=Math.max(0,S.b93StormCooldown-dt);
   const c=S.b93StormCharge;
   if(c){
-    if(!S.run||S.end||S.waveState==='stage'||S.waveState==='break'){cancelStormChargeB93(true);return}
+    if(!S.run||S.end||S.waveState==='stage'){cancelStormChargeB93(true);return}
     if(c.b116a){
       if(!c.auto)c.held+=dt;chargeStormB116a(c,dt);
       if(c.auto&&c.paused){cancelStormChargeB93(true);announce('STORM · NEED HEAT',650);return}
@@ -98,7 +103,7 @@ tickStormB93=function(dt){
       else{if(c.clouds<stormCapB116a(c)&&Math.random()<dt*3)c.flicker=.08;if(c.flicker>0)c.flicker-=dt}
     }
   }
-  if(S.run&&!S.end&&(S.waveState==='active'||S.waveState==='boss'))updateStormCloudsB93(dt);else if(S.b93StormClouds?.length)S.b93StormClouds=[];
+  if(S.run&&!S.end&&(S.waveState==='active'||S.waveState==='boss'||S.waveState==='break'))updateStormCloudsB93(dt);else if(S.b93StormClouds?.length)S.b93StormClouds=[];
 };
 
 drawStormB93=function(){

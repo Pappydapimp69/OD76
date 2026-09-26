@@ -7,7 +7,7 @@
 - **Thunderstorm:**
   - Clouds by level: Lv 1 has 1, Lv 2 and Lv 3 have 2, Lv 4 has 3, Lv 5 has 4.
   - Each cloud charges on a delay: 2.2 s for the first and 1.8 s for each one after. At Lv 5 they charge 25% faster.
-  - A quick tap charges one cloud, which strikes by itself.
+  - A quick tap charges one cloud, which strikes by itself. A charged cloud with no target waits beside you until an enemy appears. Clouds keep charging and waiting through the breaks between waves.
   - From Lv 3, each strike chains to one nearby enemy. This replaces the old Constellation ricochet.
   - Each cloud still costs 8% HEAT.
 - **Skill button:** below the ignition line the button is dim and fills toward that line. At or above it, the button is solid and full.

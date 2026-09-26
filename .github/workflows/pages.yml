@@ -290,10 +290,10 @@ jobs:
           assert s.index('// B115e Stage toll') > s.index('// B115d Drill sets') > s.index('// B115c Needs never lock') > s.index('// B115b Heat flow') > s.index('// B115a Spawn ease') > s.index('function arenaReadyB114()')
           assert s.index('// B116e Ranch comforts') > s.index('// B116d Stage appetite') > s.index('// B116c Boss dash freeze') > s.index('// B116b Skill readout and Beam') > s.index('// B116a Storm levels') > s.index('// B115e Stage toll')
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B116-PLAYTEST-PASS-TWO/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B116-PLAYTEST-PASS-TWO/g' _site/index.html
-          grep -Fq 'OD76-2026-09-26-B116-PLAYTEST-PASS-TWO' _site/index.html
-          grep -Fq 'game.js?v=B116-PLAYTEST-PASS-TWO' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B116-PLAYTEST-PASS-TWO-2/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B116-PLAYTEST-PASS-TWO-2/g' _site/index.html
+          grep -Fq 'OD76-2026-09-26-B116-PLAYTEST-PASS-TWO-2' _site/index.html
+          grep -Fq 'game.js?v=B116-PLAYTEST-PASS-TWO-2' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

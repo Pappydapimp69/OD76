@@ -51,6 +51,22 @@ function runStormChecksB116(){
     foe(90);release();assert(S.b93StormClouds.length===4,'release lost clouds');
   });
 
+  test('B116 storm clouds keep charging and waiting through a wave break',()=>{
+    arena(2,60);press();step(1);S.waveState='break';S.waveBreak=99;step(1.3);assert(S.b93StormCharge&&clouds()===1,'wave break stopped the charge');
+    release();step(.1);assert(!S.b93StormCharge&&S.b93StormClouds.length===1&&S.b93StormClouds[0].waiting,'released cloud did not wait through the break: ');
+    S.waveState='active';const e=foe(90);step(1.5);assert(strikes.length===1&&strikes[0].e===e,'cloud did not strike when the next wave came');
+    arena(1,60);tap();step(1);S.waveState='break';S.waveBreak=99;step(1.3);assert(S.b93StormClouds.length===1,'tapped cloud did not finish charging in the break');
+    S.waveState='stage';step(.1);assert(!S.b93StormClouds.length&&!S.b93StormCharge,'stage end kept storm clouds');
+  });
+  test('B116 a charged cloud with no target waits with the player until one appears',()=>{
+    arena(1,60);tap();step(2.3);
+    const cl=S.b93StormClouds;assert(!S.b93StormCharge&&cl.length===1&&cl[0].waiting&&!strikes.length,'cloud did not wait without a target');near(S.heat,52,'waiting cloud cost');
+    P.x=400;P.y=300;step(6);assert(S.b93StormClouds.length===1&&Math.hypot(S.b93StormClouds[0].x-P.x,S.b93StormClouds[0].y-P.y)<90,'waiting cloud expired or did not follow the player');
+    S.waveState='break';S.waveBreak=99;step(1);assert(S.b93StormClouds.length===1,'wave break dropped the waiting cloud');S.waveState='active';
+    S.b93StormCooldown=0;S.heat=60;assert(!triggerOverdrive()&&S.heat===60,'a second storm started while a cloud waits');
+    const e=foe(P.x+80,P.y);step(2);assert(strikes.length===1&&strikes[0].e===e&&!S.b93StormClouds.length,'waiting cloud did not strike the new target');
+    finish(true);assert(!S.b93StormClouds?.length,'waiting cloud survived the run end');
+  });
   test('B116 a tap charges exactly one cloud that strikes by itself after 2.2s with no hold',()=>{
     arena(2,60);const a=foe(90),b=foe(-90);tap();
     const c=S.b93StormCharge;assert(c&&c.auto&&!S.b38OverHeld,'tap did not leave an auto-charging cloud');assert(heatSkillBusyB115b(),'auto cloud not treated as busy');
