@@ -101,6 +101,8 @@ The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks
 
 `b21-121.js` (B117 fix): the Heart Refinery runs parallel slots (2 at level 1, 3 at level 5, 4 at level 10); running batches store start offsets in `refinery.lag`.
 
+`b21-122.js` (B117 fix): Setup (Pip prepares openings, gold diamond, flank lure) is paused behind `pipSetupOnB117u`; Emergency Return stays.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

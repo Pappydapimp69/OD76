@@ -129,5 +129,13 @@ function runFixChecksB117(){
     fr({hearts:150});loadHeartsB102(3,t0);saveRanchB99();assert(loadRanchB99().refinery.lag.length===2,'slots lost on reload');
   });
 
+  test('B117u More Supportive no longer prepares openings at any level; Emergency Return stays',()=>{
+    assert(pipSetupOnB117u===false,'Setup switched on');
+    const e=fixtureB59(1,{support:3});bossPhaseB59(e,'recover',2);e.b59.clean=true;S.b59.actionTime=0;
+    planSetupB59();assert(!S.b59.setup&&!S.b59.lure,'Setup planned');assert(!markSetupB59(e),'Setup marked');
+    S.pipSupport=0;const txt=emotionalNextText('support');assert(!/SETUP|prepares openings|diamond/i.test(txt)&&/EMERGENCY RETURN/.test(txt),'card text: '+txt);
+    S.pipSupport=2;renderAscendedPauseB39();assert(!/Setup/.test($('b39CoreList').textContent)&&/Rally/.test($('b39CoreList').textContent),'pause still lists Setup');
+  });
+
   return out;
 }
