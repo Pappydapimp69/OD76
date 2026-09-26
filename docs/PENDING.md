@@ -23,7 +23,7 @@ Charge-up (Pip's return is the wind-up):
 - HEAT drains from the press, including while Pip is flying back, capped at 10% HEAT until Pip arrives.
 - Guardian levels and Guardian Glow shorten the post-orbit delays.
 
-Pip-linked bonuses off while Guardian is active: Shield Chime (plush) invuln on shield regen, all Pip music/resonance effects, Pip Catch.
+Pip fully off while Guardian is active: no music/resonance skills (incl. Shield Chime invuln), no heart pickup, no auto-fire, no heart skills (rally, damage boost, Pip firing with player), no Pip Catch. Pip heart meter hides; Pip never counts as with the player.
 
 Sim (Pip 170px/s, reserve 110/115/120, drain 22/s; first block time after press / blocks by HEAT):
 - Lv1 (20%/s): Pip near 0.40s; 250px 1.87s; 500px 3.34s. 25% HEAT = 1 block; 50%+ = 2.
