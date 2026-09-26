@@ -53,3 +53,9 @@ Scent Hunt (Heart Sense) and Star Target (Star Power) stay. Sky Laps (Swift) and
 Grind cuts (from Brain: interleaving beats repetition; reward partial progress):
 - Variety bonus: training a different station than last week gives bonus points.
 - Partial credit: every hit in a drill earns points; no all-or-nothing pass.
+
+### 5. Star Stone buildings
+Star Stones only upgrade the refinery and stations today. Add ranch buildings bought and upgraded with Star Stones that give permanent perks (e.g. an Observatory for skill perks, a cozier Pip house for better rest). Building list and perks to be proposed.
+
+### 6. Cookbook
+Meals come from combining farm items. A cookbook page (from the Bag) lists every recipe; undiscovered ones show as silhouettes with a hint and fill in the first time they're cooked. Recipes and hints to be proposed with the meal-combining system.
