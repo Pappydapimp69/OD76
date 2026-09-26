@@ -19,7 +19,7 @@ win.HTMLCanvasElement.prototype.releasePointerCapture = () => {};
 win.HTMLCanvasElement.prototype.getBoundingClientRect = () => ({x:0,y:0,left:0,top:0,width:1024,height:768,right:1024,bottom:768});
 const byNumberB112 = (a, b) => Number(a.match(/\d+/g).pop()) - Number(b.match(/\d+/g).pop());
 const files = fs.readdirSync(root).filter(n => /^b21-\d{2,3}\.js$/.test(n)).sort(byNumberB112);
-if (files.length !== 102 || files.at(-1) !== 'b21-102.js' || files[98] !== 'b21-99.js') throw Error('B114 module order');
+if (files.length !== 107 || files.at(-1) !== 'b21-107.js' || files[98] !== 'b21-99.js') throw Error('B115 module order');
 const source = files.map(n => fs.readFileSync(path.join(root, n), 'utf8')).join('');
 new vm.Script(source, {filename:'game.js'}).runInContext(dom.getInternalVMContext());
 // Browser QA covers CSS. Removing styles keeps repeated state simulations inexpensive in JSDOM.
@@ -42,6 +42,16 @@ new vm.Script(fs.readFileSync(path.join(__dirname, 'autonomy-checks.js'), 'utf8'
 results.push(...vm.runInContext('runAutonomyChecks()', dom.getInternalVMContext()));
 new vm.Script(fs.readFileSync(path.join(__dirname, 'ranch-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
 results.push(...vm.runInContext('runRanchChecksB99()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b115-spawn-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runSpawnChecksB115()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b115-heat-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runHeatChecksB115()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b115-needs-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runNeedsChecksB115()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b115-drills-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runDrillsChecksB115()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b115-toll-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runTollChecksB115()', dom.getInternalVMContext()));
 for (const r of results) console.log(`${r.ok ? 'PASS' : 'FAIL'} ${r.name}${r.error ? ': '+r.error : ''}`);
 dom.window.close();
 if (results.some(r => !r.ok)) process.exitCode = 1;

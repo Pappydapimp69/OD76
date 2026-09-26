@@ -69,6 +69,13 @@ B113 adds `b21-101.js`: no level cap on ranch training; station upgrades add +2 
 
 B114 adds `b21-102.js`: Pip can't enter the arena above 60 fatigue.
 
+B115 Playtest pass adds five modules:
+- `b21-103.js` (spawn ease): past the opening stages, spawn pressure climbs half as fast.
+- `b21-104.js` (heat flow): HEAT auto-regen and the basic-attack combo chain with tiers 1x–5x.
+- `b21-105.js` (needs never lock): sleep costs 15 hunger and 15 cleanliness.
+- `b21-106.js` (drill sets): 10 trainings per station level; the upgrade unlocks at 10 and resets the set; station levels are uncapped.
+- `b21-107.js` (stage toll): per-stage fatigue, hunger and cleanliness costs, gate meters, a fatigue-100 stop, and themed debuffs.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

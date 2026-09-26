@@ -2,6 +2,19 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B115: Playtest pass
+
+- **Spawns:** past stage 3, enemy spawn pressure climbs half as fast as before. Stages 1–3 are unchanged.
+- **HEAT:** HEAT refills on its own, and each Constellation level adds +1% regen. Kills no longer feed it. Basic auto-fire kills start a combo chain that breaks after 1.2 s without one. Each kill adds HEAT equal to the chain's tier: 1x for kills 1–10, 2x for 11–20, and so on up to 5x. The chain shows on the right side of the screen.
+- **Stage toll:** each stage clear adds fatigue (4 + stage number + 1 per 6 s Pip spent away from you, at most 25) and costs a little hunger and cleanliness. The stage-end gate shows all three meters. At 100 fatigue Pip must return to the ranch.
+- **Need debuffs:**
+  - Hunger slows HEAT regen.
+  - Fatigue of 60 or more slows attacks and movement.
+  - Low cleanliness weakens Guardian Glow.
+  - Hunger and cleanliness never block sleep or the arena.
+- **Sleep:** each sleep costs 15 hunger and 15 cleanliness, never going below 0.
+- **Drill sets:** each station trains 10 times per level. The station upgrade unlocks once the set is done and starts a fresh set of 10. Stations no longer stop at Lv 3.
+
 ## B114: Rested for battle
 
 Pip can't enter the arena while his fatigue is over 60. The Arena gate says so and shows his fatigue; rest him at his bed (a Berry Bun helps a little) and try again.

@@ -126,7 +126,7 @@ function runRanchChecksB99(){
     fresh({stones:3,stats:{range:0,speed:0,power:3,guard:0}});assert(drillCostB99('power')===2,'stone cost wrong');soloDrillB100('power',0);assert(ranchB99.stones===1,'stones not spent');
   });
   test('B102 station upgrades cost Star Stones and add drill points across reloads',()=>{
-    fresh({stones:10,starStones:3,stats:{range:0,speed:4,power:0,guard:0}});
+    fresh({stones:10,starStones:3,stats:{range:0,speed:4,power:0,guard:0},drillCounts:{range:0,speed:10,power:0,guard:0}});
     assert(upgradeStationB102('speed')&&ranchB99.starStones===2,'upgrade wrong');
     const r=soloDrillB100('speed',0);assert(r.gain===B100_BASE+B102_STATION_POINTS,'station points missing');
     const saved=loadRanchB99();assert(saved.stations.speed===1&&saved.stats.speed===5,'station or level lost on reload');
@@ -140,7 +140,7 @@ function runRanchChecksB99(){
   });
   test('B102 corrupt refinery saves fall back safely',()=>{
     localStorage.setItem(B99_RANCH_KEY,JSON.stringify({stones:-3,dust:'x',starStones:2.7,refinery:{level:40,queue:-1,trayStones:'q'},stations:{speed:9,power:-2}}));
-    const r=loadRanchB99();assert(r.stones===0&&r.dust===0&&r.starStones===2&&r.refinery.level===10&&r.refinery.queue===0&&r.refinery.trayStones===0&&r.stations.speed===3&&r.stations.power===0,'bad economy accepted');
+    const r=loadRanchB99();assert(r.stones===0&&r.dust===0&&r.starStones===2&&r.refinery.level===10&&r.refinery.queue===0&&r.refinery.trayStones===0&&r.stations.speed===9&&r.stations.power===0,'bad economy accepted');
   });
   test('B103 the ranch plays its own soft loop at 66 bpm and the arena loop elsewhere',()=>{
     const calls=[],fake=Object.create(PipAudioEngine.prototype);fake.ctx={currentTime:10};fake.music={};
@@ -153,8 +153,8 @@ function runRanchChecksB99(){
   });
   test('B104 each ranch week makes Pip hungrier and messier; drills dirty him more',()=>{
     fresh({stones:10,hunger:80,hygiene:80});soloDrillB100('power',0);assert(ranchB99.hunger===80-B104_WEEK_HUNGER&&ranchB99.hygiene===80-B104_WEEK_DIRT.drill,'drill week wrong');
-    fresh({hunger:80,hygiene:80});restB99();assert(ranchB99.hunger===68&&ranchB99.hygiene===74&&ranchB99.week===2,'rest week wrong');
-    fresh({hunger:80,hygiene:80});S.run=true;S.heartCurrency=10;finish(true);assert(ranchB99.week===2&&ranchB99.hunger===68&&ranchB99.hygiene===60,'battle week wrong');
+    fresh({hunger:80,hygiene:80});restB99();assert(ranchB99.hunger===65&&ranchB99.hygiene===65&&ranchB99.week===2,'rest week wrong');
+    fresh({hunger:80,hygiene:80});S.run=true;S.heartCurrency=10;finish(true);assert(ranchB99.week===2&&ranchB99.hunger===80&&ranchB99.hygiene===80,'battle week wrong');
   });
   test('B104 the stall sells food and soap for hearts; feeding and washing refill the meters',()=>{
     fresh({hearts:50,hunger:30,hygiene:10,fatigue:20});assert(buyItemB104('bun')&&ranchB99.hearts===20&&itemCountB104('bun')===1,'buy failed');
@@ -166,7 +166,7 @@ function runRanchChecksB99(){
     fresh({fatigue:0});const ok=soloChanceB100();fresh({fatigue:0,hunger:30,hygiene:30});assert(Math.abs(soloChanceB100()-(ok-.25))<1e-9,'need penalty wrong');
     fresh({stones:5,hunger:30});soloDrillB100('guard',0);assert(ranchB99.fatigue===B99_DRILL_FATIGUE+10,'hungry fatigue missing');
     fresh({stats:{range:2,speed:2,power:2,guard:2},hunger:10,hygiene:10});startBattleTestB99();
-    assert(S.pipSpeedLv===1&&S.pipPowerLv===1&&S.pipRangeLv===1&&S.pipGuardLv===1&&S.b104Notes.length===2,'battle penalty wrong');
+    assert(S.pipSpeedLv===2&&S.pipPowerLv===2&&S.pipRangeLv===2&&S.pipGuardLv===2&&S.b104Notes.length===2,'battle penalty wrong');
   });
   test('B104 pressing A at Pip opens his care menu and feeding works from it',()=>{
     fresh({hunger:20});addItemB104('pellets',2);openRanchB99();const w=ranchWorldB100;w.pip.x=w.px+10;w.pip.y=w.py;w.idle=1;press();

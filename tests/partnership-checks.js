@@ -155,7 +155,7 @@ function runPartnershipChecksB59(){
     triggerOverdrive();assert(S.b59.ascTrait==="compassion"&&S.b58AscTime===8,"wrong Ascended instinct or duration");
     S.b59.coverCd=6;update(.04);assert(S.b59.coverCd<5.95,"dominant instinct not amplified");
     const left=S.b58AscTime,uses=S.overdrives;triggerOverdrive();assert(S.b58AscTime===left&&S.overdrives===uses,"repeat activation reset cap");
-    stepB59(8.2);assert(S.over===0&&S.heat===0,"Ascension exceeded B58 cap");
+    stepB59(8.2);assert(S.over===0&&S.heat<1,"Ascension exceeded B58 cap");
   });
   test("Reset clears partnership and preserves run-scoped progression",()=>{
     fixtureB59(1,{love:3});S.b59.coverCd=7;S.b59.grace=1;S.b59.stats.cover=2;reset();

@@ -154,7 +154,7 @@ interactStationB100=function(st){
 const drawStationBeforeB102=drawStationB100;
 drawStationB100=function(st,t){
  drawStationBeforeB102(st,t);
- if(B99_DRILLS[st.id]&&ranchB99.stations[st.id]){const n=ranchB99.stations[st.id];X.fillStyle="#f2b84b";X.font="bold 13px system-ui";X.textAlign="center";X.fillText("★".repeat(n),st.x,st.y-(st.id==="speed"?110:st.id==="guard"?95:st.id==="range"?90:70)+32)}
+ if(B99_DRILLS[st.id]&&ranchB99.stations[st.id]){const n=ranchB99.stations[st.id];X.fillStyle="#f2b84b";X.font="bold 13px system-ui";X.textAlign="center";X.fillText(n>3?`★×${n}`:"★".repeat(n),st.x,st.y-(st.id==="speed"?110:st.id==="guard"?95:st.id==="range"?90:70)+32)}
  if(st.id!=="refinery")return;
  const c=B100_PASTEL,x=st.x,y=st.y,f=ranchB99.refinery,busy=f.queue>0;
  X.fillStyle=c.lilac;roundRectB100(x-60,y-70,120,90,16);X.fill();
