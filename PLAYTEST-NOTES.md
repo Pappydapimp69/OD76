@@ -16,3 +16,11 @@ B114 feedback shipped in B115; see README.
    - Quick tap: charges exactly 1 cloud with the normal delay, then strikes; no need to hold.
    - Each cloud still costs 8% HEAT.
    - The Lv 3 chain replaces the old ricochet from the Constellation boss power.
+
+3. **Skill button** (pending build):
+   - Below the activation threshold: dim, and the fill shows progress toward the threshold (e.g. 12.5% HEAT with a 25% threshold = half full).
+   - At or above the threshold: solid, full brightness, full.
+
+4. **Beam** (pending build):
+   - Can't trigger without an enemy in range (no HEAT spent with no effect).
+   - Smaller at Lv 1, growing with each level (currently overpowered at Lv 1).
