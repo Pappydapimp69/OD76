@@ -5,11 +5,15 @@
 ### 1. Guardian level tiers (Beam/Storm pattern)
 Current: 25% HEAT to start, drains 22 energy/s while held. Absorbs 2+2×Lv hits (12 at Lv5), refills all shields on start, knockback pulse every 0.7s.
 
-- Lv1: Absorbs 2 hits, small knockback pulse.
-- Lv2: 3 hits, wider pulse.
-- Lv3: NEW: Reflect. Each blocked hit fires a bolt back at the attacker.
-- Lv4: 4 hits, wider pulse, stronger reflect.
-- Lv5: SPECIAL: Shield regen. Restores shields while held, 2 at most per activation.
+- Lv1: 2 blocks, small knockback pulse.
+- Lv2: 3 blocks, wider pulse.
+- Lv3: 3 blocks + Reflect (each blocked hit fires a bolt back at the attacker).
+- Lv4: 4 blocks, wider pulse, stronger reflect.
+- Lv5: 4 blocks + shield regen, 2 at most per activation.
+
+Knockback pulse: no longer every 0.7s. Fires once, when the last block breaks or on release.
+Hold only (no tap/quick-fire): HEAT drains the whole time held.
+After Guardian breaks: hits land on the player's shields/health; losing or regaining shields triggers no shield-linked bonuses (music etc.) while Guardian is active.
 
 Pip is the Guardian:
 - On activation Pip drops whatever it's doing (gathering, carrying) and flies to orbit the player.
@@ -31,4 +35,4 @@ Sim (Pip 170px/s, reserve 110/115/120, drain 22/s; first block time after press 
 - Lv3 (18%/s): near 0.32s; 250px 1.79s; 500px 3.27s. 25% = 1-2; 50% = 2-3; 100% = 3.
 - Full bar empties in 5.0-5.5s holding (6-8s with Pip far). Current Guardian at Lv3: 8 instant blocks + full shield refill.
 
-Open: when blocks run out — Guardian breaks (auto-ends, keep HEAT) and/or a penalty (Pip stunned). Awaiting call.
+Open: after the break, does holding keep draining HEAT (proposed: Guardian ends at the break, drain stops, Pip freed).
