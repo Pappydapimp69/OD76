@@ -35,4 +35,6 @@ Sim (Pip 170px/s, reserve 110/115/120, drain 22/s; first block time after press 
 - Lv3 (18%/s): near 0.32s; 250px 1.79s; 500px 3.27s. 25% = 1-2; 50% = 2-3; 100% = 3.
 - Full bar empties in 5.0-5.5s holding (6-8s with Pip far). Current Guardian at Lv3: 8 instant blocks + full shield refill.
 
-Break ends Guardian: pulse fires, HEAT drain stops, Pip freed. Holding past the break does nothing.
+Break ends Guardian: pulse fires, HEAT drain stops. Holding past the break does nothing.
+- Broken by hits: Pip stunned 1.8s (can't move or use skills), with a stun animation around Pip (e.g. circling stars).
+- Released before the break: Pip resumes duties and all skills immediately.
