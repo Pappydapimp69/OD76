@@ -1,18 +1,22 @@
 
 // B115b Heat flow: HEAT regenerates over time; basic-attack kill combos add HEAT.
 // Kills no longer feed HEAT: the outermost kill wrapper undoes base kill heat and Cosmic resonance heat.
-// HEAT refills by itself at 2.5% of the meter a second, +1% per constellation level owned this run, times
-// heatRegenNeedMultB115() (B115e's hunger hook). Regen waits while a skill is held, gathering, charging or
-// Ascended, and freezes with the run (pause, stage screen, run end). Only kills landed by the basic
+// HEAT refills by itself 1 point (energy) every 3s, slowed by heatRegenNeedMultB115() (B115e's hunger hook),
+// and only up to a ceiling: 20% of the meter, +1% per Constellation level bought past Beam's starting level.
+// Regen waits while a skill is held, gathering, charging or Ascended, for 3s after any skill spends HEAT,
+// and freezes with the run (pause, stage screen, run end). Only kills landed by the basic
 // auto-attack chain: each keeps the chain alive 1.2s, every 10 kills raise the tier (1x..5x), and each kill
 // adds `tier` HEAT energy. The chain reads "3x 24" at mid-right and flashes a new colour on each tier step.
-const B115_HEAT_REGEN=2.5;
+const B115_HEAT_REGEN_SECONDS=3,B115_HEAT_REGEN_CEIL=20,B115_HEAT_REGEN_DELAY=3;
 const B115B_COMBO_WINDOW=1.2;
 const B115B_COMBO_STEP=10;
 const B115B_COMBO_MAX_TIER=5;
 function heatRegenNeedMultB115(){return 1}
 function constellationLevelsB115b(){if(!S)return 1;let n=0;for(const id of OVER_ORDER)n+=overLevel(id);return Math.max(1,n)}
-function heatRegenRateB115(){return B115_HEAT_REGEN*(1+.01*constellationLevelsB115b())*Math.max(0,Number(heatRegenNeedMultB115())||0)}
+function heatRegenNeedB115b(){return Math.max(0,Number(heatRegenNeedMultB115())||0)}
+// Effective regen in % of the meter per second (1 point per 3s, times the need multiplier).
+function heatRegenRateB115(){return 100/heatCapacityB38()/B115_HEAT_REGEN_SECONDS*heatRegenNeedB115b()}
+function heatRegenCeilB115(){return Math.min(100,B115_HEAT_REGEN_CEIL+constellationLevelsB115b()-1)}
 function comboTierB115b(n){return n>0?Math.min(B115B_COMBO_MAX_TIER,Math.ceil(n/B115B_COMBO_STEP)):0}
 function comboB115b(){if(S&&!S.b115Combo)S.b115Combo={count:0,timer:0,tier:0};return S?.b115Combo}
 function heatLiveB115b(){return !!(S&&S.run&&!S.end&&!S.b39Paused&&!S.stagePending&&S.waveState!=='stage'&&!ranchWorldB100?.active)}
@@ -69,7 +73,7 @@ kill=function(e,chain=false){
 
 // Outermost update: the chain clock ticks before the frame (a kill this frame gets the full window) and regen
 // lands after it, outside B25's heat-restore wrapper. Both clocks stop whenever the run is not live.
-let comboStageB115b=null;
+let comboStageB115b=null,regenClockB115b=0,regenWaitB115b=0,regenLastHeatB115b=null;
 const updateBeforeB115b=update;
 update=function(dt){
   if(!S)return updateBeforeB115b(dt);
@@ -77,12 +81,25 @@ update=function(dt){
   if(comboStageB115b!==S.stage){comboStageB115b=S.stage;if(c.count)resetComboB115b()}
   if(c.count>0&&heatLiveB115b()&&(c.timer-=step)<=0)resetComboB115b();
   updateBeforeB115b(dt);
-  if(heatLiveB115b()&&!heatSkillBusyB115b()&&S.heat<100)S.heat=Math.min(100,S.heat+heatRegenRateB115()*step);
+  regenB115b(step);
   if(comboFlashB115b>0&&(comboFlashB115b-=step)<=0)comboHudB115b?.classList.remove('b115flash');
   renderComboHudB115b();
 };
+// Regen ticks 1 point per 3s while under the ceiling; any skill use (held, charging, or HEAT spent this frame)
+// holds it for 3s and restarts the tick.
+// HEAT spent anywhere since the last frame (input handlers fire skills between frames) counts as skill use.
+function regenB115b(step){
+  const last=regenLastHeatB115b;regenLastHeatB115b=S.heat;
+  if(!heatLiveB115b())return;
+  if(heatSkillBusyB115b()||(last!==null&&S.heat<last-1e-9)){regenWaitB115b=B115_HEAT_REGEN_DELAY;regenClockB115b=0;return}
+  if(regenWaitB115b>0){regenWaitB115b=Math.max(0,regenWaitB115b-step);return}
+  const ceil=heatRegenCeilB115();if(S.heat>=ceil){regenClockB115b=0;return}
+  regenClockB115b+=step*heatRegenNeedB115b();
+  while(regenClockB115b>=B115_HEAT_REGEN_SECONDS-1e-9&&S.heat<ceil){regenClockB115b-=B115_HEAT_REGEN_SECONDS;S.heat=Math.min(ceil,S.heat+100/heatCapacityB38())}
+  regenLastHeatB115b=S.heat;
+}
 const resetBeforeB115b=reset;
-reset=function(){resetBeforeB115b();if(S){S.b115Combo={count:0,timer:0,tier:0};comboStageB115b=S.stage}resetComboB115b()};
+reset=function(){resetBeforeB115b();regenClockB115b=0;regenWaitB115b=0;regenLastHeatB115b=null;if(S){S.b115Combo={count:0,timer:0,tier:0};comboStageB115b=S.stage}resetComboB115b()};
 const updateUIBeforeB115b=updateUI;
 updateUI=function(){updateUIBeforeB115b();renderComboHudB115b()};
 

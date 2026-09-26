@@ -5,7 +5,7 @@
 ## B115: Playtest pass
 
 - **Spawns:** past stage 3, enemy spawn pressure climbs half as fast as before. Stages 1–3 are unchanged.
-- **HEAT:** HEAT refills on its own, and each Constellation level adds +1% regen. Kills no longer feed it. Basic auto-fire kills start a combo chain that breaks after 1.2 s without one. Each kill adds HEAT equal to the chain's tier: 1x for kills 1–10, 2x for 11–20, and so on up to 5x. The chain shows on the right side of the screen.
+- **HEAT:** HEAT refills on its own at 1 point every 3 s, but only up to 20% of the meter; each Constellation level past the first raises that limit by 1%. Regen pauses while a skill is held or charging and for 3 s after any skill is used. Kills no longer feed HEAT. Basic auto-fire kills start a combo chain that breaks after 1.2 s without one. Each kill adds HEAT equal to the chain's tier: 1x for kills 1–10, 2x for 11–20, and so on up to 5x. The chain shows on the right side of the screen.
 - **Stage toll:** each stage clear adds fatigue (4 + stage number + 1 per 6 s Pip spent away from you, at most 25) and costs a little hunger and cleanliness. The stage-end gate shows all three meters. At 100 fatigue Pip must return to the ranch.
 - **Need debuffs:**
   - Hunger slows HEAT regen.

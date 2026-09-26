@@ -36,7 +36,8 @@
 - B101 reversed: all hearts collected in a test bank at the ranch, spent or not.
 - B114 Rested for battle: the Arena gate refuses Pip above 60 fatigue.
 - B115 Playtest pass (`b21-103`–`b21-107`): softer spawn ramp after stage 3; HEAT auto-regen plus a basic-attack combo chain (tiers 1x–5x); per-stage fatigue, hunger and cleanliness toll with gate meters; themed need debuffs; sleep costs 15/15; drill sets of 10 with uncapped station upgrades.
-- 278 automated checks pass across all 107 ordered modules.
+- B115 fix: HEAT regen is 1 point every 3 s up to 20% of the meter (+1% per Constellation level) and pauses 3 s after any skill.
+- 279 automated checks pass across all 107 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

@@ -284,10 +284,10 @@ jobs:
           assert s.rfind('chooseSpawn=function()') > s.index('// B82 Stages seven')
           assert s.index('// B115e Stage toll') > s.index('// B115d Drill sets') > s.index('// B115c Needs never lock') > s.index('// B115b Heat flow') > s.index('// B115a Spawn ease') > s.index('function arenaReadyB114()')
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B115-PLAYTEST-PASS/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B115-PLAYTEST-PASS/g' _site/index.html
-          grep -Fq 'OD76-2026-09-26-B115-PLAYTEST-PASS' _site/index.html
-          grep -Fq 'game.js?v=B115-PLAYTEST-PASS' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B115-PLAYTEST-PASS-2/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B115-PLAYTEST-PASS-2/g' _site/index.html
+          grep -Fq 'OD76-2026-09-26-B115-PLAYTEST-PASS-2' _site/index.html
+          grep -Fq 'game.js?v=B115-PLAYTEST-PASS-2' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

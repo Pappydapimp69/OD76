@@ -1,4 +1,4 @@
-# Playtest notes (post-B115) — pending build
+# Playtest notes (post-B115) — item 1 shipped as a B115 fix
 
 B114 feedback shipped in B115; see README.
 

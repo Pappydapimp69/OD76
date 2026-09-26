@@ -23,35 +23,38 @@ function runHeatChecksB115(){
       shoot();near(S.heat,40+100/heatCapacityB38(),'a basic kill added more than its 1x chain HEAT');
     }finally{resonanceRankB41=rank}
   });
-  test('B115 HEAT regenerates on its own and pauses while Beam is held',()=>{
-    arena();const rate=heatRegenRateB115();near(rate,2.525,'base regen with one constellation level');
-    step(4);near(S.heat,4*rate,'regen over four seconds');
-    S.heat=60;assert(triggerOverdrive()&&S.over>0,'Beam did not fire');step(1);
-    const held=S.heat;near(held,60-B38_DRAIN_ENERGY_PER_SEC.beam/heatCapacityB38()*100,'Beam hold drain included regen');
-    stopOverdriveB38(false);assert(S.over===0,'Beam did not stop');step(1);near(S.heat,held+rate,'regen did not resume after release');
-    S.heat=99.9;step(1);assert(S.heat===100,'regen did not clamp at 100');
+  test('B115 HEAT regenerates 1 point every 3 seconds and waits 3 seconds after Beam is used',()=>{
+    arena();const one=100/heatCapacityB38();near(heatRegenRateB115(),one/3,'regen rate');
+    step(2.9);near(S.heat,0,'regen ticked before 3 seconds');step(.2);near(S.heat,one,'first point at 3 seconds');step(3);near(S.heat,2*one,'second point at 6 seconds');
+    S.heat=30;assert(triggerOverdrive()&&S.over>0,'Beam did not fire');step(1);
+    const held=S.heat;near(held,30-B38_DRAIN_ENERGY_PER_SEC.beam/heatCapacityB38()*100,'regen ran while Beam was held');
+    stopOverdriveB38(false);assert(S.over===0,'Beam did not stop');step(2.9);near(S.heat,held,'regen resumed inside the 3-second wait');
+    step(3.2);near(S.heat,held+one,'regen did not resume after the wait');
+  });
+  test('B115 a quick HEAT spend also starts the 3-second wait',()=>{
+    arena();S.heat=10;step(2);S.heat=5;update(1/60);step(2.9);near(S.heat,5,'regen ticked right after HEAT was spent');step(3.2);near(S.heat,6,'regen stuck after the wait');
   });
   test('B115 regen waits while Thunderstorm gathers, Nova charges and Pip is Ascendant',()=>{
-    arena();S.overType='storm';S.overUnlocked.add('storm');S.overLevels.storm=1;S.heat=60;S.b93StormCooldown=0;S.b93StormClouds=[];
-    assert(triggerOverdrive()&&S.b93StormCharge,'storm did not gather');S.b93StormCharge.timer=99;const storm=S.heat;step(1);near(S.heat,storm,'HEAT regenerated while the storm gathered');
+    arena();S.overType='storm';S.overUnlocked.add('storm');S.overLevels.storm=1;S.heat=30;S.b93StormCooldown=0;S.b93StormClouds=[];
+    assert(triggerOverdrive()&&S.b93StormCharge,'storm did not gather');S.b93StormCharge.timer=99;const storm=S.heat;step(1);near(S.heat,storm,'HEAT regenerated while the storm gathered');assert(heatSkillBusyB115b(),'storm gathering not treated as an active skill');
     arena();S.overType='nova';S.overUnlocked.add('nova');S.overLevels.nova=1;S.heat=60;
     assert(triggerOverdrive()&&S.b94Charge,'Nova did not charge');step(.5);near(S.heat,50,'HEAT regenerated while Nova charged');
     const one=100/heatCapacityB38();shoot();step(.1);near(S.heat,60+one-12,'chain HEAT earned mid-charge was lost to the charge recompute');
     arena();S.overType='pip';S.overLevels.pip=1;S.heat=100;assert(triggerOverdrive()&&S.over>0&&S.b58AscTime>0,'Pip did not ascend');
     assert(heatSkillBusyB115b(),'Ascendant not treated as an active skill');step(1);near(S.heat,100-100/8,'HEAT regenerated during Ascendant');
   });
-  test('B115 each constellation level adds 1% regen without pinning HEAT full',()=>{
-    arena();near(heatRegenRateB115(),2.525,'1 level');
-    S.overLevels={beam:3,storm:2};near(heatRegenRateB115(),2.5*1.05,'5 levels');
+  test('B115 regen stops at 20% of the meter; each Constellation level past the first raises it 1%',()=>{
+    arena();assert(heatRegenCeilB115()===20,'base ceiling');S.heat=19.5;step(3.1);near(S.heat,20,'regen passed the ceiling');step(6.1);near(S.heat,20,'regen kept going at the ceiling');
+    S.heat=30;step(6.1);near(S.heat,30,'regen changed HEAT above the ceiling');
+    S.overLevels={beam:3,storm:2};assert(heatRegenCeilB115()===24,'5 levels');
     for(const id of OVER_ORDER){S.overUnlocked.add(id);S.overLevels[id]=5}
-    const max=heatRegenRateB115();near(max,3.25,'30 levels');step(2);near(S.heat,2*max,'30-level regen over two seconds');
-    assert(25/max>7.5&&100/max>30,'maxed regen ignites or fills too fast');
+    assert(heatRegenCeilB115()===49,'30 levels');near(heatRegenRateB115(),100/heatCapacityB38()/3,'levels changed the regen speed');
   });
   test('B115 the need hook scales regen',()=>{
     const hook=heatRegenNeedMultB115;
     try{
-      arena();heatRegenNeedMultB115=()=>.5;near(heatRegenRateB115(),2.525*.5,'half-need regen rate');step(2);near(S.heat,2.525,'half-need regen');
-      heatRegenNeedMultB115=()=>0;step(2);near(S.heat,2.525,'zero-need regen still filled');
+      arena();const one=100/heatCapacityB38();heatRegenNeedMultB115=()=>.5;near(heatRegenRateB115(),one/6,'half-need regen rate');step(5.9);near(S.heat,0,'half-need regen ticked early');step(.2);near(S.heat,one,'half-need regen');
+      heatRegenNeedMultB115=()=>0;step(12);near(S.heat,one,'zero-need regen still filled');
     }finally{heatRegenNeedMultB115=hook}
   });
   test('B115 basic auto-fire kills build the chain and it resets after 1.2s without one',()=>{
@@ -91,16 +94,16 @@ function runHeatChecksB115(){
     reset();assert(el.classList.contains('b115out')&&el.getAttribute('aria-hidden')==='true'&&combo().count===0,'HUD did not fade on reset');
   });
   test('B115 regen and chain clocks freeze on pause, the stage screen and run end; a new stage clears the chain',()=>{
-    arena();kills(3);S.heat=30;const t=combo().timer,el=$('comboB115');
+    arena();kills(3);S.heat=10;const t=combo().timer,el=$('comboB115'),h0=S.heat;
     assert(openAscendedPauseB39(),'pause did not open');step(3);
-    assert(S.heat===30&&combo().count===3&&combo().timer===t,'pause did not freeze HEAT and the chain');
-    closeAscendedPauseB39();step(.5);assert(S.heat>30&&combo().count===3,'clocks did not resume after pause');
-    const heat=S.heat,left=combo().timer;S.stageEnding=true;openStageUpgrade();assert(S.stagePending,'stage screen did not open');step(3);
+    assert(S.heat===h0&&combo().count===3&&combo().timer===t,'pause did not freeze HEAT and the chain');
+    closeAscendedPauseB39();step(.5);assert(combo().count===3,'chain did not survive the pause');step(2.7);assert(S.heat>h0,'regen did not resume after pause');
+    kills(3);const heat=S.heat,left=combo().timer;S.stageEnding=true;openStageUpgrade();assert(S.stagePending,'stage screen did not open');step(3);
     assert(S.heat===heat&&combo().count===3&&combo().timer===left&&el.classList.contains('b115out'),'stage screen did not freeze HEAT and the chain');
     continueStageB99();assert(S.run&&!S.stagePending,'next stage did not start');update(1/60);
     assert(combo().count===0,'a new stage kept the chain');
-    arena();kills(2);S.heat=30;finish(true);assert(S.end,'run did not end');step(2);
-    assert(S.heat===30&&combo().count===2&&el.classList.contains('b115out'),'run end did not freeze HEAT and hide the chain');
+    arena();kills(2);S.heat=10;finish(true);assert(S.end,'run did not end');step(4);
+    assert(S.heat===10&&combo().count===2&&el.classList.contains('b115out'),'run end did not freeze HEAT and hide the chain');
   });
   fresh();reset();
   return out;
