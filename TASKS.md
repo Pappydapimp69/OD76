@@ -49,7 +49,8 @@
 - B117 Refinery fix (`b21-121`): 2 refining slots at Lv1, 3 at Lv5, 4 at Lv10.
 - B117 Setup paused (`b21-122`): More Supportive no longer prepares openings; switch back on with `pipSetupOnB117u=true` when reintroduced.
 - B117 Quick repeat holds (`b21-123`): re-holding the same upgrade right after it confirms takes 0.7s; any other input resets.
-- 343 automated checks pass across all 123 ordered modules.
+- Guardian blocks stay up after release until destroyed, and carry into the next hold.
+- 344 automated checks pass across all 123 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

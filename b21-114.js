@@ -65,7 +65,9 @@ triggerOverdrive=function(...a){
   if(ok&&fresh&&S.over>0&&S.overType==='guardian'){
     S.shields=shields;S.shieldRegenClock=regen;S.overGuardHits=0;
     const lv=guardLevelB117g();
-    S.b117Guard={level:lv,max:B117G_BLOCKS[lv-1],ready:0,used:0,charged:0,prog:0,orbit:false,returnSpent:0,regen:0,regenClock:0,broken:false};
+    // Blocks still standing from an earlier activation carry in and count toward this one's cap.
+    const max=B117G_BLOCKS[lv-1],kept=Math.min(max,S.b117Held?.n||0);S.b117Held=null;
+    S.b117Guard={level:lv,max,ready:kept,used:0,charged:kept,prog:0,orbit:false,returnSpent:0,regen:0,regenClock:0,broken:false};
     // Pip drops his errand; he picks his duties back up after Guardian.
     if(S.b59){S.b59.rallyReturn=false;S.b59.lure=null;S.b59.setup=null}
     if(typeof clearMiningB74==='function')clearMiningB74();
@@ -96,6 +98,13 @@ hurt=function(...a){
     ring(P.x,P.y,'#fff0a8',80);particle(P.x,P.y,'#7ed8ff',16,160);popup(P.x,P.y-18,'GUARDIAN BLOCK','#fff0a8',true,.7);sfxShield();
     reflectB117g(g);
     if(g.used>=g.max)breakGuardB117g();
+    updateUI();return;
+  }
+  const h=S?.b117Held;
+  if(h?.n>0&&!guardActiveB117g()&&!(S.invuln>0)&&!S.end&&combatB59()){
+    h.n--;S.invuln=.42;
+    ring(P.x,P.y,'#fff0a8',80);particle(P.x,P.y,'#7ed8ff',16,160);popup(P.x,P.y-18,'GUARDIAN BLOCK','#fff0a8',true,.7);sfxShield();
+    reflectB117g(h);if(h.n<=0)S.b117Held=null;
     updateUI();return;
   }
   return hurtBeforeB117g(...a);
@@ -138,6 +147,8 @@ stopOverdriveB38=function(spent=false,...a){
   const r=stopBeforeB117g(spent,...a);
   if(live&&!guardActiveB117g()){
     S.b117Guard=null;
+    // Charged blocks outlive the hold: they stay up until hits destroy them.
+    if(!g.broken)S.b117Held=g.ready>0?{n:g.ready,level:g.level}:null;
     if(!g.broken&&combatB59())guardPulseB117g(g.level,false);
     updateUI();
   }
@@ -180,8 +191,8 @@ update=function(dt){
 const updateOverdriveBeforeB117g=updateOverdrive;
 updateOverdrive=function(dt){if(S?.overType==='guardian')return;return updateOverdriveBeforeB117g(dt)};
 const resetBeforeB117g=reset;
-reset=function(){resetBeforeB117g();S.b117Guard=null;S.b117PipStun=0;b117gPulses=[]};
-if(S){S.b117Guard=null;S.b117PipStun=0}
+reset=function(){resetBeforeB117g();S.b117Guard=null;S.b117Held=null;S.b117PipStun=0;b117gPulses=[]};
+if(S){S.b117Guard=null;S.b117Held=null;S.b117PipStun=0}
 
 // ---- visuals ----
 function drawGuardB117g(){
@@ -199,6 +210,11 @@ function drawGuardB117g(){
       X.globalAlpha=ready?.95:.45;X.beginPath();X.moveTo(x,y-5);X.lineTo(x+4,y);X.lineTo(x,y+5);X.lineTo(x-4,y);X.closePath();
       if(ready){X.fillStyle='#fff0a8';X.fill()}else{X.strokeStyle='#fff0a8';X.lineWidth=1.3;X.stroke()}
     }
+  }
+  else if(S.b117Held?.n>0){
+    const n=S.b117Held.n;X.globalAlpha=.5;X.strokeStyle='#fff0a8';X.lineWidth=1.5;X.beginPath();X.arc(px,py,30,0,Math.PI*2);X.stroke();
+    for(let i=0;i<n;i++){const a=-Math.PI/2+(i-(n-1)/2)*.42,x=px+Math.cos(a)*38,y=py+Math.sin(a)*38;
+      X.globalAlpha=.95;X.fillStyle='#fff0a8';X.beginPath();X.moveTo(x,y-5);X.lineTo(x+4,y);X.lineTo(x,y+5);X.lineTo(x-4,y);X.closePath();X.fill()}
   }
   for(const p of b117gPulses){
     const t=1-p.life/p.max,r=12+(p.r-12)*Math.min(1,t*1.4),x=worldToScreenX(p.x),y=worldToScreenY(p.y);
@@ -232,4 +248,4 @@ updateUI=function(){
   if(g&&guardActiveB117g())button.innerHTML=`GUARDIAN<br><small>${g.orbit?`BLOCKS ${g.ready} READY · ${g.max-g.used} LEFT`:'PIP RETURNING'}</small>`;
   else if(pipStunnedB117g())button.innerHTML='GUARDIAN<br><small>PIP STUNNED</small>';
 };
-OVERDRIVE_INFO.guardian.desc='Hold: Pip flies to you and becomes your Guardian, charging blocks one by one (Lv1 2, Lv2-3 3, Lv4-5 4). Lv3+ blocks reflect a bolt; Lv5 mends up to 2 shields. Release for a knockback pulse. If every block breaks, Guardian ends and Pip is stunned 1.8s. Pip does nothing else while guarding.';
+OVERDRIVE_INFO.guardian.desc='Hold: Pip flies to you and becomes your Guardian, charging blocks one by one (Lv1 2, Lv2-3 3, Lv4-5 4). Lv3+ blocks reflect a bolt; Lv5 mends up to 2 shields. Release for a knockback pulse; charged blocks stay up until destroyed. If every block breaks, Guardian ends and Pip is stunned 1.8s. Pip does nothing else while guarding.';

@@ -154,5 +154,15 @@ function runFixChecksB117(){
     beginOverdriveHold('guardian',{pointerId:1,preventDefault(){}});assert(performance.now()-overHold.start>=OVERDRIVE_HOLD_MS-B117Q_REPEAT_MS-5,'overdrive repeat not shortened');cancelOverdriveHold();
   });
 
+  test('B117g charged blocks stay up after release until hits destroy them, and carry into the next hold',()=>{
+    arena(3);S.shields=3;press();step(1.4);assert(g().ready===2,'blocks not charged');stopOverdriveB38(false);
+    assert(!guardActiveB117g()&&S.b117Held?.n===2&&pipWithPlayer(),'blocks dropped or Pip not freed on release');
+    const h0=S.heat;step(3);assert(S.b117Held?.n===2&&S.heat>=h0,'held blocks decayed or drained HEAT');
+    foe(200);const n=shots.length;hit();assert(S.b117Held.n===1&&S.shields===3&&shots.length===n+1,'held block did not absorb and reflect');
+    S.heat=100;press();assert(g().ready===1&&g().charged===1&&!S.b117Held,'held block did not carry into the new hold');step(.1);stopOverdriveB38(false);
+    hit();assert(!S.b117Held&&S.shields===3,'last held block not used');hit();assert(S.shields===2,'hit after blocks gone did not land');assert(!pipStunnedB117g(),'held blocks stunned Pip');
+    S.b117Held={n:2,level:3};reset();assert(!S.b117Held,'held blocks survived a new run');
+  });
+
   return out;
 }
