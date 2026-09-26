@@ -81,7 +81,7 @@ updateUI=function(){
  const charge=S.b93StormCharge,clouds=S.b93StormClouds?.length||0,cool=S.b93StormCooldown||0;
  if(charge){button.disabled=false;button.classList.add('active');button.innerHTML=`THUNDERSTORM<br><small>GATHERING ${charge.clouds}/${B93_STORM_MAX_CLOUDS}</small>`}
  else if(clouds){button.disabled=true;button.innerHTML=`THUNDERSTORM<br><small>${clouds} CLOUD${clouds===1?'':'S'} STRIKING</small>`}
- else if(cool>0){button.disabled=true;button.innerHTML=`THUNDERSTORM<br><small>COOLDOWN ${cool.toFixed(1)}s</small>`}
+ else if(cool>0){button.disabled=true;button.innerHTML=`STORM<br><small>COOLDOWN ${cool.toFixed(1)}s</small>`}
  else if(canIgniteOverdriveB38('storm')){button.disabled=false;button.innerHTML='THUNDERSTORM<br><small>TAP OR HOLD</small>'}
 };
 

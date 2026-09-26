@@ -58,7 +58,7 @@ updateUI=function(){
 #overdrive.b116solid{opacity:1;border-color:#fff0a8;text-shadow:0 1px 2px #000c}
 #overdrive.b116solid::before{opacity:1;background:linear-gradient(0deg,#ffb347dd,#ffd36fb0)}
 #overdrive.b116notarget{border-color:#ff9f6f;animation:none}
-#overdrive.b116notarget small{color:#ffd0bd}
+#overdrive.b116notarget small{color:#4a1400;font-weight:900}
 `;
   document.head.appendChild(style);
 })();

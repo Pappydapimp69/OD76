@@ -133,6 +133,6 @@ drawPipB100=function(t){
   for(let i=0;i<9;i++){const q=(c.t*.7+i/9)%1,r=2.5+(i%3)*1.8;X.globalAlpha=(1-q)*.9;X.beginPath();X.arc(p.x+Math.sin(i*2.1+c.t*2.4)*(12+(i%3)*5),p.y+12-q*46,r,0,Math.PI*2);X.fill();X.stroke()}
   X.globalAlpha=.9;X.fillStyle="#ffffff";X.beginPath();X.arc(p.x-6,p.y-11,5,0,Math.PI*2);X.arc(p.x+2,p.y-13,6,0,Math.PI*2);X.arc(p.x+8,p.y-10,4,0,Math.PI*2);X.fill();
  }
- X.globalAlpha=1;X.strokeStyle=c.kind==="feed"?"#ffd36f":"#9fd3ff";X.lineWidth=4;X.beginPath();X.arc(p.x,p.y-40,9,-Math.PI/2,-Math.PI/2+Math.PI*2*k);X.stroke();
+ X.globalAlpha=1;X.strokeStyle=c.kind==="feed"?"#e0a52a":"#2f7fc4";X.lineWidth=4;X.beginPath();X.arc(p.x,p.y+34,9,-Math.PI/2,-Math.PI/2+Math.PI*2*k);X.stroke();
  X.restore();
 };
