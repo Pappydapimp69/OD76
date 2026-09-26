@@ -292,10 +292,10 @@ jobs:
           assert s.index('// B116e Ranch comforts') > s.index('// B116d Stage appetite') > s.index('// B116c Boss dash freeze') > s.index('// B116b Skill readout and Beam') > s.index('// B116a Storm levels') > s.index('// B115e Stage toll')
           assert s.index('// B117 Playtest survey') > s.index('// B116e Ranch comforts')
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B117-PLAYTEST-SURVEY-7/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B117-PLAYTEST-SURVEY-7/g' _site/index.html
-          grep -Fq 'OD76-2026-09-26-B117-PLAYTEST-SURVEY-7' _site/index.html
-          grep -Fq 'game.js?v=B117-PLAYTEST-SURVEY-7' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B117-PLAYTEST-SURVEY-8/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B117-PLAYTEST-SURVEY-8/g' _site/index.html
+          grep -Fq 'OD76-2026-09-26-B117-PLAYTEST-SURVEY-8' _site/index.html
+          grep -Fq 'game.js?v=B117-PLAYTEST-SURVEY-8' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

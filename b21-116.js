@@ -55,10 +55,30 @@ const releaseGamepadMenuABeforeB117h=releaseGamepadMenuA_B35;
 releaseGamepadMenuA_B35=function(){if(cancelHoldB117h('gamepad'))return;releaseGamepadMenuABeforeB117h()};
 const clearGamepadMenuBeforeB117h=clearGamepadMenuB35;
 clearGamepadMenuB35=function(){cancelHoldB117h('gamepad');clearGamepadMenuBeforeB117h()};
+// Cards read as name, then a small level/cost line, description and the hold hint across the full width.
+function tidyCardsB117h(){
+  for(const id of B117H_IDS){
+    const btn=$(id),b=btn?.querySelector(':scope > b');if(!b||btn.querySelector('.b117meta'))continue;
+    const t=b.textContent,i=t.indexOf(' · ');if(i<0)continue;
+    b.textContent=t.slice(0,i);b.insertAdjacentHTML('afterend',`<span class="b117meta">${t.slice(i+3)}</span>`);btn.classList.add('b117card');
+  }
+}
+const renderEmotionBeforeB117h=renderEmotionButtons;
+renderEmotionButtons=function(...a){const r=renderEmotionBeforeB117h(...a);tidyCardsB117h();return r};
+const renderAbilityShopBeforeB117h=renderAbilityShop;
+renderAbilityShop=function(...a){const r=renderAbilityShopBeforeB117h(...a);tidyCardsB117h();return r};
+const renderBossRewardBeforeB117h=renderBossRewardStep;
+renderBossRewardStep=function(...a){const r=renderBossRewardBeforeB117h(...a);tidyCardsB117h();return r};
 (function styleHoldB117h(){
   const style=document.createElement('style');
+  const ids=B117H_IDS.map(id=>'#stageUp #'+id);
   style.textContent=`#stageUp .b117h-holding{border-color:#ffd36f;box-shadow:0 0 0 3px #ffd36f33}
 ${B117H_IDS.map(id=>'#'+id).join(',')}{touch-action:none;user-select:none;-webkit-user-select:none}
-${B117H_IDS.map(id=>'#'+id+'::after').join(',')}{content:'HOLD TO CONFIRM';display:block;margin-top:5px;font-size:10px;letter-spacing:.06em;color:#ffd36f;opacity:.85}`;
+${ids.map(s=>s+'::after').join(',')}{content:'HOLD TO CONFIRM';grid-column:1 / -1;align-self:end;margin-top:10px;font-size:10.5px;font-weight:800;letter-spacing:.08em;color:#ffd36f;opacity:.85}
+#stageUp .upgrade.b117card{grid-template-rows:auto auto 1fr auto}
+#stageUp .upgrade.b117card b{font-size:clamp(17px,1.9vw,21px)}
+#stageUp .upgrade.b117card .b117meta{grid-column:1 / -1;grid-row:2;margin-top:8px;font-size:12.5px;font-weight:800;letter-spacing:.03em;color:#ffd36f}
+#stageUp .upgrade.b117card .small{grid-row:3}
+${ids.map(s=>s+'.b117card::after').join(',')}{grid-row:4}`;
   document.head.appendChild(style);
 })();
