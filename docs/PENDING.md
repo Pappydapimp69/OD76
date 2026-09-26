@@ -36,5 +36,6 @@ Sim (Pip 170px/s, reserve 110/115/120, drain 22/s; first block time after press 
 - Full bar empties in 5.0-5.5s holding (6-8s with Pip far). Current Guardian at Lv3: 8 instant blocks + full shield refill.
 
 Break ends Guardian: pulse fires, HEAT drain stops. Holding past the break does nothing.
-- Broken by hits: Pip stunned 1.8s (can't move or use skills), with a stun animation around Pip (e.g. circling stars).
+- Broken by hits: Pip stunned 1.8s (can't move or use skills), with a stun animation around Pip (e.g. circling stars) and a cartoon stun sound (chirping birds).
 - Released before the break: Pip resumes duties and all skills immediately.
+- Pulse visuals differ, power/range identical: release = strong, clean, intentional ring; break = fractured, broken, incomplete-looking ring.
