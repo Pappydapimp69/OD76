@@ -15,3 +15,12 @@ Pip is the Guardian:
 - On activation Pip drops whatever it's doing (gathering, carrying) and flies to orbit the player.
 - While Guardian is active Pip cannot collect resources or use any Pip skill.
 - On release Pip resumes normal behavior.
+
+Charge-up (Storm-cloud style):
+- Blocks charge one at a time while held, up to the level's block count.
+- First block ready after 1.8s, each further block 1.2s.
+- Each Guardian level trims delays ~10%.
+- Guardian Glow (heart skill) also shortens them, same factor it applies to shield recovery.
+- Timer starts once Pip reaches orbit.
+
+Open: when blocks run out — Guardian breaks (auto-ends, keep HEAT) and/or a penalty (Pip stunned). Awaiting call.
