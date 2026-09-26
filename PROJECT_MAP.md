@@ -87,6 +87,10 @@ B117 adds `b21-113.js`: an in-game playtest survey opened from the ranch Bag. It
 
 The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks charge after Pip returns, the flight costs at most 10% HEAT, a break stuns Pip 1.8s, and release/break fire distinct pulses.
 
+`b21-115.js` (B117 fix): Thunderstorm clouds always travel to their target at half the player's speed before striking.
+
+`b21-116.js` (B117 fix): hold to confirm for boss rewards, Pip traits and heart skills between stages.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

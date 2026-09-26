@@ -9,7 +9,7 @@ function runTransportChecksB60(){
   const test=(name,fn)=>{try{fn();results.push({name,ok:true})}catch(e){results.push({name,ok:false,error:e.message})}};
   test("Prism shop supports repeated purchases, exact inventory and explicit Continue",()=>{
     transportFixtureB60();openStageUpgrade();S.prismSeeds=3;renderEmotionButtons();
-    $("upLove").click();$("upLove").click();$("upSupport").click();
+    const hold=btn=>{beginHoldB117h(btn,"test");tickHoldB117h(performance.now()+B117H_MS)};hold($("upLove"));hold($("upLove"));hold($("upSupport"));
     assert(S.prismSeeds===0&&S.pipLove===2&&S.pipSupport===1,"wrong spending or trait totals");
     assert(!$("emotionStep").classList.contains("stagehidden"),"shop advanced prematurely");
     choosePipUpgrade("love");assert(S.pipLove===2&&S.prismSeeds===0,"overspend");
@@ -138,7 +138,7 @@ function runTransportChecksB60(){
     Object.defineProperty(navigator,"getGamepads",{configurable:true,value:()=>[pad]});
     try{
       focusGamepadButtonB35($("upCompassion"));
-      for(let i=0;i<2;i++){pad.buttons[0]={pressed:true,value:1};updateGamepadInput();pad.buttons[0]={pressed:false,value:0};updateGamepadInput()}
+      for(let i=0;i<2;i++){pad.buttons[0]={pressed:true,value:1};updateGamepadInput();tickHoldB117h(performance.now()+B117H_MS);pad.buttons[0]={pressed:false,value:0};updateGamepadInput()}
       assert(S.pipCompassion===2&&S.prismSeeds===1&&!$("emotionStep").classList.contains("stagehidden"),"controller did not repeat purchases");
       pad.buttons[1]={pressed:true,value:1};updateGamepadInput();assert(!$("abilityStep").classList.contains("stagehidden")&&S.prismSeeds===1,"controller Continue lost seeds");
     }finally{if(descriptor)Object.defineProperty(navigator,"getGamepads",descriptor);else delete navigator.getGamepads;for(const [btn,rect] of rects)btn.getBoundingClientRect=rect;clearGamepadMenuB35()}

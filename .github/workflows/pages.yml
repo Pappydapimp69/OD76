@@ -37,7 +37,7 @@ jobs:
         run: |
           test -f index.html
           for f in $(ls b21-*.js | sort -V); do node --check "$f"; done
-          test "$(ls b21-*.js | sort -V | tail -1)" = b21-114.js
+          test "$(ls b21-*.js | sort -V | tail -1)" = b21-116.js
           ! grep -q 'payload-' index.html
           ! grep -q 'DecompressionStream' index.html
           grep -Fq 'const B50_BOSS_TELEGRAPH_START=.55' b21-37.js

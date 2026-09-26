@@ -23,7 +23,7 @@ function runStormChecksB116(){
       assert(c.clouds===n&&c.full&&c.max===n,`Lv${lv} held ${c.clouds} clouds, wanted ${n}`);near(S.heat,100-8*n,`Lv${lv} HEAT`);
       assert(/FULL/.test($('overdrive').innerHTML),`Lv${lv} button not full`);
       foe(90);foe(90,300);release();assert(!S.b93StormCharge&&S.b93StormCooldown>0,`Lv${lv} release did not strike`);
-      if(n>1)assert(S.b93StormClouds.length===n,`Lv${lv} launched ${S.b93StormClouds.length} clouds`);else assert(strikes.length>=1&&!S.b93StormClouds.length,'Lv1 single cloud did not strike at once');
+      if(n>1)assert(S.b93StormClouds.length===n,`Lv${lv} launched ${S.b93StormClouds.length} clouds`);else assert(!strikes.length&&S.b93StormClouds.length===1,'Lv1 single cloud struck instantly instead of travelling');
       step(B93_STORM_COOLDOWN+3);press();const again=S.b93StormCharge;
       assert(again.clouds===0&&again.prog===0&&!again.auto&&!again.full&&again.spent===0,`Lv${lv} fresh press kept old charge state`);release();cancelStormChargeB93(false);strikes=[];
     }
@@ -73,17 +73,17 @@ function runStormChecksB116(){
     assert(/CHARGING 1\/1/.test($('overdrive').innerHTML)&&$('overdrive').disabled,'button does not show the tapped cloud charging');
     release();assert(S.b93StormCharge===c&&c.auto,'repeat pointerup cancelled the tapped cloud');
     step(2.05);assert(!strikes.length&&S.heat===60,'tapped cloud struck or spent early');
-    step(.15);assert(!S.b93StormCharge&&strikes.length===1&&[a,b].includes(strikes[0].e),'tapped cloud did not strike once');near(S.heat,52,'tapped cloud cost');
-    assert(!S.b93StormClouds.length&&S.b93StormCooldown>0,'auto strike queued clouds or skipped cooldown');step(4);assert(strikes.length===1,'more than one cloud struck');
+    step(.15);assert(!S.b93StormCharge&&!strikes.length&&S.b93StormClouds.length===1&&S.b93StormCooldown>0,'tapped cloud did not launch as one travelling cloud');near(S.heat,52,'tapped cloud cost');
+    step(3);assert(strikes.length===1&&[a,b].includes(strikes[0].e)&&!S.b93StormClouds.length,'tapped cloud did not strike once');step(4);assert(strikes.length===1,'more than one cloud struck');
   });
 
   test('B116 Lv3+ strikes arc to exactly one other nearby enemy for reduced damage',()=>{
-    arena(3,60);foe(80);foe(140);foe(180);tap();step(2.3);
+    arena(3,60);foe(80);foe(140);foe(180);tap();step(5.3);
     assert(strikes.length===2&&strikes[0].e!==strikes[1].e,`Lv3 strike hit ${strikes.length} times`);
     near(strikes[1].power,strikes[0].power*B116A_CHAIN_DAMAGE,'chain damage');assert(hyp(strikes[0].e.x-strikes[1].e.x,strikes[0].e.y-strikes[1].e.y)<=140,'chain went beyond range');
-    arena(5,60);foe(90);foe(90,130);press();step(1.8);release();step(.1);assert(strikes.length===2,'Lv5 did not chain');
-    arena(4,60);foe(90);foe(90,160);tap();step(2.3);assert(strikes.length===1,'chain reached an enemy beyond range');
-    arena(2,60);foe(80);foe(140);foe(180);tap();step(2.3);assert(strikes.length===1,'Lv2 chained');
+    arena(5,60);foe(90);foe(90,130);press();step(1.8);release();step(3);assert(strikes.length===2,'Lv5 did not chain');
+    arena(4,60);foe(90);foe(90,160);tap();step(5.3);assert(strikes.length===1,'chain reached an enemy beyond range');
+    arena(2,60);foe(80);foe(140);foe(180);tap();step(5.3);assert(strikes.length===1,'Lv2 chained');
   });
 
   test('B116 the old Constellation ricochet no longer drives the storm',()=>{
@@ -91,5 +91,11 @@ function runStormChecksB116(){
     assert(strikes.length===2&&strikes.every(s=>s.power===stormDamageB116a(2)),`Constellation changed the strikes: ${strikes.length}`);
     strikes=[];assert(strikeStormTargetB93(enemies.find(e=>!e.dead),bossPowerLevel('constellation'),1)===1&&strikes.length===1,'strikeStormTargetB93 still ricochets');
   });
+  test('B117 clouds travel to their target at half the player speed',()=>{
+    arena(1,60);const e=foe(0,-300);press();step(2.3);release();step(.05);const c=S.b93StormClouds[0];assert(c&&!strikes.length,'cloud not in flight');
+    const y0=c.y;step(1);near(y0-c.y,playerSpeedB61()*.5,'cloud speed',1.5);assert(!strikes.length,'struck mid-flight');
+    step(4);assert(strikes.length===1&&strikes[0].e===e,'cloud never struck');
+  });
+
   return out;
 }
