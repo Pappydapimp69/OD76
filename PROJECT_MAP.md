@@ -97,6 +97,8 @@ The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks
 
 `b21-119.js` (B117 fix): the playtest survey splits ranch time (idle, clearing obstacles, farming, training) and counts solo vs together trainings per drill station.
 
+`b21-120.js` (B117 fix): petting Pip rolls for a Star Stone at +1% per 15 arena minutes and +1% per 500 kills since the last stone; a stone resets both.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

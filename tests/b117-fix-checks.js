@@ -98,5 +98,23 @@ function runFixChecksB117(){
     ranchB99.fatigue=99;ranchB99.hunger=0;ranchB99.hygiene=0;weekPassedB104('drill');assert(ranchB99.fatigue===100,'fatigue passed 100');
   });
 
+  test('B117p petting: +1% per 15 arena minutes and per 500 kills, a stone resets both',()=>{
+    const roll=petRollB117p;
+    try{
+      ranchB99=Object.assign(ranchDefaultB99(),{hearts:0});ensurePointsB100(ranchB99);syncCapsB102();ranchB99.starStones=0;ranchB99.b117Pet={arena:0,kills:0};
+      assert(petChanceB117p()===0,'chance without play');
+      arena(1);S.overType='beam';step(2);assert(Math.abs(petStateB117p().arena-2)<.05,'arena time not counted');
+      const e=foe(100);kill(e);kill(e);assert(petStateB117p().kills===1,'kill miscounted');
+      ranchB99.b117Pet={arena:1800,kills:500};assert(Math.abs(petChanceB117p()-.03)<1e-9,'30 min + 500 kills not 3%');
+      ranchB99.b117Pet={arena:899,kills:499};assert(petChanceB117p()===0,'partial blocks counted');
+      reset();openRanchB99();ranchB99.b117Pet={arena:1800,kills:500};ranchB99.starStones=0;
+      petRollB117p=()=>.05;pipSheetB104();assert(/chance when petted: 3%/.test($('ranchSheetB100').textContent),'chance not shown');
+      ranchWorldB100.sheet.options.find(o=>o.label==='Pet Pip').run();assert(ranchB99.starStones===0&&petStateB117p().arena===1800,'miss gave a stone or reset');
+      petRollB117p=()=>.02;closeSheetB100();pipSheetB104();ranchWorldB100.sheet.options.find(o=>o.label==='Pet Pip').run();
+      assert(ranchB99.starStones===1&&petStateB117p().arena===0&&petStateB117p().kills===0,'hit did not give a stone and reset');
+      ranchB99.b117Pet={arena:900,kills:0};saveRanchB99();assert(loadRanchB99().b117Pet.arena===900,'progress lost on reload');
+    }finally{petRollB117p=roll;closeSheetB100();ranchWorldB100.active=false}
+  });
+
   return out;
 }
