@@ -2,7 +2,7 @@
 
 ## B118 proposals (feedback session — build on go)
 
-### 1. Guardian level tiers (Beam/Storm pattern)
+### 1. Guardian level tiers (Beam/Storm pattern) — APPLIED as a B117 fix (`b21-114.js`)
 Current: 25% HEAT to start, drains 22 energy/s while held. Absorbs 2+2×Lv hits (12 at Lv5), refills all shields on start, knockback pulse every 0.7s.
 
 - Lv1: 2 blocks, small knockback pulse.

@@ -39,7 +39,8 @@
 - B115 fix: HEAT regen is 1 point every 3 s up to 20% of the meter (+1% per Constellation level) and pauses 3 s after any skill.
 - B116 Playtest pass two (`b21-108`–`b21-112`): Thunderstorm levels and per-cloud charge with a Lv 3 chain; skill button fills toward the ignition line; Beam needs a target and scales with level; Fang's dash freeze; food follows HEAT spent and cleanliness follows kills, hits and bosses; shop cursor, owned counts, ranch sounds, timed feeding and washing.
 - B117 Playtest survey (`b21-113`): in-game survey from the ranch Bag, stats tracked automatically, copy or share the answers.
-- 326 automated checks pass across all 113 ordered modules.
+- B117 Guardian fix (`b21-114`, no new build number): Pip is the Guardian — tiered blocks, 10% return cap, break stun, release/break pulses.
+- 334 automated checks pass across all 114 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

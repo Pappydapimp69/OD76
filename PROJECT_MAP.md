@@ -85,6 +85,8 @@ B116 Playtest pass two adds five modules:
 
 B117 adds `b21-113.js`: an in-game playtest survey opened from the ranch Bag. It tracks play stats in localStorage, fills them in automatically, and lets the player copy or share the answers.
 
+The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks charge after Pip returns, the flight costs at most 10% HEAT, a break stuns Pip 1.8s, and release/break fire distinct pulses.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.
