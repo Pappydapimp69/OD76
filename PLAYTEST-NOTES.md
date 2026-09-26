@@ -31,3 +31,7 @@ B114 feedback shipped in B115; see README.
    - While frozen: movement, auto-fire, dash and skills are all locked. Pip keeps acting normally.
    - HEAT regen pauses during the freeze.
    - Any skill being held or charged is cancelled and its HEAT is lost (no refund).
+
+6. **Food/cleanliness per stage** (pending build; replaces 3 + ceil(stage/2) for both):
+   - Food: 2 + max(1, 0.5 × stage#) + 1 per 25% HEAT spent in the stage.
+   - Cleanliness (proposed, unconfirmed): 2 + 1 per 15 kills + 1 per hit taken + 3 on boss stages.
