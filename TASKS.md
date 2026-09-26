@@ -43,7 +43,8 @@
 - B117 Storm fix (`b21-115`): no instant strike; clouds drift to targets at half player speed.
 - B117 Hold fix (`b21-116`): boss rewards, Pip traits and heart skills buy on a completed hold.
 - B117 Input guard fix (`b21-117`): 0.7s of ignored input when a stage ends.
-- 337 automated checks pass across all 117 ordered modules.
+- B117 Needs fix (`b21-118`): a ranch week that starts at 0 food or 0 clean adds +10 fatigue each.
+- 338 automated checks pass across all 118 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

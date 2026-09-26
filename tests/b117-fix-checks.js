@@ -90,5 +90,13 @@ function runFixChecksB117(){
     }finally{stageInputLockMsB117i=saved;stageInputLockB117i=0}
   });
 
+  test('B117n a week starting at 0 food or 0 clean adds +10 fatigue each; sleep still works',()=>{
+    const week=(h,g,kind='drill')=>{ranchB99.hunger=h;ranchB99.hygiene=g;ranchB99.fatigue=40;weekPassedB104(kind);return ranchB99.fatigue};
+    assert(week(80,80)===40,'fed and clean Pip tired');
+    assert(week(0,80)===50,'empty food not +10');assert(week(80,0)===50,'empty clean not +10');assert(week(0,0)===60,'both empty not +20');
+    assert(week(10,10,'rest')===40,'week that began above 0 was penalised');
+    ranchB99.fatigue=99;ranchB99.hunger=0;ranchB99.hygiene=0;weekPassedB104('drill');assert(ranchB99.fatigue===100,'fatigue passed 100');
+  });
+
   return out;
 }

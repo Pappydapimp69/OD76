@@ -93,6 +93,8 @@ The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks
 
 `b21-117.js` (B117 fix): pointer, keyboard and gamepad input is ignored for 0.7s when the stage-end upgrade screen opens.
 
+`b21-118.js` (B117 fix): a ranch week that begins with food or cleanliness at 0 adds +10 fatigue for each.
+
 ## Access Pattern
 
 1. Read `AGENTS.md`, `PROJECT_MAP.md`, `TASKS.md`, and the relevant blueprint.

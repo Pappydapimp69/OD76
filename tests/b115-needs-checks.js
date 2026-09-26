@@ -15,7 +15,7 @@ function runNeedsChecksB115(){
     const w=ranchWorldB100;assert(w.sheet&&w.sheet.options[0].label==='Rest a week'&&$('ranchSheetB100').textContent.includes('always sleep'),'bed sheet did not offer rest');
     press();assert(ranchB99.hunger===0&&ranchB99.hygiene===0,'needs went below 0 or did not drop');
     assert(ranchB99.fatigue===30&&ranchB99.week===2&&w.pip.state==='sleep','Pip did not sleep');
-    restB99();assert(ranchB99.hunger===0&&ranchB99.hygiene===0&&ranchB99.fatigue===0&&ranchB99.week===3,'second rest at 0 needs failed');
+    restB99();assert(ranchB99.hunger===0&&ranchB99.hygiene===0&&ranchB99.fatigue===20&&ranchB99.week===3,'second rest at 0 needs failed (B117: +20 fatigue when a week starts at 0 food and 0 clean)');
   });
   test('B115 week hooks still run when Pip sleeps',()=>{
     fresh({areas:{garden:false,kitchen:false,orchard:true}});restB99();assert(!ranchB99.orchard.apples&&ranchB99.orchard.weeks===1,'orchard week hook skipped');
