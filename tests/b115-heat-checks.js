@@ -26,7 +26,7 @@ function runHeatChecksB115(){
   test('B115 HEAT regenerates 1 point every 3 seconds and waits 3 seconds after Beam is used',()=>{
     arena();const one=100/heatCapacityB38();near(heatRegenRateB115(),one/3,'regen rate');
     step(2.9);near(S.heat,0,'regen ticked before 3 seconds');step(.2);near(S.heat,one,'first point at 3 seconds');step(3);near(S.heat,2*one,'second point at 6 seconds');
-    S.heat=30;assert(triggerOverdrive()&&S.over>0,'Beam did not fire');step(1);
+    S.heat=30;foe();assert(triggerOverdrive()&&S.over>0,'Beam did not fire');step(1);
     const held=S.heat;near(held,30-B38_DRAIN_ENERGY_PER_SEC.beam/heatCapacityB38()*100,'regen ran while Beam was held');
     stopOverdriveB38(false);assert(S.over===0,'Beam did not stop');step(2.9);near(S.heat,held,'regen resumed inside the 3-second wait');
     step(3.2);near(S.heat,held+one,'regen did not resume after the wait');
