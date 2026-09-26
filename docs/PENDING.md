@@ -45,3 +45,12 @@ Give Nova, Gravity Well and Ascended Pip the same 5-level shape: Lv1-2 grow the 
 
 ### 3. Rank-up exams
 Ranks stop unlocking on their own. At the arena gate, once Pip qualifies, the next rank offers an exam: a boss fight at that rank. Winning unlocks the rank; losing costs the usual fatigue but nothing else. Details (qualify rule, exam boss per rank, rewards) to be proposed.
+
+### 4. Pip moods in battle
+Pip's ranch care carries into the arena. A fed, clean, rested Pip starts a battle test with a small mood buff; a neglected one starts with a mood quirk. Mood shows at the arena gate. Buff/quirk list to be proposed.
+
+### 5. Ranch focus: less grind
+Scent Hunt (Heart Sense) and Star Target (Star Power) stay. Sky Laps (Swift) and Glow Pond (Guardian Glow) are generic button timers; replace them with movement games that match their stat:
+- Sky Laps → Race: Pip flies a checkpoint lap around the ranch; the player runs to each checkpoint before Pip passes it.
+- Glow Pond → Shelter: glow pebbles fall toward Pip; the player walks under them to catch/block them before they land.
+Further grind cuts (fewer repeat drills needed, bigger rewards per drill) to be proposed with these.
