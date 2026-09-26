@@ -8,7 +8,7 @@ const byNumberB112 = (a, b) => Number(a.match(/\d+/g).pop()) - Number(b.match(/\
 const modules = fs.readdirSync(root).filter(n => /^b21-\d{2,3}\.js$/.test(n)).sort(byNumberB112);
 const source = modules.map(n => fs.readFileSync(path.join(root, n), 'utf8')).join('');
 new vm.Script(source, { filename: 'game.js' });
-const version = 'B117-PLAYTEST-SURVEY-2';
+const version = 'B117-PLAYTEST-SURVEY-3';
 const date = '2026-09-26';
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
   .replaceAll('OD76-2026-08-12-B21-STARDRIVE', `OD76-${date}-${version}`)
