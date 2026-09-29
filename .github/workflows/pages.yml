@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B118 Arena Endurance ${{ github.sha }}
+run-name: OD76 B118 Arena Endurance 3 ${{ github.sha }}
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-fund --no-audit
           npm test
-      - name: Verify B118 Arena Endurance and previous build contracts
+      - name: Verify B118 Arena Endurance 3 and previous build contracts
         run: |
           test -f index.html
           for f in $(ls b21-*.js | sort -V); do node --check "$f"; done
@@ -293,10 +293,10 @@ jobs:
           assert 'function eatSnackB118()' in s
           assert 'B118_SNACK_PRICES=[20,30,45]' in s
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B118-ARENA-ENDURANCE/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B118-ARENA-ENDURANCE/g' _site/index.html
-          grep -Fq 'OD76-2026-09-29-B118-ARENA-ENDURANCE' _site/index.html
-          grep -Fq 'game.js?v=B118-ARENA-ENDURANCE' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B118-ARENA-ENDURANCE-3/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B118-ARENA-ENDURANCE-3/g' _site/index.html
+          grep -Fq 'OD76-2026-09-29-B118-ARENA-ENDURANCE-3' _site/index.html
+          grep -Fq 'game.js?v=B118-ARENA-ENDURANCE-3' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

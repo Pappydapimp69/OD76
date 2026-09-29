@@ -114,4 +114,4 @@ renderTollGateB115=function(){
 const renderRanchBeforeB118=renderRanchB99;
 renderRanchB99=function(){renderRanchBeforeB118();const p=$('ranchReportB99');if(p)p.textContent+=` Arena fatigue max ${fatigueMaxB118()} · best Pip Lv ${ranchB99.bestPipLevel}.`};
 const renderRanchHudBeforeB118=renderRanchHudB100;
-renderRanchHudB100=function(){renderRanchHudBeforeB118();const spans=$('ranchHudB100')?.querySelectorAll('span');if(spans?.[2])spans[2].textContent=`Fatigue ${ranchB99.fatigue} · Arena max ${fatigueMaxB118()}`};
+renderRanchHudB100=function(){renderRanchHudBeforeB118();const spans=$('ranchHudB100')?.querySelectorAll('span');if(spans?.[2])spans[2].textContent=`Tired · Arena max ${fatigueMaxB118()}`};
