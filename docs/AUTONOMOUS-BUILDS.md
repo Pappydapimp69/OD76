@@ -93,7 +93,9 @@ Structural pass after B117: Skeleton 1 consolidates the final Thunderstorm behav
 
 Direct build after B117: B118 Arena Endurance in `b21-124.js`. New all-time-high Pip levels bank permanent arena fatigue for future runs; a deterministic stage merchant sells three arena-only fatigue snacks per run. User-requested; does not increment the loop count. 350 checks pass across 118 modules.
 
-Next: select loop 16 / B119 from the B118 baseline. No gameplay implementation is currently unfinished.
+Direct build after B118: B119 Farm weeks in `b21-125.js`. The player waters crops for free; dry weeks grow half, then nothing, then wither the crop; every week that ends fades to "Week N". User-requested; does not increment the loop count.
+
+Next: select loop 16 / B120 from the B119 baseline. No gameplay implementation is currently unfinished.
 
 Validation notes: use `rg -uuu` with an explicit path to find ignored numbered modules. On Windows/Codex set `NODE_PATH=C:/Users/Kompooter/Documents/OD76/node_modules` for the existing JSDOM dependency; on Linux `npm ci` needs no override. `HANDOFF.md` carries the full per-environment toolchain. Check the entire test outcome, not only the final passing lines. `scripts/serve.mjs` serves `_site` at port 8176 and local fixtures at `/qa`; inspect whether a server is already running before starting one. Update build version, test module count/order, both workflow module lists and stamp/cache key together. Browser tests use CUA and production-path fixture buttons, never application-state injection from evaluate.
 

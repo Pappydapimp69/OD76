@@ -181,7 +181,7 @@ function runRanchChecksB99(){
     fresh({hearts:500,areas:{garden:true,kitchen:false,orchard:false}});
     assert(!tillB105(0),'tilled without hoe');buyToolB105('hoe');buyToolB105('can');buyItemB104('seed_carrot');
     assert(tillB105(0)&&plantB105(0,'carrot')&&!itemCountB104('seed_carrot'),'plant failed');
-    restB99();assert(plotB105(0).stage===0,'grew unwatered');
+    restB99();assert(plotB105(0).stage===.5&&plotB105(0).dry===1,'B119 dry week should grow half');plotB105(0).stage=0;plotB105(0).dry=0;
     assert(waterB105(0)&&!waterB105(0),'water twice');restB99();assert(plotB105(0).stage===1&&!plotB105(0).watered,'watered crop did not grow');
     waterAllB105();restB99();assert(plotRipeB105(plotB105(0)),'carrot not ripe after 2 watered weeks');assert(!waterB105(0),'watered ripe crop');
     const h=harvestB105(0);assert(h.n===2&&itemCountB104('carrot')===2&&!plotB105(0).crop&&plotB105(0).tilled,'harvest wrong');
@@ -242,9 +242,9 @@ function runRanchChecksB99(){
     assert(!clearObstacleB106(tree.id),'cleared twice');ranchB99.fatigue=B99_TIRED;assert(!clearObstacleB106(B106_OBSTACLES.find(o=>o.tree&&o!==tree).id),'tired Pip chopped');
     assert(loadRanchB99().cleared[tree.id]&&siteOpenB106(tree.site),'clearing not saved');
   });
-  test('B106 tilling and watering tire Pip and stop when he is tired',()=>{
+  test('B106 tilling tires Pip and stops when he is tired; B119 watering is free',()=>{
     fresh({fatigue:0,areas:{garden:true,kitchen:false,orchard:false},tools:{hoe:true,can:true,axe:false,sickle:false}});addItemB104('seed_carrot',2);
-    assert(tillB105(0)&&ranchB99.fatigue===8,'till fatigue');plantB105(0,'carrot');assert(waterB105(0)&&ranchB99.fatigue===12,'water fatigue');
+    assert(tillB105(0)&&ranchB99.fatigue===8,'till fatigue');plantB105(0,'carrot');assert(waterB105(0)&&ranchB99.fatigue===8,'B119 watering is free');
     ranchB99.fatigue=B99_TIRED;assert(!tillB105(1),'tired Pip tilled');
   });
   test('B106 the stall sells the axe and sickle before any area opens',()=>{
@@ -315,13 +315,12 @@ function runRanchChecksB99(){
     const i=ranchWorldB100.sheet.options.findIndex(o=>o.label.startsWith('Let Pip'));focusSheetB100(i);press();
     assert(ranchWorldB100.b109Action?.kind==='cut'&&obstacleStandingB106(shrub),'sheet option skipped the animation');runFor(B109_APPROACH_MAX+2.2);assert(!obstacleStandingB106(shrub),'cut never finished');
   });
-  test('B109 X tills, waters and harvests garden plots; tired Pips only get A',()=>{
+  test('B109 X tills and harvests garden plots (B119: you water); tired Pips only get A',()=>{
     fresh({fatigue:0,areas:{garden:true,kitchen:false,orchard:false},tools:{hoe:true,can:true,axe:false,sickle:false}});openRanchB99();
     const q=B105_PLOT_POS[0];ranchWorldB100.px=q.x;ranchWorldB100.py=q.y;updateRanchB100(.016);
     assert(pipActionForB109(nearestInteractB100())?.kind==='till','till not offered');pressX();runFor(B109_APPROACH_MAX+2.1);assert(plotB105(0).tilled,'till failed');
-    addItemB104('seed_carrot');plantB105(0,'carrot');updateRanchB100(.016);assert(pipActionForB109(nearestInteractB100())?.kind==='water','water not offered');
-    ranchB99.fatigue=B99_TIRED;assert(!pipActionForB109(nearestInteractB100()),'tired Pip offered water');ranchB99.fatigue=0;
-    pressX();runFor(B109_APPROACH_MAX+1.3);assert(plotB105(0).watered,'water failed');
+    addItemB104('seed_carrot');plantB105(0,'carrot');updateRanchB100(.016);assert(!pipActionForB109(nearestInteractB100()),'B119 Pip should not water');
+    assert(waterB105(0)&&plotB105(0).watered,'water failed');
     plotB105(0).stage=2;updateRanchB100(.016);assert(pipActionForB109(nearestInteractB100())?.kind==='harvest','harvest not offered');pressX();runFor(B109_APPROACH_MAX+1.1);assert(itemCountB104('carrot')===2,'harvest failed');
   });
   test('B109 the keyboard X key and leaving mid-job both behave',()=>{

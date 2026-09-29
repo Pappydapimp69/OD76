@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B118 Arena Endurance 4 ${{ github.sha }}
+run-name: OD76 B119 Farm Weeks ${{ github.sha }}
 
 on:
   push:
@@ -33,11 +33,11 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-fund --no-audit
           npm test
-      - name: Verify B118 Arena Endurance 4 and previous build contracts
+      - name: Verify B119 Farm Weeks and previous build contracts
         run: |
           test -f index.html
           for f in $(ls b21-*.js | sort -V); do node --check "$f"; done
-          test "$(ls b21-*.js | sort -V | tail -1)" = b21-124.js
+          test "$(ls b21-*.js | sort -V | tail -1)" = b21-125.js
           ! grep -q 'payload-' index.html
           ! grep -q 'DecompressionStream' index.html
           grep -Fq 'const B50_BOSS_TELEGRAPH_START=.55' b21-37.js
@@ -178,7 +178,8 @@ jobs:
               '// B116d Stage appetite',
               '// B116e Ranch comforts',
               '// B117 Playtest survey',
-              '// B118 Arena Endurance'
+              '// B118 Arena Endurance',
+              '// B119 Farm weeks'
           ]:
               assert marker in s, marker
           assert s.rfind('pipWithPlayer=function()') > s.find('function pipWithPlayer()')
@@ -292,11 +293,14 @@ jobs:
           assert 'function buySnackB118()' in s
           assert 'function eatSnackB118()' in s
           assert 'B118_SNACK_PRICES=[20,30,45]' in s
+          assert s.index('// B119 Farm weeks') > s.index('// B118 Arena Endurance')
+          assert 'B119_DRY_GROWTH=[1,.5,0],B119_WITHER_WEEKS=3' in s
+          assert 'function playWeekFadeB119(f)' in s
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B118-ARENA-ENDURANCE-4/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B118-ARENA-ENDURANCE-4/g' _site/index.html
-          grep -Fq 'OD76-2026-09-29-B118-ARENA-ENDURANCE-4' _site/index.html
-          grep -Fq 'game.js?v=B118-ARENA-ENDURANCE-4' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B119-FARM-WEEKS/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B119-FARM-WEEKS/g' _site/index.html
+          grep -Fq 'OD76-2026-09-29-B119-FARM-WEEKS' _site/index.html
+          grep -Fq 'game.js?v=B119-FARM-WEEKS' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

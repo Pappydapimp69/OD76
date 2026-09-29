@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B119: Farm weeks
+
+You water the crops yourself now. It's free, and it works even when Pip is tired. Crops need water every ranch week: a week that ends dry grows them only half a week, a second dry week in a row grows nothing, and a third withers the crop. A 💧 marks an unwatered plot and a 🥀 warns that it will wither. Every time a week ends (training, resting or a battle test) the screen fades to **Week N** with what happened to your crops, and resting plays a little twinkle.
+
 ## B117: Playtest survey
 
 At the ranch, open the Bag and choose **Playtest survey**. The game fills in your play stats by itself (time played, runs, highest stage, rank, most-used skill, best chain and more), so you only answer the opinion questions. Then tap **Copy answers** or **Share** to send them. Unsent answers are saved as a draft.
