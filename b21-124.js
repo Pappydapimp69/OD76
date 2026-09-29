@@ -75,7 +75,7 @@ function snackPriceB118(){return B118_SNACK_PRICES[Math.min(B118_SNACK_PRICES.le
 function buySnackB118(){
  if(!S?.stagePending||!merchantStageB118()||S.b118SnackBought>=B118_SNACK_PRICES.length)return false;
  const price=snackPriceB118();if(S.heartCurrency<price)return false;
- S.heartCurrency-=price;S.b118SnackBought++;S.b118Snacks++;renderTollGateB115();updateUI();return true;
+ S.heartCurrency-=price;S.b118SnackBought++;S.b118Snacks++;updateUI();return true;
 }
 function eatSnackB118(){
  if(!S?.stagePending||!exhaustedB115()||!(S.b118Snacks>0))return false;
@@ -85,29 +85,42 @@ function eatSnackB118(){
 (function installArenaEnduranceB118(){
  const gate=$('ranchGateStepB99'),meters=$('ranchGateMetersB115'),actions=gate?.querySelector('.b99Actions');if(!gate||!meters||!actions)return;
  const merchant=document.createElement('div');merchant.id='arenaMerchantB118';merchant.className='stagehidden';
- merchant.innerHTML='<div><b>✦ ARENA MERCHANT</b><span id="merchantTextB118"></span></div><button id="buySnackB118" class="primary" type="button"></button>';
- meters.insertAdjacentElement('beforebegin',merchant);
+ merchant.innerHTML='<h2>✦ Arena Merchant</h2><p id="merchantTextB118"></p><button id="buySnackB118" class="primary" type="button"></button><button id="leaveMerchantB118" type="button">Continue without buying</button>';
+ $('stageUp').querySelector('.card').appendChild(merchant);
  const eat=document.createElement('button');eat.id='eatSnackB118';eat.className='primary stagehidden';eat.type='button';actions.insertAdjacentElement('beforebegin',eat);
- $('buySnackB118').addEventListener('click',buySnackB118);eat.addEventListener('click',eatSnackB118);
+ $('buySnackB118').addEventListener('click',()=>resolveMerchantB118(true));$('leaveMerchantB118').addEventListener('click',()=>resolveMerchantB118(false));eat.addEventListener('click',eatSnackB118);
  const style=document.createElement('style');style.id='arenaEnduranceStyleB118';
- style.textContent='#arenaMerchantB118{border:1px solid #ffd36f55;background:#20170688;border-radius:12px;padding:10px;margin:9px 0;display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center}#arenaMerchantB118 b{display:block;color:#ffe7a3;font-size:12px}#arenaMerchantB118 span{display:block;color:var(--muted);font-size:10px;margin-top:3px}#arenaMerchantB118 button{width:auto;min-width:150px}#eatSnackB118{margin:9px 0;border-color:#ffd36f;background:#503915}@media(max-width:560px){#arenaMerchantB118{grid-template-columns:1fr}#arenaMerchantB118 button{width:100%}}';
+ style.textContent='#arenaMerchantB118 button{width:100%;margin-top:9px}#eatSnackB118{margin:9px 0;border-color:#ffd36f;background:#503915}';
  document.head.appendChild(style);
 })();
+
+function renderMerchantB118(){
+ const bought=S?.b118SnackBought||0,left=Math.max(0,3-bought),price=snackPriceB118();
+ $('merchantTextB118').textContent=left?`Arena snacks restore ${B118_SNACK_HEAL} fatigue between stages. ${left} remain this run.`:'The merchant is sold out for this run.';
+ const buy=$('buySnackB118');buy.textContent=left?`Buy snack · ♥ ${price}`:'SOLD OUT';buy.disabled=!left||S.heartCurrency<price;
+}
+function openMerchantB118(){
+ for(const el of stageStepsB99())el.classList.add('stagehidden');$('ranchGateStepB99').classList.add('stagehidden');
+ $('arenaMerchantB118').classList.remove('stagehidden');renderMerchantB118();
+}
+function resolveMerchantB118(buy){
+ if(!S?.stagePending)return;if(buy&&!buySnackB118())return;
+ $('arenaMerchantB118').classList.add('stagehidden');
+ if(buy)openRanchGateB99();else openStageUpgradeBeforeB118();
+}
+const openStageUpgradeBeforeB118=openStageUpgrade;
+openStageUpgrade=function(){openStageUpgradeBeforeB118();if(merchantStageB118())openMerchantB118()};
 
 renderTollGateB115=function(){
  const bars=$('ranchGateBarsB115');if(!bars)return;
  const r=ranchB99,t=S?.b115Toll||{},fatigue=arenaFatigueB118(),max=fatigueMaxB118(),sign=d=>d>0?`+${d}`:d<0?`−${-d}`:'±0';
- const row=(label,v,d,cls,pct=v)=>`<span>${label} ${v} (${sign(d||0)})${cls==='fat'?` · max ${max}`:''}</span><div class="b115Bar ${cls}"><i style="width:${clamp(pct,0,100)}%;background-size:${10000/Math.max(pct,1)}% 100%"></i></div>`;
+ const row=(label,v,d,cls,pct=v)=>`<span>${label} ${v} (${sign(d||0)})</span><div class="b115Bar ${cls}"><i style="width:${clamp(pct,0,100)}%;background-size:${10000/Math.max(pct,1)}% 100%"></i></div>`;
  bars.innerHTML=row('Tired',fatigue,t.fatigue,'fat',100*fatigue/max)+row('Food',r.hunger,t.hunger,'food')+row('Clean',r.hygiene,t.hygiene,'clean');
- const notes=needNotesB115(),away=t.away>=1?`Pip spent ${Math.floor(t.away)}s away fetching hearts this stage. `:'';
- $('ranchGateDebuffsB115').textContent=away+(notes.length?notes.join('. ')+'.':'No penalties: Pip feels fine.');
+ $('ranchGateDebuffsB115').textContent='';
  const done=exhaustedB115(),snacks=S?.b118Snacks||0;
  $('ranchGateExhaustB115').textContent=done?(snacks?'Pip has no free fatigue. Feed him an arena snack or return to the ranch.':'Pip is exhausted — return to the ranch.') :'';
  $('nextStageB99').disabled=done;
  const eat=$('eatSnackB118');if(eat){eat.textContent=`Feed Pip an arena snack · ${snacks} left · −${B118_SNACK_HEAL} fatigue`;eat.classList.toggle('stagehidden',!(done&&snacks>0))}
- const merchant=$('arenaMerchantB118'),eligible=merchantStageB118(),bought=S?.b118SnackBought||0,left=Math.max(0,3-bought),price=snackPriceB118();
- if(merchant){merchant.classList.toggle('stagehidden',!eligible);$('merchantTextB118').textContent=left?`Arena snacks restore ${B118_SNACK_HEAL} fatigue between stages. ${left} remain this run.`:'Sold out for this run.';
-  const buy=$('buySnackB118');buy.textContent=left?`Buy snack · ♥ ${price}`:'SOLD OUT';buy.disabled=!left||S.heartCurrency<price}
  const why=$('ranchGateWhyB116d');if(why)why.textContent=appetiteTextB116d(t.why);
 };
 
