@@ -27,7 +27,9 @@ Standalone OD76 game workspace with Brain/GitHub workflow intact and compact age
 
 ## Current Build
 
-B117 Skeleton 1 is behavior-preserving consolidation. Thunderstorm is authoritative in `b21-108.js`, the Heart Refinery in `b21-90.js`, and playtest survey/telemetry in `b21-113.js`. Six superseded fragment modules were removed; the complete game now assembles from 117 ordered modules. See `docs/B117-skeleton-consolidation.md`.
+B118 Arena Endurance adds permanent maximum fatigue from newly reached Pip levels and an arena-only snack merchant in `b21-124.js`. See `docs/B118-arena-endurance.md`.
+
+B117 Skeleton 1 is behavior-preserving consolidation. Thunderstorm is authoritative in `b21-108.js`, the Heart Refinery in `b21-90.js`, and playtest survey/telemetry in `b21-113.js`. Six superseded fragment modules were removed. See `docs/B117-skeleton-consolidation.md`.
 
 B93 originally added `b21-82.js`; its surviving Thunderstorm behavior is now consolidated in `b21-108.js`.
 
@@ -106,6 +108,8 @@ The former `b21-121.js` B117 fix, now consolidated in `b21-90.js`, gives the Hea
 `b21-122.js` (B117 fix): Setup (Pip prepares openings, gold diamond, flank lure) is paused behind `pipSetupOnB117u`; Emergency Return stays.
 
 `b21-123.js` (B117 fix): between stages, re-holding the same upgrade right after it confirms takes 0.7s (Overdrive, Sound Lab, boss rewards, traits, heart skills); any other input resets to the full hold.
+
+`b21-124.js` (B118): each new all-time-high Pip level banks +4 maximum arena fatigue for future runs. A merchant appears after stage 7 and every five stages, selling three arena-only snacks for 20/30/45 hearts; each restores 15 fatigue at an exhausted stage gate.
 
 ## Access Pattern
 

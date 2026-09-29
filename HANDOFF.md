@@ -58,14 +58,14 @@ application-state injection from `evaluate`.
 
 ## Current state
 
-B117 Skeleton 1 consolidates three complete systems without changing gameplay: Thunderstorm (`b21-108.js`), Heart Refinery (`b21-90.js`) and survey/telemetry (`b21-113.js`). The six superseded fragment files are gone; 344 checks cover the 117-module assembled game. The pre-consolidation backup is `archive/pre-consolidation-b117` at `a24dedc`.
+B118 Arena Endurance is the head in `b21-124.js`: each newly reached all-time-high Pip level banks +4 maximum arena fatigue for future runs. The stage-7 merchant returns every five stages with three run-only snacks priced at ♥20/30/45; each restores 15 fatigue when free fatigue reaches zero. 350 checks cover the 118-module game. The pre-consolidation backup remains `archive/pre-consolidation-b117` at `a24dedc`.
 
-B117 Playtest survey (`b21-113.js`) is the head; B116 Playtest pass two (`b21-108.js`–`b21-112.js`); B115 Playtest pass (`b21-103.js`–`b21-107.js`); B114 Rested for battle (`b21-102.js`); B113 Uncapped ranch training (`b21-101.js`); B112 Uncapped heart skills (`b21-100.js`); B111 Start at the ranch (`b21-99.js`); B110 Bag on Select (`b21-98.js`); B109 Pip actions (`b21-97.js`); B108 Stage curve and ranks (`b21-96.js`); B107 Gate refinery timer is consolidated into `b21-90.js`; B106 Overgrowth (`b21-94.js`); B105 Ranch farm (`b21-93.js`); B104 Pip needs (`b21-92.js`); B103 Ranch music (`b21-91.js`); B102 Heart Refinery (`b21-90.js`); B100 Ranch world (`b21-89.js`): OD76's Monster Rancher core is a
+B118 Arena Endurance (`b21-124.js`) is the head; B117 Playtest survey (`b21-113.js`); B116 Playtest pass two (`b21-108.js`–`b21-112.js`); B115 Playtest pass (`b21-103.js`–`b21-107.js`); B114 Rested for battle (`b21-102.js`); B113 Uncapped ranch training (`b21-101.js`); B112 Uncapped heart skills (`b21-100.js`); B111 Start at the ranch (`b21-99.js`); B110 Bag on Select (`b21-98.js`); B109 Pip actions (`b21-97.js`); B108 Stage curve and ranks (`b21-96.js`); B107 Gate refinery timer is consolidated into `b21-90.js`; B106 Overgrowth (`b21-94.js`); B105 Ranch farm (`b21-93.js`); B104 Pip needs (`b21-92.js`); B103 Ranch music (`b21-91.js`); B102 Heart Refinery (`b21-90.js`); B100 Ranch world (`b21-89.js`): OD76's Monster Rancher core is a
 walkable pastel ranch (B99 `b21-88.js` holds the save, banking and stage-end
 gate). B91 Wave Closeout remains loop 15 of 50; B92–B100 were separate direct user requests. B93 release commit
 `429b435c1459f8f0356821d380cf11476c53e295` deployed successfully in Pages
 run `36095439314`; the public stamp, cache key and normalized assembled bundle
-matched. No gameplay implementation is unfinished; select loop 16 / B118 next.
+matched. No gameplay implementation is unfinished; select loop 16 / B119 next.
 
 Suggested first action: read `TASKS.md`, check `git status` and the current
-Pages run, and continue the listed step.
+Pages run, and continue with loop 16 / B119.

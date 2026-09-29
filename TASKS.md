@@ -51,13 +51,14 @@
 - B117 Quick repeat holds (`b21-123`): re-holding the same upgrade right after it confirms takes 0.7s; any other input resets.
 - Guardian blocks stay up after release until destroyed, and carry into the next hold.
 - B117 Skeleton 1 consolidates the complete Thunderstorm, Heart Refinery and playtest-survey fragments into authoritative owners (`b21-108.js`, `b21-90.js`, `b21-113.js`).
-- 344 automated checks pass across all 117 ordered modules.
+- B118 Arena Endurance (`b21-124`): newly reached all-time-high Pip levels permanently add +4 maximum arena fatigue. The stage-7 merchant returns every five stages with three run-only snacks priced at ♥20/30/45; each restores 15 fatigue at an exhausted gate.
+- 350 automated checks pass across all 118 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next
 
 1. Continue the authorized **50 additional ZaneGPT build loops**. `docs/AUTONOMOUS-BUILDS.md` is the progress authority; 15 of 50 loops are verified.
-2. Select loop 16 / B118 from the B117 baseline. No gameplay implementation is currently unfinished.
+2. Select loop 16 / B119 from the B118 baseline. No gameplay implementation is currently unfinished.
 3. The continuation heartbeat is `od76-finish-50-zanegpt-build-loops`; pause it after 50 verified loops. Do not add controls, persistent affection scores or a live model without further design discussion.
 
 ## Constraints

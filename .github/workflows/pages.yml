@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B117 Skeleton ${{ github.sha }}
+run-name: OD76 B118 Arena Endurance ${{ github.sha }}
 
 on:
   push:
@@ -33,11 +33,11 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-fund --no-audit
           npm test
-      - name: Verify B117 Playtest survey and previous build contracts
+      - name: Verify B118 Arena Endurance and previous build contracts
         run: |
           test -f index.html
           for f in $(ls b21-*.js | sort -V); do node --check "$f"; done
-          test "$(ls b21-*.js | sort -V | tail -1)" = b21-123.js
+          test "$(ls b21-*.js | sort -V | tail -1)" = b21-124.js
           ! grep -q 'payload-' index.html
           ! grep -q 'DecompressionStream' index.html
           grep -Fq 'const B50_BOSS_TELEGRAPH_START=.55' b21-37.js
@@ -177,7 +177,8 @@ jobs:
               '// B116c Boss dash freeze',
               '// B116d Stage appetite',
               '// B116e Ranch comforts',
-              '// B117 Playtest survey'
+              '// B117 Playtest survey',
+              '// B118 Arena Endurance'
           ]:
               assert marker in s, marker
           assert s.rfind('pipWithPlayer=function()') > s.find('function pipWithPlayer()')
@@ -287,11 +288,15 @@ jobs:
           assert s.index('function releaseStormB93()') > s.index('// B116a Storm levels')
           assert s.index('function gatherStormCloudB98(') > s.index('// B116a Storm levels')
           assert s.index('// B117 Playtest survey') > s.index('// B116e Ranch comforts')
+          assert s.index('// B118 Arena Endurance') > s.index('// B117 Playtest survey')
+          assert 'function buySnackB118()' in s
+          assert 'function eatSnackB118()' in s
+          assert 'B118_SNACK_PRICES=[20,30,45]' in s
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B117-SKELETON-1/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B117-SKELETON-1/g' _site/index.html
-          grep -Fq 'OD76-2026-09-29-B117-SKELETON-1' _site/index.html
-          grep -Fq 'game.js?v=B117-SKELETON-1' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B118-ARENA-ENDURANCE/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B118-ARENA-ENDURANCE/g' _site/index.html
+          grep -Fq 'OD76-2026-09-29-B118-ARENA-ENDURANCE' _site/index.html
+          grep -Fq 'game.js?v=B118-ARENA-ENDURANCE' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6
