@@ -42,16 +42,16 @@ function runTollChecksB115(){
     assert(ranchB99.week===2&&ranchB99.hunger===80&&ranchB99.hygiene===80&&ranchB99.fatigue===B99_DEATH_FATIGUE,'death week wrong');
     fresh({hunger:80,hygiene:80});restB99();assert(ranchB99.hunger===65&&ranchB99.hygiene===65,'rest week lost its drain');
   });
-  test('B115 the stage gate shows Pip\'s meters with this stage\'s change and the debuffs in words',()=>{
+  test('B115 the stage gate shows Pip\'s meters without redundant debuff detail',()=>{
     fresh({fatigue:40,hunger:50,hygiene:30});toGate(2,12);
     const box=$('ranchGateMetersB115'),txt=box.textContent;
     assert(txt.includes('Tired 48 (+8)')&&txt.includes('Food 47 (−3)')&&txt.includes('Clean 28 (−2)'),'meters: '+txt);
-    assert(txt.includes('Pip is hungry: HEAT refills at 75% speed')&&txt.includes('Pip is dirty: Guardian Glow at 70% strength')&&txt.includes('12s away'),'debuffs: '+txt);
+    assert($('ranchGateDebuffsB115').textContent===''&&!txt.includes('HEAT refills at')&&!txt.includes('Guardian Glow at'),'debuff details remain: '+txt);
     assert(!txt.includes('exhausted')&&!$('nextStageB99').disabled,'rested Pip blocked');
     assert(box.querySelector('.fat i').style.width==='48%'&&box.querySelector('.clean i').style.width==='28%','bars');
     assert(box.compareDocumentPosition($('nextStageB99'))&Node.DOCUMENT_POSITION_FOLLOWING,'meters below the buttons');
     renderGateRefineryB107();assert($('ranchGateMetersB115').textContent===txt,'refinery refresh wiped the meters');
-    fresh({fatigue:0,...fine});toGate(2);assert($('ranchGateMetersB115').textContent.includes('No penalties'),'no-debuff line missing');
+    fresh({fatigue:0,...fine});toGate(2);assert($('ranchGateDebuffsB115').textContent==='','empty debuff line changed');
   });
   test('B115 fatigue 100 blocks Next stage while Return to ranch still works',()=>{
     fresh({fatigue:94,hearts:5,...fine});toGate(2);assert(ranchB99.fatigue===100&&gateOpen(),'setup');
