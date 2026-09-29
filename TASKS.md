@@ -44,13 +44,14 @@
 - B117 Hold fix (`b21-116`): boss rewards, Pip traits and heart skills buy on a completed hold.
 - B117 Input guard fix (`b21-117`): 0.7s of ignored input when a stage ends.
 - B117 Needs fix (`b21-118`): a ranch week that starts at 0 food or 0 clean adds +10 fatigue each.
-- B117 Survey fix (`b21-119`): ranch time split into idle, clearing obstacles, farming and training; solo vs together counts per drill station.
+- B117 Survey fix (now consolidated in `b21-113`): ranch time split into idle, clearing obstacles, farming and training; solo vs together counts per drill station.
 - B117 Pet fix (`b21-120`): petting Pip can give a Star Stone, +1% per 15 arena min and per 500 kills since the last one.
-- B117 Refinery fix (`b21-121`): 2 refining slots at Lv1, 3 at Lv5, 4 at Lv10.
+- B117 Refinery fix (now consolidated in `b21-90`): 2 refining slots at Lv1, 3 at Lv5, 4 at Lv10.
 - B117 Setup paused (`b21-122`): More Supportive no longer prepares openings; switch back on with `pipSetupOnB117u=true` when reintroduced.
 - B117 Quick repeat holds (`b21-123`): re-holding the same upgrade right after it confirms takes 0.7s; any other input resets.
 - Guardian blocks stay up after release until destroyed, and carry into the next hold.
-- 344 automated checks pass across all 123 ordered modules.
+- B117 Skeleton 1 consolidates the complete Thunderstorm, Heart Refinery and playtest-survey fragments into authoritative owners (`b21-108.js`, `b21-90.js`, `b21-113.js`).
+- 344 automated checks pass across all 117 ordered modules.
 - Browser checks cover full cloud gathering and chained strike scenes at desktop and mobile sizes.
 
 ## Next

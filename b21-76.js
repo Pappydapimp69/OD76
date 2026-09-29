@@ -8,6 +8,9 @@ function releaseTransientInputB87(){
   if(typeof cancelOverdriveHold==="function"&&overHold.active)cancelOverdriveHold();
   if(typeof cancelSoundLabHoldB45==="function"&&soundLabHold.active)cancelSoundLabHoldB45();
   if(typeof soundLabInputB54!=="undefined")soundLabInputB54.keyboardButton=null;
+  // Mark charged skills before the shared release so browser listener ordering cannot fire them on blur.
+  if(S?.b93StormCharge)S.b93StormCharge.cancel=true;
+  if(S?.b94Charge)S.b94Charge.cancel=true;
   if(S?.b38OverHeld&&typeof stopOverdriveB38==="function")stopOverdriveB38(false);
 }
 window.addEventListener("blur",releaseTransientInputB87);

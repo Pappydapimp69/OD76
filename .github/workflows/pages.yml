@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B117 ${{ github.sha }}
+run-name: OD76 B117 Skeleton ${{ github.sha }}
 
 on:
   push:
@@ -143,7 +143,7 @@ jobs:
               'function homeSoundLabB97()',
               'function firstPipSoundRowB97()',
               'const B98_STORM_CLOUD_COST=8',
-              'function gatherStormCloudB98(charge)',
+              'function gatherStormCloudB98(',
               'const B99_RANCH_KEY="overdrive76_ranch_v1"',
               'function returnToRanchB99()',
               'const B100_BASE=10,B100_BONUS=5',
@@ -257,10 +257,7 @@ jobs:
           assert s.index('// B91 Wave closeout') > s.index('// B90 Dash readiness')
           assert s.index('// B92 Sound engine') > s.index('// B91 Wave closeout')
           assert s.rfind('canIgniteOverdriveB38=function(id=') > s.index('// B92 Skill charge contract')
-          assert s.index('// B93 Thunderstorm charge') > s.index('// B92 Skill charge contract')
-          assert s.rfind('triggerOverdrive=function()') > s.index('// B93 Thunderstorm charge')
-          assert s.rfind('stopOverdriveB38=function(spent=false)') > s.index('// B93 Thunderstorm charge')
-          assert s.index('// B94 Overdrive hold contract') > s.index('// B93 Thunderstorm charge')
+          assert s.index('// B94 Overdrive hold contract') > s.index('// B92 Skill charge contract')
           assert s.rfind('canIgniteOverdriveB38=function(id=') > s.index('// B94 Overdrive hold contract')
           assert s.rfind('triggerOverdrive=function()') > s.index('// B94 Overdrive hold contract')
           assert s.rfind('stopOverdriveB38=function(spent=false)') > s.index('// B94 Overdrive hold contract')
@@ -268,10 +265,7 @@ jobs:
           assert s.rfind('updateUI=function()') > s.index('// B95 Heat readout')
           assert s.index('// B96 Sound Lab wallet') > s.index('// B95 Heat readout')
           assert s.index('// B97 Sound Lab wallet') > s.index('// B96 Sound Lab wallet')
-          assert s.index('// B98 Thunderstorm clouds cost HEAT') > s.index('// B97 Sound Lab wallet')
-          assert s.rfind('tickStormB93=function(dt)') > s.index('// B98 Thunderstorm clouds cost HEAT')
-          assert s.rfind('releaseStormB93=function()') > s.index('// B98 Thunderstorm clouds cost HEAT')
-          assert s.index('// B99 Pip Ranch') > s.index('// B98 Thunderstorm clouds cost HEAT')
+          assert s.index('// B99 Pip Ranch') > s.index('// B97 Sound Lab wallet')
           assert s.rfind('advanceToNextStage=function()') > s.index('// B99 Pip Ranch')
           assert s.index('// B100 Ranch world') > s.index('// B99 Pip Ranch')
           assert s.rfind('reset=function()') > s.index('// B100 Ranch world')
@@ -290,12 +284,14 @@ jobs:
           assert s.rfind('chooseSpawn=function()') > s.index('// B82 Stages seven')
           assert s.index('// B115e Stage toll') > s.index('// B115d Drill sets') > s.index('// B115c Needs never lock') > s.index('// B115b Heat flow') > s.index('// B115a Spawn ease') > s.index('function arenaReadyB114()')
           assert s.index('// B116e Ranch comforts') > s.index('// B116d Stage appetite') > s.index('// B116c Boss dash freeze') > s.index('// B116b Skill readout and Beam') > s.index('// B116a Storm levels') > s.index('// B115e Stage toll')
+          assert s.index('function releaseStormB93()') > s.index('// B116a Storm levels')
+          assert s.index('function gatherStormCloudB98(') > s.index('// B116a Storm levels')
           assert s.index('// B117 Playtest survey') > s.index('// B116e Ranch comforts')
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-26-B117-PLAYTEST-SURVEY-10/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B117-PLAYTEST-SURVEY-10/g' _site/index.html
-          grep -Fq 'OD76-2026-09-26-B117-PLAYTEST-SURVEY-10' _site/index.html
-          grep -Fq 'game.js?v=B117-PLAYTEST-SURVEY-10' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B117-SKELETON-1/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B117-SKELETON-1/g' _site/index.html
+          grep -Fq 'OD76-2026-09-29-B117-SKELETON-1' _site/index.html
+          grep -Fq 'game.js?v=B117-SKELETON-1' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

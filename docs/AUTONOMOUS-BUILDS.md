@@ -89,6 +89,8 @@ Direct build after B115: B116 Playtest pass two in `b21-108.js`–`b21-112.js`. 
 
 Direct build after B116: B117 Playtest survey in `b21-113.js`. User-requested; does not increment the loop count.
 
+Structural pass after B117: Skeleton 1 consolidates the final Thunderstorm behavior into `b21-108.js`, Heart Refinery behavior into `b21-90.js`, and survey/telemetry into `b21-113.js`. Historical build references above remain release provenance. Six superseded modules were removed; behavior remains covered by all 344 checks across 117 modules. This does not increment the loop count.
+
 Next: select loop 16 / B118 from the B117 baseline. No gameplay implementation is currently unfinished.
 
 Validation notes: use `rg -uuu` with an explicit path to find ignored numbered modules. On Windows/Codex set `NODE_PATH=C:/Users/Kompooter/Documents/OD76/node_modules` for the existing JSDOM dependency; on Linux `npm ci` needs no override. `HANDOFF.md` carries the full per-environment toolchain. Check the entire test outcome, not only the final passing lines. `scripts/serve.mjs` serves `_site` at port 8176 and local fixtures at `/qa`; inspect whether a server is already running before starting one. Update build version, test module count/order, both workflow module lists and stamp/cache key together. Browser tests use CUA and production-path fixture buttons, never application-state injection from evaluate.

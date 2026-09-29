@@ -12,7 +12,7 @@ function sanitizeEconomyB102(r,raw){
  const n=(x,lo,hi)=>Number.isFinite(x)?Math.min(hi,Math.max(lo,Math.floor(x))):lo;
  r.stones=n(raw?.stones,0,1e9);r.dust=n(raw?.dust,0,1e9);r.starStones=n(raw?.starStones,0,1e9);
  const f=raw?.refinery||{};
- r.refinery={level:n(f.level??1,1,B102_REFINERY_MAX),queue:n(f.queue,0,1e7),startedAt:Number.isFinite(f.startedAt)?Math.max(0,f.startedAt):0,trayStones:n(f.trayStones,0,1e9),trayDust:n(f.trayDust,0,1e9)};
+ r.refinery={level:n(f.level??1,1,B102_REFINERY_MAX),queue:n(f.queue,0,1e7),startedAt:Number.isFinite(f.startedAt)?Math.max(0,f.startedAt):0,trayStones:n(f.trayStones,0,1e9),trayDust:n(f.trayDust,0,1e9),lag:Array.isArray(f.lag)?f.lag.filter(x=>Number.isFinite(x)&&x>=0).slice(0,4):[]};
  if(r.refinery.queue&&!r.refinery.startedAt)r.refinery.startedAt=Date.now();
  r.stations={};for(const k in B99_DRILLS)r.stations[k]=n(raw?.stations?.[k],0,B102_STATION_MAX);
  return r;
@@ -30,21 +30,30 @@ const ranchDefaultBeforeB102=ranchDefaultB99;
 ranchDefaultB99=function(){return sanitizeEconomyB102(ranchDefaultBeforeB102(),null)}; // callers sync caps; the loader reuses this mid-load
 ranchB99=loadRanchB99();syncCapsB102();
 
-// ---- refinery ----
+// ---- refinery: parallel slots are authoritative ----
+function refinerySlotsB117f(lv=ranchB99?.refinery?.level){const l=clamp(Math.floor(lv)||1,1,B102_REFINERY_MAX);return 2+(l>=5?1:0)+(l>=10?1:0)}
+function refineStartsB117f(f,now){
+ if(!f.queue)return[];const base=f.startedAt||now,lag=Array.isArray(f.lag)?f.lag.filter(x=>Number.isFinite(x)&&x>=0):[];
+ return lag.length?lag.slice(0,f.queue).map(l=>base+l):[base];
+}
+function storeStartsB117f(f,starts){
+ if(!starts.length||!f.queue){f.startedAt=0;f.lag=[];return}
+ starts.sort((a,b)=>a-b);f.startedAt=starts[0];f.lag=starts.map(s=>s-starts[0]);
+}
 function tickRefineryB102(now=Date.now(),roll=Math.random){
- const f=ranchB99.refinery;let done=0;
- if(f.startedAt>now)f.startedAt=now;
- while(f.queue>0){const T=refineSecondsB102(f.level)*1000;if(now<f.startedAt+T)break;f.queue--;f.trayStones++;if(roll()<B102_DUST_CHANCE)f.trayDust++;f.startedAt+=T;done++}
- if(!f.queue)f.startedAt=0;
- if(done)saveRanchB99();
- return done;
+ const f=ranchB99.refinery;let done=0;if(f.startedAt>now)f.startedAt=now;
+ const slots=refinerySlotsB117f(f.level),T=refineSecondsB102(f.level)*1000,starts=refineStartsB117f(f,now);
+ while(starts.length<Math.min(slots,f.queue))starts.push(now);
+ while(starts.length){let i=0;for(let j=1;j<starts.length;j++)if(starts[j]<starts[i])i=j;const end=starts[i]+T;if(now<end)break;
+  starts.splice(i,1);f.queue--;f.trayStones++;if(roll()<B102_DUST_CHANCE)f.trayDust++;done++;if(f.queue>starts.length)starts.push(end)}
+ storeStartsB117f(f,starts);if(done)saveRanchB99();return done;
 }
 function refineLeftB102(now=Date.now()){const f=ranchB99.refinery;return f.queue?Math.max(0,f.startedAt+refineSecondsB102(f.level)*1000-now):0}
 function loadHeartsB102(batches,now=Date.now()){
  tickRefineryB102(now);
  const n=Math.min(Math.max(0,Math.floor(batches)),Math.floor(ranchB99.hearts/B102_HEARTS_PER_STONE));
  if(!n)return 0;
- const f=ranchB99.refinery;ranchB99.hearts-=n*B102_HEARTS_PER_STONE;if(!f.queue)f.startedAt=now;f.queue+=n;saveRanchB99();
+ const f=ranchB99.refinery;ranchB99.hearts-=n*B102_HEARTS_PER_STONE;if(!f.queue)f.startedAt=now;f.queue+=n;tickRefineryB102(now);saveRanchB99();
  return n;
 }
 function collectTrayB102(now=Date.now()){
@@ -58,7 +67,7 @@ function upgradeRefineryB102(now=Date.now()){
  tickRefineryB102(now); // finished batches count at the old speed
  const f=ranchB99.refinery,cost=refineryUpgradeCostB102(f.level);
  if(f.level>=B102_REFINERY_MAX||ranchB99.starStones<cost)return false;
- ranchB99.starStones-=cost;f.level++;saveRanchB99();return true;
+ ranchB99.starStones-=cost;f.level++;tickRefineryB102(now);saveRanchB99();return true;
 }
 function upgradeStationB102(kind){
  const lv=ranchB99.stations[kind],cost=stationUpgradeCostB102(lv);
@@ -67,6 +76,12 @@ function upgradeStationB102(kind){
 }
 function clockB102(ms){const s=Math.ceil(ms/1000),m=Math.floor(s/60);return m?`${m}:${String(s%60).padStart(2,"0")}`:`${s}s`}
 function refineLabelB102(lv){const s=refineSecondsB102(lv);return s>=60?`${s/60} min`:`${s} sec`}
+function refineAllLeftB117f(now=Date.now()){
+ const f=ranchB99.refinery;if(!f.queue)return 0;
+ const T=refineSecondsB102(f.level)*1000,starts=refineStartsB117f(f,now);let waiting=f.queue-starts.length,last=now;
+ while(starts.length){let i=0;for(let j=1;j<starts.length;j++)if(starts[j]<starts[i])i=j;const end=starts[i]+T;starts.splice(i,1);last=Math.max(last,end);if(waiting>0){waiting--;starts.push(end)}}
+ return Math.max(0,last-now);
+}
 
 // ---- drills cost Heart Stones ----
 drillCostB99=function(kind){return 1+Math.floor(ranchB99.stats[kind]/3)};
@@ -108,9 +123,10 @@ renderRanchHudB100=function(){hudBeforeB102();$("ranchStoneB102").textContent=`�
 
 function refinerySheetB102(){
  tickRefineryB102();
- const f=ranchB99.refinery,st=stationB100("refinery"),can=Math.floor(ranchB99.hearts/B102_HEARTS_PER_STONE),up=refineryUpgradeCostB102(f.level);
+ const f=ranchB99.refinery,st=stationB100("refinery"),can=Math.floor(ranchB99.hearts/B102_HEARTS_PER_STONE),up=refineryUpgradeCostB102(f.level),slots=refinerySlotsB117f(f.level);
  const lines=[`Level ${f.level}: ♥ ${B102_HEARTS_PER_STONE} → ◆ 1 every ${refineLabelB102(f.level)}, with a ${Math.round(B102_DUST_CHANCE*100)}% chance of star dust.`];
  lines.push(f.queue?`Refining ${f.queue} batch${f.queue===1?"":"es"}; next stone in ${clockB102(refineLeftB102())}.`:"The machine is idle.");
+ lines.push(`${slots} slots refine at once${slots<4?` (${slots<3?"3 at level 5, ":""}4 at level 10)`:""}.${f.queue>1?` All done in ${clockB102(refineAllLeftB117f())}.`:""}`);
  if(f.trayStones||f.trayDust)lines.push(`Tray: ◆ ${f.trayStones}${f.trayDust?` · ✧ ${f.trayDust}`:""}.`);
  lines.push(`You have ♥ ${ranchB99.hearts} · ✧ ${ranchB99.dust} · ★ ${ranchB99.starStones}.`);
  const opts=[];
@@ -124,6 +140,22 @@ function refinerySheetB102(){
  opts.push({label:"Not now",quiet:true});
  openSheetB100("Heart Refinery",lines.join(" "),opts);
 }
+function refineryGateTextB107(now=Date.now()){
+ tickRefineryB102(now);
+ const f=ranchB99.refinery,tray=f.trayStones||f.trayDust?`Tray ready: ◆ ${f.trayStones}${f.trayDust?` · ✧ ${f.trayDust}`:""}.`:"";
+ if(!f.queue)return tray?`Heart Refinery: idle. ${tray}`:"";
+ return`Heart Refinery: next ◆ in ${clockB102(refineLeftB102(now))}${f.queue>1?` · ${f.queue} batches, all done in ${clockB102(refineAllLeftB117f(now))}`:""}.${tray?" "+tray:""}`;
+}
+(function installGateRefineryB107(){
+ const text=$("ranchGateTextB99");if(!text)return;const line=document.createElement("p");line.id="ranchGateRefineB107";line.className="small";line.style.cssText="color:#ffd8e6;margin-top:-4px";text.insertAdjacentElement("afterend",line);
+})();
+function renderGateRefineryB107(){
+ const line=$("ranchGateRefineB107");if(!line)return;const open=!$("stageUp")?.classList.contains("hidden")&&!$("ranchGateStepB99")?.classList.contains("stagehidden");if(!open)return;
+ const t=refineryGateTextB107();line.textContent=t;line.style.display=t?"":"none";
+}
+const gateBeforeRefineryAuthority=openRanchGateB99;
+openRanchGateB99=function(){gateBeforeRefineryAuthority();renderGateRefineryB107()};
+setInterval(renderGateRefineryB107,500);
 function drillSheetB102(st){
  const kind=st.id,d=B99_DRILLS[kind],g=B100_GAMES[kind],block=drillBlockB99(kind),slv=ranchB99.stations[kind],up=stationUpgradeCostB102(slv),cost=drillCostB99(kind),base=drillBaseB102(kind);
  const head=`${g.title} · ${levelLineB100(kind)}`,opts=[];

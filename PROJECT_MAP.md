@@ -27,7 +27,9 @@ Standalone OD76 game workspace with Brain/GitHub workflow intact and compact age
 
 ## Current Build
 
-B93 adds `b21-82.js`: Thunderstorm now gathers up to five clouds across a one-second hold, spends at most 20% HEAT, launches on release, seeks random targets and ricochets by Constellation level. Quick taps strike once without ricochet; a 1.25-second cooldown prevents spam. Regression and desktop/mobile browser fixtures cover charge, release, chaining, pause and focus loss.
+B117 Skeleton 1 is behavior-preserving consolidation. Thunderstorm is authoritative in `b21-108.js`, the Heart Refinery in `b21-90.js`, and playtest survey/telemetry in `b21-113.js`. Six superseded fragment modules were removed; the complete game now assembles from 117 ordered modules. See `docs/B117-skeleton-consolidation.md`.
+
+B93 originally added `b21-82.js`; its surviving Thunderstorm behavior is now consolidated in `b21-108.js`.
 
 B94 adds `b21-83.js`: every basic skill ignites at 25% HEAT and Ascended Pip at 70%. Beam and Guardian drain while held; Thunderstorm, Nova and Gravity Well charge while held, stop draining when full and strike on release. Sound Lab audition buttons get the game's button style.
 
@@ -37,7 +39,7 @@ B96 adds `b21-85.js`: the Sound Lab wallet row scrolls with the page instead of 
 
 B97 adds `b21-86.js`: the Sound Lab wallet row pins again while scrolling down, and snaps home when the top Pip Sounds row is selected or scrolled back into.
 
-B98 adds `b21-87.js`: Thunderstorm clouds cost 8% HEAT each, gathering pauses below 8%, and charging gets start/cloud/full flashes, a darkening sky and arcing lightning.
+B98 originally added `b21-87.js`; its cloud cost and charging presentation are now consolidated in `b21-108.js`.
 
 B99 adds `b21-88.js`: the Pip Ranch, OD76's core change. Ranch drills set Pip's starting ability levels, stage clears offer Return to ranch, and deaths bank half the run's hearts. `tests/ranch-checks.js` covers it.
 
@@ -53,7 +55,7 @@ B105 adds `b21-93.js`: unlockable garden, kitchen and orchard; tools, seeds, cro
 
 B106 adds `b21-94.js`: overgrowth around drill sites with collision, Pip-only tool fatigue, and arena Heart Stone drops.
 
-B107 adds `b21-95.js`: a live Heart Refinery status line on the stage-end gate.
+B107's former `b21-95.js` gate status is now consolidated in `b21-90.js`.
 
 B108 adds `b21-96.js`: the stage-driven difficulty curve, bounded heart nudge and arena ranks. It supersedes B63's heart tiers and the stage-11 legacy formulas.
 
@@ -87,7 +89,7 @@ B117 adds `b21-113.js`: an in-game playtest survey opened from the ranch Bag. It
 
 The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks charge after Pip returns, the flight costs at most 10% HEAT, a break stuns Pip 1.8s, and release/break fire distinct pulses.
 
-`b21-115.js` (B117 fix): Thunderstorm clouds always travel to their target at half the player's speed before striking.
+The former `b21-115.js` B117 fix, now consolidated in `b21-108.js`, makes Thunderstorm clouds travel to their target at half the player's speed before striking.
 
 `b21-116.js` (B117 fix): hold to confirm for boss rewards, Pip traits and heart skills between stages.
 
@@ -95,11 +97,11 @@ The B117 Guardian fix adds `b21-114.js`: Pip becomes the Guardian. Tiered blocks
 
 `b21-118.js` (B117 fix): a ranch week that begins with food or cleanliness at 0 adds +10 fatigue for each.
 
-`b21-119.js` (B117 fix): the playtest survey splits ranch time (idle, clearing obstacles, farming, training) and counts solo vs together trainings per drill station.
+The former `b21-119.js` B117 fix, now consolidated in `b21-113.js`, splits survey ranch time (idle, clearing obstacles, farming, training) and counts solo vs together trainings per drill station.
 
 `b21-120.js` (B117 fix): petting Pip rolls for a Star Stone at +1% per 15 arena minutes and +1% per 500 kills since the last stone; a stone resets both.
 
-`b21-121.js` (B117 fix): the Heart Refinery runs parallel slots (2 at level 1, 3 at level 5, 4 at level 10); running batches store start offsets in `refinery.lag`.
+The former `b21-121.js` B117 fix, now consolidated in `b21-90.js`, gives the Heart Refinery parallel slots (2 at level 1, 3 at level 5, 4 at level 10); running batches store start offsets in `refinery.lag`.
 
 `b21-122.js` (B117 fix): Setup (Pip prepares openings, gold diamond, flank lure) is paused behind `pipSetupOnB117u`; Emergency Return stays.
 
