@@ -56,7 +56,7 @@
 ## Next
 
 1. Continue the authorized **50 additional ZaneGPT build loops**. `docs/AUTONOMOUS-BUILDS.md` is the progress authority; 15 of 50 loops are verified.
-2. Select loop 16 / B99 from the B98 baseline. No gameplay implementation is currently unfinished.
+2. Select loop 16 / B118 from the B117 baseline. No gameplay implementation is currently unfinished.
 3. The continuation heartbeat is `od76-finish-50-zanegpt-build-loops`; pause it after 50 verified loops. Do not add controls, persistent affection scores or a live model without further design discussion.
 
 ## Constraints
