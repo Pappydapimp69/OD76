@@ -1,7 +1,7 @@
 
 // B116d Stage appetite: food follows HEAT spent, cleanliness follows kills, hits and bosses.
 // Replaces B115e's equal 3+ceil(stage/2) drop. Per stage (fresh record whenever S.stage changes), live play only:
-// food  = 2 + max(1, floor(stage/2)) + floor(HEAT% spent / 25)
+// food  = 2 + max(1, floor(stage/2)) + floor(net HEAT value used / 25)
 // clean = 2 + floor(kills / 15) + hits taken (absorbed ones too) + 3 if a boss fight happened.
 // HEAT spent is the net fall of S.heat, settled at every frame edge (so skills fired from input handlers count),
 // with regen and chain-combo HEAT added back as gains, a hit's HEAT loss left out, and charge refunds subtracted.
@@ -11,7 +11,7 @@ function cleanTollB116d(kills,hits,boss){return 2+Math.floor((+kills||0)/B116D_C
 function liveB116d(){return heatLiveB115b()}
 function appetiteB116d(){
  if(!S)return null;
- if(!S.b116App||S.b116App.stage!==S.stage)S.b116App={stage:S.stage,heat:0,kills:0,hits:0,boss:false,last:S.heat,gain:0,hurt:0,refund:0};
+ if(!S.b116App||S.b116App.stage!==S.stage)S.b116App={stage:S.stage,heat:0,startHeat:heatEnergyB38(),kills:0,hits:0,boss:false,last:S.heat,gain:0,hurt:0,refund:0};
  return S.b116App;
 }
 // Settle HEAT since the last edge: falls count while live; refunds always give HEAT back to the stage.
@@ -64,7 +64,7 @@ function stageAppetiteB116d(){
  const a=settleHeatB116d()||{};
  // A charge still gathering at the gate is refunded by its cancel, so it is not eaten yet.
  const pend=[S.b93StormCharge,S.b94Charge].reduce((n,c)=>n+(c&&Number.isFinite(c.startHeat)?Math.max(0,c.startHeat-S.heat):0),0);
- const heat=Math.max(0,(a.heat||0)-pend),kills=a.kills||0,hits=a.hits||0,boss=!!a.boss;
+ const heat=Math.max(0,(a.startHeat||0)-heatEnergyB38()-pend*heatCapacityB38()/100),kills=a.kills||0,hits=a.hits||0,boss=!!a.boss;
  return {heat,kills,hits,boss,food:foodTollB116d(S.stage,heat),clean:cleanTollB116d(kills,hits,boss)};
 }
 stageTollB115=function(){
@@ -77,7 +77,7 @@ stageTollB115=function(){
 function appetiteTextB116d(w){
  if(!w)return "";
  const n=(v,one)=>`${v} ${one}${v===1?"":"s"}`;
- return `Food −${w.food}: ${Math.round(w.heat)}% HEAT used · Clean −${w.clean}: ${n(w.kills,"kill")}, ${n(w.hits,"hit")}${w.boss?", boss":""}`;
+ return `Food −${w.food}: ${Math.round(w.heat)} HEAT used · Clean −${w.clean}: ${n(w.kills,"kill")}, ${n(w.hits,"hit")}${w.boss?", boss":""}`;
 }
 (function installAppetiteB116d(){
  const bars=$("ranchGateBarsB115");if(!bars)return;
