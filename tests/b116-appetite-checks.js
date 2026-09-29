@@ -12,7 +12,7 @@ function runAppetiteChecksB116(){
   const app=()=>S.b116App;
   const clear=()=>{S.stageEnding=true;S.runHearts=10;S.heartCurrency=10;openStageUpgrade();continueSoundLabB41();
     assert(!$('stageUp').classList.contains('hidden')&&!$('ranchGateStepB99').classList.contains('stagehidden'),'gate missing')};
-  test('B116 formula: food 2 + max(1, half the stage) + 1 per 25% HEAT spent; clean 2 + kills/15 + hits + 3 for a boss',()=>{
+  test('B116 formula: food 2 + max(1, half the stage) + 1 per 25 net HEAT used; clean 2 + kills/15 + hits + 3 for a boss',()=>{
     assert(foodTollB116d(1,0)===3&&foodTollB116d(2,0)===3&&foodTollB116d(3,0)===3&&foodTollB116d(9,0)===6,'stage base');
     assert(foodTollB116d(6,60)===7&&foodTollB116d(6,24.99)===5&&foodTollB116d(6,25)===6&&foodTollB116d(6,100)===9,'HEAT steps');
     assert(cleanTollB116d(0,0,false)===2&&cleanTollB116d(14,0,false)===2&&cleanTollB116d(15,0,false)===3,'kill steps');
@@ -39,7 +39,7 @@ function runAppetiteChecksB116(){
   test('B116 the appetite record starts fresh each stage',()=>{
     fresh({hunger:100,hygiene:100});arena(2);for(let i=0;i<16;i++)kill(foe());S.shields=1;hurt();S.heat=40;update(1/60);S.heat=10;update(1/60);
     near(app().heat,30,'stage 2 HEAT');assert(app().stage===2&&app().kills===16&&app().hits===1,'stage 2 record');
-    clear();assert(S.b115Toll.hunger===-4&&S.b115Toll.hygiene===-4,'stage 2 toll '+JSON.stringify(S.b115Toll));
+    clear();assert(S.b115Toll.hunger===-3&&S.b115Toll.hygiene===-4,'stage 2 toll '+JSON.stringify(S.b115Toll));
     $('nextStageB99').click();assert(S.stage===3&&S.run&&!S.stagePending,'next stage');update(1/60);
     assert(app().stage===3&&app().kills===0&&app().hits===0&&app().heat===0&&!app().boss,'record carried over: '+JSON.stringify(app()));
   });
@@ -49,16 +49,16 @@ function runAppetiteChecksB116(){
     enemies=[];for(let i=0;i<34;i++)hitEnemy(foe(),99,'player');S.shields=1;S.invuln=0;hurt();startBossBattle();update(1/60);
     assert(app().kills===34&&app().hits===1&&app().boss,'counts '+JSON.stringify(app()));
     clear();const t=S.b115Toll;
-    assert(t.hunger===-7&&t.hygiene===-8&&ranchB99.hunger===93&&ranchB99.hygiene===92,'deltas '+JSON.stringify(t));
+    assert(t.hunger===-5&&t.hygiene===-8&&ranchB99.hunger===95&&ranchB99.hygiene===92,'deltas '+JSON.stringify(t));
     const txt=$('ranchGateMetersB115').textContent;
-    assert(txt.includes('Food 93 (−7)')&&txt.includes('Clean 92 (−8)'),'meters: '+txt);
-    assert($('ranchGateWhyB116d').textContent==='Food −7: 60% HEAT used · Clean −8: 34 kills, 1 hit, boss','why: '+$('ranchGateWhyB116d').textContent);
-    openRanchGateB99();assert(ranchB99.hunger===93&&ranchB99.hygiene===92,'toll charged twice');
+    assert(txt.includes('Food 95 (−5)')&&txt.includes('Clean 92 (−8)'),'meters: '+txt);
+    assert($('ranchGateWhyB116d').textContent==='Food −5: 0 HEAT used · Clean −8: 34 kills, 1 hit, boss','why: '+$('ranchGateWhyB116d').textContent);
+    openRanchGateB99();assert(ranchB99.hunger===95&&ranchB99.hygiene===92,'toll charged twice');
   });
   test('B116 a quiet stage costs only the base and the meters floor at 0',()=>{
     fresh({hunger:2,hygiene:1});arena(1);clear();
     assert(ranchB99.hunger===0&&ranchB99.hygiene===0&&S.b115Toll.hunger===-2&&S.b115Toll.hygiene===-1,'floor '+JSON.stringify(S.b115Toll));
-    assert($('ranchGateWhyB116d').textContent==='Food −3: 0% HEAT used · Clean −2: 0 kills, 0 hits','quiet why: '+$('ranchGateWhyB116d').textContent);
+    assert($('ranchGateWhyB116d').textContent==='Food −3: 0 HEAT used · Clean −2: 0 kills, 0 hits','quiet why: '+$('ranchGateWhyB116d').textContent);
   });
   fresh();reset();
   return out;

@@ -70,7 +70,7 @@ function applyPipPower(){
  const lv=S.pipLevel||1;
  const senseLv=Math.max(0,S.pipRangeLv||0);
  S.pipDetectRange=Math.min(200,82+Math.min(10,senseLv)*8+Math.max(0,senseLv-10)*2);
- S.pipCarryCapacity=senseLv*3;
+ S.pipCarryCapacity=senseLv? senseLv*3:10;
  S.pipMoveSpeed=285+(S.pipSpeedLv||0)*34;
  S.attackMax=Math.max(.17,.33-(lv-1)*.014-(S.pipPowerLv||0)*.006);
  S.attackRange=Math.min(430,Math.min(W,H)*.55+(lv-1)*12+(S.pipPowerLv||0)*7);

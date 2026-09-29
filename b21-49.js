@@ -96,7 +96,7 @@ PIP_ABILITY_INFO.range.desc="+8px sense per level through Lv 10, then +2px (200p
 PIP_ABILITY_INFO.speed.desc="+34 flight speed per level. Full cargo reduces Pip's flight speed by 50%.";
 const pipAbilityEffectTextBeforeB60=pipAbilityEffectText;
 pipAbilityEffectText=function(kind){
-  if(kind==="range")return `${Math.round(S.pipDetectRange)} → ${heartRangeB60((S.pipRangeLv||0)+1)}px sense · ${S.pipCarryCapacity} → ${S.pipCarryCapacity+3} capacity. Range growth slows after Lv 10.`;
+  if(kind==="range"){const next=(S.pipRangeLv||0)+1;return `${Math.round(S.pipDetectRange)} → ${heartRangeB60(next)}px sense · ${S.pipCarryCapacity} → ${next*3} capacity. Range growth slows after Lv 10.`}
   if(kind==="speed")return `${S.pipMoveSpeed} → ${S.pipMoveSpeed+34} flight speed · ${(S.pipMoveSpeed+34)/2} at full load`;
   return pipAbilityEffectTextBeforeB60(kind);
 };
