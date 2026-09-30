@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B119 Farm Weeks ${{ github.sha }}
+run-name: OD76 B119 Farm Weeks 2 ${{ github.sha }}
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-fund --no-audit
           npm test
-      - name: Verify B119 Farm Weeks and previous build contracts
+      - name: Verify B119 Farm Weeks 2 and previous build contracts
         run: |
           test -f index.html
           for f in $(ls b21-*.js | sort -V); do node --check "$f"; done
@@ -297,10 +297,10 @@ jobs:
           assert 'B119_DRY_GROWTH=[1,.5,0],B119_WITHER_WEEKS=3' in s
           assert 'function playWeekFadeB119(f)' in s
           PY
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B119-FARM-WEEKS/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B119-FARM-WEEKS/g' _site/index.html
-          grep -Fq 'OD76-2026-09-29-B119-FARM-WEEKS' _site/index.html
-          grep -Fq 'game.js?v=B119-FARM-WEEKS' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-09-29-B119-FARM-WEEKS-2/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B119-FARM-WEEKS-2/g' _site/index.html
+          grep -Fq 'OD76-2026-09-29-B119-FARM-WEEKS-2' _site/index.html
+          grep -Fq 'game.js?v=B119-FARM-WEEKS-2' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6

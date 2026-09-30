@@ -8,7 +8,7 @@ function runNeedsChecksB115(){
     fresh({hunger:80,hygiene:80,fatigue:70});restB99();
     assert(ranchB99.hunger===65&&ranchB99.hygiene===65&&ranchB99.fatigue===10&&ranchB99.week===2,'rest drain wrong: '+ranchB99.hunger+'/'+ranchB99.hygiene);
     const saved=loadRanchB99();assert(saved.hunger===65&&saved.hygiene===65,'rest drain not saved');
-    fresh({stones:10,hunger:80,hygiene:80});soloDrillB100('power',0);assert(ranchB99.hunger===80-B104_WEEK_HUNGER&&ranchB99.hygiene===80-B104_WEEK_DIRT.drill,'drill week drain changed');
+    fresh({stones:10,hunger:80,hygiene:80});soloDrillB100('power',0);assert(ranchB99.hunger===80&&ranchB99.hygiene===80&&ranchB99.week===1,'drill passed time');
   });
   test('B115 a starving, filthy Pip still sleeps and his needs stop at 0',()=>{
     fresh({hunger:10,hygiene:5,fatigue:90});openRanchB99();at('home');press();

@@ -21,22 +21,23 @@ function runFarmWeekChecksB119(){
  test('B119 half-week growth and dry weeks survive a reload',()=>{
   garden();restB99();const r=loadRanchB99();assert(r.plots[0].stage===.5&&r.plots[0].dry===1,'lost '+r.plots[0].stage+'/'+r.plots[0].dry);
  });
- test('B119 every week-ending event shows the Week N fade; rest queues the twinkle',()=>{
+ test('B119 rest shows the timed Week N fade; drills do not pass time',()=>{
   fresh({hearts:500});openRanchB99();ranchB99.fatigue=0;
   restB99();let f=weekFadeB119.last;assert(f&&f.kind==='rest'&&f.week===ranchB99.week&&$('weekFadeB119').classList.contains('on'),'rest fade');
   assert($('weekFadeB119').textContent.includes(`Week ${ranchB99.week}`),'week text');
-  weekPassedB104('drill');assert(weekFadeB119.last.kind==='drill'&&weekFadeB119.last.text.includes('trained'),'drill fade');
+  assert(B119_FADE_IN===2&&B119_TEXT_IN===.3&&B119_FADE_HOLD===.5&&B119_FADE_OUT===2&&B119_TEXT_HOLD===5,'fade timing');
+  const week=ranchB99.week;weekPassedB104('drill');assert(ranchB99.week===week&&weekFadeB119.last===f,'drill passed time or faded');
  });
  test('B119 a battle-test week waits for the ranch, then fades',()=>{
   leaveRanchB100();ranchWorldB100.active=false;weekFadeB119.last=null;weekFadeB119.pending=null;S.run=true;S.pipLevel=1;S.runHearts=0;bankRunB99(false);
   assert(weekFadeB119.pending?.kind==='battle'&&!weekFadeB119.last,'battle fade not deferred');
   openRanchB99();assert(weekFadeB119.last?.kind==='battle'&&!weekFadeB119.pending,'battle fade not shown on entry');
  });
- test('B119 a together drill shows its week after the mini-game, not over it',()=>{
+ test('B119 a together drill does not pass a week or queue a fade',()=>{
   fresh({stones:20,fatigue:0});openRanchB99();ranchB99.stones=20;
   assert(startGameB100('speed')&&ranchWorldB100.game,'game did not start');
-  assert(weekFadeB119.pending?.kind==='drill'&&!weekFadeB119.last,'fade covered the mini-game');
-  finishGameB100();assert(weekFadeB119.last?.kind==='drill'&&!weekFadeB119.pending,'fade not shown after the game');
+  assert(!weekFadeB119.pending&&!weekFadeB119.last&&ranchB99.week===1,'drill queued a week fade');
+  finishGameB100();assert(!weekFadeB119.last&&!weekFadeB119.pending&&ranchB99.week===1,'drill passed a week');
  });
  test('B119 plot and garden sheets explain the dry rule',()=>{
   garden();openRanchB99();restB99();restB99();plotSheetB105(0);

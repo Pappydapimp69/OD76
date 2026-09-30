@@ -47,10 +47,10 @@ function runRanchChecksB99(){
     keys.add('a');for(let i=0;i<400;i++)updateRanchB100(.05);keys.delete('a');assert(ranchWorldB100.px===40,'left the ranch');
     draw();
   });
-  test('B100 a solo drill costs a week and succeeds for base points or fails for base minus bonus',()=>{
+  test('B100 a solo drill does not pass a week and succeeds for base points or fails for base minus bonus',()=>{
     fresh({stones:100});openRanchB99();
     let r=soloDrillB100('power',0);assert(r.ok&&r.gain===B100_BASE&&ranchB99.points.power===10&&ranchB99.stats.power===1&&r.levelUp,'solo success wrong');
-    assert(ranchB99.stones===99&&ranchB99.fatigue===B99_DRILL_FATIGUE&&ranchB99.week===2,'solo cost wrong');
+    assert(ranchB99.stones===99&&ranchB99.fatigue===B99_DRILL_FATIGUE&&ranchB99.week===1,'solo cost wrong');
     r=soloDrillB100('power',.999);assert(!r.ok&&r.gain===B100_BASE-B100_BONUS&&ranchB99.points.power===15&&ranchB99.stats.power===1,'solo failure wrong');
     fresh({fatigue:0});const rested=soloChanceB100();fresh({fatigue:60});assert(soloChanceB100()<rested,'fatigue did not lower solo odds');
     assert(loadRanchB99().points.power===0,'fresh save kept points');
@@ -58,7 +58,7 @@ function runRanchChecksB99(){
   test('B100 walking to a station and pressing A opens its drill sheet; solo runs from the sheet',()=>{
     fresh({stones:100});openRanchB99();at('guard');press();
     assert(ranchWorldB100.sheet&&$('ranchSheetB100').classList.contains('on')&&$('ranchSheetB100').textContent.includes('Glow Pond'),'station sheet missing');
-    press();assert(!ranchWorldB100.sheet&&ranchB99.week===2&&ranchB99.points.guard>=5,'solo from sheet failed');
+    press();assert(!ranchWorldB100.sheet&&ranchB99.week===1&&ranchB99.points.guard>=5,'solo from sheet failed');
   });
   test('B100 blocked drills explain why and never charge',()=>{
     fresh({hearts:500,stones:0});openRanchB99();at('speed');press();
@@ -67,7 +67,7 @@ function runRanchChecksB99(){
     fresh({stones:99,fatigue:B99_TIRED});openRanchB99();at('speed');press();assert($('ranchSheetB100').textContent.includes('too tired'),'tired reason missing');
   });
   test('B100 timing mini-game: 3 of 4 wins base plus bonus, fewer loses the bonus',()=>{
-    fresh({stones:100});openRanchB99();assert(startGameB100('power'),'game refused');const g=ranchWorldB100.game;assert(g&&ranchB99.stones===99&&ranchB99.week===2,'game cost wrong');
+    fresh({stones:100});openRanchB99();assert(startGameB100('power'),'game refused');const g=ranchWorldB100.game;assert(g&&ranchB99.stones===99&&ranchB99.week===1,'game cost wrong');
     const hit=()=>{g.zone=.5-.5*Math.cos(g.phase);g.cool=0;gameInputB100(g,0,true,true)},miss=()=>{const pos=.5-.5*Math.cos(g.phase);g.zone=pos>.5?pos-.4:pos+.4;g.cool=0;gameInputB100(g,0,true,true)};
     hit();hit();miss();hit();assert(!ranchWorldB100.game&&ranchB99.points.power===B100_BASE+B100_BONUS,'win did not award bonus');
     startGameB100('power');const h=ranchWorldB100.game;const m=()=>{const pos=.5-.5*Math.cos(h.phase);h.zone=pos>.5?pos-.4:pos+.4;h.cool=0;gameInputB100(h,0,true,true)};
@@ -150,8 +150,8 @@ function runRanchChecksB99(){
     S.audioEnabled=false;const before=calls.length;fake.scheduleStep(20);assert(calls.length===before,'muted ranch still played');S.audioEnabled=true;
     reset();fake.scheduleStep(21);assert(!Number.isFinite(fake.b103Next),'ranch loop did not reset after leaving');
   });
-  test('B104 each ranch week makes Pip hungrier and messier; drills dirty him more',()=>{
-    fresh({stones:10,hunger:80,hygiene:80});soloDrillB100('power',0);assert(ranchB99.hunger===80-B104_WEEK_HUNGER&&ranchB99.hygiene===80-B104_WEEK_DIRT.drill,'drill week wrong');
+  test('B104 rest and battle weeks affect needs; drills do not pass time',()=>{
+    fresh({stones:10,hunger:80,hygiene:80});soloDrillB100('power',0);assert(ranchB99.hunger===80&&ranchB99.hygiene===80&&ranchB99.week===1,'drill passed time');
     fresh({hunger:80,hygiene:80});restB99();assert(ranchB99.hunger===65&&ranchB99.hygiene===65&&ranchB99.week===2,'rest week wrong');
     fresh({hunger:80,hygiene:80});S.run=true;S.heartCurrency=10;finish(true);assert(ranchB99.week===2&&ranchB99.hunger===80&&ranchB99.hygiene===80,'battle week wrong');
   });

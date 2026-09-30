@@ -1,9 +1,9 @@
 
 // B119 Farm weeks: you water the crops yourself, free, even when Pip is tired. Every crop needs water each
 // ranch week: one dry week grows it half a week, a second dry week in a row grows nothing, a third withers it.
-// Every week that ends (drill, rest, battle test) fades the screen to "Week N"; a rest also plays a twinkle.
-const B119_DRY_GROWTH=[1,.5,0],B119_WITHER_WEEKS=3,B119_FADE_IN=.4,B119_FADE_HOLD=.9;
-const B119_WEEK_WHY={drill:"Pip trained.",rest:"Pip rested.",battle:"Back from the arena."};
+// Every week that ends (rest or battle test) gets a long black transition; training no longer passes time.
+const B119_DRY_GROWTH=[1,.5,0],B119_WITHER_WEEKS=3,B119_FADE_IN=2,B119_TEXT_IN=.3,B119_FADE_HOLD=.5,B119_FADE_OUT=2,B119_TEXT_HOLD=5;
+const B119_WEEK_WHY={rest:"Pip rested.",battle:"Back from the arena."};
 
 // ---- plot state: half-week growth and consecutive dry weeks survive a reload ----
 function farmWeekFieldsB119(r,raw){
@@ -36,6 +36,7 @@ function dryTextB119(p){
 }
 const weekPassedBeforeB119=weekPassedB104;
 weekPassedB104=function(kind){
+ if(kind==="drill")return;
  const before=ranchB99.plots.map(p=>({crop:p.crop,watered:!!p.watered,ripe:plotRipeB105(p),stage:p.stage}));
  const r=weekPassedBeforeB119(kind),report={grew:0,half:0,stalled:0,withered:[]};
  ranchB99.plots.forEach((p,i)=>{
@@ -65,7 +66,7 @@ function ensureWeekFadeB119(){
  el=document.createElement("div");el.id="weekFadeB119";el.setAttribute("role","status");el.innerHTML="<b></b><span></span>";
  document.body.appendChild(el);
  const style=document.createElement("style");style.id="weekFadeStyleB119";
- style.textContent="#weekFadeB119{position:fixed;inset:0;z-index:60;display:grid;place-content:center;gap:10px;padding:16px;text-align:center;background:#2c2545;color:#fff6e0;opacity:0;pointer-events:none;transition:opacity .4s ease}#weekFadeB119.on{opacity:1}#weekFadeB119 b{font-size:clamp(34px,9vw,64px);font-weight:950;letter-spacing:-.03em}#weekFadeB119 span{font-size:14px;color:#e8dcff;max-width:min(520px,90vw);margin:0 auto}";
+ style.textContent="#weekFadeB119{position:fixed;inset:0;z-index:60;display:grid;place-content:center;gap:10px;padding:16px;text-align:center;background:#000;color:#fff;opacity:0;pointer-events:none}#weekFadeB119.on{animation:b119Shade 4.8s linear}#weekFadeB119 b,#weekFadeB119 span{opacity:0}#weekFadeB119.on b,#weekFadeB119.on span{animation:b119WeekText 7.6s linear}#weekFadeB119 b{font-size:clamp(34px,9vw,64px);font-weight:950;letter-spacing:-.03em}#weekFadeB119 span{font-size:14px;max-width:min(520px,90vw);margin:0 auto}@keyframes b119Shade{0%{opacity:0}41.667%,58.333%{opacity:1}100%{opacity:0}}@keyframes b119WeekText{0%,26.315%{opacity:0}30.263%,96.052%{opacity:.6}100%{opacity:0}}";
  document.head.appendChild(style);
  return el;
 }
@@ -79,15 +80,13 @@ function playWeekFadeB119(f){
  const el=ensureWeekFadeB119();
  el.querySelector("b").textContent=`Week ${f.week}`;el.querySelector("span").textContent=f.text;
  weekFadeB119.last={...f,shownAt:Date.now()};weekFadeB119.pending=null;
- clearTimeout(weekFadeB119.timer);el.classList.add("on");
- weekFadeB119.timer=setTimeout(()=>{
-   el.classList.remove("on");
-   if(f.kind==="rest")weekFadeB119.last.twinkled=sfxWeekTwinkleB119();
- },(B119_FADE_IN+B119_FADE_HOLD)*1000);
+ clearTimeout(weekFadeB119.timer);clearTimeout(weekFadeB119.twinkleTimer);el.classList.remove("on");void el.offsetWidth;el.classList.add("on");
+ weekFadeB119.twinkleTimer=setTimeout(()=>{if(f.kind==="rest")weekFadeB119.last.twinkled=sfxWeekTwinkleB119()},(B119_FADE_IN+B119_TEXT_IN+B119_FADE_HOLD+B119_FADE_OUT)*1000);
+ weekFadeB119.timer=setTimeout(()=>el.classList.remove("on"),(B119_FADE_IN+B119_TEXT_IN+B119_TEXT_HOLD+B119_TEXT_IN)*1000);
 }
 function queueWeekFadeB119(kind,report){
  const f={week:ranchB99.week,kind,report,text:weekSummaryB119(kind,report)};
- // Battle weeks show once the ranch opens; a together drill's week shows after its mini-game.
+ // Battle weeks show once the ranch opens.
  if(ranchWorldB100.active&&!weekFadeB119.holdForGame)playWeekFadeB119(f);else weekFadeB119.pending=f;
 }
 const startGameBeforeB119=startGameB100;
