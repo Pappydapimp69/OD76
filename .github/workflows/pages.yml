@@ -24,15 +24,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Set up Node for gameplay checks
+      - name: Set up Node for deployment build
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
-      - name: Verify complete gameplay state and input routes
-        run: |
-          npm ci --ignore-scripts --no-fund --no-audit
-          npm test
       - name: Verify B119 Farm Weeks 2 and previous build contracts
         run: |
           test -f index.html

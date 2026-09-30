@@ -78,7 +78,7 @@ function buySnackB118(){
  S.heartCurrency-=price;S.b118SnackBought++;S.b118Snacks++;updateUI();return true;
 }
 function eatSnackB118(){
- if(!S?.stagePending||!exhaustedB115()||!(S.b118Snacks>0))return false;
+ if(!S?.stagePending||arenaFatigueB118()<=0||!(S.b118Snacks>0))return false;
  S.b118Snacks--;setArenaFatigueB118(arenaFatigueB118()-B118_SNACK_HEAL);renderTollGateB115();return true;
 }
 
@@ -120,7 +120,7 @@ renderTollGateB115=function(){
  const done=exhaustedB115(),snacks=S?.b118Snacks||0;
  $('ranchGateExhaustB115').textContent=done?(snacks?'Pip has no free fatigue. Feed him an arena snack or return to the ranch.':'Pip is exhausted — return to the ranch.') :'';
  $('nextStageB99').disabled=done;
- const eat=$('eatSnackB118');if(eat){eat.textContent=`Feed Pip an arena snack · ${snacks} left · −${B118_SNACK_HEAL} fatigue`;eat.classList.toggle('stagehidden',!(done&&snacks>0))}
+ const eat=$('eatSnackB118');if(eat){eat.textContent=`Feed Pip an arena snack · ${snacks} left · −${B118_SNACK_HEAL} fatigue`;eat.classList.toggle('stagehidden',!(fatigue>0&&snacks>0))}
  const why=$('ranchGateWhyB116d');if(why)why.textContent=appetiteTextB116d(t.why);
 };
 
