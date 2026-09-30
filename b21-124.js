@@ -132,10 +132,7 @@ renderRanchHudB100=function(){renderRanchHudBeforeB118();const spans=$('ranchHud
 // B119 quick fixes: drills no longer pass time, and the playtest panel is available only through Pip's hidden ranch sequence.
 const payDrillBeforeB118v=payDrillB100;
 payDrillB100=function(kind){
- if(drillBlockB99(kind))return false;
- const hungry=ranchB99.hunger<B104_LOW;
- ranchB99.stones-=drillCostB99(kind);ranchB99.fatigue=Math.min(100,ranchB99.fatigue+B99_DRILL_FATIGUE+(hungry?10:0));
- const c=ranchB99.drillCounts||(ranchB99.drillCounts={});c[kind]=(c[kind]||0)+1;saveRanchB99();return true;
+ const week=ranchB99.week,out=payDrillBeforeB118v(kind);if(out){ranchB99.week=week;saveRanchB99()}return out;
 };
 const trainBeforeB118v=trainB99;
 trainB99=function(kind){const week=ranchB99.week,out=trainBeforeB118v(kind);if(out){ranchB99.week=week;saveRanchB99();renderRanchB99()}return out};
