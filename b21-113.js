@@ -9,16 +9,13 @@ const B117_LABELS={name:"Name",diff13:"Stages 1-3",diff46:"Stages 4-6",diff7:"St
  needs:"Pip's Tired/Food/Clean meters",gate:"Stage-clear meters",drills:"Drill training",best:"Best moment",worst:"Most frustrating",bugs:"Bugs / confusing",fun:"Fun (1-5)",again:"Play next build"};
 
 // ---- stats: one versioned save, every read and write guarded ----
-const B117R_BUCKETS=['ranchIdle','ranchClear','ranchFarm','ranchTrain'];
-function drillModesDefaultB117r(){const m={};for(const k in B99_DRILLS)m[k]={solo:0,together:0};return m}
-function statsDefaultB117(){return{v:B117_V,play:0,arena:0,ranch:0,ranchIdle:0,ranchClear:0,ranchFarm:0,ranchTrain:0,runs:0,stage:0,rank:0,deaths:0,skills:{},drillModes:drillModesDefaultB117r(),chain:0,tier:0,blocks:0,drills:0,upgrades:0,feeds:0,washes:0}}
+function statsDefaultB117(){return{v:B117_V,play:0,arena:0,ranch:0,runs:0,stage:0,rank:0,deaths:0,skills:{},chain:0,tier:0,blocks:0,drills:0,upgrades:0,feeds:0,washes:0}}
 function loadStatsB117(){
  const s=statsDefaultB117();let raw=null;try{raw=JSON.parse(localStorage.getItem(B117_KEY)||"null")}catch(_){}
  if(!raw||raw.v!==B117_V)return s;
  const n=x=>Number.isFinite(x)&&x>0?x:0;
  for(const k in s)if(typeof s[k]==="number"&&k!=="v")s[k]=n(raw[k]);
  for(const id in raw.skills||{})if(OVERDRIVE_INFO[id])s.skills[id]={n:n(raw.skills[id]?.n),sec:n(raw.skills[id]?.sec)};
- for(const k in s.drillModes)s.drillModes[k]={solo:n(raw.drillModes?.[k]?.solo),together:n(raw.drillModes?.[k]?.together)};
  return s;
 }
 let statsB117=loadStatsB117(),sinceSaveB117=0;
@@ -80,19 +77,11 @@ const feedBeforeB117=feedB104;
 feedB104=function(...a){const it=feedBeforeB117(...a);if(it)bumpB117("feeds");return it};
 const washBeforeB117=washB104;
 washB104=function(...a){const ok=washBeforeB117(...a);if(ok)bumpB117("washes");return ok};
-function drillModeB117r(kind,mode){const m=statsB117.drillModes[kind];if(!m)return;m[mode]++;saveStatsB117()}
-const soloDrillBeforeB117r=soloDrillB100;
-soloDrillB100=function(kind,...a){const r=soloDrillBeforeB117r(kind,...a);if(r)drillModeB117r(kind,'solo');return r};
-const startGameBeforeB117r=startGameB100;
-startGameB100=function(kind,...a){const ok=startGameBeforeB117r(kind,...a);if(ok)drillModeB117r(kind,'together');return ok};
 
 // ---- words: the auto-filled summary and the plain-text report ----
 function minutesB117(sec){return sec<60?"<1 min":`${Math.round(sec/60)} min`}
 function stampB117(){return($("od76BuildStamp")?.textContent||"").trim()||"OD76 B117"}
 function pluralB117(n,one,many=one+"s"){return`${n} ${n===1?one:many}`}
-function secsB117r(sec){return sec<60?`${Math.round(sec)}s`:minutesB117(sec)}
-function ranchTimeTextB117r(){const s=statsB117;return`idle ${secsB117r(s.ranchIdle)}, clearing obstacles ${secsB117r(s.ranchClear)}, farming ${secsB117r(s.ranchFarm)}, training ${secsB117r(s.ranchTrain)}`}
-function drillModesTextB117r(){return Object.keys(B99_DRILLS).map(k=>{const m=statsB117.drillModes[k];return`${B99_DRILLS[k].name} ${m.solo} solo / ${m.together} together`}).join(', ')}
 function summaryB117(){
  const s=statsB117,top=topSkillB117(),rank=B108_RANKS[rankUnlockedB117()]?.id||"E";
  return[`Played ${minutesB117(s.play)} (arena ${minutesB117(s.arena)})`,pluralB117(s.runs,"battle test"),s.stage?`reached stage ${s.stage}`:"no stage reached yet",`rank ${rank} unlocked`,
@@ -101,15 +90,14 @@ function summaryB117(){
 function detailB117(){
  const s=statsB117;
  return[`${skillRateB117().toFixed(1)} skill uses per arena minute`,pluralB117(s.deaths,"fall"),`stopped by 100 fatigue ${s.blocks}×`,pluralB117(s.drills,"drill training"),
-  pluralB117(s.upgrades,"station upgrade"),`fed Pip ${s.feeds}×`,`washed Pip ${s.washes}×`,`ranch: ${ranchTimeTextB117r()}`].join(" · ");
+  pluralB117(s.upgrades,"station upgrade"),`fed Pip ${s.feeds}×`,`washed Pip ${s.washes}×`].join(" · ");
 }
 function statsTextB117(){
  const s=statsB117,top=topSkillB117(),skills=Object.entries(s.skills).filter(([,k])=>k.n>0).sort((a,b)=>b[1].n-a[1].n).map(([id,k])=>`${OVERDRIVE_INFO[id].name} ${k.n} (${Math.round(k.sec)}s)`);
  return[`Time played: ${minutesB117(s.play)} (arena ${minutesB117(s.arena)}, ranch ${minutesB117(s.ranch)})`,`Battle tests: ${s.runs} · falls: ${s.deaths}`,
   `Highest stage: ${s.stage||"-"} · rank unlocked: ${B108_RANKS[rankUnlockedB117()]?.id||"E"}`,`Most-used skill: ${top?`${top.name} (${top.n} uses)`:"none"}`,
   `Skills: ${skills.join(", ")||"none"} · ${skillRateB117().toFixed(1)} uses/arena min`,`Best chain: ${s.chain?`${s.tier}x ${s.chain}`:"none"}`,
-  `Gate stops at 100 fatigue: ${s.blocks}`,`Drill trainings: ${s.drills} · station upgrades: ${s.upgrades}`,`Feeds: ${s.feeds} · washes: ${s.washes}`,
-  `Ranch time: ${ranchTimeTextB117r()}`,`Drills: ${drillModesTextB117r()}`].join("\n");
+  `Gate stops at 100 fatigue: ${s.blocks}`,`Drill trainings: ${s.drills} · station upgrades: ${s.upgrades}`,`Feeds: ${s.feeds} · washes: ${s.washes}`].join("\n");
 }
 function reportB117(answers=answersB117()){
  const lines=Object.keys(B117_LABELS).filter(k=>answers[k]).map(k=>`${B117_LABELS[k]}: ${answers[k]}`);
@@ -259,15 +247,10 @@ const pipActionBeforeB117=pipActionForB109;
 pipActionForB109=function(near){return surveyB117.open?null:pipActionBeforeB117(near)};
 const startPipActionBeforeB117=startPipActionB109;
 startPipActionB109=function(a){return surveyB117.open?false:startPipActionBeforeB117(a)};
-function ranchBucketB117r(w=ranchWorldB100){
- if(w.game||w.pip?.state==='drill')return'ranchTrain';
- const a=w.b109Action;if(a)return a.kind==='chop'||a.kind==='cut'?'ranchClear':'ranchFarm';
- return'ranchIdle';
-}
 const updateRanchBeforeB117=updateRanchB100;
 updateRanchB100=function(dt){
  const w=ranchWorldB100,open=surveyB117.open,px=w.px,py=w.py;
- if(w.active){const t=Math.min(1,Math.max(0,Number(dt)||0));if(t&&!document.hidden)statsB117[ranchBucketB117r(w)]+=t;timeB117("ranch",dt)}
+ if(w.active)timeB117("ranch",dt);
  updateRanchBeforeB117(dt);
  if(!open)return;
  w.px=px;w.py=py;$("ranchActB100")?.classList.remove("on");
