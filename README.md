@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B120: Nova constellations
+
+Nova now turns every enemy struck by its released shockwaves into a temporary star. Up to seven of those enemies are linked into a traced line drawing—Pair, Triad, Kite, Crown, Dipper or Hunter—while additional hits remain as loose stars around it. Living star nodes move with their enemies; defeated enemies hold their final point until the constellation fades.
+
 ## B119: Farm weeks
 
 You water the crops yourself now. It's free, and it works even when Pip is tired. Crops need water every ranch week: a week that ends dry grows them only half a week, a second dry week in a row grows nothing, and a third withers the crop. A 💧 marks an unwatered plot and a 🥀 warns that it will wither. Every time a week ends (training, resting or a battle test) the screen fades to **Week N** with what happened to your crops, and resting plays a little twinkle.
