@@ -35,6 +35,12 @@ Damage (all × weapon power, like Beam):
 
 Beam: unchanged.
 
+### 3. Skill balance: Beam / Nova / Storm
+- Nova and Storm damage × weapon power (Beam already does; `S.weaponPower` in `b21-01.js`).
+- Beam overdrive power 1.5 + 0.20×Lv (was 0.33×Lv; `b21-06.js` attack). Lv1 −7%, Lv5 −21%.
+- Costs in % of the HEAT meter, not fixed energy: Beam drain 26%/s (was 26 energy/s), Nova full charge 20% (was 20 energy). Storm already %.
+- Target per 8% HEAT, single target: Beam 2.8/7.0/12.8 · Nova 3.3/6.2/9.2 per enemy in range · Storm 2.6/4.4/8.6 (+chain) at Lv1/3/5.
+
 ## B121 quick fixes — SHIPPED (B121)
 
 ### 1. Heart Sense carry capacity
