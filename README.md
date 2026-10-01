@@ -2,6 +2,12 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B122: Follow cloud
+
+Thunderstorm is a storm cloud of your own now. Press the skill with no cloud up and one forms over you in 2.2s for 25% HEAT; it floats with you for 12s and zaps the nearest enemy in range (110px, 140px from Lv4) every 0.8s at Lv1 down to 0.5s at Lv5. While it is up, a quick tap fires a bolt from the cloud at the nearest enemy you can see: no HEAT, one second off the cloud, a quarter second between bolts. A hold charges seeking clouds instead (8% HEAT each, 1.1s for the first and 0.9s after, 1 to 4 by level) that travel and strike as before; let go before the first forms and nothing is spent. From Lv3 every storm hit arcs to a nearby enemy, and every storm hit grows with weapon power.
+
+Balance: Beam's level power is 1.5+0.20 per level (was 0.33) and its drain is 26% of the meter per second whatever the meter's size; Nova grows with weapon power too. The ranch top bar shows Heart Stones again (B118 had been writing "Tired · Arena max" over the counter), and the refinery sheet lists them with your other currencies.
+
 ## B121: Sense capacity
 
 Pip's carry capacity starts at 3 and grows +3 with every Heart Sense level through Lv 10 (33), then +1 per level. Upgrading never lowers it. Hearts still weigh 3.

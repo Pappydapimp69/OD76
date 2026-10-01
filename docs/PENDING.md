@@ -1,10 +1,10 @@
 # Pending builds
 
-## B122 quick fixes (build on go)
+## B122 quick fixes — SHIPPED (B122, `b21-128.js`)
 
 ### 1. Ranch HUD: remove "Arena max" (also restores Heart Stones)
 - Bug: the B118 override writes into `spans[2]`, which since B102 is the Heart Stones span (◆), not the Fatigue label. Heart Stones vanish from the HUD; the save is intact.
-- Top bar on the ranch reads "Tired · Arena max N" (`b21-124.js:130`). Drop the B118 override so the label is back to the original "Fatigue".
+- Top bar on the ranch reads "Tired · Arena max N" (`b21-124.js:130`). Drop the override; the fatigue bar keeps only its 😴 (no word). Refinery sheet now lists ◆ Heart Stones too (tester report).
 
 ### 2. Thunderstorm rework: follow cloud
 Why: Beam pays off instantly; Storm waits 2.2s charge + travel and does ~1.6-2.3x less damage per HEAT. Give Storm its own role (lasting, safe, ranged) instead of a slower Beam.
@@ -39,7 +39,7 @@ Beam: unchanged.
 ### 3. Skill balance: Beam / Nova / Storm
 - Nova and Storm damage × weapon power (Beam already does; `S.weaponPower` in `b21-01.js`).
 - Beam overdrive power 1.5 + 0.20×Lv (was 0.33×Lv; `b21-06.js` attack). Lv1 −7%, Lv5 −21%.
-- Costs in % of the HEAT meter, not fixed energy: Beam drain 26%/s (was 26 energy/s), Nova full charge 20% (was 20 energy). Storm already %.
+- Beam drain in % of the HEAT meter: 26%/s (was 26 energy/s, so it got cheaper as the meter grew). Nova (20%) and Storm were already %.
 - Target per 8% HEAT, single target: Beam 2.8/7.0/12.8 · Nova 3.3/6.2/9.2 per enemy in range · Storm 2.6/4.4/8.6 (+chain) at Lv1/3/5.
 
 ## B121 quick fixes — SHIPPED (B121)

@@ -48,7 +48,7 @@ function runSkillChecksB116(){
       S.attackCd=0;shots=[];attackBeforeB116b();const today=shots.filter(s=>s.source==='player');
       S.attackCd=0;shots=[];attack();const beam=shots.filter(s=>s.source==='player'),[count,mult]=want[lv-1];
       assert(beam.length===count,`Lv${lv} streams ${beam.length} not ${count}`);
-      for(const s of beam){near(s.power,today[1].power*mult,`Lv${lv} power`);assert(s.pierce===today[1].pierce&&s.life===today[1].life,`Lv${lv} pierce/life changed`)}
+      for(const s of beam){near(s.power,today[1].power*mult*(1.5+lv*B122_BEAM_PER_LEVEL)/(1.5+lv*.33),`Lv${lv} power`);assert(s.pierce===today[1].pierce&&s.life===today[1].life,`Lv${lv} pierce/life changed`)}
       const angles=beam.map(s=>Math.atan2(s.vy,s.vx)),width=Math.max(...angles)-Math.min(...angles);
       assert(width>lastWidth,`Lv${lv} spread did not widen`);lastWidth=width;
       if(lv===3)angles.forEach((a,i)=>near(a,Math.atan2(today[i].vy,today[i].vx),'Lv3 is not today\'s 3-way spread'));

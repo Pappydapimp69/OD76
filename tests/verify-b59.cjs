@@ -58,8 +58,6 @@ new vm.Script(fs.readFileSync(path.join(__dirname, 'b115-drills-checks.js'), 'ut
 results.push(...vm.runInContext('runDrillsChecksB115()', dom.getInternalVMContext()));
 new vm.Script(fs.readFileSync(path.join(__dirname, 'b115-toll-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
 results.push(...vm.runInContext('runTollChecksB115()', dom.getInternalVMContext()));
-new vm.Script(fs.readFileSync(path.join(__dirname, 'b116-storm-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
-results.push(...vm.runInContext('runStormChecksB116()', dom.getInternalVMContext()));
 new vm.Script(fs.readFileSync(path.join(__dirname, 'b116-skill-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
 results.push(...vm.runInContext('runSkillChecksB116()', dom.getInternalVMContext()));
 new vm.Script(fs.readFileSync(path.join(__dirname, 'b116-freeze-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
@@ -76,6 +74,8 @@ new vm.Script(fs.readFileSync(path.join(__dirname, 'b118-endurance-checks.js'), 
 results.push(...vm.runInContext('runEnduranceChecksB118()', dom.getInternalVMContext()));
 new vm.Script(fs.readFileSync(path.join(__dirname, 'b119-farm-week-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
 results.push(...vm.runInContext('runFarmWeekChecksB119()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b122-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runChecksB122()', dom.getInternalVMContext()));
 for (const r of results) console.log(`${r.ok ? 'PASS' : 'FAIL'} ${r.name}${r.error ? ': '+r.error : ''}`);
 dom.window.close();
 if (results.some(r => !r.ok)) process.exitCode = 1;
