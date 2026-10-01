@@ -1,6 +1,11 @@
 # Pending builds
 
-## B121 quick fixes (build on go)
+## B122 quick fixes (build on go)
+
+### 1. Ranch HUD: remove "Arena max"
+- Top bar on the ranch reads "Tired · Arena max N" (`b21-124.js:130`). Show just "Tired".
+
+## B121 quick fixes — SHIPPED (B121)
 
 ### 1. Heart Sense carry capacity
 - Starts at 3. +3 per Sense level through Lv 10 (Lv 10 = 33). After Lv 10, +1 per level.
