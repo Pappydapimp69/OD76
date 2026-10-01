@@ -1,5 +1,13 @@
 # Pending builds
 
+## B123 quick fixes (build on go)
+
+### 1. Slower basic auto-attack, tuned for mobile
+- Basic shots fly at 600px/s for 0.55s (`b21-06.js` attack) whatever the screen; reach is 55% of the short side (up to 430px), so big screens target enemies the shot can't reach and phones see shots cross the reach in ~0.35s.
+- New: shot speed = current reach ÷ 0.5s, clamped 360–600px/s. Phone (390px short side, ~215px reach) ≈ 430px/s; big screens stay near today's speed.
+- Shot lifetime = reach ÷ speed + 10%, so a shot always reaches what it targets.
+- Beam and Pip shots unchanged.
+
 ## B122 quick fixes — SHIPPED (B122, `b21-128.js`)
 
 ### 1. Ranch HUD: remove "Arena max" (also restores Heart Stones)
