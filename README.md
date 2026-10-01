@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B123: Reach
+
+Your auto-attack reach is 10% shorter, with or without Pip, and Beam's reach follows it. Basic shots now cross that reach in half a second (between 360 and 600px/s), so on a phone they fly visibly slower than before, and every shot lives just long enough to reach whatever it was aimed at, whatever the screen size.
+
 ## B122: Follow cloud
 
 Thunderstorm is a storm cloud of your own now. Press the skill with no cloud up and one forms over you in 2.2s for 25% HEAT; it floats with you for 12s and zaps the nearest enemy in range (110px, 140px from Lv4) every 0.8s at Lv1 down to 0.5s at Lv5. While it is up, a quick tap fires a bolt from the cloud at the nearest enemy you can see: no HEAT, one second off the cloud, a quarter second between bolts. A hold charges seeking clouds instead (8% HEAT each, 1.1s for the first and 0.9s after, 1 to 4 by level) that travel and strike as before; let go before the first forms and nothing is spent. From Lv3 every storm hit arcs to a nearby enemy, and every storm hit grows with weapon power.

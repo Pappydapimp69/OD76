@@ -76,6 +76,8 @@ new vm.Script(fs.readFileSync(path.join(__dirname, 'b119-farm-week-checks.js'), 
 results.push(...vm.runInContext('runFarmWeekChecksB119()', dom.getInternalVMContext()));
 new vm.Script(fs.readFileSync(path.join(__dirname, 'b122-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
 results.push(...vm.runInContext('runChecksB122()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b123-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runChecksB123()', dom.getInternalVMContext()));
 for (const r of results) console.log(`${r.ok ? 'PASS' : 'FAIL'} ${r.name}${r.error ? ': '+r.error : ''}`);
 dom.window.close();
 if (results.some(r => !r.ok)) process.exitCode = 1;

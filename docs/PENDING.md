@@ -1,6 +1,6 @@
 # Pending builds
 
-## B123 quick fixes (build on go)
+## B123 quick fixes — SHIPPED (B123, `b21-129.js`)
 
 ### 1. Slower basic auto-attack, tuned for mobile
 - Basic shots fly at 600px/s for 0.55s (`b21-06.js` attack) whatever the screen; reach is 55% of the short side (up to 430px), so big screens target enemies the shot can't reach and phones see shots cross the reach in ~0.35s.
