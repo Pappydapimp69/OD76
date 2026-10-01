@@ -1,5 +1,13 @@
 # Pending builds
 
+## B121 quick fixes (build on go)
+
+### 1. Heart Sense carry capacity
+- Starts at 3. +3 per Sense level through Lv 10 (Lv 10 = 33). After Lv 10, +1 per level.
+- Never decreases on upgrade. Hearts still weigh 3.
+- Upgrade preview and Pip's capacity line show the new numbers.
+- Dirt (hygiene) does not touch capacity; dirt effects unchanged.
+
 ## B118 proposals (feedback session — build on go)
 
 ### 1. Guardian level tiers (Beam/Storm pattern) — APPLIED as a B117 fix (`b21-114.js`)
