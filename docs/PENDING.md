@@ -5,6 +5,36 @@
 ### 1. Ranch HUD: remove "Arena max"
 - Top bar on the ranch reads "Tired · Arena max N" (`b21-124.js:130`). Drop the B118 override so the label is back to the original "Fatigue".
 
+### 2. Thunderstorm rework: follow cloud
+Why: Beam pays off instantly; Storm waits 2.2s charge + travel and does ~1.6-2.3x less damage per HEAT. Give Storm its own role (lasting, safe, ranged) instead of a slower Beam.
+
+Controls (one button):
+- No follow cloud up: press charges 2.2s, then summons the follow cloud. Costs 25% HEAT. Only one at a time.
+- Follow cloud up, quick tap (under 0.18s): fires a bolt from the follow cloud at the nearest enemy. Costs 1s of follow-cloud time, no HEAT. 0.25s cooldown between bolts. Capture taps at press time so fast taps never drop.
+- Follow cloud up, hold (past 0.18s): charges seeking clouds that hunt enemies and strike (chain from Lv3). Each costs 8% HEAT, none of the follow-cloud time. Charge 1.1s first, 0.9s each after (Lv5 25% faster). No HEAT is spent inside the tap window.
+
+Follow cloud:
+- Lasts 12s. Each bolt takes 1s off. More tapping = shorter, burstier cloud.
+- Floats over the player and auto-zaps any enemy in range (keeps zapping while the player stands still).
+- When it runs out, the next press summons a new one (2.2s charge again).
+
+Levels (replace "more clouds per level"):
+| Lv | Seeking clouds max | Auto-zap | Range | Extra |
+|---|---|---|---|---|
+| 1 | 1 | every 0.8s | 110px | follow cloud + bolts |
+| 2 | 2 | every 0.7s | 110px | |
+| 3 | 2 | every 0.7s | 110px | chain on every strike |
+| 4 | 3 | every 0.6s | 140px | |
+| 5 | 4 | every 0.5s | 140px | seeking clouds charge 25% faster |
+
+Damage (all × weapon power, like Beam):
+- Seeking cloud: Lv1-5 = 2.6 / 3.4 / 4.4 / 6.2 / 8.6. Chain hit 60%.
+- Bolt: 60% of a seeking cloud.
+- Auto-zap: 50% of a seeking cloud.
+- Target: Storm lands ~85-100% of Beam's damage per HEAT, paid for in startup time.
+
+Beam: unchanged.
+
 ## B121 quick fixes — SHIPPED (B121)
 
 ### 1. Heart Sense carry capacity
