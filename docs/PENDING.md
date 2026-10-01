@@ -8,6 +8,10 @@
 - Shot lifetime = reach ÷ speed + 10%, so a shot always reaches what it targets.
 - Beam and Pip shots unchanged.
 
+### 2. Player range −10%
+- Auto-target reach ×0.9: `S.attackRange` (`b21-01.js`, cap 430 → 387) and the no-Pip base range in `getAutoTarget` (`b21-05.js`, 185–270 → 167–243).
+- Beam's reach follows (it mirrors auto-target range). Item 1's shot speed is tied to reach, so basic shots also fly ~10% slower on the same screen.
+
 ## B122 quick fixes — SHIPPED (B122, `b21-128.js`)
 
 ### 1. Ranch HUD: remove "Arena max" (also restores Heart Stones)
