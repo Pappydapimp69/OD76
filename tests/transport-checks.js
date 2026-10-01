@@ -3,6 +3,7 @@ function transportFixtureB60(){
   fixtureB59();enemies=[];S.bossActive=false;S.waveState="active";S.spawn=999;S.waveGoal=999;
   P.x=0;P.y=0;P.pipX=150;P.pipY=0;S.pipState="collect";S.pipTarget=null;
   S.heartCurrency=0;S.stageCurrency=0;S.heartTotal=0;
+  S.pipCarryCapacity=10; // routing/speed checks use a fixed 10-weight hold; the B121 curve has its own check
 }
 function runTransportChecksB60(){
   const results=[],assert=(ok,message)=>{if(!ok)throw Error(message)};
@@ -22,7 +23,7 @@ function runTransportChecksB60(){
   });
   test("Heart Sense grows slower after 10, caps range, and never multiplies Swift",()=>{
     transportFixtureB60();const values=[];
-    for(const lv of [0,1,9,10,11,20,100]){S.pipRangeLv=lv;applyPipPower();values.push(S.pipDetectRange);assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase,"Sense changes flight speed");assert(S.pipCarryCapacity===(lv?lv*3:10),"capacity progression");}
+    for(const lv of [0,1,9,10,11,20,100]){S.pipRangeLv=lv;applyPipPower();values.push(S.pipDetectRange);assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase,"Sense changes flight speed");assert(S.pipCarryCapacity===3+Math.min(10,lv)*3+Math.max(0,lv-10),"capacity progression");}
     assert(values.join() === [82,90,154,162,164,182,200].join(),"wrong range curve");
     S.pipSpeedLv=2;applyPipPower();assert(S.pipMoveSpeed===B61_DEFAULTS.pipBase+2*B61_DEFAULTS.swiftFlat,"Swift altered by Sense");
   });

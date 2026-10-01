@@ -82,7 +82,7 @@ function runSettingsChecksB61(){
       applySettingsB61(config);S.pipSpeedLv=4;applyPipPower();
       for(const count of [0,1,3,4]){
         transportB60().cargo=Array.from({length:count},()=>heartFixtureB60());
-        const normal=swiftSpeedB61(4)*(1-(1-config.fullSpeed/100)*Math.min(count*3/10,1));
+        const normal=swiftSpeedB61(4)*(1-(1-config.fullSpeed/100)*Math.min(count*3/S.pipCarryCapacity,1));
         for(const bond of [1,.5,.00001,0]){S.b51PipBond=bond;assert(near(carrySpeedB60(),normal*(bond===0?.9:1)),'wrong load/bond speed')}
         S.b51PipBond=.001;assert(near(carrySpeedB60(),normal),'penalty survived recovery');
       }

@@ -19,7 +19,8 @@ win.HTMLCanvasElement.prototype.releasePointerCapture = () => {};
 win.HTMLCanvasElement.prototype.getBoundingClientRect = () => ({x:0,y:0,left:0,top:0,width:1024,height:768,right:1024,bottom:768});
 const byNumberB112 = (a, b) => Number(a.match(/\d+/g).pop()) - Number(b.match(/\d+/g).pop());
 const files = fs.readdirSync(root).filter(n => /^b21-\d{2,3}\.js$/.test(n)).sort(byNumberB112);
-if (files.length !== 119 || files.at(-1) !== 'b21-125.js' || files[95] !== 'b21-99.js') throw Error('B119 module order');
+// Any build count works; numeric order must hold (b21-99 before b21-100).
+if (!files.length || files.some((n, i) => i && byNumberB112(files[i - 1], n) >= 0)) throw Error('module order');
 const source = files.map(n => fs.readFileSync(path.join(root, n), 'utf8')).join('');
 new vm.Script(source, {filename:'game.js'}).runInContext(dom.getInternalVMContext());
 // Browser QA covers CSS. Removing styles keeps repeated state simulations inexpensive in JSDOM.

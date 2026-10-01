@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B121: Sense capacity
+
+Pip's carry capacity starts at 3 and grows +3 with every Heart Sense level through Lv 10 (33), then +1 per level. Upgrading never lowers it. Hearts still weigh 3.
+
 ## B120: Nova constellations
 
 Nova now turns every enemy struck by its released shockwaves into a temporary star. Up to seven of those enemies are linked into a traced line drawing—Pair, Triad, Kite, Crown, Dipper or Hunter—while additional hits remain as loose stars around it. Living star nodes move with their enemies; defeated enemies hold their final point until the constellation fades.
