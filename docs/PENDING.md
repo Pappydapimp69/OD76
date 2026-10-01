@@ -2,7 +2,8 @@
 
 ## B122 quick fixes (build on go)
 
-### 1. Ranch HUD: remove "Arena max"
+### 1. Ranch HUD: remove "Arena max" (also restores Heart Stones)
+- Bug: the B118 override writes into `spans[2]`, which since B102 is the Heart Stones span (◆), not the Fatigue label. Heart Stones vanish from the HUD; the save is intact.
 - Top bar on the ranch reads "Tired · Arena max N" (`b21-124.js:130`). Drop the B118 override so the label is back to the original "Fatigue".
 
 ### 2. Thunderstorm rework: follow cloud
