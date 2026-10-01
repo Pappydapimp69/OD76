@@ -3,7 +3,7 @@
 ## B122 quick fixes (build on go)
 
 ### 1. Ranch HUD: remove "Arena max"
-- Top bar on the ranch reads "Tired · Arena max N" (`b21-124.js:130`). Show just "Tired".
+- Top bar on the ranch reads "Tired · Arena max N" (`b21-124.js:130`). Drop the B118 override so the label is back to the original "Fatigue".
 
 ## B121 quick fixes — SHIPPED (B121)
 
