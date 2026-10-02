@@ -1,5 +1,10 @@
 # Pending builds
 
+## B124 quick fixes (build on go)
+
+### 1. Thunderstorm follow-cloud zap range ×3
+- `B122_ZAP_RANGE` (`b21-128.js`): 110/110/110/140/140 → 330/330/330/420/420 px. Dashed range ring follows.
+
 ## B123 quick fixes — SHIPPED (B123, `b21-129.js`)
 
 ### 1. Slower basic auto-attack, tuned for mobile
