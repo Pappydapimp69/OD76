@@ -70,7 +70,7 @@ function runFixChecksB117(){
     reset();S.run=true;openStageUpgrade();S.prismSeeds=2;renderEmotionButtons();$('stageUp').classList.remove('hidden');
     const btn=$('upLove'),love=S.pipLove||0;
     btn.click();assert(S.prismSeeds===2&&(S.pipLove||0)===love,'tap spent');
-    beginHoldB117h(btn,'test');tickHoldB117h(performance.now()+B117H_MS*.5);cancelHoldB117h('test');assert(S.prismSeeds===2,'early release spent');
+    beginHoldB117h(btn,'test');tickHoldB117h(performance.now()+B124_HOLD_MS*.5);cancelHoldB117h('test');assert(S.prismSeeds===2,'early release spent');
     beginHoldB117h(btn,'test');tickHoldB117h(performance.now()+B117H_MS);assert(S.prismSeeds===1&&S.pipLove===love+1,'full hold did not buy');
     assert(!holdB117h.btn,'hold not cleared');
   });
@@ -142,11 +142,11 @@ function runFixChecksB117(){
     reset();S.run=true;openStageUpgrade();S.prismSeeds=9;renderEmotionButtons();$('stageUp').classList.remove('hidden');
     const love=$('upLove'),sup=$('upSupport'),t0=()=>performance.now();
     const hold=(btn,ms)=>{beginHoldB117h(btn,'test');const need=holdB117h.ms;tickHoldB117h(t0()+ms);return need};
-    assert(hold(love,B117H_MS)===B117H_MS,'first hold not full');assert(repeatKeyB117q==='h:upLove','repeat not armed');
+    assert(hold(love,B124_HOLD_MS)===B124_HOLD_MS,'first hold not full');assert(repeatKeyB117q==='h:upLove','repeat not armed');
     assert(hold(love,B117Q_REPEAT_MS)===B117Q_REPEAT_MS&&S.pipLove===2,'repeat hold not 0.7s');
     love.dispatchEvent(new MouseEvent('pointerdown',{bubbles:true}));assert(repeatKeyB117q==='h:upLove','pressing the same card reset');cancelHoldB117h();
     sup.dispatchEvent(new MouseEvent('pointerdown',{bubbles:true}));cancelHoldB117h();assert(repeatKeyB117q===null,'other card did not reset');
-    assert(hold(love,B117H_MS)===B117H_MS,'after reset not full');
+    assert(hold(love,B124_HOLD_MS)===B124_HOLD_MS,'after reset not full');
     window.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown'}));assert(repeatKeyB117q===null,'other key did not reset');
     hold(love,B117H_MS);moveGamepadMenuFocusB35(0,1);assert(repeatKeyB117q===null,'gamepad move did not reset');
     hold(love,B117H_MS);openStageUpgrade();assert(repeatKeyB117q===null,'new stage did not reset');

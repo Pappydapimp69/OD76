@@ -12,7 +12,7 @@ function runFreezeChecksB116(){
     const e={type:'boss',bossKey:5,bossStage:1,x,y:0,r:30,hp:5000,maxHp:5000,dead:false,age:0,flash:0,attackClock:1,volleyCount:0,orbitAngle:0};
     enemies=[e];S.bossKey=5;S.bossName=bossData(5).name;initBossB59(e);return e};
   // The real boss update commits the aim: stalk runs out and the lane turns yellow ("locked") inside update().
-  const lock=e=>{bossPhaseB59(e,'stalk',.01);update(1/60);assert(e.b59.phase==='locked','Fang did not lock its pounce')};
+  const lock=e=>{bossPhaseB59(e,'stalk',.01);update(1/60);assert(e.b59.phase==='locked','Fang did not lock its pounce');settleFreezeWarnB124()}; // B124: skip the 0.6s warning
   const calm=e=>bossPhaseB59(e,'recover',99);
   const skill=(id,heat)=>{S.overType=id;S.overUnlocked.add(id);S.overLevels[id]=1;S.heat=heat;S.b93StormCooldown=0;S.b93StormClouds=[]};
 
@@ -54,8 +54,8 @@ function runFreezeChecksB116(){
   test('B116 a charging Nova or Gravity Well is cancelled with no refund',()=>{
     for(const id of ['nova','gravity']){
       const e=fang();skill(id,60);assert(triggerOverdrive()&&S.b94Charge,id+' did not charge');step(.5);near(S.heat,50,id+' charge drain');
-      lock(e);calm(e);assert(!S.b94Charge&&!S.b38OverHeld,id+' still charging');near(S.heat,50,id+' HEAT refunded');
-      stopOverdriveB38(false);assert(!(S.b94NovaWaves?.length)&&!S.b94Well,id+' released after the freeze');step(2.3);near(S.heat,50,id+' HEAT came back');
+      lock(e);calm(e);assert(!S.b94Charge&&!S.b38OverHeld,id+' still charging');assert(S.heat<=50&&S.heat>49,id+' HEAT refunded: '+S.heat); // B124: one more charging frame before the freeze lands
+      stopOverdriveB38(false);assert(!(S.b94NovaWaves?.length)&&!S.b94Well,id+' released after the freeze');step(2.3);assert(S.heat<=50&&S.heat>49,id+' HEAT came back: '+S.heat);
     }
   });
   test('B116 a held Beam stops and Pip Ascendant ends, both with no refund',()=>{

@@ -45,7 +45,7 @@ function runTollChecksB115(){
   test('B115 the stage gate shows Pip\'s meters without redundant debuff detail',()=>{
     fresh({fatigue:40,hunger:50,hygiene:30});toGate(2,12);
     const box=$('ranchGateMetersB115'),txt=box.textContent;
-    assert(txt.includes('Tired 48 (+8)')&&txt.includes('Food 47 (−3)')&&txt.includes('Clean 28 (−2)'),'meters: '+txt);
+    assert(txt.includes('Fatigue 48 (+8)')&&txt.includes('Food 47 (−3)')&&txt.includes('Clean 28 (−2)'),'meters: '+txt);
     assert($('ranchGateDebuffsB115').textContent===''&&!txt.includes('HEAT refills at')&&!txt.includes('Guardian Glow at'),'debuff details remain: '+txt);
     assert(!txt.includes('exhausted')&&!$('nextStageB99').disabled,'rested Pip blocked');
     assert(box.querySelector('.fat i').style.width==='48%'&&box.querySelector('.clean i').style.width==='28%','bars');

@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B124: Fixes
+
+The storm cloud that follows you zaps from three times as far (330px, 420px from Lv4). Fang's pounce lane now flashes for 0.6s before it freezes you, so you can step out. A fully charged Nova hits every enemy on screen. Enemies gain 12% HP for every wave you clear in a run and always take at least two basic shots. The Arena Merchant matches the rest of the stage screens and both its buttons are press-and-hold; every between-stage hold now takes 0.9s instead of 1.8s. Pip's meter is called Fatigue everywhere.
+
 ## B123: Reach
 
 Your auto-attack reach is 10% shorter, with or without Pip, and Beam's reach follows it. Basic shots now cross that reach in half a second (between 360 and 600px/s), so on a phone they fly visibly slower than before, and every shot lives just long enough to reach whatever it was aimed at, whatever the screen size.

@@ -13,7 +13,7 @@ function runChecksB122(){
   const press=()=>assert(triggerOverdrive()&&S.b93StormCharge,'storm press rejected');
   const release=()=>stopOverdriveB38(false);
   const tap=()=>{press();step(.05);release()};
-  const summon=(lv,heat=100)=>{arena(lv,heat);tap();step(2.3);assert(S.b122Cloud&&!S.b93StormCharge,'follow cloud did not form');strikes=[]};
+  const summon=(lv,heat=100,zaps=true)=>{arena(lv,heat);tap();step(2.3);assert(S.b122Cloud&&!S.b93StormCharge,'follow cloud did not form');if(!zaps)S.b122Cloud.zap=1e9;strikes=[]};
   const dmg=lv=>B122_STORM_DAMAGE[lv-1];
   fresh();reset();
 
@@ -33,22 +33,22 @@ function runChecksB122(){
   test('B122 the follow cloud zaps the nearest enemy in range on its level clock, half a cloud strike, chaining from Lv3',()=>{
     summon(1);const e=foe(90);step(.02);assert(strikes.length===1&&strikes[0].e===e,'no zap on an enemy in range');near(strikes[0].power,dmg(1)*.5,'zap damage');
     step(.7);assert(strikes.length===1,'zapped again too soon');step(.15);assert(strikes.length===2,'second zap late');
-    summon(1);foe(200);step(2);assert(!strikes.length,'zapped beyond range');
-    summon(4);foe(130);step(.02);assert(strikes.length===1,'Lv4 range not 140px');
+    summon(1);foe(B122_ZAP_RANGE[0]+20);step(2);assert(!strikes.length,'zapped beyond range');
+    summon(4);foe(B122_ZAP_RANGE[0]+20);step(.02);assert(strikes.length===1,'Lv4 range not wider than Lv1');
     summon(3);foe(80);foe(140);step(.02);assert(strikes.length===2&&strikes[0].e!==strikes[1].e,'Lv3 zap did not chain');near(strikes[1].power,dmg(3)*.5*B116A_CHAIN_DAMAGE,'chain damage');
     summon(2);S.weaponPower=2;foe(80);step(.02);near(strikes[0].power,dmg(2),'zap ignores weapon power');
   });
 
   test('B122 a tap fires a bolt from the cloud for 1s of cloud time and no HEAT, 0.25s apart; no target costs nothing',()=>{
-    summon(1);const e=foe(300),t0=S.b122Cloud.time;tap();assert(strikes.length===1&&strikes[0].e===e,'bolt did not fire');near(strikes[0].power,dmg(1)*.6,'bolt damage');
+    summon(1,100,false);const e=foe(300),t0=S.b122Cloud.time;tap();assert(strikes.length===1&&strikes[0].e===e,'bolt did not fire');near(strikes[0].power,dmg(1)*.6,'bolt damage');
     near(t0-S.b122Cloud.time,B122_BOLT_SECONDS+.05,'bolt did not cost 1s',.05);near(S.heat,75,'bolt spent HEAT');assert(!S.b93StormCharge&&!S.b38OverHeld,'bolt left a charge');
     tap();assert(strikes.length===1,'bolt ignored its cooldown');step(.3);tap();assert(strikes.length===2,'second bolt after cooldown missing');
-    summon(1);const t1=S.b122Cloud.time;tap();assert(!strikes.length,'bolt with no target struck');near(t1-S.b122Cloud.time,.05,'no-target bolt cost cloud time',.05);
-    summon(1,30);S.heat=10;foe(300);tap();assert(strikes.length===1,'bolt refused below the ignition line');
+    summon(1,100,false);const t1=S.b122Cloud.time;tap();assert(!strikes.length,'bolt with no target struck');near(t1-S.b122Cloud.time,.05,'no-target bolt cost cloud time',.05);
+    summon(1,30,false);S.heat=10;foe(300);tap();assert(strikes.length===1,'bolt refused below the ignition line');
   });
 
   test('B122 holding with the cloud up charges seeking clouds (1.1s then 0.9s, 8% each, max by level) that travel and strike; letting go before the first forms costs nothing',()=>{
-    summon(4);foe(0,-300);press();step(.1);assert(S.b93StormCharge?.mode==='pending'&&S.heat===75,'press spent HEAT inside the tap window');
+    summon(4,100,false);foe(0,-300);press();step(.1);assert(S.b93StormCharge?.mode==='pending'&&S.heat===75,'press spent HEAT inside the tap window');
     step(1.1);assert(S.b93StormCharge?.mode==='seek'&&S.b93StormCharge.clouds===0,'first seeking cloud early');
     step(.2);assert(S.b93StormCharge.clouds===1,'first seeking cloud late');near(S.heat,67,'first cloud cost');
     step(.75);assert(S.b93StormCharge.clouds===1,'second early');step(.2);assert(S.b93StormCharge.clouds===2,'second late');
@@ -56,21 +56,21 @@ function runChecksB122(){
     step(1);assert(S.b93StormCharge.clouds===3,'overfilled');release();
     assert(!S.b93StormCharge&&S.b93StormClouds.length===3&&S.b122Cloud,'release did not launch three clouds or dropped the follow cloud');
     step(8);assert(strikes.length>=3&&strikes.every(s=>s.e===enemies[0]),'seeking clouds did not strike');near(strikes[0].power,dmg(4),'seeking cloud damage');
-    summon(5);press();step(1.4);assert(S.b93StormCharge.clouds===1,'Lv5 first seeking cloud not 25% faster');cancelStormChargeB93(false);
-    summon(2);press();step(.6);release();assert(!S.b93StormCharge&&!S.b93StormClouds.length,'early release launched something');near(S.heat,75,'early release spent HEAT');
-    summon(1,30);press();step(.5);assert(S.b93StormCharge?.mode==='dud','hold below the ignition line charged');release();near(S.heat,5,'dud spent HEAT');
-    summon(1);foe(300);tap();step(.3);assert(S.b93StormClouds.length===0,'a bolt sent a seeking cloud');
+    summon(5,100,false);press();step(1.4);assert(S.b93StormCharge.clouds===1,'Lv5 first seeking cloud not 25% faster');cancelStormChargeB93(false);
+    summon(2,100,false);press();step(.6);release();assert(!S.b93StormCharge&&!S.b93StormClouds.length,'early release launched something');near(S.heat,75,'early release spent HEAT');
+    summon(1,30,false);press();step(.5);assert(S.b93StormCharge?.mode==='dud','hold below the ignition line charged');release();near(S.heat,5,'dud spent HEAT');
+    summon(1,100,false);foe(300);tap();step(.3);assert(S.b93StormClouds.length===0,'a bolt sent a seeking cloud');
   });
 
   test('B122 the follow cloud fades after 12s or 12 bolts; the next press forms a new one; stage end clears it',()=>{
-    summon(1);step(11.5);assert(S.b122Cloud,'cloud faded early');step(.4);assert(!S.b122Cloud,'cloud outlived 12s');
+    summon(1,100,false);step(11.5);assert(S.b122Cloud,'cloud faded early');step(.4);assert(!S.b122Cloud,'cloud outlived 12s');
     press();assert(S.b93StormCharge?.mode==='summon','press after fading did not start a new cloud');cancelStormChargeB93(true);
-    summon(1);foe(300);let bolts=0;while(S.b122Cloud&&bolts<20){tap();bolts++;step(.26)}
+    summon(1,100,false);foe(300);let bolts=0;while(S.b122Cloud&&bolts<20){tap();bolts++;step(.26)}
     // the last tap can land as the cloud fades mid-press, so it may fire nothing
     assert(!S.b122Cloud&&strikes.length>=8&&strikes.length<12&&bolts-strikes.length<=1,`bolts did not spend the cloud: ${bolts} bolts, ${strikes.length} strikes`);
-    summon(1);S.waveState='break';S.waveBreak=99;step(3);assert(S.b122Cloud&&S.b122Cloud.time>11,'wave break ran the cloud down');
+    summon(1,100,false);S.waveState='break';S.waveBreak=99;step(3);assert(S.b122Cloud&&S.b122Cloud.time>11,'wave break ran the cloud down');
     S.waveState='stage';step(.1);assert(!S.b122Cloud,'stage end kept the cloud');
-    summon(1);finish(true);step(.1);assert(!S.b122Cloud,'run end kept the cloud');
+    summon(1,100,false);finish(true);step(.1);assert(!S.b122Cloud,'run end kept the cloud');
   });
 
   test('B122 Beam drains 26% of the meter per second at any size, hits 1.5+0.2×Lv, and Nova scales with weapon power',()=>{
