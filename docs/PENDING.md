@@ -19,6 +19,10 @@
 - New: spawn HP × (1 + 0.12 per wave cleared this run), and never less than 2 basic shots at the player's current weapon power.
 - Bosses unchanged.
 
+### 5. Arena Merchant screen follows the theme
+- The second button ("Continue without buying", `#leaveMerchantB118` in `b21-124.js`) renders as a pale bar with unreadable light text; the buy button doesn't match the stage-up buttons either.
+- Style both like the other stage-up choices: themed dark card buttons, readable label, same focus ring. Leave button reads "Continue without buying".
+
 ## B123 quick fixes — SHIPPED (B123, `b21-129.js`)
 
 ### 1. Slower basic auto-attack, tuned for mobile
