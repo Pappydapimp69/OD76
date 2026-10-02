@@ -54,7 +54,7 @@ const B125_SCENT_TIERS=[
 ];
 const B125_DECOY_PENALTY=1.5;
 function scentTierB125(lv=ranchB99.stats.range){let t=B125_SCENT_TIERS[0];for(const x of B125_SCENT_TIERS)if((lv||0)>=x.min)t=x;return t}
-function scentSpotB125(st,spread){const a=Math.random()*Math.PI*2,d=110+Math.random()*(spread-110);return{x:clamp(st.x+Math.cos(a)*d,60,B100_WORLD.w-60),y:clamp(st.y+Math.sin(a)*d,60,B100_WORLD.h-60)}}
+function scentSpotB125(st,spread,slot=null,slots=1){const a=slot==null?Math.random()*Math.PI*2:slot/slots*Math.PI*2+Math.random()*.8,d=110+Math.random()*(spread-110);return{x:clamp(st.x+Math.cos(a)*d,60,B100_WORLD.w-60),y:clamp(st.y+Math.sin(a)*d,60,B100_WORLD.h-60)}}
 function scentHowB125(t){return`Walk over the scent sparkles with Pip. Get ${t.total-1} of ${t.total} in ${t.time}s.${t.drift?' They drift.':''}${t.fade?` Unclaimed ones move after ${t.fade}s.`:''}${t.decoys?` Grey ✿ are decoys: −${B125_DECOY_PENALTY}s.`:''}`}
 const startGameBeforeB125=startGameB100;
 startGameB100=function(kind,...a){
@@ -62,8 +62,9 @@ startGameB100=function(kind,...a){
   const t=scentTierB125(),how=B100_GAMES.range.how;B100_GAMES.range.how=scentHowB125(t);
   let ok;try{ok=startGameBeforeB125(kind,...a)}finally{B100_GAMES.range.how=how}
   const g=ranchWorldB100.game;if(!ok||!g||g.type!=='collect')return ok;
+  // sparkles start spaced around the field like B100's
   const st=stationB100('range');g.b125=t;g.total=t.total;g.need=t.total-1;g.time=t.time;
-  const mk=decoy=>{const p=scentSpotB125(st,t.spread),a=Math.random()*Math.PI*2;return{...p,got:false,decoy,age:0,vx:Math.cos(a)*t.drift,vy:Math.sin(a)*t.drift}};
+  const all=t.total+t.decoys;let slot=0;const mk=decoy=>{const p=scentSpotB125(st,t.spread,slot++,all),a=Math.random()*Math.PI*2;return{...p,got:false,decoy,age:0,vx:Math.cos(a)*t.drift,vy:Math.sin(a)*t.drift}};
   g.sparks=[];for(let i=0;i<t.total;i++)g.sparks.push(mk(false));
   g.decoys=[];for(let i=0;i<t.decoys;i++)g.decoys.push(mk(true));
   return ok;

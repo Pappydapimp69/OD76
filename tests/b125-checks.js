@@ -29,7 +29,7 @@ function runChecksB125(){
     fresh({fatigue:0,stones:99});ranchB99.stats.range=6;startGameB100('range');let g=ranchWorldB100.game;const w=ranchWorldB100;
     w.px=w.py=w.pip.x=w.pip.y=-9999;const s=g.sparks[0],x0=s.x;for(let i=0;i<5*60;i++)gameInputB100(g,1/60,false,false);assert(s.x!==x0||s.age<1,'unclaimed sparkle never moved');
     fresh({fatigue:0,stones:99});ranchB99.stats.range=9;startGameB100('range');g=ranchWorldB100.game;w.pip.x=w.pip.y=-9999;
-    const d=g.decoys[0];w.px=d.x;w.py=d.y;const t0=g.time;gameInputB100(g,1/60,false,false);near(t0-g.time,1/60+B125_DECOY_PENALTY,'decoy penalty',1e-6);
+    for(const o of [...g.sparks,...g.decoys.slice(1)]){o.x=-5000;o.y=-5000;o.vx=o.vy=0}const d=g.decoys[0];w.px=d.x;w.py=d.y;const t0=g.time;gameInputB100(g,1/60,false,false);near(t0-g.time,1/60+B125_DECOY_PENALTY,'decoy penalty',1e-6);
     ranchWorldB100.active=false;
   });
 
@@ -49,7 +49,7 @@ function runChecksB125(){
   });
 
   test('B125 every look and every in-between keeps gameplay colours at 3:1 or better against the backdrop',()=>{
-    const sprites=['#7ed8ff','#ff6e8b','#ffd36f','#b388ff','#ff7dd8','#d9c8ff','#ff9fba','#ffe58f','#9ee7ff','#fff0a8','#7be0ae'];
+    const sprites=[...new Set([...Object.values(BOSS_DATA).map(b=>b.color),'#c99a2e','#e7d7ff','#e8f6ff']),'#7ed8ff','#ff6e8b','#ffd36f','#b388ff','#ff7dd8','#d9c8ff','#ff9fba','#ffe58f','#9ee7ff','#fff0a8','#7be0ae'];
     for(let i=0;i<=50;i++){const q=i/10,bg=backdropPeakB125(q);for(const c of sprites){const r=contrastB125(bg,hexRgbB125(c));assert(r>=3,`q ${q} ${c} contrast ${r.toFixed(2)}`)}}
   });
 
@@ -57,6 +57,11 @@ function runChecksB125(){
     reset();S.run=true;S.end=false;S.waveState='active';ranchWorldB100.active=false;
     for(const v of [0,.5,1,1.5,2.5,3.5,4.5,5]){lookOverrideB125=v;draw()}
     lookOverrideB125=null;
+  });
+  test('B125 every boss draws its own look at the top tier without errors',()=>{
+    reset();S.run=true;S.end=false;S.waveState='boss';ranchWorldB100.active=false;lookOverrideB125=5;
+    for(const k of Object.keys(BOSS_DATA)){enemies=[{type:'boss',bossKey:+k,x:P.x+120,y:P.y,r:30,hp:50,maxHp:50,dead:false,age:1,flash:0}];draw()}
+    lookOverrideB125=null;enemies=[];
   });
   return out;
 }

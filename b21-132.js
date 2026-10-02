@@ -32,7 +32,7 @@ function silhouetteB126(k,a,t){
     for(let i=0;i<22;i++){const f=.5+.5*Math.sin(t*2.4+i*1.7),x=wrapB126(seededB125(i+60)*W+Math.sin(t*.6+i)*30+px*.6,W),y=wrapB126(seededB125(i+80)*H*.8+Math.cos(t*.5+i)*20,H);
       const g=X.createRadialGradient(x,y,0,x,y,9);g.addColorStop(0,rgbB125([230,200,255],.75*f));g.addColorStop(1,rgbB125([197,140,255],0));X.fillStyle=g;X.beginPath();X.arc(x,y,9,0,Math.PI*2);X.fill()}
   }else if(k===4){ // Aurora Fields: sky-wide aurora + jagged ridge
-    for(let b=0;b<4;b++){const g=X.createLinearGradient(0,0,0,H*.75);g.addColorStop(0,rgbB125([94,255,200],0));g.addColorStop(.45,rgbB125(b%2?[120,200,255]:[94,255,200],B126_LARGE_ALPHA));g.addColorStop(1,rgbB125([94,255,200],0));
+    for(let b=0;b<4;b++){const g=X.createLinearGradient(0,0,0,H*.75);g.addColorStop(0,rgbB125([94,255,200],0));g.addColorStop(.45,rgbB125(b%2?[120,200,255]:[94,255,200],B126_LARGE_ALPHA*.45)); // bands overlap: keep the stack under the capg.addColorStop(1,rgbB125([94,255,200],0));
       X.fillStyle=g;X.beginPath();X.moveTo(0,0);for(let x=0;x<=W+30;x+=30)X.lineTo(x,H*(.08+b*.1)+Math.sin(x/160+t*.45+b*1.3)*30);for(let x=W;x>=0;x-=30)X.lineTo(x,H*(.32+b*.1)+Math.sin(x/190+t*.35+b)*26);X.closePath();X.fill()}
     X.fillStyle=rgbB125([6,20,26]);X.beginPath();X.moveTo(0,H);for(let x=0;x<=W+30;x+=30){const u=(x-px)/60;X.lineTo(x,H*.8-Math.abs(Math.sin(u))*50-Math.abs(Math.sin(u*.37))*40)}X.lineTo(W,H);X.closePath();X.fill();
   }else if(k===5){ // Starforge: forge towers with lit windows, rising embers, constellation
