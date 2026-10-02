@@ -28,6 +28,10 @@
 - Between-stage hold confirms (boss rewards, Pip traits, heart skills, merchant) hold 0.9s instead of 1.8s (`B117H_MS`).
 - Skill-select (Overdrive) and Sound Lab holds keep 1.8s.
 
+### 7. One word: Fatigue
+- The stage gate meter says "Tired 100 (+3)" while snacks, the gate warning and the HUD say fatigue.
+- Rename the meter label to "Fatigue" everywhere it shows: stage gate bars (`b21-107.js`, `b21-124.js`), QA panel row. Status words like "Pip is exhausted" stay.
+
 ## B123 quick fixes — SHIPPED (B123, `b21-129.js`)
 
 ### 1. Slower basic auto-attack, tuned for mobile
