@@ -21,6 +21,14 @@
 | 12+ | 9 (8) | 14s | 430px | faster drift, 3 decoys |
 - How-to text and HUD show the tier's numbers. Pip's helper speed unchanged.
 
+### 3. Ranch Pip shows his trained levels
+- Today ranch Pip follows at a flat 200px/s (120 tired) and looks the same at any level (`updatePipB100`, `b21-89.js`).
+- Swift Pip: follow speed 200 + 8/Lv (cap 360); Scent Hunt helper speed 90 + 4/Lv. Tired = 60% of that.
+- Heart Sense: Scent Hunt pickup radius 22 + 2px/Lv (cap 50); antenna glow brightens with level.
+- Star Power: sparkle trail behind Pip, bigger with level.
+- Guardian Glow: soft aura around Pip, brighter with level.
+- Reads the permanent ranch stats (`ranchB99.stats`).
+
 ## B124 quick fixes — SHIPPED (B124, `b21-130.js`)
 
 ### 1. Thunderstorm follow-cloud zap range ×3
