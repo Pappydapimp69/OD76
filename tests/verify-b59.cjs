@@ -27,6 +27,8 @@ new vm.Script(source, {filename:'game.js'}).runInContext(dom.getInternalVMContex
 win.document.querySelectorAll('style').forEach(style => style.remove());
 // The stage-end input guard is real-time; checks drive screens synchronously, so it is off except in its own check.
 vm.runInContext('stageInputLockMsB117i=0;stageInputLockB117i=0', dom.getInternalVMContext());
+// Drill sites lock until a path is cleared (B125); older ranch checks assume open sites, the B125 check turns it back on.
+vm.runInContext('drillGateB134=false', dom.getInternalVMContext());
 new vm.Script(fs.readFileSync(path.join(__dirname, 'partnership-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
 // Setup is paused in B117; its partnership checks still run with it switched back on.
 vm.runInContext('pipSetupOnB117u=true', dom.getInternalVMContext());

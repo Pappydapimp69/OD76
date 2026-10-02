@@ -118,5 +118,15 @@ $('end').classList.add('hidden');clearGamepadMenuB35();
     pipDoB100('drill',stationB100('speed'),1.6,'speed');assert(ranchBucketB117r(w)==='ranchTrain','drill no longer training');
     assert(/Obstacles cleared: \d+/.test(statsTextB117()),'count missing from stats');w.pip.state='follow';
   });
+  test('B125 a drill site stays locked until one inner and one outer obstacle are cleared',()=>{
+    drillGateB134=true;try{fresh({fatigue:0,stones:99,tools:{axe:true,sickle:true}});ranchB99.cleared={};
+    assert(siteLockedB134('speed')&&soloDrillB100('speed',0)===null&&startGameB100('speed')===false,'overgrown site allowed a drill');
+    interactStationB100(stationB100('speed'));assert(/Overgrown/.test($('ranchSheetB100').textContent),'no overgrown notice');closeSheetB100();
+    const inner=B106_OBSTACLES.find(o=>o.site==='speed'&&+o.id.slice(5)<8),outer=B106_OBSTACLES.find(o=>o.site==='speed'&&+o.id.slice(5)>=8);
+    ranchB99.cleared[inner.id]=true;assert(siteLockedB134('speed'),'one ring opened the site');
+    ranchB99.cleared[outer.id]=true;assert(!siteLockedB134('speed'),'path did not open the site');
+    assert(soloDrillB100('speed',0),'open site refused a drill');
+    }finally{drillGateB134=false}
+  });
   return out;
 }
