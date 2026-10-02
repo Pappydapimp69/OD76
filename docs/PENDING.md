@@ -29,6 +29,21 @@
 - Guardian Glow: soft aura around Pip, brighter with level.
 - Reads the permanent ranch stats (`ranchB99.stats`).
 
+### 4. Arena visual fidelity grows with the stage ("remaster as you go")
+- Brain kernel: ideas `RPG / progression / world-facets-as-reward / diegetic-restore`.
+- Tiers by stage (today's visuals are the top tier; nothing above it is removed):
+| Stage | Look |
+|---|---|
+| 1 | Half render resolution, pixelated (no smoothing), 8-colour palette, no glow, no particles |
+| 2 | Full palette, still pixelated |
+| 3 | Full resolution, flat shapes with outlines |
+| 4 | Particles and hit sparks |
+| 5 | Glow and shadows on shots, Pip, skills |
+| 6 | Background star parallax and screen flashes |
+| 7+ | Full current visuals + bloom on boss kills |
+- Each boss kill plays a short "remaster" sweep as the next tier turns on.
+- Ranch, menus and HUD stay full quality. Settings toggle to force full quality.
+
 ## B124 quick fixes — SHIPPED (B124, `b21-130.js`)
 
 ### 1. Thunderstorm follow-cloud zap range ×3
