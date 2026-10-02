@@ -85,5 +85,13 @@ function runChecksB125(){
       const n=novaConstellationB120.nodes;assert(n.length===cap,`Lv${lv} made ${n.length} stars, wanted ${cap}`);assert(n.every(x=>enemies.indexOf(x.enemy)<cap),`Lv${lv} did not take the nearest`)}
     enemies=[];novaConstellationB120=null;
   });
+  test('B125 basic fire is 25% slower and Star Power adds 11% fire rate per level instead of damage',()=>{
+    reset();S.pipLevel=1;S.pipPowerLv=0;applyPipPower();near(S.attackMax,.33*1.25,'base cooldown');const w0=S.weaponPower;
+    S.pipPowerLv=5;applyPipPower();near(S.attackMax,.33*1.25/1.55,'Lv5 cooldown');near(S.weaponPower,w0,'Star Power still adds damage');
+    S.pipPowerLv=99;applyPipPower();near(S.attackMax,B130_MIN_CD,'cooldown floor');
+    S.pipPowerLv=0;applyPipPower();S.run=true;S.end=false;S.waveState='active';S.over=0;S.attackCd=0;P.pipX=P.x+9999;P.pipY=P.y;
+    enemies=[{type:'chaser',x:P.x+60,y:P.y,r:12,hp:99,maxHp:99,dead:false,age:1,speed:0}];shots=[];attack();
+    if(!pipWithPlayer())near(S.attackCd,.33*1.25,'no-Pip cooldown');enemies=[];shots=[];
+  });
   return out;
 }

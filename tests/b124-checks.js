@@ -30,11 +30,11 @@ function runChecksB124(){
     far.hp=99;close.hp=99;S.b94NovaWaves=[];releaseNovaB94(.5,1);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);assert(far.hp===99&&close.hp<99,'partial Nova reached the far enemy');
   });
 
-  test('B124 enemy HP grows 12% per wave cleared and never dies to one basic shot',()=>{
-    reset();live();S.waveState='active';S.weaponPower=1;S.stage=1;S.b124Waves=1;enemies=[];spawnEnemy('chaser');const base=enemies[0].hp;
-    S.b124Waves=6;enemies=[];spawnEnemy('chaser');near(enemies[0].hp,Math.max(2,base*1.6),'wave 6 HP');
-    S.weaponPower=3;S.b124Waves=1;enemies=[];spawnEnemy('core');assert(enemies[0].hp>=6,'core dies to one shot at weapon power 3');
-    reset();assert(S.b124Waves===0,'wave count survived reset');
+  test('B124 enemy HP grows 8% per stage, not between waves, and never dies to one basic shot',()=>{
+    reset();live();S.waveState='active';S.weaponPower=1;S.stage=1;enemies=[];spawnEnemy('chaser');const base=enemies[0].hp;
+    startWave(2);startWave(3);enemies=[];spawnEnemy('chaser');near(enemies[0].hp,base,'HP grew between waves');
+    S.stage=3;enemies=[];spawnEnemy('chaser');near(enemies[0].hp,base,'opening stage HP grew');S.stage=8;enemies=[];spawnEnemy('chaser');assert(enemies[0].hp>=base*1.4-1e-9,'stage 8 HP did not grow 40%: '+enemies[0].hp);
+    S.weaponPower=3;S.stage=1;enemies=[];spawnEnemy('core');assert(enemies[0].hp>=6,'core dies to one shot at weapon power 3');
   });
 
   test('B124 the merchant buttons are hold-to-confirm and holds take 0.9s',()=>{

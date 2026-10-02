@@ -56,21 +56,19 @@ fireNovaWaveB94=function(wave){
   flash=Math.max(flash,.3);burstTone(260,5);
 };
 
-// ---- 4. enemy HP grows every wave and never dies to one basic shot ----
-const B124_HP_PER_WAVE=.12;
-const startWaveBeforeB124=startWave;
-startWave=function(n){if(S)S.b124Waves=(S.b124Waves||0)+1;return startWaveBeforeB124(n)};
-function wavesClearedB124(){return Math.max(0,(S?.b124Waves||1)-1)}
+// ---- 4. enemy HP grows every stage (not between waves) and never dies to one basic shot ----
+// B125 patch: per-wave growth compounded with the stage-5 HP tiers into 80-HP chasers by stage 30; HP now
+// grows 8% per stage on top of the tiers and stays flat between waves. The opening (stages 1–3) stays frozen,
+// as B108 keeps every other number there.
+const B124_HP_PER_STAGE=.08;
+function stageHpMultB124(){return 1+B124_HP_PER_STAGE*Math.max(0,(S?.stage||1)-3)}
 function minHpB124(){return 2*Math.max(1,Number(S?.weaponPower)||1)}
 const spawnEnemyBeforeB124=spawnEnemy;
 spawnEnemy=function(type){
   const before=enemies.length;spawnEnemyBeforeB124(type);
   for(let i=before;i<enemies.length;i++){const e=enemies[i];if(!e||e.type==='boss')continue;
-    e.hp=Math.max(minHpB124(),e.hp*(1+B124_HP_PER_WAVE*wavesClearedB124()));e.maxHp=e.hp}
+    e.hp=Math.max(minHpB124(),e.hp*stageHpMultB124());e.maxHp=e.hp}
 };
-const resetBeforeB124hp=reset;
-reset=function(){resetBeforeB124hp();if(S)S.b124Waves=0};
-if(S&&S.b124Waves==null)S.b124Waves=0;
 
 // ---- 5/6. Arena Merchant: themed, hold-to-confirm; between-stage holds take 0.9s ----
 B117H_IDS.push('buySnackB118','leaveMerchantB118');

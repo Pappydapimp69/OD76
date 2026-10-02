@@ -58,7 +58,7 @@ function runSpawnChecksB115(){
     for(let rank=0;rank<B108_RANKS.length;rank++)for(let stage=1;stage<=30;stage++){wave(stage,2,rank);const tier=difficultyStageB63(),w=1+(tier-1)*3;
       assert(near(difficulty(),.88+Math.min(1.1,(w-1)*.12)+(tier>=5?.16+Math.min(.34,(tier-5)*.045):0))&&near(tierDifficultyB115(tier),difficulty()),`difficulty moved at stage ${stage} rank ${rank}`);
       assert(enemyCap()===enemyCapBeforeB82()||enemyRosterB82(),'cap moved');assert(waveGoalFor(S.wave)===Math.min(16,8+Math.floor((tier-1)*2/3)),'goal moved')}
-    wave(7);spawnEnemy('charger');assert(difficultyStageB63()===6&&enemies.at(-1).hp===4,'HP moved');
+    wave(7);spawnEnemy('charger');assert(difficultyStageB63()===6&&Math.abs(enemies.at(-1).hp-Math.max(minHpB124(),4*stageHpMultB124()))<1e-9,'HP moved'); // B125: +8%/stage
   });
   test('B115 a 1.5 kills/s player meets the enemy cap far less often than before',()=>{
     let before=0,after=0;

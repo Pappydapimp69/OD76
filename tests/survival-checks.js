@@ -39,7 +39,7 @@ function runSurvivalChecksB63(){
       const tier=curveB108(stage,0),boss=Math.floor((tier-1)/3);
       assert(difficultyWaveB63()===1+(tier-1)*3&&difficultyBossCountB63()===boss,'wave or boss count wrong');
       assert(enemyCap()===(H>W?15:18),'cap not saturated');
-      spawnEnemy('charger');assert(enemies.at(-1).hp===3+Math.min(5,1+Math.floor((tier-5)/2)),'HP wrong');
+      spawnEnemy('charger');assert(Math.abs(enemies.at(-1).hp-Math.max(minHpB124(),(3+Math.min(5,1+Math.floor((tier-5)/2)))*stageHpMultB124()))<1e-9,'HP wrong'); // B125: +8%/stage
       startBossBattle();assert(S.bossMaxHp===Math.round(54+tier*7+(1+boss)*18)&&enemies.at(-1).bossStage===tier+boss*2,'boss wrong');
     }
   });
