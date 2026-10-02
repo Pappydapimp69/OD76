@@ -44,6 +44,13 @@
 - E, D, C rows are the user's spec; B, A, S filled in on the same pattern (adjust later).
 - E's early start at stage 10 is for testing; move it to stage 20 after playtesting.
 - Arena only (ranch, menus, HUD untouched); a setting can force the top look.
+- Readability (hard rule): player, Pip, enemies, boss, enemy shots, hearts, Heart Stones and pickups stay readable on every look and every in-between.
+  - Draw order: backdrop → ground → ambient effects (stars, aurora, weather, fireflies) → gameplay sprites → hit FX → HUD. Nothing ambient draws over a sprite.
+  - Backdrop and ground stay in a mid-dark luminance band on every look; the band never overlaps the sprite colours.
+  - Gameplay sprites get a thin dark outline + soft light rim that strengthens automatically when contrast is low.
+  - Bloom and glow never brighten the backdrop near a sprite past the band; ambient alpha is capped.
+  - Test: for each look and each midpoint, sample backdrop/ground luminance and assert contrast >= 3:1 against every gameplay colour (player, Pip, each enemy type, enemy shots, hearts, Heart Stones, pickups). Build fails otherwise.
+  - Contact sheet of every look + midpoints with live enemies, Pip, shots and pickups on screen, sent for review before ship.
 
 ## B124 quick fixes — SHIPPED (B124, `b21-130.js`)
 
