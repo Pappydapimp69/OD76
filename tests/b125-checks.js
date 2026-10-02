@@ -99,5 +99,15 @@ function runChecksB125(){
     reset();S.run=true;S.end=false;S.waveState='active';S.dashCd=0;S.pipSupport=5;assert(dashVector(1,0),'dash refused');near(P.vx,640*1.3,'Lv5 dash speed',1e-6);
     S.dashCd=0;S.pipSupport=0;assert(dashVector(1,0),'dash refused');near(P.vx,640,'Lv0 dash speed',1e-6);
   });
+  test('B125 the controller moves between and presses the RUN COMPLETE buttons',()=>{
+    reset();$('end').classList.remove('hidden');clearGamepadMenuB35();
+    const btns=gamepadMenuButtonsB35();assert(btns.length>=1&&btns.includes($('again')),'end buttons not in the gamepad menu');
+    assert(stageUpgradeVisibleB35(),'end screen not treated as a gamepad menu');
+    const realReset=reset;let resets=0;reset=function(...x){resets++;return realReset(...x)};
+    try{ensureGamepadMenuFocusB35();assert(gamepadMenuB35.focus===$('again'),'Again not focused first');pressGamepadMenuA_B35();assert(resets===1,'A on Again did not restart')}finally{reset=realReset}
+    $('end').classList.remove('hidden');clearGamepadMenuB35();ensureGamepadMenuFocusB35();
+    if(btns.length>1){moveGamepadMenuFocusB35(0,1);assert(gamepadMenuB35.focus===btns[1],'focus did not move to Pip Ranch')}
+$('end').classList.add('hidden');clearGamepadMenuB35();
+  });
   return out;
 }
