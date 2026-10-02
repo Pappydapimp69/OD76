@@ -2,6 +2,12 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B125: Looks
+
+The arena gets better looking as you go. Every run starts on today's arena; from your rank's first window it shifts a little each stage toward Dusk Hills, then Crystal Shore, Night Garden, Aurora Fields and Starforge: new skies and backdrops, more stars, glow under your shots and slightly richer hit sparks. Higher ranks get there sooner (an E run starts changing at stage 10 for now, a C run reaches Night Garden by stage 30). Everything new draws behind the action, so Pip, enemies, shots and hearts stay easy to see.
+
+At the ranch: chopping a tree or cutting a shrub sometimes turns up a snack for the bag (Sunny Acorn, −10 fatigue; Dewberry, −5). Scent Hunt grows with Heart Sense: more sparkles to find, spread wider, drifting, moving if you leave them, and grey decoys that cost time. And Pip shows his training while he follows you: faster with Swift Pip, a sparkle trail with Star Power, an aura with Guardian Glow and a brighter antenna with Heart Sense.
+
 ## B124: Fixes
 
 The storm cloud that follows you zaps from three times as far (330px, 420px from Lv4). Fang's pounce lane now flashes for 0.6s before it freezes you, so you can step out. A fully charged Nova hits every enemy on screen. Enemies gain 12% HP for every wave you clear in a run and always take at least two basic shots. The Arena Merchant matches the rest of the stage screens and both its buttons are press-and-hold; every between-stage hold now takes 0.9s instead of 1.8s. Pip's meter is called Fatigue everywhere.

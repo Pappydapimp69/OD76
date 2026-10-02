@@ -1,6 +1,6 @@
 # Pending builds
 
-## B125 quick fixes (build on go)
+## B125 quick fixes — SHIPPED (B125, `b21-131.js`)
 
 ### 1. Chopping drops fatigue snacks (10%)
 - Each tree chopped or shrub cut (`b21-94.js`, obstacle clear) has a 10% chance to drop a unique bag item:

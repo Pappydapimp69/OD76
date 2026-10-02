@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B124 Fixes ${{ github.sha }}
+run-name: OD76 B125 Looks ${{ github.sha }}
 
 on:
   push:
@@ -30,8 +30,8 @@ jobs:
           mkdir _site
           cp index.html _site/
           cat $(ls b21-*.js | sort -V) > _site/game.js
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-10-02-B124-FIXES/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B124-FIXES/g' _site/index.html
+          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-10-02-B125-LOOKS/g' _site/index.html
+          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B125-LOOKS/g' _site/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v6
