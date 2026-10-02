@@ -51,7 +51,8 @@ const fireNovaWaveBeforeB124=fireNovaWaveB94;
 fireNovaWaveB94=function(wave){
   if(!wave?.screen)return fireNovaWaveBeforeB124(wave);
   const r=Math.hypot(W,H)/2;ring(P.x,P.y,'#ff9fba',r);particle(P.x,P.y,'#ffd36f',26,260);
-  for(const e of visibleEnemies())hitEnemy(e,wave.damage,'overdrive');
+  const hit=visibleEnemies();for(const e of hit)hitEnemy(e,wave.damage,'overdrive');
+  addNovaStarsB120(hit); // B125 patch: struck enemies (killed ones too) become constellation stars
   flash=Math.max(flash,.3);burstTone(260,5);
 };
 

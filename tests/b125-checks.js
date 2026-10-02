@@ -74,5 +74,13 @@ function runChecksB125(){
     layer.innerHTML='';finishGameB100();assert(!layer.children.length,'a finished game fired again');
     ranchWorldB100.active=false;layer.innerHTML='';
   });
+  test('B125 a full-charge Nova turns every struck enemy into a star, kills included',()=>{
+    reset();S.run=true;S.end=false;S.waveState='active';S.weaponPower=1;W=900;H=600;CAM.x=P.x;CAM.y=P.y;ranchWorldB100.active=false;
+    enemies=[0,1,2].map(i=>({type:'chaser',x:P.x+80+i*90,y:P.y+(i%2)*60,r:12,hp:i===0?.5:999,maxHp:999,dead:false,age:1,speed:0}));
+    S.b94NovaWaves=[];releaseNovaB94(1,1);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);
+    assert(enemies[0].dead||enemies[0].hp<=0,'fixture enemy did not die');
+    assert(novaConstellationB120&&novaConstellationB120.nodes.length===3,'full Nova made '+(novaConstellationB120?.nodes.length||0)+' stars');
+    enemies=[];novaConstellationB120=null;
+  });
   return out;
 }
