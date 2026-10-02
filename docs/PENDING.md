@@ -9,6 +9,18 @@
 - Goes into Pip's bag (B104 items); feed it from the bag like other food. No food value, can't be bought or sold.
 - Toast on drop: "Found a Sunny Acorn! (−10 fatigue)".
 
+### 2. Scent Hunt (train together) gets harder every level
+- Today: 5 sparkles, need 4, 12s, 110–230px out, static, every level (`b21-89.js` collect game).
+- Scale by Heart Sense level:
+| Sense Lv | Sparkles (need) | Time | Max spread | Twist |
+|---|---|---|---|---|
+| 0–2 | 5 (4) | 12s | 230px | — |
+| 3–5 | 6 (5) | 12s | 280px | sparkles drift slowly |
+| 6–8 | 7 (6) | 13s | 330px | an unclaimed sparkle fades after 4s and reappears elsewhere |
+| 9–11 | 8 (7) | 13s | 380px | 2 grey decoys: touching one costs 1.5s |
+| 12+ | 9 (8) | 14s | 430px | faster drift, 3 decoys |
+- How-to text and HUD show the tier's numbers. Pip's helper speed unchanged.
+
 ## B124 quick fixes — SHIPPED (B124, `b21-130.js`)
 
 ### 1. Thunderstorm follow-cloud zap range ×3
