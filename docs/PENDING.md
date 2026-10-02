@@ -1,5 +1,14 @@
 # Pending builds
 
+## B125 quick fixes (build on go)
+
+### 1. Chopping drops fatigue snacks (10%)
+- Each tree chopped or shrub cut (`b21-94.js`, obstacle clear) has a 10% chance to drop a unique bag item:
+  - Tree → **Sunny Acorn** 🌰: −10 fatigue.
+  - Shrub → **Dewberry** 🫐: −5 fatigue.
+- Goes into Pip's bag (B104 items); feed it from the bag like other food. No food value, can't be bought or sold.
+- Toast on drop: "Found a Sunny Acorn! (−10 fatigue)".
+
 ## B124 quick fixes — SHIPPED (B124, `b21-130.js`)
 
 ### 1. Thunderstorm follow-cloud zap range ×3
