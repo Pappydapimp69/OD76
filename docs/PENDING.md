@@ -5,6 +5,20 @@
 ### 1. Thunderstorm follow-cloud zap range ×3
 - `B122_ZAP_RANGE` (`b21-128.js`): 110/110/110/140/140 → 330/330/330/420/420 px. Dashed range ring follows.
 
+### 2. Boss dash freeze: warning before it hits
+- Today the freeze lands the instant the dash lane turns yellow with the player in it (`b21-110.js`).
+- New: the lane turns yellow, then the player has 0.6s to step out; the freeze only lands if they are still in the lane when that window ends. The lane flashes during the window.
+- Freeze length (2.2s) and what it locks are unchanged.
+
+### 3. Nova: full charge hits the whole screen
+- Nova is already hold-to-charge (1s, 20% HEAT). Partial charges keep today's radius and waves.
+- A full charge hits every enemy on screen (visible area), with a screen-wide ring.
+
+### 4. Enemy HP grows every wave
+- Today HP is flat (chaser 2, charger 3, core 1) until stage 5 (`b21-05.js` spawn), so most basic shots one-shot.
+- New: spawn HP × (1 + 0.12 per wave cleared this run), and never less than 2 basic shots at the player's current weapon power.
+- Bosses unchanged.
+
 ## B123 quick fixes — SHIPPED (B123, `b21-129.js`)
 
 ### 1. Slower basic auto-attack, tuned for mobile
