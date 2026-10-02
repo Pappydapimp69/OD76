@@ -35,7 +35,7 @@
 - "toward X" = a small step every stage across that window; every visual blends (map palette/backdrop/ground, hit sparks, star density + parallax, glow, trails, bloom, light, aurora) — no pops.
 | Rank | 2–9 | 10 | 11–19 | 20 | 21–29 | 30 | after |
 |---|---|---|---|---|---|---|---|
-| E | E | E, starts toward D (TESTING; real target: start at 20) | toward D | **D** | D | D | toward C 40–49, **C** at 50 |
+| E | E | E, starts toward D (TESTING; real: window 20–29) | toward D | **D** | D | D | toward C 40–49 → **C** at 50; toward B 60–69 → **B** at 70; toward A 80–89 → **A** at 90; toward S 100–109 → **S** at 110 |
 | D | toward D | **D** | D | D | D | starts toward C | **C** at 40 |
 | C | toward D | **D** | toward C | **C** | toward B | **B** | toward A, **A** at 40 |
 | B | toward D | **D** | toward C | **C** at 15 → toward B | **B** at 20 → toward A | **A** at 30 | |
