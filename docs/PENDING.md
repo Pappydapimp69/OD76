@@ -1,5 +1,24 @@
 # Pending builds
 
+## B126 quick fixes (build on go)
+
+### 1. Arena looks: stronger, more distinct maps
+- B125 maps read too alike (C/B both "dark blue", S "dark brown"): features were capped at 25% to protect contrast.
+- Identity through shape and hue, not brightness: full-strength dark silhouettes (crystal spires, garden treeline, mountain ridge, forge towers), a ground pattern per map replacing the grid (sand ripples, moss tiles, frost, ember cracks), more saturated per-map hue at the same darkness (C teal, B indigo-violet, A green-cyan, S red-gold), one large signature motion per map (fireflies, sky-wide aurora, rising embers).
+- Contrast test still gates the build.
+
+### 2. Sprite upgrades on the same ladder
+| Look | Player + Pip | Enemies | Shots + pickups |
+|---|---|---|---|
+| E | today's circles | today's circles | dots, text ♥ |
+| D | outline, shading, eyes that track movement | distinct silhouettes: chaser blob with eyes, charger horned diamond, core orb with spinning ring | short shot tail, drawn heart icon |
+| C | squash/stretch on move, highlights | idle bob, attack wind-up pose, squash on hit | glowing shot core, hearts bob + sparkle |
+| B | player scarf trail, Pip wing flutter | map-tinted colours, ground shadow | impact stars |
+| A | rim light in the map's light colour | death pops into pieces | |
+| S | full detail, light from player and skills | each boss gets a unique drawn look | |
+- Each enemy type keeps its outline and colour family at every tier; on-screen size within today's; hitboxes unchanged.
+- Canvas-drawn and blended with the look value like the maps; contrast test extended to sprites; contact sheet before ship.
+
 ## B125 quick fixes — SHIPPED (B125, `b21-131.js`)
 
 ### 1. Chopping drops fatigue snacks (10%)
