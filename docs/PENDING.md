@@ -1,6 +1,6 @@
 # Pending builds
 
-## B126 quick fixes (build on go)
+## B126 quick fixes — SHIPPED as a B125 patch (`b21-132.js`, B125-LOOKS-2)
 
 ### 1. Arena looks: stronger, more distinct maps
 - B125 maps read too alike (C/B both "dark blue", S "dark brown"): features were capped at 25% to protect contrast.
