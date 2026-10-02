@@ -93,5 +93,11 @@ function runChecksB125(){
     enemies=[{type:'chaser',x:P.x+60,y:P.y,r:12,hp:99,maxHp:99,dead:false,age:1,speed:0}];shots=[];attack();
     if(!pipWithPlayer())near(S.attackCd,.33*1.25,'no-Pip cooldown');enemies=[];shots=[];
   });
+  test('B125 Supportive dash distance: +10% at Lv1, 3, 5, then +2% every other level',()=>{
+    const want={0:0,1:.1,2:.1,3:.2,4:.2,5:.3,6:.3,7:.32,8:.32,9:.34,11:.36};
+    for(const [lv,b] of Object.entries(want))near(dashBonusB131(+lv),b,`Lv${lv} bonus`,1e-9);
+    reset();S.run=true;S.end=false;S.waveState='active';S.dashCd=0;S.pipSupport=5;assert(dashVector(1,0),'dash refused');near(P.vx,640*1.3,'Lv5 dash speed',1e-6);
+    S.dashCd=0;S.pipSupport=0;assert(dashVector(1,0),'dash refused');near(P.vx,640,'Lv0 dash speed',1e-6);
+  });
   return out;
 }
