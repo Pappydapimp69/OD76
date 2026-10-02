@@ -63,5 +63,16 @@ function runChecksB125(){
     for(const k of Object.keys(BOSS_DATA)){enemies=[{type:'boss',bossKey:+k,x:P.x+120,y:P.y,r:30,hp:50,maxHp:50,dead:false,age:1,flash:0}];draw()}
     lookOverrideB125=null;enemies=[];
   });
+  test('B125 drills show 👍 rising on success and 👎 falling on failure',()=>{
+    const layer=$('drillFxB128');layer.innerHTML='';
+    fresh({fatigue:0,stones:99});assert(soloDrillB100('speed',0),'solo drill refused');
+    let spans=[...layer.children];assert(spans.length===B128_COUNT&&spans.every(s=>s.textContent==='👍'&&s.className==='up'),'success stream wrong');
+    layer.innerHTML='';fresh({fatigue:0,stones:99});assert(soloDrillB100('speed',.9999),'solo drill refused');
+    spans=[...layer.children];assert(spans.length===B128_COUNT&&spans.every(s=>s.textContent==='👎'&&s.className==='down'),'failure stream wrong');
+    layer.innerHTML='';fresh({fatigue:0,stones:99});ranchWorldB100.active=true;startGameB100('range');const g=ranchWorldB100.game;g.hits=g.need;finishGameB100();
+    assert([...layer.children].every(s=>s.textContent==='👍')&&layer.children.length===B128_COUNT,'together win had no 👍');
+    layer.innerHTML='';finishGameB100();assert(!layer.children.length,'a finished game fired again');
+    ranchWorldB100.active=false;layer.innerHTML='';
+  });
   return out;
 }
