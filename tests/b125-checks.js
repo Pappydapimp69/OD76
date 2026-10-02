@@ -109,5 +109,14 @@ function runChecksB125(){
     if(btns.length>1){moveGamepadMenuFocusB35(0,1);assert(gamepadMenuB35.focus===btns[1],'focus did not move to Pip Ranch')}
 $('end').classList.add('hidden');clearGamepadMenuB35();
   });
+  test('B125 chopping from the menu counts as clearing time and every clear adds to the count',()=>{
+    const tree=B106_OBSTACLES.find(o=>o.tree),st=B100_STATIONS.find(s=>s.obstacle===tree.id);
+    fresh({fatigue:0,tools:{axe:true,sickle:true}});const before=statsB117.clears||0,w=ranchWorldB100;
+    assert(clearObstacleB106(tree.id)&&statsB117.clears===before+1,'clear not counted');
+    pipDoB100('drill',tree,1.6,null);w.game=null;assert(ranchBucketB117r(w)==='ranchClear','menu chop logged as '+ranchBucketB117r(w));
+    pipDoB100('drill',st,1.6,null);assert(ranchBucketB117r(w)==='ranchClear','station chop logged as '+ranchBucketB117r(w));
+    pipDoB100('drill',stationB100('speed'),1.6,'speed');assert(ranchBucketB117r(w)==='ranchTrain','drill no longer training');
+    assert(/Obstacles cleared: \d+/.test(statsTextB117()),'count missing from stats');w.pip.state='follow';
+  });
   return out;
 }
