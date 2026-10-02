@@ -29,16 +29,21 @@
 - Guardian Glow: soft aura around Pip, brighter with level.
 - Reads the permanent ranch stats (`ranchB99.stats`).
 
-### 4. Arena visuals improve gradually, faster from higher ranks
+### 4. Arena visuals improve stage by stage, faster at higher ranks
 - Brain kernel: ideas `RPG / progression / world-facets-as-reward / diegetic-restore`.
-- One arena quality value `q`. Looks sit at whole numbers: E 0 (today's arena), D 1 (Dusk Hills), C 2 (Crystal Shore), B 3 (Night Garden), A 4 (Aurora Fields), S 5 (Starforge). Nothing ever looks worse than today.
-- A run starts at its rank's look. From stage 10, `q` rises a little every 2 stages:
-  - next look in 10 stages (+0.2 per 2 stages: stages 10,12,14,16,18 → whole at 20),
-  - the one after in 20 stages (+0.1 per 2 stages → whole at 40),
-  - then 40 stages (+0.05 per 2 stages), and so on. Caps at S.
-- E run: D look at 20, C look at 40. D run: C look at 20, B at 40.
-- Everything blends with `q` (no pops): map palette/backdrop/ground lerp toward the next map; hit-spark size/count, background star density + parallax, shot/skill glow, trails, bloom on big hits, dynamic light, aurora/weather each fade in over their own range of `q`.
-- A small shimmer on the stage-start banner marks each step. Arena only (ranch, menus, HUD untouched); a setting can force max quality.
+- Looks: E (today's arena) → D Dusk Hills → C Crystal Shore → B Night Garden → A Aurora Fields → S Starforge. Every run starts on the E look; nothing ever looks worse than today.
+- "toward X" = a small step every stage across that window; every visual blends (map palette/backdrop/ground, hit sparks, star density + parallax, glow, trails, bloom, light, aurora) — no pops.
+| Rank | 2–9 | 10 | 11–19 | 20 | 21–29 | 30 | after |
+|---|---|---|---|---|---|---|---|
+| E | E | E, starts toward D (TESTING; real target: start at 20) | toward D | **D** | D | D | toward C 40–49, **C** at 50 |
+| D | toward D | **D** | D | D | D | starts toward C | **C** at 40 |
+| C | toward D | **D** | toward C | **C** | toward B | **B** | toward A, **A** at 40 |
+| B | toward D | **D** | toward C | **C** at 15 → toward B | **B** at 20 → toward A | **A** at 30 | |
+| A | **D** by 5, **C** by 10 | C | toward B | **B** at 15 → **A** at 20 | toward S | **S** at 30 | |
+| S | **C** by 5, **B** by 10 | B | toward A | **A** at 15 → **S** at 20 | S | S | |
+- E, D, C rows are the user's spec; B, A, S filled in on the same pattern (adjust later).
+- E's early start at stage 10 is for testing; move it to stage 20 after playtesting.
+- Arena only (ranch, menus, HUD untouched); a setting can force the top look.
 
 ## B124 quick fixes — SHIPPED (B124, `b21-130.js`)
 
