@@ -157,8 +157,8 @@ releaseNovaB94=function(frac,lv){releaseNovaBeforeB122(frac,lv);const w=weaponPo
 
 // ---- ranch HUD: Heart Stones back (B118 wrote "Tired · Arena max" into their span) ----
 const renderRanchHudBeforeB122=renderRanchHudB100;
-// The fatigue bar needs no word beside it (the bar is the fatigue); the 😴 stays.
-function fatigueLabelB122(){const w=$('ranchHudB100')?.querySelector('.fat')?.previousElementSibling?.querySelector('.w');if(w)w.textContent=''}
+// The fatigue bar is labelled Fatigue (B104 called it Tired); the 😴 stays.
+function fatigueLabelB122(){const w=$('ranchHudB100')?.querySelector('.fat')?.previousElementSibling?.querySelector('.w');if(w)w.textContent='Fatigue'}
 renderRanchHudB100=function(){renderRanchHudBeforeB122();const s=$('ranchStoneB102');if(s)s.textContent=`◆ ${ranchB99.stones}`;fatigueLabelB122()};
 fatigueLabelB122();
 

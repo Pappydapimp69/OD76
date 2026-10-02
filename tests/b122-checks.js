@@ -86,7 +86,7 @@ function runChecksB122(){
   test('B122 the ranch HUD shows Heart Stones and the Fatigue label; the refinery sheet lists them',()=>{
     fresh({stones:7,hearts:120});renderRanchHudB100();
     assert($('ranchStoneB102').textContent==='◆ 7','stone counter: '+$('ranchStoneB102').textContent);
-    const hud=$('ranchHudB100').textContent;assert(!/Arena max/.test(hud)&&!/Tired/.test(hud)&&/😴/.test(hud),'HUD text: '+hud);
+    const hud=$('ranchHudB100').textContent;assert(!/Arena max/.test(hud)&&!/Tired/.test(hud)&&/Fatigue/.test(hud)&&/😴/.test(hud),'HUD text: '+hud);
     refinerySheetB102();const p=$('ranchSheetB100').querySelector('p').textContent;assert(/You have ◆ 7 · ♥ 120/.test(p),'refinery sheet: '+p);
   });
 
