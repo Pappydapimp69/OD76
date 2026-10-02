@@ -22,6 +22,11 @@
 ### 5. Arena Merchant screen follows the theme
 - The second button ("Continue without buying", `#leaveMerchantB118` in `b21-124.js`) renders as a pale bar with unreadable light text; the buy button doesn't match the stage-up buttons either.
 - Style both like the other stage-up choices: themed dark card buttons, readable label, same focus ring. Leave button reads "Continue without buying".
+- Both merchant buttons (`buySnackB118`, `leaveMerchantB118`) join the B117 hold-to-confirm set (`B117H_IDS`, `b21-116.js`): press and hold, early release cancels, tap shows the hint.
+
+### 6. Arena hold-to-confirm twice as fast
+- Between-stage hold confirms (boss rewards, Pip traits, heart skills, merchant) hold 0.9s instead of 1.8s (`B117H_MS`).
+- Skill-select (Overdrive) and Sound Lab holds keep 1.8s.
 
 ## B123 quick fixes — SHIPPED (B123, `b21-129.js`)
 
