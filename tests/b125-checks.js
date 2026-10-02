@@ -128,5 +128,15 @@ $('end').classList.add('hidden');clearGamepadMenuB35();
     assert(soloDrillB100('speed',0),'open site refused a drill');
     }finally{drillGateB134=false}
   });
+  test('B125 clearing pays off: restored moments, full-site bonus, chop effects and Pip carrying home',()=>{
+    fresh({fatigue:0,stones:99,tools:{axe:true,sickle:true}});ranchB99.cleared={};fxB135.length=0;dropRollB125=()=>1;
+    const obs=B106_OBSTACLES.filter(o=>o.site==='power'),inner=obs.find(o=>+o.id.slice(5)<8),outer=obs.find(o=>+o.id.slice(5)>=8);
+    clearObstacleB106(inner.id);assert(fxB135.some(f=>f.kind==='chip')&&fxB135.some(f=>f.kind==='fall')&&fxB135.some(f=>f.kind==='carry'),'chop effects missing');
+    ranchB99.fatigue=0;clearObstacleB106(outer.id);assert(/restored! The path is open/.test(ranchWorldB100.toast||''),'no restored banner: '+ranchWorldB100.toast);
+    const c=siteCountB135('power');assert(c.done===2&&c.total===obs.length,'count wrong');
+    for(const o of obs)ranchB99.cleared[o.id]=true;assert(siteFullB135('power'),'site not full');
+    const before=ranchB99.points.power,r=awardDrillB100('power',0);assert(ranchB99.points.power-before===r.gain&&r.gain>=B100_BASE+1,'full-site bonus missing');
+    ranchWorldB100.active=true;drawRanchB100();ranchWorldB100.active=false;fxB135.length=0;
+  });
   return out;
 }
