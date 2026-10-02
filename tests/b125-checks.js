@@ -80,6 +80,9 @@ function runChecksB125(){
     S.b94NovaWaves=[];releaseNovaB94(1,1);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);
     assert(enemies[0].dead||enemies[0].hp<=0,'fixture enemy did not die');
     assert(novaConstellationB120&&novaConstellationB120.nodes.length===3,'full Nova made '+(novaConstellationB120?.nodes.length||0)+' stars');
+    enemies=Array.from({length:10},(_,i)=>({type:'chaser',x:P.x+40+i*30,y:P.y,r:12,hp:999,maxHp:999,dead:false,age:1,speed:0}));
+    for(const [lv,cap] of [[1,3],[3,5],[5,7]]){S.overLevels={...S.overLevels,nova:lv};S.b94NovaWaves=[];releaseNovaB94(1,lv);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);
+      const n=novaConstellationB120.nodes;assert(n.length===cap,`Lv${lv} made ${n.length} stars, wanted ${cap}`);assert(n.every(x=>enemies.indexOf(x.enemy)<cap),`Lv${lv} did not take the nearest`)}
     enemies=[];novaConstellationB120=null;
   });
   return out;
