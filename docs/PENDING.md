@@ -29,27 +29,16 @@
 - Guardian Glow: soft aura around Pip, brighter with level.
 - Reads the permanent ranch stats (`ranchB99.stats`).
 
-### 4. Arena visual ladder: every rank climbs it, higher ranks start higher
+### 4. Arena visuals improve gradually, faster from higher ranks
 - Brain kernel: ideas `RPG / progression / world-facets-as-reward / diegetic-restore`.
-- Today's arena is step 0; every step only adds. Arena only (ranch, menus, HUD untouched); a setting can force the top step.
-| Step | Adds |
-|---|---|
-| 0 | today's arena |
-| 1 | richer hit sparks and impacts |
-| 2 | background star parallax |
-| 3 | **D look**: Dusk Hills map palette + ground |
-| 4 | glow trails on shots and skills |
-| 5 | **C look**: Crystal Shore map |
-| 6 | soft bloom on big hits |
-| 7 | **B look**: Night Garden map |
-| 8 | dynamic light from Pip and skills |
-| 9 | **A look**: Aurora Fields map |
-| 10 | aurora sky + particle weather |
-| 11 | **S look**: Starforge map + boss-kill remaster sweep |
-- Climb one step at stages 10, 12, 20, 30, 40, then every 10 stages.
-- Starting step by rank: E 0 · D 3 · C 5 · B 7 · A 9 · S 11 (top).
-- E: D look at stage 20, C look at stage 40. D: C look at stage 12. A step-up plays a short sweep.
-- Maps are cosmetic (backdrop, palette, ground); no layout or obstacle changes.
+- One arena quality value `q`. Looks sit at whole numbers: E 0 (today's arena), D 1 (Dusk Hills), C 2 (Crystal Shore), B 3 (Night Garden), A 4 (Aurora Fields), S 5 (Starforge). Nothing ever looks worse than today.
+- A run starts at its rank's look. From stage 10, `q` rises a little every 2 stages:
+  - next look in 10 stages (+0.2 per 2 stages: stages 10,12,14,16,18 → whole at 20),
+  - the one after in 20 stages (+0.1 per 2 stages → whole at 40),
+  - then 40 stages (+0.05 per 2 stages), and so on. Caps at S.
+- E run: D look at 20, C look at 40. D run: C look at 20, B at 40.
+- Everything blends with `q` (no pops): map palette/backdrop/ground lerp toward the next map; hit-spark size/count, background star density + parallax, shot/skill glow, trails, bloom on big hits, dynamic light, aurora/weather each fade in over their own range of `q`.
+- A small shimmer on the stage-start banner marks each step. Arena only (ranch, menus, HUD untouched); a setting can force max quality.
 
 ## B124 quick fixes — SHIPPED (B124, `b21-130.js`)
 
