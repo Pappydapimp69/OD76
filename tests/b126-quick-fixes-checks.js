@@ -17,6 +17,11 @@ function runQuickFixChecksB126(){
  test('B126 farm sheets say only tilling adds fatigue',()=>{
   fresh({areas:{garden:true,kitchen:false,orchard:false},tools:{hoe:true,can:true,axe:false,sickle:false},fatigue:0});openRanchB99();plotSheetB105(0);assert($('ranchSheetB100').textContent.includes('Only tilling adds fatigue (+8). Planting and watering add no fatigue.'),'plot copy stale');closeSheetB100();gardenSheetB105();assert($('ranchSheetB100').textContent.includes('Planting and watering add no fatigue.'),'garden copy stale');
  });
+ test('B126 arena merchant shows spendable hearts',()=>{
+  reset();S.stage=7;S.stagePending=true;S.heartCurrency=37;openMerchantB118();
+  assert($('merchantTextB118').textContent.includes('♥ 37 available to spend.'),'merchant balance missing');
+  $('arenaMerchantB118').classList.add('stagehidden');
+ });
  test('B126 arena return reaches black before switching to ranch and Week N',()=>{
   fresh({fatigue:0});reset();S.run=true;S.stage=3;S.stagePending=true;S.runHearts=5;S.heartCurrency=5;openRanchGateB99();
   assert(returnToRanchWithFadeB126()&&!ranchWorldB100.active&&$('weekFadeB119').classList.contains('b126-preblack'),'ranch appeared before black');

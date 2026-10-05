@@ -38,6 +38,13 @@ plotSheetB105=function(i){
 const gardenSheetBeforeB126=gardenSheetB105;
 gardenSheetB105=function(){const r=gardenSheetBeforeB126(),el=ranchWorldB100.sheet&&$('ranchSheetB100')?.querySelector('p');if(el&&!el.textContent.includes('Only tilling adds fatigue'))el.textContent+=` ${farmFatigueTextB126()}`;return r};
 
+const renderMerchantBeforeB126=renderMerchantB118;
+renderMerchantB118=function(...a){
+ const r=renderMerchantBeforeB126(...a),el=$('merchantTextB118');
+ if(el)el.textContent+=` ♥ ${Math.max(0,S?.heartCurrency||0)} available to spend.`;
+ return r;
+};
+
 let arenaReturnDelayB126=600,arenaReturnTimerB126=0;
 const playWeekFadeBeforeB126=playWeekFadeB119;
 function playArenaWeekFromBlackB126(f){

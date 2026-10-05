@@ -4,7 +4,7 @@
 
 ## B126: Playtest quick fixes
 
-Stage changes now release held movement, iOS gameplay no longer triggers browser zoom or text selection, every ranch sheet has a visible **Back / Exit**, and farm copy states that only tilling adds fatigue. Returning from the arena fades fully black before revealing the ranch and its **Week N** transition. The playtest report also includes current currency balances and rare currency earned since tracking began.
+Stage changes now release held movement, iOS gameplay no longer triggers browser zoom or text selection, every ranch sheet has a visible **Back / Exit**, and farm copy states that only tilling adds fatigue. The Arena Merchant shows how many hearts are available to spend. Returning from the arena fades fully black before revealing the ranch and its **Week N** transition. The playtest report also includes current currency balances and rare currency earned since tracking began.
 
 ## B125: Looks
 
