@@ -112,7 +112,7 @@ function runFixChecksB117(){
       petRollB117p=()=>.05;pipSheetB104();assert(/chance when petted: 3%/.test($('ranchSheetB100').textContent),'chance not shown');
       ranchWorldB100.sheet.options.find(o=>o.label==='Pet Pip').run();assert(ranchB99.starStones===0&&petStateB117p().arena===1800,'miss gave a stone or reset');
       petRollB117p=()=>.02;closeSheetB100();pipSheetB104();ranchWorldB100.sheet.options.find(o=>o.label==='Pet Pip').run();
-      assert(ranchB99.starStones===1&&petStateB117p().arena===0&&petStateB117p().kills===0,'hit did not give a stone and reset');
+      assert(ranchB99.starStones===1&&statsB117.starStonesEarned===1&&petStateB117p().arena===0&&petStateB117p().kills===0,'hit did not give and track a stone or reset');
       ranchB99.b117Pet={arena:900,kills:0};saveRanchB99();assert(loadRanchB99().b117Pet.arena===900,'progress lost on reload');
     }finally{petRollB117p=roll;closeSheetB100();ranchWorldB100.active=false}
   });

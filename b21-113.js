@@ -9,7 +9,7 @@ const B117_LABELS={name:"Name",diff13:"Stages 1-3",diff46:"Stages 4-6",diff7:"St
  needs:"Pip's Tired/Food/Clean meters",gate:"Stage-clear meters",drills:"Drill training",best:"Best moment",worst:"Most frustrating",bugs:"Bugs / confusing",fun:"Fun (1-5)",again:"Play next build"};
 
 // ---- stats: one versioned save, every read and write guarded ----
-function statsDefaultB117(){return{v:B117_V,play:0,arena:0,ranch:0,runs:0,stage:0,rank:0,deaths:0,skills:{},chain:0,tier:0,blocks:0,drills:0,upgrades:0,feeds:0,washes:0}}
+function statsDefaultB117(){return{v:B117_V,play:0,arena:0,ranch:0,runs:0,stage:0,rank:0,deaths:0,skills:{},chain:0,tier:0,blocks:0,drills:0,upgrades:0,feeds:0,washes:0,dustEarned:0,starStonesEarned:0}}
 function loadStatsB117(){
  const s=statsDefaultB117();let raw=null;try{raw=JSON.parse(localStorage.getItem(B117_KEY)||"null")}catch(_){}
  if(!raw||raw.v!==B117_V)return s;
@@ -77,6 +77,8 @@ const feedBeforeB117=feedB104;
 feedB104=function(...a){const it=feedBeforeB117(...a);if(it)bumpB117("feeds");return it};
 const washBeforeB117=washB104;
 washB104=function(...a){const ok=washBeforeB117(...a);if(ok)bumpB117("washes");return ok};
+const fuseStarBeforeB117=fuseStarB102;
+fuseStarB102=function(...a){const ok=fuseStarBeforeB117(...a);if(ok)bumpB117("starStonesEarned");return ok};
 
 // ---- words: the auto-filled summary and the plain-text report ----
 function minutesB117(sec){return sec<60?"<1 min":`${Math.round(sec/60)} min`}
@@ -97,7 +99,9 @@ function statsTextB117(){
  return[`Time played: ${minutesB117(s.play)} (arena ${minutesB117(s.arena)}, ranch ${minutesB117(s.ranch)})`,`Battle tests: ${s.runs} · falls: ${s.deaths}`,
   `Highest stage: ${s.stage||"-"} · rank unlocked: ${B108_RANKS[rankUnlockedB117()]?.id||"E"}`,`Most-used skill: ${top?`${top.name} (${top.n} uses)`:"none"}`,
   `Skills: ${skills.join(", ")||"none"} · ${skillRateB117().toFixed(1)} uses/arena min`,`Best chain: ${s.chain?`${s.tier}x ${s.chain}`:"none"}`,
-  `Gate stops at 100 fatigue: ${s.blocks}`,`Drill trainings: ${s.drills} · station upgrades: ${s.upgrades}`,`Feeds: ${s.feeds} · washes: ${s.washes}`].join("\n");
+  `Gate stops at 100 fatigue: ${s.blocks}`,`Drill trainings: ${s.drills} · station upgrades: ${s.upgrades}`,`Feeds: ${s.feeds} · washes: ${s.washes}`,
+  `Currencies held: Hearts ${ranchB99.hearts||0} · Heart Stones ${ranchB99.stones||0} · Star Dust ${ranchB99.dust||0} · Star Stones ${ranchB99.starStones||0}`,
+  `Rare currency earned since tracking: Star Dust ${s.dustEarned} · Star Stones ${s.starStonesEarned}`].join("\n");
 }
 function reportB117(answers=answersB117()){
  const lines=Object.keys(B117_LABELS).filter(k=>answers[k]).map(k=>`${B117_LABELS[k]}: ${answers[k]}`);

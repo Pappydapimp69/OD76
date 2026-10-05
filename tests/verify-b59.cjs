@@ -20,7 +20,9 @@ win.HTMLCanvasElement.prototype.getBoundingClientRect = () => ({x:0,y:0,left:0,t
 const byNumberB112 = (a, b) => Number(a.match(/\d+/g).pop()) - Number(b.match(/\d+/g).pop());
 const files = fs.readdirSync(root).filter(n => /^b21-\d{2,3}\.js$/.test(n)).sort(byNumberB112);
 // Any build count works; numeric order must hold (b21-99 before b21-100).
-if (!files.length || files.some((n, i) => i && byNumberB112(files[i - 1], n) >= 0)) throw Error('module order');
+const moduleNumbers = files.map(n => Number(n.match(/\d+/g).pop()));
+if (!files.length || moduleNumbers.some((n, i) => i && n <= moduleNumbers[i - 1])) throw Error('numeric module order');
+if (files.indexOf('b21-99.js') < 0 || files.indexOf('b21-100.js') !== files.indexOf('b21-99.js') + 1) throw Error('late-module order');
 const source = files.map(n => fs.readFileSync(path.join(root, n), 'utf8')).join('');
 new vm.Script(source, {filename:'game.js'}).runInContext(dom.getInternalVMContext());
 // Browser QA covers CSS. Removing styles keeps repeated state simulations inexpensive in JSDOM.
@@ -84,6 +86,8 @@ new vm.Script(fs.readFileSync(path.join(__dirname, 'b124-checks.js'), 'utf8')).r
 results.push(...vm.runInContext('runChecksB124()', dom.getInternalVMContext()));
 new vm.Script(fs.readFileSync(path.join(__dirname, 'b125-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
 results.push(...vm.runInContext('runChecksB125()', dom.getInternalVMContext()));
+new vm.Script(fs.readFileSync(path.join(__dirname, 'b126-quick-fixes-checks.js'), 'utf8')).runInContext(dom.getInternalVMContext());
+results.push(...vm.runInContext('runQuickFixChecksB126()', dom.getInternalVMContext()));
 for (const r of results) console.log(`${r.ok ? 'PASS' : 'FAIL'} ${r.name}${r.error ? ': '+r.error : ''}`);
 dom.window.close();
 if (results.some(r => !r.ok)) process.exitCode = 1;

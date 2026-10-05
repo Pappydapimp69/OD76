@@ -22,6 +22,7 @@ window.addEventListener('pagehide',()=>saveRanchB99());
 function petStoneB117p(){
   const chance=petChanceB117p();if(chance<=0||petRollB117p()>=chance)return false;
   ranchB99.starStones=(ranchB99.starStones||0)+1;ranchB99.b117Pet={arena:0,kills:0};saveRanchB99();
+  bumpB117('starStonesEarned');
   const p=ranchWorldB100.pip;burstHeartsB100(p.x,p.y,8);ranchToastB100('Pip found a Star Stone for you! ✦',3.2);renderRanchHudB100();return true;
 }
 const pipSheetBeforeB117p=pipSheetB104;

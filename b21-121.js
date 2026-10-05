@@ -14,18 +14,19 @@ function storeStartsB117f(f,starts){
   starts.sort((a,b)=>a-b);f.startedAt=starts[0];f.lag=starts.map(s=>s-starts[0]);
 }
 tickRefineryB102=function(now=Date.now(),roll=Math.random){
-  const f=ranchB99.refinery;let done=0;
+  const f=ranchB99.refinery;let done=0,dust=0;
   if(f.startedAt>now)f.startedAt=now;
   const k=refinerySlotsB117f(f.level),T=refineSecondsB102(f.level)*1000,starts=refineStartsB117f(f,now);
   while(starts.length<Math.min(k,f.queue))starts.push(now); // a load or an upgrade opened a slot just now
   while(starts.length){
     let i=0;for(let j=1;j<starts.length;j++)if(starts[j]<starts[i])i=j;
     const end=starts[i]+T;if(now<end)break;
-    starts.splice(i,1);f.queue--;f.trayStones++;if(roll()<B102_DUST_CHANCE)f.trayDust++;done++;
+    starts.splice(i,1);f.queue--;f.trayStones++;if(roll()<B102_DUST_CHANCE){f.trayDust++;dust++}done++;
     if(f.queue>starts.length)starts.push(end);
   }
   storeStartsB117f(f,starts);
   if(done)saveRanchB99();
+  if(dust)bumpB117('dustEarned',dust);
   return done;
 };
 const loadHeartsBeforeB117f=loadHeartsB102;

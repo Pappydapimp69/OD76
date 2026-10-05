@@ -95,7 +95,13 @@ Direct build after B117: B118 Arena Endurance in `b21-124.js`. New all-time-high
 
 Direct build after B118: B119 Farm weeks in `b21-125.js`. The player waters crops for free; dry weeks grow half, then nothing, then wither the crop; every week that ends fades to "Week N". User-requested; does not increment the loop count.
 
-Next: select loop 16 / B120 from the B119 baseline. No gameplay implementation is currently unfinished.
+Loop 16 / B120: Nova constellations in `b21-126.js`. User-requested visual skill extension.
+
+B121–B125 extend Heart Sense capacity, Thunderstorm, attack reach, combat fixes, arena/ranch visuals and clearing payoffs through `b21-141.js`.
+
+Direct build after B125: B126 Playtest quick fixes in `b21-142.js`. Stage input release, iOS gesture suppression, visible ranch-sheet exits, corrected farm fatigue copy, a black arena-to-week handoff and survey currency telemetry. User-requested; does not increment the loop count.
+
+Next: select loop 17 / B127 from the B126 baseline. No gameplay implementation is currently unfinished.
 
 Validation notes: use `rg -uuu` with an explicit path to find ignored numbered modules. On Windows/Codex set `NODE_PATH=C:/Users/Kompooter/Documents/OD76/node_modules` for the existing JSDOM dependency; on Linux `npm ci` needs no override. `HANDOFF.md` carries the full per-environment toolchain. Check the entire test outcome, not only the final passing lines. `scripts/serve.mjs` serves `_site` at port 8176 and local fixtures at `/qa`; inspect whether a server is already running before starting one. Update build version, test module count/order, both workflow module lists and stamp/cache key together. Browser tests use CUA and production-path fixture buttons, never application-state injection from evaluate.
 

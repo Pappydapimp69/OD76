@@ -78,10 +78,16 @@ function runSurveyChecksB117(){
     assert(checked('diff46')==="Didn't reach"&&checked('diff7')==="Didn't reach"&&checked('chain')===undefined,'pre-selections wrong for stage 2 / chain 3');
   });
   test('B117 the report carries the build stamp, stats and answers',()=>{
-    Object.assign(statsB117,{runs:4,stage:6,chain:12,tier:2,skills:{nova:{n:7,sec:20}}});openRanchB99();openSurveyB117();
+    fresh({hearts:321,stones:8,dust:3,starStones:2});Object.assign(statsB117,{runs:4,stage:6,chain:12,tier:2,dustEarned:7,starStonesEarned:4,skills:{nova:{n:7,sec:20}}});openRanchB99();openSurveyB117();
     type('name','Sam');pick('fun','4');pick('again','Yes');type('best','Ricochet storm on stage 5');
     const r=reportB117();
-    for(const bit of [$('od76BuildStamp').textContent.trim(),'Battle tests: 4','Highest stage: 6','Most-used skill: Nova (7 uses)','Best chain: 2x 12','Name: Sam','Fun (1-5): 4','Play next build: Yes','Best moment: Ricochet storm on stage 5','Stage 7+: Didn\'t reach'])assert(r.includes(bit),`report missing "${bit}"`);
+    for(const bit of [$('od76BuildStamp').textContent.trim(),'Battle tests: 4','Highest stage: 6','Most-used skill: Nova (7 uses)','Best chain: 2x 12','Currencies held: Hearts 321 · Heart Stones 8 · Star Dust 3 · Star Stones 2','Rare currency earned since tracking: Star Dust 7 · Star Stones 4','Name: Sam','Fun (1-5): 4','Play next build: Yes','Best moment: Ricochet storm on stage 5','Stage 7+: Didn\'t reach'])assert(r.includes(bit),`report missing "${bit}"`);
+  });
+  test('B117 rare-currency telemetry counts refinery dust and fused Star Stones',()=>{
+    fresh({hearts:250,dust:0,starStones:0});const t0=1e12;loadHeartsB102(5,t0);tickRefineryB102(t0+2700e3,()=>0);
+    assert(statsB117.dustEarned===5&&ranchB99.refinery.trayDust===5,'refinery dust not tracked');collectTrayB102(t0+2700e3);
+    assert(fuseStarB102()&&statsB117.starStonesEarned===1&&ranchB99.starStones===1,'fused Star Stone not tracked');
+    saveStatsB117();const s=reload();assert(s.dustEarned===5&&s.starStonesEarned===1,'rare-currency totals lost on reload');
   });
   test('B117 Copy answers uses the clipboard, and falls back to selected text without it',()=>{
     openRanchB99();openSurveyB117();type('name','Kit');const box=$('b117CopyBox');

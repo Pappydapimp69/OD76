@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B126: Playtest quick fixes
+
+Stage changes now release held movement, iOS gameplay no longer triggers browser zoom or text selection, every ranch sheet has a visible **Back / Exit**, and farm copy states that only tilling adds fatigue. Returning from the arena fades fully black before revealing the ranch and its **Week N** transition. The playtest report also includes current currency balances and rare currency earned since tracking began.
+
 ## B125: Looks
 
 The arena gets better looking as you go. Every run starts on today's arena; from your rank's first window it shifts a little each stage toward Dusk Hills, then Crystal Shore, Night Garden, Aurora Fields and Starforge: new skies and backdrops, more stars, glow under your shots and slightly richer hit sparks. Higher ranks get there sooner (an E run starts changing at stage 10 for now, a C run reaches Night Garden by stage 30). Each map has its own shape: hill ridges at dusk, crystal spires on the shore, a treeline with fireflies, aurora over mountains, forge towers with rising embers, and a ground pattern of its own instead of the grid. Pip, the player, enemies, shots and hearts get upgraded along the way too: outlines, shading and eyes that follow you, horned chargers and ringed cores, then movement, ground shadows, wing flutters and scarf trails, rim light and enemies that pop into pieces. On the way to Starforge every boss turns into its own drawing: a scowling Grump Star, Velvet Fang with ears, fangs and a tail, Static Bloom's turning petals, a swinging Hollow Bell, a four-leaf Lucky Thirteen, a Night Kite with its ribbon tail and The Last Glare's single eye. Every enemy keeps its shape and colour at every look, and everything new draws behind the action so it all stays easy to see.
@@ -36,7 +40,7 @@ You water the crops yourself now. It's free, and it works even when Pip is tired
 
 ## B117: Playtest survey
 
-At the ranch, open the Bag and choose **Playtest survey**. The game fills in your play stats by itself (time played, runs, highest stage, rank, most-used skill, best chain and more), so you only answer the opinion questions. Then tap **Copy answers** or **Share** to send them. Unsent answers are saved as a draft.
+At the ranch, open the Bag and choose **Playtest survey**. The game fills in your play stats by itself (time played, runs, highest stage, rank, most-used skill, best chain, current currency balances and rare currency earned), so you only answer the opinion questions. Then tap **Copy answers** or **Share** to send them. Unsent answers are saved as a draft.
 
 ## B116: Playtest pass two
 

@@ -17,7 +17,7 @@ function runRanchChecksB99(){
     $('nextStageB99').click();assert(S.stage===3&&!S.stagePending&&S.run&&$('stageUp').classList.contains('hidden'),'next stage failed');
   });
   test('B99 Return to ranch banks every run heart, ends the run and walks into the ranch',()=>{
-    fresh({hearts:5});clearStage();$('returnRanchB99').click();
+    fresh({hearts:5});clearStage();returnToRanchB99();
     assert(ranchB99.hearts===45&&ranchB99.tests===1&&S.end&&!S.run&&!S.stagePending,'return banking wrong');
     assert(ranchWorldB100.active&&document.body.classList.contains('ranchB100')&&$('stageUp').classList.contains('hidden'),'ranch world not entered');
     finish(true);assert(ranchB99.hearts===45&&ranchB99.tests===1,'ended run banked twice');
@@ -32,7 +32,7 @@ function runRanchChecksB99(){
     fresh({hearts:0});reset();S.run=true;S.stage=2;S.runHearts=40;S.heartCurrency=40;S.stageEnding=true;openStageUpgrade();
     openAbilityStep();buyPipAbility('range');assert(S.heartCurrency<40,'upgrade not bought');
     continueSoundLabB41();assert($('ranchGateTextB99').textContent.includes('♥ 40 this test'),'gate hid spent hearts');
-    $('returnRanchB99').click();assert(ranchB99.hearts===40,'spent hearts were subtracted');
+    returnToRanchB99();assert(ranchB99.hearts===40,'spent hearts were subtracted');
     fresh({hearts:0});reset();S.run=true;S.runHearts=30;S.heartCurrency=0;finish(true);assert(ranchB99.hearts===15,'death did not bank half of everything collected');
   });
   test('B99 corrupt ranch saves fall back to safe values',()=>{
@@ -256,7 +256,7 @@ function runRanchChecksB99(){
     const n=heartStoneDropsB106[0];n.fall=0;P.x=n.x;P.y=n.y;updateB26Drops(.016);assert(S.runStones===1&&!heartStoneDropsB106.length,'stone not collected');
     dropBossExplorationRewardsB30(0,0);assert(heartStoneDropsB106.some(q=>q.bossDrop),'boss stone missing');
     S.runStones=3;S.heartCurrency=0;finish(true);assert(ranchB99.stones===1,'death did not bank half the stones');
-    fresh({stones:0});clearStageStones();$('returnRanchB99').click();assert(ranchB99.stones===2,'return did not bank every stone');
+    fresh({stones:0});clearStageStones();returnToRanchB99();assert(ranchB99.stones===2,'return did not bank every stone');
     reset();assert(!heartStoneDropsB106.length&&S.runStones===0,'stones leaked into the next run');
   });
   test('B106 corrupt overgrowth saves keep only real obstacles',()=>{
@@ -286,7 +286,7 @@ function runRanchChecksB99(){
   });
   test('B108 higher ranks multiply banked hearts and stones',()=>{
     fresh({rankUnlocked:5,rank:5});reset();S.run=true;S.stage=2;S.runHearts=40;S.heartCurrency=40;S.runStones=2;S.stageEnding=true;openStageUpgrade();continueSoundLabB41();
-    assert($('ranchGateTextB99').textContent.includes('Rank S pays ×2'),'gate reward note');$('returnRanchB99').click();
+    assert($('ranchGateTextB99').textContent.includes('Rank S pays ×2'),'gate reward note');returnToRanchB99();
     assert(ranchB99.hearts===80&&ranchB99.stones===4&&ranchB99.report.includes('Rank S bonus'),'rank S did not double rewards');
     fresh({rankUnlocked:1,rank:1});reset();S.run=true;S.runHearts=21;S.heartCurrency=21;finish(true);assert(ranchB99.hearts===12,'rank D death bank wrong: '+ranchB99.hearts+' '+ranchB99.report);
   });

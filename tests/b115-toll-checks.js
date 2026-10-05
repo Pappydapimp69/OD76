@@ -35,7 +35,7 @@ function runTollChecksB115(){
   });
   test('B115 banking a test keeps the week and its hooks but no longer drains hunger and cleanliness again',()=>{
     fresh({hearts:0,hunger:80,hygiene:80});ranchB99.areas.orchard=true;ranchB99.orchard.weeks=0;
-    toGate(2);$('returnRanchB99').click();
+    toGate(2);returnToRanchB99();
     assert(ranchB99.week===2&&ranchB99.tests===1&&ranchB99.orchard.weeks===1,'week or week hooks lost');
     assert(ranchB99.hunger===77&&ranchB99.hygiene===78,'bank drained again: '+ranchB99.hunger+'/'+ranchB99.hygiene);
     fresh({hunger:80,hygiene:80,fatigue:10});reset();S.run=true;S.heartCurrency=10;finish(true);
@@ -59,13 +59,13 @@ function runTollChecksB115(){
     $('nextStageB99').click();assert(S.stage===2&&S.stagePending&&gateOpen(),'click advanced');
     assert(continueStageB99()===false&&S.stage===2&&S.stagePending&&gateOpen(),'direct continue advanced');
     S.b99Onward=true;advanceToNextStage();assert(S.stage===2&&S.stagePending&&gateOpen()&&!S.b99Onward,'forced advance');
-    $('returnRanchB99').click();assert(ranchB99.hearts===45&&ranchB99.tests===1&&S.end&&!S.run&&ranchWorldB100.active,'return failed');
+    returnToRanchB99();assert(ranchB99.hearts===45&&ranchB99.tests===1&&S.end&&!S.run&&ranchWorldB100.active,'return failed');
     fresh({fatigue:93,...fine});toGate(2);assert(ranchB99.fatigue===99&&!$('nextStageB99').disabled,'99 blocked');
     $('nextStageB99').click();assert(S.stage===3&&!S.stagePending&&S.run,'next failed at 99');
   });
   test('B115 an exhausted Pip recovers: home, one rest, and the arena opens again',()=>{
     fresh({fatigue:94,...fine});toGate(2);assert(ranchB99.fatigue===100&&$('nextStageB99').disabled,'setup');
-    $('returnRanchB99').click();assert(ranchWorldB100.active&&startBattleTestB99()===false&&!S.run,'exhausted Pip entered the arena');
+    returnToRanchB99();assert(ranchWorldB100.active&&startBattleTestB99()===false&&!S.run,'exhausted Pip entered the arena');
     restB99();assert(ranchB99.fatigue===40&&arenaReadyB114(),'rest did not recover');
     startBattleTestB99();assert(S.run&&!ranchWorldB100.active,'arena stayed shut');
   });
