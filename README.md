@@ -4,7 +4,7 @@
 
 ## B126: Playtest quick fixes
 
-Stage changes now release held movement, iOS gameplay no longer triggers browser zoom or text selection, every ranch sheet has a visible **Back / Exit**, and farm copy states that only tilling adds fatigue. Drill stations no longer track sets: each upgrade unlocks the next ten skill levels. The Arena Merchant opens into a repeat-purchase shop with arena snacks and Star Dust for 50 hearts. Returning from the arena fades fully black before revealing the ranch and its **Week N** transition. The playtest report also includes current currency balances and rare currency earned since tracking began.
+Stage changes now release held movement, iOS gameplay no longer triggers browser zoom or text selection, every ranch sheet has a visible **Back / Exit**, and farm copy states that only tilling adds fatigue. Drill stations no longer track sets: each upgrade unlocks the next ten skill levels. The Arena Merchant opens into a repeat-purchase shop with arena snacks and Star Dust for 50 hearts, and random arena meteors can now drop Star Dust. Returning from the arena fades fully black before revealing the ranch and its **Week N** transition. The playtest report also includes current currency balances and rare currency earned since tracking began.
 
 ## B125: Looks
 

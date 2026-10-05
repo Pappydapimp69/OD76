@@ -76,6 +76,51 @@ function exitArenaShopB126(){
  if(!S?.stagePending||!merchantShopOpenB126)return false;merchantShopOpenB126=false;$('arenaMerchantB118').classList.add('stagehidden');openRanchGateB99();return true;
 }
 
+// Random exploration meteors get an independent 10% Star Dust roll every 30 kills.
+const B126_DUST_DROP_CHANCE=.10;
+let starDustDropsB126=[],starDustRollB126=()=>rnd();
+function spawnStarDustB126(){
+ if(starDustDropsB126.some(n=>!n.dead))return false;const p=b26PointOutsideViews();
+ starDustDropsB126.push({x:p.x,y:p.y,r:13,life:24,dead:false,fall:1.05,fallMax:1.05,phase:rr(0,6.28)});
+ announce('STAR DUST FALLING',900);showPipMessage("Star Dust! follow the violet meteor marker — that's for the ranch!",true);return true;
+}
+function collectStarDustB126(n){
+ if(n.dead)return;n.dead=true;S.runDust=(S.runDust||0)+1;S.score+=700;
+ popup(n.x,n.y,'✧ STAR DUST','#d7b2ff',true,1);particle(n.x,n.y,'#b77cff',20,145);ring(n.x,n.y,'#d7b2ff',84);if(ensureAudio())audioEngine.chime([72,79,84],.035);
+}
+const checkMilestoneBeforeB126=checkKillMilestoneDropB30;
+checkKillMilestoneDropB30=function(){
+ const before=S?.b30LastKillMilestone||0;checkMilestoneBeforeB126();
+ for(let m=before+EXPLORATION_KILL_INTERVAL_B30;m<=(S?.b30LastKillMilestone||0);m+=EXPLORATION_KILL_INTERVAL_B30)if(starDustRollB126()<B126_DUST_DROP_CHANCE)spawnStarDustB126();
+};
+const updateDropsBeforeB126=updateB26Drops;
+updateB26Drops=function(dt){
+ updateDropsBeforeB126(dt);if(!S.run||S.end||S.waveState==='stage')return;
+ for(const n of starDustDropsB126){if(n.dead)continue;n.life-=dt;n.phase+=dt*5;if(n.fall>0)n.fall=Math.max(0,n.fall-dt);if(n.fall<=0&&hyp(P.x-n.x,P.y-n.y)<P.r+n.r+7)collectStarDustB126(n)}
+ starDustDropsB126=starDustDropsB126.filter(n=>!n.dead&&n.life>0);
+};
+const drawDropsBeforeB126=drawB26Drops;
+drawB26Drops=function(){
+ drawDropsBeforeB126();X.save();X.textAlign='center';
+ for(const n of starDustDropsB126){const sx=worldToScreenX(n.x),sy=worldToScreenY(n.y)-(n.fall>0?(n.fall/n.fallMax)*120:0);if(sx>-60&&sx<W+60&&sy>-170&&sy<H+60){drawFallingTrailB26(sx,sy,n.fall,'#b77cff');X.save();X.translate(sx,sy);X.rotate(S.t+n.phase);X.fillStyle='#d7b2ff';for(let i=0;i<4;i++){X.rotate(Math.PI/2);X.fillRect(-2,-13,4,13)}X.fillStyle='#fff';X.beginPath();X.arc(0,0,4,0,Math.PI*2);X.fill();X.restore()}drawWaypointB26(n,'#d7b2ff','✧')}
+ X.restore();
+};
+const rareTargetsBeforeB126=rareRewardTargetsB48;
+rareRewardTargetsB48=function(){const out=rareTargetsBeforeB126();if(S&&P)for(const n of starDustDropsB126)if(!n.dead&&n.life>0)out.push({x:n.x,y:n.y,icon:'✧',label:'STAR DUST',color:'#d7b2ff',priority:4,d:hyp(n.x-P.x,n.y-P.y)});return out.sort((a,b)=>b.priority-a.priority||a.d-b.d)};
+const resetBeforeDustB126=reset;
+reset=function(){starDustDropsB126=[];resetBeforeDustB126();if(S)S.runDust=0};
+if(S)S.runDust=0;
+const bankRunBeforeDustB126=bankRunB99;
+bankRunB99=function(dead){
+ const tests=ranchB99.tests,found=Math.max(0,S?.runDust||0),earned=bankRunBeforeDustB126(dead);
+ if(ranchB99.tests>tests&&found){const kept=dead?Math.floor(found/2):found;ranchB99.dust+=kept;ranchB99.report+=` Star Dust found: ✧ ${kept}${dead?` of ${found}`:''}.`;if(kept)bumpB117('dustEarned',kept);saveRanchB99()}
+ return earned;
+};
+const gateBeforeDustB126=openRanchGateB99;
+openRanchGateB99=function(){gateBeforeDustB126();const n=S?.runDust||0;if(n)$('ranchGateTextB99').textContent+=` Pip also found ✧ ${n} Star Dust.`};
+const currencyBeforeDustB126=currencyItemsB47;
+currencyItemsB47=function(){const items=currencyBeforeDustB126();if(S?.runDust)items.push({icon:'✧',value:S.runDust,title:'Star Dust'});return items};
+
 let arenaReturnDelayB126=600,arenaReturnTimerB126=0;
 const playWeekFadeBeforeB126=playWeekFadeB119;
 function playArenaWeekFromBlackB126(f){
