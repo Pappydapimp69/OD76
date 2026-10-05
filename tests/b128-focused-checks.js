@@ -1,0 +1,10 @@
+function runFocusedChecksB128(){
+ const out=[],assert=(v,m)=>{if(!v)throw Error(m)},test=(name,fn)=>{try{fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}};
+ const fresh=over=>{ranchB99=Object.assign(ranchDefaultB99(),over||{});ensurePointsB100(ranchB99);syncCapsB102();saveRanchB99();reset()};
+ test('B128 Glow Pond waits for the training-menu press to be released',()=>{const g={kind:'guard',type:'hold',t:0,hits:0,attempts:0,cool:0,flash:0,fill:0,holding:false,lo:.6,width:.16,total:3,need:2,b128AwaitRelease:true};gameInputB100(g,.2,false,true);assert(g.fill===0&&g.attempts===0,'held menu press leaked');gameInputB100(g,.01,false,false);gameInputB100(g,.2,false,true);assert(g.fill>0,'new hold ignored')});
+ test('B128 rest applies fatigue only at full black',()=>{fresh({fatigue:80,week:2});ranchWorldB100.active=true;restB99();assert(ranchB99.fatigue===80,'fatigue changed before black');finishRestB128();assert(ranchB99.fatigue===Math.max(0,80-B99_REST)&&ranchB99.week===3,'rest did not apply at black')});
+ test('B128 kitchen launches with exactly three recipes',()=>{fresh({areas:{garden:true,kitchen:true,orchard:false}});kitchenSheetB105();const t=$('ranchSheetB100').textContent;assert(B128_KITCHEN_RECIPES.join()==='stew,bowl,crisp'&&t.includes('Carrot Stew')&&t.includes('Harvest Bowl')&&t.includes('Apple Crisp')&&!t.includes('Berry Tart')&&!t.includes('Pumpkin Pie'),'recipe set wrong')});
+ test('B128 high-rank opening spawn easing tapers by stage',()=>{assert(earlySpawnScaleB128(1,'D')===1.15&&earlySpawnScaleB128(2,'S')===1.10&&earlySpawnScaleB128(3,'A')===1.05&&earlySpawnScaleB128(1,'E')===1&&earlySpawnScaleB128(4,'D')===1,'spawn easing wrong')});
+ test('B128 arena entry uses a black-first transition',()=>{fresh({fatigue:0});ranchWorldB100.active=true;assert(startBattleTestB99()&&ensureWeekFadeB119().classList.contains('b128-arena-out'),'entry fade missing');assert(finishArenaEntryB128()&&ensureWeekFadeB119().classList.contains('b128-arena-in'),'arena did not switch at black')});
+ return out;
+}
