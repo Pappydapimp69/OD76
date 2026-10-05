@@ -1,5 +1,40 @@
 # Pending builds
 
+
+## B127 proposal: Gravity Well rework (Beam/Storm/Guardian pattern) — build on go
+
+Why: Gravity is the only skill still on B94 rules. No level tiers, damage ignores weapon power (Lv1 ~1.9 per enemy per 8% HEAT vs Nova 3.3), one flat 20% / 1s charge, target picked blind on release, and a new cast deletes the open well. Give it its own role: **placed crowd control**. It lasts at a spot and pulls enemies together for Nova, Storm chains and Beam.
+
+Controls (Storm-cloud style charge):
+- Can't start with no enemy on screen. No HEAT spent (Beam rule).
+- Press locks the target. A dashed ring at the target previews the well's radius and grows with each mass.
+- Hold charges masses one at a time: 8% HEAT each, 1.1s for the first and 0.9s after. If you let go before the first forms, nothing is spent.
+- Release opens the well at the locked spot (or the target's last position if it died).
+- One well at a time: can't start while one is open.
+- Pause, focus loss and transitions refund every mass. A boss dash freeze cancels it with HEAT lost (B116 rule).
+
+Each mass adds 1.5s of well time. Pulses every 0.5s.
+
+Levels:
+| Lv | Masses max | Radius | Pull | Extra |
+|---|---|---|---|---|
+| 1 | 1 | 150px | today's Lv1 | well + pulses |
+| 2 | 2 | 170px | +20% | |
+| 3 | 2 | 170px | +20% | NEW: Event horizon. Enemy shots entering the well are swallowed. |
+| 4 | 3 | 200px | +45% | |
+| 5 | 4 | 200px | +45% | SPECIAL: Collapse. When the well ends it implodes on everything inside for 1 pulse per mass. Masses charge 25% faster. |
+
+Damage (all × weapon power, like Beam/Nova/Storm):
+- Pulse: Lv1–5 = 0.9 / 1.2 / 1.6 / 2.1 / 2.8.
+- Per 8% HEAT, per enemy held: 2.7 / 4.8 / 8.4 (+ collapse) at Lv1/3/5. That's ~80–90% of Nova; the hold and grouping pay the difference.
+
+Looks: a ring, sparks and a falling tone per mass; "WELL FULL" at the level max. The open well gets a dark core sized to its masses, particles spiralling inward and a faint radius edge. The button reads `MASS n/max`, then `WELL OPEN`.
+
+Unchanged: 25% ignition, hold-to-charge/release-to-fire, Ascended Pip's gravity echo, Nova, Storm, Beam, Guardian.
+
+Open:
+- Should Lv3 swallow shots, or should that be the Lv5 special with Collapse at Lv3?
+- Allow a second well while one is open, or keep one at a time?
 ## B126 quick fixes — SHIPPED as a B125 patch (`b21-132.js`, B125-LOOKS-2)
 
 ### 1. Arena looks: stronger, more distinct maps
