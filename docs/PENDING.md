@@ -2,7 +2,7 @@
 
 ## B127 proposal: Gravity Well rework — build on go
 
-Role: placed crowd control. Groups enemies for Nova, Storm, Beam.
+Role: placed crowd control. Stands alone: pulls enemies in and grinds them down.
 
 - No enemy on screen: can't start, no HEAT spent.
 - Press locks target; ring previews radius.
