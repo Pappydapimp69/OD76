@@ -10,6 +10,11 @@ function runFocusedChecksB127(){
   const run=(e,h,d)=>{fresh({dust:0});S.run=true;S.waveState='active';S.kills=15;S.b30LastKillMilestone=0;let n=0;rollExplorationDropB30=()=>{if(e)n++;return e};heartStoneRollB106=()=>h?0:1;starDustRollB126=()=>d?0:1;checkKillMilestoneDropB30();return n+heartStoneDropsB106.filter(x=>!x.bossDrop).length+starDustDropsB126.length};
   try{assert(run(0,0,0)===0&&run(1,0,0)===1&&run(1,1,0)===2&&run(1,1,1)===3,'independent outcomes')}finally{rollExplorationDropB30=er;heartStoneRollB106=hr;starDustRollB126=dr}
  });
+ test('B127 actual enemy kills reach the authoritative rare-drop checkpoint',()=>{
+  fresh({dust:0});S.run=true;S.waveState='active';S.kills=14;S.b30LastKillMilestone=0;S.waveKills=0;S.waveGoal=99;
+  const er=rollExplorationDropB30,hr=heartStoneRollB106,dr=starDustRollB126;let explored=0;
+  try{rollExplorationDropB30=()=>{explored++;return true};heartStoneRollB106=()=>0;starDustRollB126=()=>0;kill({type:'chaser',dead:false,x:P.x+40,y:P.y,r:12,hp:1,maxHp:1});assert(S.kills===15&&explored===1&&heartStoneDropsB106.some(x=>!x.bossDrop)&&starDustDropsB126.length===1,'live kill path missed rare drops')}finally{rollExplorationDropB30=er;heartStoneRollB106=hr;starDustRollB126=dr}
+ });
  test('B127 Gravity Well gathers hearts and manual collapse launches them to Pip',()=>{
   fresh();S.run=true;S.waveState='active';S.overType='gravity';P.pipX=300;P.pipY=0;heartBits=[{x:30,y:0,vx:0,vy:0,life:10,dead:false,bob:0}];S.b94Well={x:0,y:0,level:2,time:2,pulse:1,radius:200,frac:1,mass:0};updateWellB94(.1);assert(heartBits[0].x<30&&heartBits[0].b127Well,'heart not gathered');assert(triggerOverdrive()&&!S.b94Well&&heartBits[0].vx>0,'manual collapse failed');
  });

@@ -5,7 +5,7 @@ Development index only. This file is not loaded by the game.
 ## Start here
 
 - Current release: `B127-SKILL-REFINEMENTS`.
-- Next numbered runtime file: `b21-144.js`.
+- Next numbered runtime file: `b21-145.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -27,7 +27,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 |---|---|---|
 | Ordered bundle | `scripts/build.mjs` | Numeric order; syntax-checks the assembled bundle. |
 | Pages | `.github/workflows/pages.yml` | Must call the shared build script; do not duplicate build stamps here. |
-| Current release layer | `b21-143.js` | Gravity Well, Pip Ascendant, stage-gate effect chips. |
+| Current release layer | `b21-144.js` | Meteor checkpoint hotfix; `b21-143.js` owns Gravity Well, Pip Ascendant and stage-gate effect chips. |
 | Current focused runner | `tests/verify-b127-focused.cjs` | Runs only `tests/b127-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
@@ -51,10 +51,10 @@ Do not remove historical modules. Add the smallest late override, update this ma
 
 | System | Current authority | Critical detail | Focused coverage |
 |---|---|---|---|
-| Exploration checkpoint | `b21-32.js` | Active cadence is `B45_EXPLORATION_KILL_INTERVAL = 15`. The old 30-kill constant in `b21-16.js` is superseded. | `tests/b127-focused-checks.js` |
+| Exploration checkpoint | `b21-144.js` | Final authority runs all three independent rolls every 15 actual non-boss kills. | `tests/b127-focused-checks.js` |
 | Exploration payload | `b21-16.js` | Independent 10% roll; success selects Note, Music Star or Prism Seed. |
-| Heart Stone meteor | `b21-94.js` | Independent 10% roll at the active 15-kill checkpoint; bosses use a separate guaranteed path. | `tests/ranch-checks.js`, `tests/b127-focused-checks.js` |
-| Star Dust meteor | `b21-142.js` | Independent 10% roll at the active 15-kill checkpoint; collected dust banks at run end. | `tests/b126-quick-fixes-checks.js`, `tests/b127-focused-checks.js` |
+| Heart Stone meteor | `b21-144.js` | Independent 10% checkpoint roll using the spawn and collection behavior from `b21-94.js`; bosses keep their separate guaranteed path. | `tests/ranch-checks.js`, `tests/b127-focused-checks.js` |
+| Star Dust meteor | `b21-144.js` | Independent 10% checkpoint roll using the spawn and collection behavior from `b21-142.js`; collected dust banks at run end. | `tests/b126-quick-fixes-checks.js`, `tests/b127-focused-checks.js` |
 
 All three checkpoint rolls are independent, so zero, one, two or all three drops are valid.
 
