@@ -5,7 +5,8 @@ const B104_START_NEED=80,B104_LOW=40,B104_STARVING=20;
 const B104_WEEK_HUNGER=12,B104_WEEK_DIRT={drill:14,rest:6,battle:20};
 const B104_ITEMS={
  pellets:{name:"Pip Pellets",icon:"🥣",food:25,price:15,sell:0},
- bun:{name:"Berry Bun",icon:"🥯",food:40,fatigue:5,price:30,sell:0},
+ bun:{name:"Berry Bun",icon:"🥯",food:50,price:60,sell:0},
+ feast:{name:"Harvest Feast",icon:"🍱",food:100,price:240,sell:0},
  soap:{name:"Bubble Soap",icon:"🫧",price:10,sell:0}
 };
 const B104_WEEK_HOOKS=[],B104_RUN_HOOKS=[];
@@ -92,7 +93,7 @@ nearestInteractB100=function(){
 function bagLinesB104(){return Object.keys(ranchB99.items).filter(k=>itemCountB104(k)>0).map(k=>`${itemInfoB104(k)?.icon||"•"} ${itemInfoB104(k)?.name||k} ×${itemCountB104(k)}`)}
 function stallSheetB104(){
  const opts=[];
- for(const id of ["pellets","bun","soap"]){const it=B104_ITEMS[id];opts.push({label:`${it.icon} ${it.name} · ♥ ${it.price}${it.food?` · food +${it.food}`:" · washes Pip"}`,run:()=>{if(buyItemB104(id)){renderRanchHudB100();ranchToastB100(`Bought ${it.name}.`)}else ranchToastB100(`Need ♥ ${it.price}.`);stallSheetB104()}})}
+ for(const id of ["pellets","bun","feast","soap"]){const it=B104_ITEMS[id];opts.push({label:`${it.icon} ${it.name} · ♥ ${it.price}${it.food?` · food +${it.food}`:" · washes Pip"}`,run:()=>{if(buyItemB104(id)){renderRanchHudB100();ranchToastB100(`Bought ${it.name}.`)}else ranchToastB100(`Need ♥ ${it.price}.`);stallSheetB104()}})}
  for(const o of B104_STALL_EXTRA)o(opts);
  opts.push({label:"Done",quiet:true});
  openSheetB100("Food stall",`You have ♥ ${ranchB99.hearts}. Buy food and supplies for Pip.`,opts);
@@ -140,7 +141,7 @@ const drawStationBeforeB104=drawStationB100;
 drawStationB100=function(st,t){
  drawStationBeforeB104(st,t);
  const c=B100_PASTEL,x=st.x,y=st.y;
- if(st.id==="stall"){X.fillStyle="#e9d5c3";X.fillRect(x-56,y-40,8,60);X.fillRect(x+48,y-40,8,60);for(let i=0;i<6;i++){X.fillStyle=i%2?"#fff":c.pink;X.fillRect(x-60+i*20,y-62,20,24)}X.fillStyle=c.peach;roundRectB100(x-58,y-6,116,30,8);X.fill();X.font="18px system-ui";X.textAlign="center";X.fillText("🥣🥯🫧",x,y+15);labelB100(x,y-78,"Food stall","Food · soap · seeds")}
+ if(st.id==="stall"){X.fillStyle="#e9d5c3";X.fillRect(x-56,y-40,8,60);X.fillRect(x+48,y-40,8,60);for(let i=0;i<6;i++){X.fillStyle=i%2?"#fff":c.pink;X.fillRect(x-60+i*20,y-62,20,24)}X.fillStyle=c.peach;roundRectB100(x-58,y-6,116,30,8);X.fill();X.font="18px system-ui";X.textAlign="center";X.fillText("🥣🥯🍱🫧",x,y+15);labelB100(x,y-78,"Food stall","Food · soap · seeds")}
  if(st.id==="tub"){X.fillStyle="#bfe4f6";X.beginPath();X.ellipse(x,y,46,22,0,0,Math.PI*2);X.fill();X.strokeStyle="#e9d5c3";X.lineWidth=6;X.stroke();X.fillStyle="#ffffffcc";for(let i=0;i<5;i++){const b=Math.sin(t*2+i)*3;X.beginPath();X.arc(x-28+i*14,y-12+b,6+(i%2)*3,0,Math.PI*2);X.fill()}labelB100(x,y-44,"Wash tub",`Clean ${ranchB99.hygiene}`)}
 };
 // Pip visibly droops when hungry and gets smudges when grubby.

@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B127: Skill refinements and ranch clarity
+
+Gravity Well now forms an orbiting singularity: kills add Mass, loose hearts spiral inward, and a second tap collapses the well. Pip Ascendant cycles unlocked skill Echoes, builds Harmony, emphasizes Pip's strongest bond and ends at level 5 with an Ascendant Finale. The stage-clear meters show their effects in compact chips, the ranch food stall has 25/50/100 Food tiers, and exploration loot, Heart Stones and Star Dust now roll separately on the same 15-kill checkpoint.
+
 ## B126: Playtest quick fixes
 
 Stage changes now release held movement, iOS gameplay no longer triggers browser zoom or text selection, every ranch sheet has a visible **Back / Exit**, and farm copy states that only tilling adds fatigue. Drill stations no longer track sets: each upgrade unlocks the next ten skill levels. The Arena Merchant opens into a repeat-purchase shop with arena snacks and Star Dust for 50 hearts, and random arena meteors can now drop Star Dust. Returning from the arena fades fully black before revealing the ranch and its **Week N** transition. The playtest report also includes current currency balances and rare currency earned since tracking began.
@@ -80,7 +84,7 @@ At the ranch, open the Bag and choose **Playtest survey**. The game fills in you
 
 ## B114: Rested for battle
 
-Pip can't enter the arena while his fatigue is over 60. The Arena gate says so and shows his fatigue; rest him at his bed (a Berry Bun helps a little) and try again.
+Pip can't enter the arena while his fatigue is over 60. The Arena gate says so and shows his fatigue; rest him at his bed and try again.
 
 ## Spent hearts still go home
 
@@ -134,7 +138,7 @@ Each drill site starts ringed by trees and shrubs you can't walk through; clear 
 
 ## B104–B105: Pip's needs and the ranch farm
 
-Pip now has **hunger** and **hygiene** alongside fatigue. Every ranch week (a drill, a rest or a battle test) makes him hungrier and messier. Buy Pip Pellets, Berry Buns and Bubble Soap at the **food stall**, wash him at the **wash tub**, and press A at Pip to pet or feed him. A hungry or grubby Pip trains worse; a starving or filthy one starts battle tests with lower abilities.
+Pip now has **hunger** and **hygiene** alongside fatigue. Every ranch week (a drill, a rest or a battle test) makes him hungrier and messier. Buy Pip Pellets (+25 Food for ♥15), Berry Buns (+50 for ♥60), Harvest Feasts (+100 for ♥240) and Bubble Soap at the **food stall**, wash him at the **wash tub**, and press A at Pip to pet or feed him. A hungry or grubby Pip trains worse; a starving or filthy one starts battle tests with lower abilities.
 
 Unlock new areas: the **Garden** (◆ 2) with six plots, the **Kitchen** (◆ 3) and the **Orchard** (★ 1). Buy a hoe, watering can and seeds at the stall, then till, plant and water. Watered crops grow one stage per ranch week: carrots (2 weeks), strawberries (3) and pumpkins (4). The orchard fruits every two weeks. Sell spare crops for hearts, or cook meals in the kitchen. Battle meals buff the next test (+20 max HP, 50% starting HEAT, Swift +1); ranch meals boost the next three drills. See [the B104](docs/B104-pip-needs.md) and [B105](docs/B105-ranch-farm.md) blueprints.
 

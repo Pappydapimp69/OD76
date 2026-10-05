@@ -156,10 +156,13 @@ function runRanchChecksB99(){
     fresh({hunger:80,hygiene:80});S.run=true;S.heartCurrency=10;finish(true);assert(ranchB99.week===2&&ranchB99.hunger===80&&ranchB99.hygiene===80,'battle week wrong');
   });
   test('B104 the stall sells food and soap for hearts; feeding and washing refill the meters',()=>{
-    fresh({hearts:50,hunger:30,hygiene:10,fatigue:20});assert(buyItemB104('bun')&&ranchB99.hearts===20&&itemCountB104('bun')===1,'buy failed');
-    assert(!buyItemB104('bun'),'bought without hearts');assert(feedB104('bun')&&ranchB99.hunger===70&&ranchB99.fatigue===15&&!itemCountB104('bun'),'feeding wrong');
-    assert(!washB104(),'washed without soap');buyItemB104('soap');assert(washB104()&&ranchB99.hygiene===60,'wash wrong');
-    assert(loadRanchB99().hunger===70&&loadRanchB99().hygiene===60,'needs not saved');
+    fresh({hearts:300,hunger:0,hygiene:10,fatigue:20});assert(buyItemB104('bun')&&ranchB99.hearts===240&&itemCountB104('bun')===1,'bun buy failed');
+    assert(feedB104('bun')&&ranchB99.hunger===50&&ranchB99.fatigue===20&&!itemCountB104('bun'),'bun feeding wrong');
+    assert(buyItemB104('feast')&&ranchB99.hearts===0&&itemCountB104('feast')===1,'feast buy failed');
+    ranchB99.hunger=0;assert(feedB104('feast')&&ranchB99.hunger===100&&!itemCountB104('feast'),'feast feeding wrong');
+    assert(!buyItemB104('bun'),'bought without hearts');
+    assert(!washB104(),'washed without soap');ranchB99.hearts=10;buyItemB104('soap');assert(washB104()&&ranchB99.hygiene===60,'wash wrong');
+    assert(loadRanchB99().hunger===100&&loadRanchB99().hygiene===60,'needs not saved');
   });
   test('B104 low needs lower solo odds and add fatigue; starving and filthy Pips start battle tests weaker',()=>{
     fresh({fatigue:0});const ok=soloChanceB100();fresh({fatigue:0,hunger:30,hygiene:30});assert(Math.abs(soloChanceB100()-(ok-.25))<1e-9,'need penalty wrong');

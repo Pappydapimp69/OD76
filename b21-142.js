@@ -76,7 +76,7 @@ function exitArenaShopB126(){
  if(!S?.stagePending||!merchantShopOpenB126)return false;merchantShopOpenB126=false;$('arenaMerchantB118').classList.add('stagehidden');openRanchGateB99();return true;
 }
 
-// Random exploration meteors get an independent 10% Star Dust roll every 30 kills.
+// Each active 15-kill exploration checkpoint also gets an independent 10% Star Dust roll.
 const B126_DUST_DROP_CHANCE=.10;
 let starDustDropsB126=[],starDustRollB126=()=>rnd();
 function spawnStarDustB126(){
@@ -91,7 +91,7 @@ function collectStarDustB126(n){
 const checkMilestoneBeforeB126=checkKillMilestoneDropB30;
 checkKillMilestoneDropB30=function(){
  const before=S?.b30LastKillMilestone||0;checkMilestoneBeforeB126();
- for(let m=before+EXPLORATION_KILL_INTERVAL_B30;m<=(S?.b30LastKillMilestone||0);m+=EXPLORATION_KILL_INTERVAL_B30)if(starDustRollB126()<B126_DUST_DROP_CHANCE)spawnStarDustB126();
+ for(let m=before+B45_EXPLORATION_KILL_INTERVAL;m<=(S?.b30LastKillMilestone||0);m+=B45_EXPLORATION_KILL_INTERVAL)if(starDustRollB126()<B126_DUST_DROP_CHANCE)spawnStarDustB126();
 };
 const updateDropsBeforeB126=updateB26Drops;
 updateB26Drops=function(dt){

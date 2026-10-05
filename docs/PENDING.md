@@ -1,5 +1,38 @@
 # Pending builds
 
+## B127 skill refinements and ranch clarity
+
+### 1. Gravity Well refinement: Event Horizon
+- Preserve hold-to-charge and release-at-target behavior.
+- Enemies orbit the well; kills inside add Mass, strengthening pull and pulse damage.
+- Loose hearts spiral into the well.
+- Tapping again collapses it early, damaging trapped enemies and sending collected hearts toward Pip; natural expiration triggers a weaker collapse.
+- Levels: Singularity, Heart Orbit, Growing Mass, Tidal Force, Event Horizon.
+
+### 2. Pip Ascendant refinement: Ascendant Symphony
+- Preserve 70% ignition and automatic HEAT drain.
+- Unlocked arena skills fire as clear Echoes in sequence: Beam, Storm, Guardian, Nova, Gravity.
+- Different Echo hits build Harmony, strengthening Pip and the player.
+- Pip's strongest bond becomes the active Crown: Loving boosts damage/Nova, Compassionate boosts shields/rescue, Supportive boosts speed/rapid fire.
+- HEAT expiration triggers an Ascendant Finale combining every unlocked Echo.
+- Levels: Twin Stars, Resonant Echoes, Crowned Instinct, Perfect Harmony, Ascendant Finale.
+
+### 3. Ranch food tiers
+- Keep Pip Pellets at +25 Food for ♥ 15.
+- Berry Bun restores +50 Food for ♥ 60.
+- Harvest Feast restores +100 Food for ♥ 240.
+
+### 4. Stage-gate meter effect chips
+- Put one short effect chip beside each meter instead of adding explanatory paragraphs.
+- Tired: `Move + attack 90%`, `80%`, or `Normal`.
+- Food: `HEAT refill 75%`, `50%`, `25%`, or `Normal`.
+- Clean: `Guardian Glow 85%`, `70%`, `55%`, or `Normal`.
+- Show `Normal` in muted text; highlight only active penalties. Keep the existing exhaustion warning separate.
+
+### 5. Shared rare-drop checkpoint
+- Exploration loot, Heart Stones and Star Dust each roll independently at the active 15-kill checkpoint.
+- Preserve possible outcomes of zero, one, two or all three drops.
+
 ## B126 quick fixes — SHIPPED as a B125 patch (`b21-132.js`, B125-LOOKS-2)
 
 ### 1. Arena looks: stronger, more distinct maps

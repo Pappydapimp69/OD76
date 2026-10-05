@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const {JSDOM}=require('jsdom'),root=path.resolve(__dirname,'..');
+const dom=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8'),{url:'http://127.0.0.1:8176/',runScripts:'outside-only',pretendToBeVisual:true}),win=dom.window;
+win.requestAnimationFrame=()=>0;win.cancelAnimationFrame=()=>{};
+const context=new Proxy({},{get:(o,k)=>k in o?o[k]:k==='measureText'?(t=>({width:String(t).length*7})):(k==='createRadialGradient'||k==='createLinearGradient')?(()=>({addColorStop(){}})):(()=>{}),set:(o,k,v)=>(o[k]=v,true)});
+win.HTMLCanvasElement.prototype.getContext=()=>context;win.HTMLCanvasElement.prototype.setPointerCapture=()=>{};win.HTMLCanvasElement.prototype.releasePointerCapture=()=>{};win.HTMLCanvasElement.prototype.getBoundingClientRect=()=>({x:0,y:0,left:0,top:0,width:1024,height:768,right:1024,bottom:768});
+const byNumber=(a,b)=>Number(a.match(/\d+/g).pop())-Number(b.match(/\d+/g).pop()),files=fs.readdirSync(root).filter(n=>/^b21-\d{2,3}\.js$/.test(n)).sort(byNumber);
+new vm.Script(files.map(n=>fs.readFileSync(path.join(root,n),'utf8')).join(''),{filename:'game.js'}).runInContext(dom.getInternalVMContext());
+new vm.Script(fs.readFileSync(path.join(__dirname,'b127-focused-checks.js'),'utf8')).runInContext(dom.getInternalVMContext());
+const results=vm.runInContext('runFocusedChecksB127()',dom.getInternalVMContext());for(const r of results)console.log(`${r.ok?'PASS':'FAIL'} ${r.name}${r.error?': '+r.error:''}`);dom.window.close();if(results.some(r=>!r.ok))process.exitCode=1;

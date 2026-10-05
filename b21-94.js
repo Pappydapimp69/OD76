@@ -107,6 +107,7 @@ drawPipB100=function(t){
 
 // ---- Heart Stones fall in the arena ----
 const B106_STONE_CHANCE=.10;
+let heartStoneRollB106=()=>rnd();
 let heartStoneDropsB106=[];
 function spawnHeartStoneB106(x,y){
  if(heartStoneDropsB106.some(n=>!n.dead&&!n.bossDrop)&&x==null)return false;
@@ -123,7 +124,7 @@ function collectHeartStoneB106(n){
 const checkMilestoneBeforeB106=checkKillMilestoneDropB30;
 checkKillMilestoneDropB30=function(){
  const before=S?.b30LastKillMilestone||0;checkMilestoneBeforeB106();
- for(let m=before+EXPLORATION_KILL_INTERVAL_B30;m<=(S?.b30LastKillMilestone||0);m+=EXPLORATION_KILL_INTERVAL_B30)if(rnd()<B106_STONE_CHANCE)spawnHeartStoneB106();
+ for(let m=before+B45_EXPLORATION_KILL_INTERVAL;m<=(S?.b30LastKillMilestone||0);m+=B45_EXPLORATION_KILL_INTERVAL)if(heartStoneRollB106()<B106_STONE_CHANCE)spawnHeartStoneB106();
 };
 const dropBossBeforeB106=dropBossExplorationRewardsB30;
 dropBossExplorationRewardsB30=function(x,y){dropBossBeforeB106(x,y);spawnHeartStoneB106(x+rr(-24,24),y+rr(-24,24))};

@@ -21,6 +21,8 @@ Keep output brief. The current Brain stance is `brief`.
 
 Minimize repeated repo discovery.
 
+Focused checks are the default. Run the complete regression suite only when the user explicitly requests it.
+
 First read:
 1. `AGENTS.md`
 2. `PROJECT_MAP.md`

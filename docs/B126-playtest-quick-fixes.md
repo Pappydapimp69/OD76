@@ -8,7 +8,7 @@ This patch addresses the issues reported in Nick's B119 and B125 playtests.
 - Farm sheets state that only tilling adds fatigue; planting and watering are free.
 - Drill stations have no set/session counter. Station Lv 0 trains through skill Lv 10, and each station upgrade unlocks ten more skill levels.
 - The Arena Merchant starts with **Enter shop** or **Skip shop**. Inside, the player can repeatedly buy arena snacks or one Star Dust for 50 hearts, see the remaining heart balance, and leave when finished.
-- Every 30 arena kills has an independent 10% chance to send down a collectible Star Dust meteor; collected dust banks with the other ranch rewards.
+- Every active 15-kill exploration checkpoint gives exploration loot, Heart Stones and Star Dust separate 10% rolls; any combination from zero through all three can fall. Collected dust banks with the other ranch rewards.
 - Leaving the arena reaches black before the ranch is shown, then reveals the normal **Week N** transition from black.
 - Survey reports include current Hearts, Heart Stones, Star Dust and Star Stones, plus tracked Star Dust and Star Stones earned.
 

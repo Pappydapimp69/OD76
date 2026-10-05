@@ -33,8 +33,9 @@ function runComfortsChecksB116(){
   test('B116 the stall shows owned counts for consumables and nothing at zero',()=>{
     fresh({hearts:100});addItemB104('bun',3);openRanchB99();stallSheetB104();
     const bun=w().sheet.options[opt('🥯 Berry Bun')].label,btn=$('ranchSheetB100').querySelectorAll('button')[opt('🥯 Berry Bun')];
-    assert(bun.startsWith('🥯 Berry Bun · ♥ 30 · ×3')&&btn.textContent===bun,`owned count missing: ${bun}`);
-    assert(!w().sheet.options.some(o=>/^(🥣|🫧|🪓|🌾)/.test(o.label)&&o.label.includes('×')),'zero or tool count shown');
+    assert(bun.startsWith('🥯 Berry Bun · ♥ 60 · ×3')&&btn.textContent===bun,`owned count missing: ${bun}`);
+    assert(w().sheet.options.some(o=>o.label.startsWith('🍱 Harvest Feast · ♥ 240 · food +100')),'Harvest Feast missing');
+    assert(!w().sheet.options.some(o=>/^(🥣|🍱|🫧|🪓|🌾)/.test(o.label)&&o.label.includes('×')),'zero or tool count shown');
     buy('🥣 Pip Pellets');assert(focused().startsWith('🥣 Pip Pellets · ♥ 15 · ×1'),'count did not appear after buying');closeSheetB100();
   });
   test('B116 feeding takes 3 seconds, locks movement and actions, then releases with the meter filled',()=>{

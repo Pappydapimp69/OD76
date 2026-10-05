@@ -27,9 +27,15 @@ function runQuickFixChecksB126(){
   assert($('buyDustB126').disabled&&$('merchantTextB118').textContent.includes('♥ 20 available to spend'),'shop balance did not refresh');
   assert(exitArenaShopB126()&&$('arenaMerchantB118').classList.contains('stagehidden')&&!$('ranchGateStepB99').classList.contains('stagehidden'),'shop exit failed');
  });
- test('B126 random arena meteors can drop collectible Star Dust that banks',()=>{
-  fresh({dust:0});reset();S.run=true;S.waveState='active';S.kills=30;S.b30LastKillMilestone=0;const roll=starDustRollB126,earned=statsB117.dustEarned;
-  try{starDustRollB126=()=>0;checkKillMilestoneDropB30();assert(starDustDropsB126.length===1,'milestone did not drop Star Dust')}finally{starDustRollB126=roll}
+ test('B126 exploration, Heart Stone and Star Dust rolls are independent at each active checkpoint',()=>{
+  const dustRoll=starDustRollB126,stoneRoll=heartStoneRollB106,exploreRoll=rollExplorationDropB30,earned=statsB117.dustEarned;
+  const checkpoint=(explore,stone,dust)=>{
+   fresh({dust:0});reset();S.run=true;S.waveState='active';S.kills=B45_EXPLORATION_KILL_INTERVAL;S.b30LastKillMilestone=0;let explored=0;
+   rollExplorationDropB30=()=>{if(explore)explored++;return explore};heartStoneRollB106=()=>stone?0:1;starDustRollB126=()=>dust?0:1;checkKillMilestoneDropB30();
+   return explored+heartStoneDropsB106.filter(n=>!n.bossDrop).length+starDustDropsB126.length;
+  };
+  try{assert(checkpoint(false,false,false)===0,'zero-drop outcome missing');assert(checkpoint(true,false,false)===1,'one-drop outcome missing');assert(checkpoint(true,true,false)===2,'two-drop outcome missing');assert(checkpoint(true,true,true)===3,'three-drop outcome missing')}finally{starDustRollB126=dustRoll;heartStoneRollB106=stoneRoll;rollExplorationDropB30=exploreRoll}
+  assert(starDustDropsB126.length===1,'checkpoint did not drop Star Dust');
   const n=starDustDropsB126[0];n.fall=0;P.x=n.x;P.y=n.y;updateB26Drops(.016);assert(S.runDust===1&&!starDustDropsB126.length,'Star Dust was not collected');
   S.runDust=3;S.runHearts=0;bankRunB99(false);assert(ranchB99.dust===3&&statsB117.dustEarned===earned+3,'Star Dust did not bank or track');
  });
