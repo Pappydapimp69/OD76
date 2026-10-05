@@ -125,10 +125,10 @@ function runRanchChecksB99(){
     fresh({stones:3,stats:{range:0,speed:0,power:3,guard:0}});assert(drillCostB99('power')===2,'stone cost wrong');soloDrillB100('power',0);assert(ranchB99.stones===1,'stones not spent');
   });
   test('B102 station upgrades cost Star Stones and add drill points across reloads',()=>{
-    fresh({stones:10,starStones:3,stats:{range:0,speed:4,power:0,guard:0},drillCounts:{range:0,speed:10,power:0,guard:0}});
+    fresh({stones:10,starStones:3,stats:{range:0,speed:10,power:0,guard:0},points:{range:0,speed:100,power:0,guard:0}});
     assert(upgradeStationB102('speed')&&ranchB99.starStones===2,'upgrade wrong');
     const r=soloDrillB100('speed',0);assert(r.gain===B100_BASE+B102_STATION_POINTS,'station points missing');
-    const saved=loadRanchB99();assert(saved.stations.speed===1&&saved.stats.speed===5,'station or level lost on reload');
+    const saved=loadRanchB99();assert(saved.stations.speed===1&&saved.stats.speed===11,'station or level lost on reload');
     ranchB99.starStones=1;assert(!upgradeStationB102('speed'),'second upgrade too cheap');
   });
   test('B102 the refinery station opens its sheet and loads hearts from it',()=>{
@@ -357,7 +357,7 @@ function runRanchChecksB99(){
   });
   test('B113 ranch training has no level cap for any heart skill',()=>{
     for(const k in B99_DRILLS)assert(B99_DRILLS[k].cap===Infinity,'cap left on '+k);
-    fresh({stones:999,stats:{range:30,speed:12,power:15,guard:12}});
+    fresh({stones:999,stats:{range:30,speed:12,power:15,guard:12},stations:{range:3,speed:1,power:1,guard:1}});
     for(const k in B99_DRILLS){const before=ranchB99.stats[k];assert(!drillBlockB99(k),'blocked '+k);soloDrillB100(k,0);ranchB99.fatigue=0;assert(ranchB99.stats[k]===before+1,'no level from drill on '+k)}
     const saved=loadRanchB99();assert(saved.stats.range===31&&saved.stats.speed===13,'high levels clamped on reload');
     reset();assert(S.pipSpeedLv===13&&S.pipRangeLv===31,'high ranch levels not applied to the run');

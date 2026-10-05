@@ -34,7 +34,7 @@ function runSurveyChecksB117(){
     ranchB99.fatigue=99;toGate(6);assert(statsB117.blocks===1,'gate block not counted');openRanchGateB99();assert(statsB117.blocks===1,'one block counted twice');
     arena();S.heartCurrency=4;finish(true);finish(true);assert(statsB117.deaths===1,'deaths '+statsB117.deaths);
     fresh({hearts:500,stones:500,starStones:99,fatigue:0});addItemB104('pellets',1);addItemB104('soap',1);
-    assert(feedB104('pellets')&&washB104(),'care failed');assert(payDrillB100('speed'),'drill failed');ranchB99.drillCounts.speed=10;assert(upgradeStationB102('speed'),'upgrade failed');
+    assert(feedB104('pellets')&&washB104(),'care failed');assert(payDrillB100('speed'),'drill failed');ranchB99.stats.speed=10;ranchB99.points.speed=100;assert(upgradeStationB102('speed'),'upgrade failed');
     assert(statsB117.feeds===1&&statsB117.washes===1&&statsB117.drills===1&&statsB117.upgrades===1,'ranch counts '+JSON.stringify(statsB117));
     openRanchB99();runFor(2);assert(statsB117.ranch>=1.99,'ranch time '+statsB117.ranch);
     saveStatsB117();const before=JSON.stringify(statsB117);statsB117=null;const s=reload();
