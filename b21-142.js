@@ -38,12 +38,43 @@ plotSheetB105=function(i){
 const gardenSheetBeforeB126=gardenSheetB105;
 gardenSheetB105=function(){const r=gardenSheetBeforeB126(),el=ranchWorldB100.sheet&&$('ranchSheetB100')?.querySelector('p');if(el&&!el.textContent.includes('Only tilling adds fatigue'))el.textContent+=` ${farmFatigueTextB126()}`;return r};
 
+const B126_DUST_PRICE=50;
+let merchantShopOpenB126=false;
+(function installMerchantShopB126(){
+ const merchant=$('arenaMerchantB118'),snack=$('buySnackB118'),skip=$('leaveMerchantB118');if(!merchant||!snack||!skip)return;
+ const enter=document.createElement('button');enter.id='enterMerchantB126';enter.className='primary';enter.type='button';enter.textContent='Enter shop';snack.insertAdjacentElement('beforebegin',enter);
+ const dust=document.createElement('button');dust.id='buyDustB126';dust.type='button';
+ const exit=document.createElement('button');exit.id='exitMerchantB126';exit.type='button';exit.textContent='Leave shop';merchant.append(dust,exit);
+ enter.addEventListener('click',enterArenaShopB126);dust.addEventListener('click',buyArenaDustB126);exit.addEventListener('click',exitArenaShopB126);
+ skip.textContent='Skip shop';B117H_IDS.push('enterMerchantB126','buyDustB126','exitMerchantB126');
+ const style=document.createElement('style');style.textContent='#arenaMerchantB118 #buyDustB126{border-color:#c9a7ff88;background:#b77cff14;color:#e9d8ff}#arenaMerchantB118 #enterMerchantB126{border-color:#ffd36f88;background:#ffd36f14;color:#ffe7a3}';document.head.appendChild(style);
+})();
+function merchantVisibleB126(el,show){el?.classList.toggle('stagehidden',!show)}
 const renderMerchantBeforeB126=renderMerchantB118;
 renderMerchantB118=function(...a){
- const r=renderMerchantBeforeB126(...a),el=$('merchantTextB118');
- if(el)el.textContent+=` ♥ ${Math.max(0,S?.heartCurrency||0)} available to spend.`;
+ const r=renderMerchantBeforeB126(...a),hearts=Math.max(0,S?.heartCurrency||0),bought=S?.b118SnackBought||0,left=Math.max(0,3-bought),price=snackPriceB118();
+ const text=$('merchantTextB118'),enter=$('enterMerchantB126'),snack=$('buySnackB118'),skip=$('leaveMerchantB118'),dust=$('buyDustB126'),exit=$('exitMerchantB126');
+ if(text)text.textContent=merchantShopOpenB126?`♥ ${hearts} available to spend · ✧ ${ranchB99.dust||0} Star Dust owned.`:`The Arena Merchant has supplies for this test. ♥ ${hearts} available to spend.`;
+ if(snack){snack.textContent=left?`Buy arena snack · ♥ ${price} · ${left} left`:'Arena snacks · SOLD OUT';snack.disabled=!left||hearts<price}
+ if(dust){dust.textContent=`Buy 1 Star Dust · ♥ ${B126_DUST_PRICE}`;dust.disabled=hearts<B126_DUST_PRICE}
+ merchantVisibleB126(enter,!merchantShopOpenB126);merchantVisibleB126(skip,!merchantShopOpenB126);merchantVisibleB126(snack,merchantShopOpenB126);merchantVisibleB126(dust,merchantShopOpenB126);merchantVisibleB126(exit,merchantShopOpenB126);
  return r;
 };
+const openMerchantBeforeB126=openMerchantB118;
+openMerchantB118=function(...a){merchantShopOpenB126=false;return openMerchantBeforeB126(...a)};
+const resolveMerchantBeforeB126=resolveMerchantB118;
+resolveMerchantB118=function(buy){
+ if(!buy){merchantShopOpenB126=false;return resolveMerchantBeforeB126(false)}
+ if(!merchantShopOpenB126||!buySnackB118())return false;renderMerchantB118();return true;
+};
+function enterArenaShopB126(){if(!S?.stagePending)return false;merchantShopOpenB126=true;renderMerchantB118();return true}
+function buyArenaDustB126(){
+ if(!S?.stagePending||!merchantShopOpenB126||S.heartCurrency<B126_DUST_PRICE)return false;
+ S.heartCurrency-=B126_DUST_PRICE;ranchB99.dust=(ranchB99.dust||0)+1;saveRanchB99();bumpB117('dustEarned');updateUI();renderMerchantB118();return true;
+}
+function exitArenaShopB126(){
+ if(!S?.stagePending||!merchantShopOpenB126)return false;merchantShopOpenB126=false;$('arenaMerchantB118').classList.add('stagehidden');openRanchGateB99();return true;
+}
 
 let arenaReturnDelayB126=600,arenaReturnTimerB126=0;
 const playWeekFadeBeforeB126=playWeekFadeB119;

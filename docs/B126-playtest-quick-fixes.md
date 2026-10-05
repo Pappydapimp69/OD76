@@ -6,7 +6,7 @@ This patch addresses the issues reported in Nick's B119 and B125 playtests.
 - Gameplay suppresses iOS double-tap zoom, callouts and text selection while survey text fields remain selectable.
 - Every ranch sheet exposes a visible **Back / Exit** action.
 - Farm sheets state that only tilling adds fatigue; planting and watering are free.
-- The Arena Merchant shows the number of hearts currently available to spend.
+- The Arena Merchant starts with **Enter shop** or **Skip shop**. Inside, the player can repeatedly buy arena snacks or one Star Dust for 50 hearts, see the remaining heart balance, and leave when finished.
 - Leaving the arena reaches black before the ranch is shown, then reveals the normal **Week N** transition from black.
 - Survey reports include current Hearts, Heart Stones, Star Dust and Star Stones, plus tracked Star Dust and Star Stones earned.
 

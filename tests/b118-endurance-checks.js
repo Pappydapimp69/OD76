@@ -22,11 +22,12 @@ function runEnduranceChecksB118(){
   S.b118ArenaFatigue=96;assert(tiredMultB115()===.8&&needNotesB115().some(x=>x.includes('worn out')),'80 percent tier missing');
   S.b118ArenaFatigue=120;assert(exhaustedB115(),'expanded cap did not block');
  });
- test('B118 merchant comes first; buying skips upgrades while declining keeps them',()=>{
+ test('B118 merchant comes first; shopping skips upgrades while declining keeps them',()=>{
   S.heartCurrency=200;clear(7);assert(!$('arenaMerchantB118').classList.contains('stagehidden')&&$('emotionStep').classList.contains('stagehidden'),'stage 7 merchant not first');
-  resolveMerchantB118(true);assert(S.b118Snacks===1&&S.heartCurrency===180&&!$('ranchGateStepB99').classList.contains('stagehidden'),'purchase did not skip to gate');
+  enterArenaShopB126();resolveMerchantB118(true);assert(S.b118Snacks===1&&S.heartCurrency===180&&!$('arenaMerchantB118').classList.contains('stagehidden'),'purchase closed shop');
+  exitArenaShopB126();assert(!$('ranchGateStepB99').classList.contains('stagehidden'),'leaving shop did not skip to gate');
   clear(12);resolveMerchantB118(false);assert(!$('emotionStep').classList.contains('stagehidden')&&$('arenaMerchantB118').classList.contains('stagehidden'),'decline did not continue upgrades');
-  clear(12);resolveMerchantB118(true);clear(17);resolveMerchantB118(true);
+  clear(12);enterArenaShopB126();resolveMerchantB118(true);exitArenaShopB126();clear(17);enterArenaShopB126();resolveMerchantB118(true);exitArenaShopB126();
   assert(S.b118Snacks===3&&S.b118SnackBought===3&&S.heartCurrency===105,'prices or run stock wrong');
   clear(8);assert($('arenaMerchantB118').classList.contains('stagehidden')&&!$('emotionStep').classList.contains('stagehidden'),'merchant appeared at stage 8');
  });
