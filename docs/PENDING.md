@@ -1,40 +1,30 @@
 # Pending builds
 
+## B127 proposal: Gravity Well rework — build on go
 
-## B127 proposal: Gravity Well rework (Beam/Storm/Guardian pattern) — build on go
+Role: placed crowd control. Groups enemies for Nova, Storm, Beam.
 
-Why: Gravity is the only skill still on B94 rules. No level tiers, damage ignores weapon power (Lv1 ~1.9 per enemy per 8% HEAT vs Nova 3.3), one flat 20% / 1s charge, target picked blind on release, and a new cast deletes the open well. Give it its own role: **placed crowd control**. It lasts at a spot and pulls enemies together for Nova, Storm chains and Beam.
+- No enemy on screen: can't start, no HEAT spent.
+- Press locks target; ring previews radius.
+- Hold charges masses: 8% HEAT each, 1.1s first, 0.9s after. Release before first = free.
+- Each mass: +1.5s well time. Pulse every 0.5s.
+- One well at a time.
+- Pause/focus loss refund. Dash freeze cancels, no refund.
 
-Controls (Storm-cloud style charge):
-- Can't start with no enemy on screen. No HEAT spent (Beam rule).
-- Press locks the target. A dashed ring at the target previews the well's radius and grows with each mass.
-- Hold charges masses one at a time: 8% HEAT each, 1.1s for the first and 0.9s after. If you let go before the first forms, nothing is spent.
-- Release opens the well at the locked spot (or the target's last position if it died).
-- One well at a time: can't start while one is open.
-- Pause, focus loss and transitions refund every mass. A boss dash freeze cancels it with HEAT lost (B116 rule).
+| Lv | Masses | Radius | Pull | Pulse dmg | Extra |
+|---|---|---|---|---|---|
+| 1 | 1 | 150 | base | 0.9 | |
+| 2 | 2 | 170 | +20% | 1.2 | |
+| 3 | 2 | 170 | +20% | 1.6 | Swallows enemy shots |
+| 4 | 3 | 200 | +45% | 2.1 | |
+| 5 | 4 | 200 | +45% | 2.8 | Collapse on end (1 pulse/mass); 25% faster charge |
 
-Each mass adds 1.5s of well time. Pulses every 0.5s.
+Damage × weapon power. ~80–90% of Nova per HEAT.
 
-Levels:
-| Lv | Masses max | Radius | Pull | Extra |
-|---|---|---|---|---|
-| 1 | 1 | 150px | today's Lv1 | well + pulses |
-| 2 | 2 | 170px | +20% | |
-| 3 | 2 | 170px | +20% | NEW: Event horizon. Enemy shots entering the well are swallowed. |
-| 4 | 3 | 200px | +45% | |
-| 5 | 4 | 200px | +45% | SPECIAL: Collapse. When the well ends it implodes on everything inside for 1 pulse per mass. Masses charge 25% faster. |
+Button: `MASS n/max` → `WELL OPEN`.
 
-Damage (all × weapon power, like Beam/Nova/Storm):
-- Pulse: Lv1–5 = 0.9 / 1.2 / 1.6 / 2.1 / 2.8.
-- Per 8% HEAT, per enemy held: 2.7 / 4.8 / 8.4 (+ collapse) at Lv1/3/5. That's ~80–90% of Nova; the hold and grouping pay the difference.
+Open: swap Lv3/Lv5 extras? Allow 2 wells?
 
-Looks: a ring, sparks and a falling tone per mass; "WELL FULL" at the level max. The open well gets a dark core sized to its masses, particles spiralling inward and a faint radius edge. The button reads `MASS n/max`, then `WELL OPEN`.
-
-Unchanged: 25% ignition, hold-to-charge/release-to-fire, Ascended Pip's gravity echo, Nova, Storm, Beam, Guardian.
-
-Open:
-- Should Lv3 swallow shots, or should that be the Lv5 special with Collapse at Lv3?
-- Allow a second well while one is open, or keep one at a time?
 ## B126 quick fixes — SHIPPED as a B125 patch (`b21-132.js`, B125-LOOKS-2)
 
 ### 1. Arena looks: stronger, more distinct maps
