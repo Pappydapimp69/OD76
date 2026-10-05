@@ -1,5 +1,5 @@
 name: Deploy OD76 to Pages
-run-name: OD76 B126 Playtest Quick Fixes ${{ github.sha }}
+run-name: OD76 B127 Skill Refinements ${{ github.sha }}
 
 on:
   push:
@@ -26,13 +26,7 @@ jobs:
         uses: actions/checkout@v6
       - name: Assemble direct site
         run: |
-          rm -rf _site
-          mkdir _site
-          cp index.html _site/
-          cat $(ls b21-*.js | sort -V) > _site/game.js
-          sed -i 's/OD76-2026-08-12-B21-STARDRIVE/OD76-2026-10-04-B126-PLAYTEST-QUICK-FIXES/g' _site/index.html
-          sed -i 's/game.js?v=B21-STARDRIVE/game.js?v=B126-PLAYTEST-QUICK-FIXES/g' _site/index.html
-          touch _site/.nojekyll
+          node scripts/build.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v6
         with:
