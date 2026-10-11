@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B128-RANCH-POLISH`.
-- Next numbered runtime file: `b21-146.js`.
+- Current release: `B129-PLAYTEST-TRUST`.
+- Next numbered runtime file: `b21-147.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -27,8 +27,8 @@ Do not remove historical modules. Add the smallest late override, update this ma
 |---|---|---|
 | Ordered bundle | `scripts/build.mjs` | Numeric order; syntax-checks the assembled bundle. |
 | Pages | `.github/workflows/pages.yml` | Must call the shared build script; do not duplicate build stamps here. |
-| Current release layer | `b21-145.js` | Ranch input/transitions/audio/kitchen polish and early high-rank spawn easing. |
-| Current focused runner | `tests/verify-b128-focused.cjs` | Runs only `tests/b128-focused-checks.js`. |
+| Current release layer | `b21-146.js` | Playtest trust pass: stage-summary recovery, fixed-energy skill costs, status refresh, kitchen recipe visibility, late-ranch care relief and soft boss adaptation. |
+| Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority
@@ -44,6 +44,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Gravity Well | `b21-143.js` | Replaces `updateWellB94`; wraps `releaseGravityB94` from `b21-83.js`. | `tests/b127-focused-checks.js` |
 | Pip Ascendant | `b21-143.js` | Replaces `ascendantPulse`; still depends on synthesis helpers in `b21-25.js` and duration in `b21-45.js`. | `tests/b127-focused-checks.js` |
 | Difficulty and spawns | `b21-145.js`, with curve/HP authority in `b21-96.js`, `b21-103.js`, `b21-130.js` | B128 eases stages 1-3 at ranks D-S by 15%/10%/5%; goals and caps stay unchanged. | `tests/b128-focused-checks.js` |
+| Boss adaptation | `b21-146.js`, over boss behavior from `b21-05.js`, `b21-06.js`, B59/B124 boss layers | B129 reads the tracked top skill and adds a soft pattern tag on stage 7+ bosses; it should not hard-counter favorite skills. | `tests/b129-focused-checks.js` |
 | Boss dash freeze | `b21-110.js`, then `b21-130.js` | B124 adds the warning window before the freeze. | `tests/b116-freeze-checks.js`, `tests/b124-checks.js` |
 | Arena endurance / merchant | `b21-124.js`, then `b21-142.js` | B126 converts merchant to enter/shop/leave and adds repeat purchases. | `tests/b118-endurance-checks.js`, `tests/b126-quick-fixes-checks.js` |
 
@@ -73,7 +74,7 @@ All three checkpoint rolls are independent, so zero, one, two or all three drops
 | Drill level gates | `b21-106.js` | Every station level unlocks ten skill levels; obsolete set counters are discarded. | `tests/b115-drills-checks.js` |
 | Drill result feedback | `b21-134.js` | Visual/audio success and failure feedback. | `tests/b125-checks.js` |
 | Overgrowth and restoration | `b21-94.js`, `b21-140.js`, `b21-141.js` | Obstacles, access blocking and restored-site progress. | `tests/b125-checks.js` |
-| Farm and kitchen | `b21-145.js`, with crops/week timing in `b21-93.js`, `b21-125.js` | Kitchen exposes the initial Stew, Bowl and Crisp recipes. | `tests/b128-focused-checks.js` |
+| Farm and kitchen | `b21-146.js`, with crops/week timing in `b21-93.js`, `b21-125.js` | Kitchen starts with Stew, Bowl and Crisp; orchard restores Tart and Pie ranch-buff recipes. | `tests/b128-focused-checks.js`, `tests/b129-focused-checks.js` |
 | Farm fatigue copy | `b21-142.js` | Only tilling adds fatigue. | `tests/b126-quick-fixes-checks.js` |
 | Survey and telemetry | `b21-113.js`, `b21-119.js`, `b21-142.js` | Core survey, ranch detail, currency/drop tracking. | `tests/b117-survey-checks.js` |
 
