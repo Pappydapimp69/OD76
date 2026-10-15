@@ -4,7 +4,9 @@
 // "od76/<area>/<what>/…". Volume is bounded (one event per moment, never per frame or per shot; per-run skill use
 // is summarised at run end; 600 events per session cap). Only sends from the live site, never from file://,
 // localhost or automated browsers, so tests and local play are never counted.
-const B136_CODE='pappydapimp69',B136_CAP=600,B136_BUILD=(document.getElementById('od76BuildStamp')?.textContent||'').trim()||'dev';
+const B136_CODE='pappydapimp69',B136_CAP=600;
+// The build stamp sits below the game script in index.html, so read it when it's needed, not at load.
+function buildB136(){const t=(document.getElementById('od76BuildStamp')?.textContent||'').trim();return(t.match(/B\d+[A-Z0-9-]*/)||[t||'dev'])[0]}
 const analyticsLogB136=[];let sentB136=0;
 function analyticsOnB136(){
   const h=location.hostname;
@@ -35,8 +37,8 @@ const sessionB136={start:Date.now(),play:statsB117?.play||0,arena:statsB117?.are
   let seen=false;try{seen=!!localStorage.getItem('od76SeenB136');localStorage.setItem('od76SeenB136','1')}catch(_){}
   const mobile=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent),w=Math.min(innerWidth,innerHeight);
   trackB136(['session','start',seen?'returning':'new',mobile?'mobile':'desktop',bucketB136(w,[400,700,1000,1400])],'Session start');
-  trackB136(['build',B136_BUILD]);
 })();
+setTimeout(()=>trackB136(['build',buildB136()]),0);
 for(const [type,name] of [['touchstart','touch'],['keydown','keyboard'],['mousedown','mouse']])
   window.addEventListener(type,()=>{if(!sessionB136.input[name]){sessionB136.input[name]=1;trackB136(['input',name])}},{capture:true,passive:true});
 window.addEventListener('gamepadconnected',e=>{if(!sessionB136.input.gamepad){sessionB136.input.gamepad=1;trackB136(['input','gamepad',(e.gamepad?.id||'').split('(')[0]])}});
