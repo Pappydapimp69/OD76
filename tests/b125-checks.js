@@ -138,5 +138,16 @@ $('end').classList.add('hidden');clearGamepadMenuB35();
     const before=ranchB99.points.power,r=awardDrillB100('power',0);assert(ranchB99.points.power-before===r.gain&&r.gain>=B100_BASE+1,'full-site bonus missing');
     ranchWorldB100.active=true;drawRanchB100();ranchWorldB100.active=false;fxB135.length=0;
   });
+  test('B125 analytics: never sends from tests, and logs the key moments as event paths',()=>{
+    assert(!analyticsOnB136(),'analytics would send from the test page');
+    analyticsLogB136.length=0;fresh({fatigue:0,stones:99,tools:{axe:true,sickle:true}});
+    soloDrillB100('speed',0);washB104();
+    const shrub=B106_OBSTACLES.find(o=>!o.tree);clearObstacleB106(shrub.id);
+    reset();S.run=true;S.end=false;S.waveState='active';finish(true);
+    const has=re=>analyticsLogB136.some(p=>re.test(p));
+    assert(has(/^od76\/drill\/solo\/speed\/(win|fail)$/),'drill event missing: '+analyticsLogB136.join(' '));
+    assert(has(/^od76\/ranch\/clear\//),'clear event missing');assert(has(/^od76\/run\/end\/fell\/stage-\d+\/rank-[a-z]\//),'run end missing: '+analyticsLogB136.join(' '));
+    assert(analyticsLogB136.every(p=>/^od76\/[a-z0-9.\/+-]+$/.test(p)),'bad path: '+analyticsLogB136.find(p=>!/^od76\/[a-z0-9.\/+-]+$/.test(p)));
+  });
   return out;
 }

@@ -16,6 +16,9 @@ The arena gets better looking as you go. Every run starts on today's arena; from
 
 At the ranch: chopping a tree or cutting a shrub sometimes turns up a snack for the bag (Sunny Acorn, −10 fatigue; Dewberry, −5). Scent Hunt grows with Heart Sense: more sparkles to find, spread wider, drifting, moving if you leave them, and grey decoys that cost time. Every drill now shows how it went: a stream of 👍 rising up the screen with a bright chime when it works, 👎 falling with a low tone when it doesn't. And Pip shows his training while he follows you: faster with Swift Pip, a sparkle trail with Star Power, an aura with Guardian Glow and a brighter antenna with Heart Sense.
 
+### Analytics
+The live site counts gameplay moments with GoatCounter (https://pappydapimp69.goatcounter.com): cookieless, no personal data, nothing sent from local or test copies. Events are paths under `od76/` — sessions and input device, runs (start, end, stage, rank, skill, minutes, score, skill use), stages, bosses, fatigue walls, upgrades, merchant and snacks, drills (solo/together, win/fail), ranch care, clearing, shop, refinery, stations, the secret playtest menu, and JS errors.
+
 ## B124: Fixes
 
 The storm cloud that follows you zaps from three times as far (330px, 420px from Lv4). Fang's pounce lane now flashes for 0.6s before it freezes you, so you can step out. A fully charged Nova hits every enemy on screen. Enemies gain 12% HP for every wave you clear in a run and always take at least two basic shots. The Arena Merchant matches the rest of the stage screens and both its buttons are press-and-hold; every between-stage hold now takes 0.9s instead of 1.8s. Pip's meter is called Fatigue everywhere.
