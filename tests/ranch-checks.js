@@ -116,8 +116,8 @@ function runRanchChecksB99(){
   });
   test('B102 refinery upgrades cost Star Stones, speed refining and keep finished work',()=>{
     fresh({hearts:150,starStones:1});const t0=1e12;loadHeartsB102(3,Date.now());
-    const f=ranchB99.refinery;f.startedAt=Date.now()-900e3;assert(upgradeRefineryB102()&&f.level===2&&ranchB99.starStones===0,'upgrade failed');
-    assert(f.trayStones===2&&f.queue===1,'finished work lost on upgrade');assert(refineSecondsB102(2)===600&&refineSecondsB102(10)===10,'level times');
+    const f=ranchB99.refinery;f.startedAt=Date.now()-900e3;assert(upgradeRefineryB102()&&f.upgradeTo===2&&ranchB99.starStones===0,'upgrade failed'); // B151: the upgrade takes time
+    assert(f.trayStones===2&&f.queue===1,'finished work lost on upgrade');f.upgradeUntil=Date.now()-1;tickRefineryB102();assert(f.level===2,'upgrade did not finish');assert(refineSecondsB102(2)===600&&refineSecondsB102(10)===10,'level times');
     assert(!upgradeRefineryB102(),'upgraded without stars');ranchB99.starStones=99;f.level=10;assert(!upgradeRefineryB102(),'passed max level');
   });
   test('B102 drills cost Heart Stones, not hearts',()=>{
