@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B133-ASCENSION`.
-- Next numbered runtime file: `b21-152.js`.
+- Current release: `B139-ON-SCREEN`.
+- Next numbered runtime file: `b21-158.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -32,6 +32,11 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Overdrive mastery (B131) | `b21-149.js`; ignition gate edited in `b21-83.js`/`b21-84.js`, Gravity mass cap in `b21-143.js` | Basic skills: level 1-5 × 5 mastery tiers (uses + stars), level-up ★10. `S.b131[id]={lv,t,u}`; `S.overLevels` now holds the old-kit feature level (L1 tiers → old Lv1-5). Power/reach/flair/signature from L2+ tiers; ignition 25%−(lv−1); regen 3s −0.1s per tier 3. Pip Ascendant unchanged. Interim card text until B132. | `tests/b131-focused-checks.js` |
 | Overdrive page (B132) | `b21-150.js` over `#overdriveStep` (old `overChoice*` cards hidden, still rendered) | Tile strip + one detail panel; main button `#b132Main` joins B117h hold-to-confirm (`#b132Why` when not affordable: plain press explains); Equip, More, ? rules, Continue. Keys [ ] / Q E switch skill, Esc closes; pad LB/RB switch, Start continues, Select rules, B closes. Inner classes are all `b132*` (the game owns `.top`). | `tests/b132-focused-checks.js` |
 | Ascension (B133) | `b21-151.js`; Ascend/Ascended UI in `b21-150.js` | Level 5 + 5 tiers → Ascend (★10). Saved in `localStorage['od76-ascension-b133']` = `{v:1,asc:{id:0-5}}`, clamped on load. Each ascension starts the skill unlocked one level higher (`S.b131[id].base`); 5 = starts Ascended, nothing to master. Uses per level by start ascension 10/13-12/14-13/15/30; the asc-4 run doubles tier stars and Ascend (50★). Overrides `nextStepB131`/`masteryStepB131`. | `tests/b133-focused-checks.js` |
+| Skill names on focus (B134) | `b21-152.js` over `b132TileHTML` | Each Overdrive tile carries a `.b134Tip` with its full name, shown on gamepad focus, keyboard focus-visible or mouse hover. | `tests/b134-focused-checks.js` |
+| Between-stage polish (B135-B136) | `b21-153.js`, `b21-154.js` | Snack feed is a hold; Sound Lab auditions hidden. Traits/Hearts/Boss cards compact (2-line effect); eyebrow = step counter (`stepsB136`); Sound Lab chips in title, folds when nothing affordable; shop enter/skip/exit taps (reverted by B138); gate focus starts on Next stage. Shared UI sounds `uiSoundB136(kind)` with per-kind cooldowns. Decoration runs on a 200ms tick. | `tests/b135-focused-checks.js`, `tests/b136-focused-checks.js` |
+| Drill-site labels (B137) | `b21-155.js`; B106 loop in `b21-94.js` now gated by `siteLabelsInWorldB137()` | Site names draw in world space after the ranch (not inside Pip's B109 swing transform); only the chopped site's label jolts. | `tests/b137-focused-checks.js` |
+| Hold everywhere (B138) | `b21-156.js` | Every acting button between stages (Continue on each step, Equip, Next stage, Return to ranch, shop Enter/Skip/Exit) joins B117h hold; tile pick, More, ?, Show sounds stay taps. Untrusted (code) clicks on those buttons pass, via `window.event`. | `tests/b138-focused-checks.js` |
+| Attacks on screen (B139) | `b21-157.js` | `hitEnemy` ignores player/pip/overdrive/burst/sound hits on enemies with no part in view; `nearestEnemyFrom`/`getAutoTarget` pick only on-screen enemies; player/Pip shots are removed at the screen edge. | `tests/b139-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 

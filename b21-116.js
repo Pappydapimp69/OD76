@@ -33,7 +33,7 @@ function beginHoldB117h(btn,source){
 window.addEventListener('click',e=>{
   const btn=holdButtonB117h(e.target);if(!btn||holdB117h.allow)return;
   e.stopImmediatePropagation();e.preventDefault();
-  if(performance.now()>=holdB117h.suppressUntil&&stageUpgradeVisibleB35())showPipMessage('hold to confirm this upgrade.',true);
+  if(performance.now()>=holdB117h.suppressUntil&&stageUpgradeVisibleB35())showPipMessage('hold to confirm.',true);
 },true);
 window.addEventListener('pointerdown',e=>{
   const btn=holdButtonB117h(e.target);if(!btn||(e.button!==undefined&&e.button!==0))return;
