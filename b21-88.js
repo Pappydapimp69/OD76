@@ -30,7 +30,7 @@ function drillCostB99(kind){const d=B99_DRILLS[kind];return d.base+ranchB99.stat
 function drillBlockB99(kind){
  const d=B99_DRILLS[kind];if(!d)return"unknown";
  if(ranchB99.stats[kind]>=d.cap)return"capped";
- if(ranchB99.fatigue>=B99_TIRED)return"tired";
+ if(ranchB99.fatigue>=tiredLineB141())return"tired";
  if(ranchB99.hearts<drillCostB99(kind))return"hearts";
  return"";
 }
@@ -124,7 +124,7 @@ function bankRunB99(dead){
 
 function ranchNoteB99(text){const el=$("ranchNoteB99");if(el)el.textContent=text||""}
 function ranchMoodB99(){
- if(ranchB99.fatigue>=B99_TIRED)return"Pip is curled up and exhausted.";
+ if(ranchB99.fatigue>=tiredLineB141())return"Pip is curled up and exhausted.";
  if(ranchB99.fatigue>=40)return"Pip is tired but game.";
  return"Pip is bouncing around the ranch.";
 }

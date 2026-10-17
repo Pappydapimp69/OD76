@@ -73,7 +73,7 @@ drillCostB99=function(kind){return 1+Math.floor(ranchB99.stats[kind]/3)};
 drillBlockB99=function(kind){
  const d=B99_DRILLS[kind];if(!d)return"unknown";
  if(ranchB99.points[kind]>=d.cap*B100_POINTS_PER_LEVEL)return"capped";
- if(ranchB99.fatigue>=B99_TIRED)return"tired";
+ if(ranchB99.fatigue>=tiredLineB141())return"tired";
  if(ranchB99.stones<drillCostB99(kind))return"stones";
  return"";
 };

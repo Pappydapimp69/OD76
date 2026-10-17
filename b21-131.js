@@ -92,7 +92,7 @@ function pipFollowSpeedB125(){return Math.min(360,200+8*(ranchB99.stats.speed||0
 function pipHuntSpeedB125(){return 90+4*(ranchB99.stats.speed||0)}
 updatePipB100=function(dt){
   const w=ranchWorldB100,p=w.pip;p.happy=Math.max(0,p.happy-dt);
-  const tired=ranchB99.fatigue>=B99_TIRED,slow=tired?.6:1;
+  const tired=ranchB99.fatigue>=tiredLineB141(),slow=tired?.6:1;
   let tx=w.px-46*(p.face||1),ty=w.py-10,speed=pipFollowSpeedB125()*slow;
   if(p.state==='drill'||p.state==='sleep'){p.t-=dt;tx=p.tx;ty=p.ty;speed=240;if(p.t<=0)p.state='follow'}
   if(w.game&&w.game.type==='collect'){const s=w.game.sparks.find(q=>!q.got);if(s){tx=s.x;ty=s.y;speed=pipHuntSpeedB125()*slow}}

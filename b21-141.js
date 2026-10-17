@@ -19,7 +19,7 @@ clearObstacleB106=function(id){
   const col=o.tree?['#c8935a','#9b6b3d','#e3b67a']:['#7fcf8a','#5fae6a','#a6e3a1'];
   for(let i=0;i<(o.tree?16:12);i++){const a=Math.random()*Math.PI*2,sp=60+Math.random()*120;fxB135.push({kind:'chip',x:o.x,y:o.y-10,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-80,t:0,life:.8,c:col[i%3],r:o.tree?3:2.5,leaf:!o.tree})}
   fxB135.push({kind:'fall',x:o.x,y:o.y,r:o.r,tree:o.tree,t:0,life:.6,dir:Math.random()<.5?-1:1});
-  if(o.tree){tone(120,.16,.07,'square');setTimeout(()=>tone(80,.2,.06,'sine'),90)}else{tone(900,.05,.03,'triangle');setTimeout(()=>tone(700,.06,.025,'triangle'),50)}
+  if(o.tree){tone(150,.14,.018,'sine');setTimeout(()=>tone(98,.22,.016,'sine'),90)}else{tone(900,.05,.016,'triangle');setTimeout(()=>tone(700,.06,.013,'triangle'),50)} // B140: soft wood, no square buzz
   // (6) Pip cheers and carries a log or twigs home
   const w=ranchWorldB100,home=stationB100('home');w.pip.happy=Math.max(w.pip.happy||0,2.2);burstHeartsB100(w.pip.x,w.pip.y-6,3);
   if(home)fxB135.push({kind:'carry',x:w.pip.x,y:w.pip.y,fx:w.pip.x,fy:w.pip.y,tx:home.x,ty:home.y,t:0,life:2.2,log:o.tree});
