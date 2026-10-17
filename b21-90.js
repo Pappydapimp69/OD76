@@ -79,7 +79,7 @@ drillBlockB99=function(kind){
 };
 payDrillB100=function(kind){
  if(drillBlockB99(kind))return false;
- ranchB99.stones-=drillCostB99(kind);ranchB99.fatigue=Math.min(100,ranchB99.fatigue+B99_DRILL_FATIGUE);ranchB99.week++;saveRanchB99();
+ ranchB99.stones-=drillCostB99(kind);ranchB99.fatigue=Math.min(fatigueMaxB118(),ranchB99.fatigue+B99_DRILL_FATIGUE);ranchB99.week++;saveRanchB99();
  return true;
 };
 function drillBaseB102(kind){return B100_BASE+(ranchB99.stations[kind]||0)*B102_STATION_POINTS}

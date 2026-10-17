@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B129-PLAYTEST-TRUST`.
-- Next numbered runtime file: `b21-147.js`.
+- Current release: `B130-FATIGUE-SCALE`.
+- Next numbered runtime file: `b21-149.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -28,6 +28,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Ordered bundle | `scripts/build.mjs` | Numeric order; syntax-checks the assembled bundle. |
 | Pages | `.github/workflows/pages.yml` | Must call the shared build script; do not duplicate build stamps here. |
 | Current release layer | `b21-146.js` | Playtest trust pass: stage-summary recovery, fixed-energy skill costs, status refresh, kitchen recipe visibility, late-ranch care relief and soft boss adaptation. |
+| Fatigue scale (B130) | `b21-148.js`, caps in `b21-124.js` (B118 endurance) and farm adders in `b21-88/89/90/92/94/118.js` | Farm and arena share one fatigue number capped at `fatigueMaxB118()`; farm bars fill fatigue/max and grow 1% per 15 over 100; chop drops tree 50% / shrub 70%; arena snacks −30; gate label Fatigue. | `tests/b130-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 

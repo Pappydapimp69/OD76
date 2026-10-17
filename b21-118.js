@@ -5,7 +5,7 @@ function emptyNeedsFatigueB117n(){return (ranchB99.hunger<=0?B117N_EMPTY_FATIGUE
 const weekPassedBeforeB117n=weekPassedB104;
 weekPassedB104=function(kind){
   const add=emptyNeedsFatigueB117n(),r=weekPassedBeforeB117n(kind); // needs as the week begins, before its drain
-  if(add>0){ranchB99.fatigue=Math.min(100,ranchB99.fatigue+add);saveRanchB99()}
+  if(add>0){ranchB99.fatigue=Math.min(fatigueMaxB118(),ranchB99.fatigue+add);saveRanchB99()}
   return r;
 };
 const interactBeforeB117n=interactStationB100;

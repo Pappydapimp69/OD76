@@ -17,10 +17,10 @@ function runEnduranceChecksB118(){
  });
  test('B118 expanded fatigue applies next run and preserves percentage debuffs',()=>{
   fresh({bestPipLevel:6,fatigueMax:120,fatigue:60});assert(S.b118ArenaFatigue===60&&fatigueMaxB118()===120,'run capacity');
-  S.run=true;S.b118ArenaFatigue=71;assert(tiredMultB115()===1,'59 percent tired early');
-  S.b118ArenaFatigue=72;assert(tiredMultB115()===.9,'60 percent tier missing');
-  S.b118ArenaFatigue=96;assert(tiredMultB115()===.8&&needNotesB115().some(x=>x.includes('worn out')),'80 percent tier missing');
-  S.b118ArenaFatigue=120;assert(exhaustedB115(),'expanded cap did not block');
+  S.run=true;setArenaFatigueB118(71);assert(tiredMultB115()===1,'59 percent tired early');
+  setArenaFatigueB118(72);assert(tiredMultB115()===.9,'60 percent tier missing');
+  setArenaFatigueB118(96);assert(tiredMultB115()===.8&&needNotesB115().some(x=>x.includes('worn out')),'80 percent tier missing');
+  setArenaFatigueB118(120);assert(exhaustedB115(),'expanded cap did not block');
  });
  test('B118 merchant comes first; shopping skips upgrades while declining keeps them',()=>{
   S.heartCurrency=200;clear(7);assert(!$('arenaMerchantB118').classList.contains('stagehidden')&&$('emotionStep').classList.contains('stagehidden'),'stage 7 merchant not first');
@@ -35,7 +35,7 @@ function runEnduranceChecksB118(){
   S.b118Snacks=2;S.b118ArenaFatigue=100;ranchB99.fatigue=100;gate(8);renderTollGateB115();
   assert($('nextStageB99').disabled&&!$('eatSnackB118').classList.contains('stagehidden'),'snack option missing');
   assert($('eatSnackB118').textContent.includes('2 left'),'snack count missing');assert(eatSnackB118(),'snack refused');
-  assert(S.b118Snacks===1&&arenaFatigueB118()===85&&!$('nextStageB99').disabled&&$('eatSnackB118').classList.contains('stagehidden'),'snack did not restore headroom');
+  assert(S.b118Snacks===1&&arenaFatigueB118()===100-B118_SNACK_HEAL&&!$('nextStageB99').disabled&&$('eatSnackB118').classList.contains('stagehidden'),'snack did not restore headroom');
  });
  test('B118 snacks are run-only and reset before the next arena test',()=>{
   S.b118Snacks=3;S.b118SnackBought=3;reset();assert(S.b118Snacks===0&&S.b118SnackBought===0,'snacks carried runs');

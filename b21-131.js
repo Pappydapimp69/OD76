@@ -15,7 +15,7 @@ let dropToastB125=null;
 const clearObstacleBeforeB125=clearObstacleB106;
 clearObstacleB106=function(id){
   const o=obstacleB106(id),ok=clearObstacleBeforeB125(id);
-  if(ok&&o&&dropRollB125()<B125_DROP_CHANCE){
+  if(ok&&o&&dropRollB125()<dropChanceB130(o)){
     const k=o.tree?'acorn':'dewberry',it=B104_ITEMS[k];addItemB104(k,1);saveRanchB99();
     dropToastB125={t:1.4,text:`Found a ${it.name}! ${it.icon} (−${it.fatigue} fatigue, in the bag)`};
   }

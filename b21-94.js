@@ -32,7 +32,7 @@ function siteOpenB106(site){return B106_OBSTACLES.some(o=>o.site===site&&!obstac
 
 // ---- Pip's tool work ----
 function toolReadyB106(){return ranchB99.fatigue<B99_TIRED}
-function tireB106(kind){ranchB99.fatigue=Math.min(100,ranchB99.fatigue+B106_TOOL_FATIGUE[kind])}
+function tireB106(kind){ranchB99.fatigue=Math.min(fatigueMaxB118(),ranchB99.fatigue+B106_TOOL_FATIGUE[kind])}
 function clearObstacleB106(id){
  const o=obstacleB106(id);if(!o||!obstacleStandingB106(o))return false;
  const tool=o.tree?"axe":"sickle";if(!ranchB99.tools[tool]||!toolReadyB106())return false;

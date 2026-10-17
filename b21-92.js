@@ -49,7 +49,7 @@ const payDrillBeforeB104=payDrillB100;
 payDrillB100=function(kind){
  const hungry=ranchB99.hunger<B104_LOW;
  if(!payDrillBeforeB104(kind))return false;
- if(hungry)ranchB99.fatigue=Math.min(100,ranchB99.fatigue+10);
+ if(hungry)ranchB99.fatigue=Math.min(fatigueMaxB118(),ranchB99.fatigue+10);
  weekPassedB104("drill");return true;
 };
 const restBeforeB104=restB99;

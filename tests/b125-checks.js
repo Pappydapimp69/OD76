@@ -6,12 +6,12 @@ function runChecksB125(){
   const test=(name,fn)=>{try{fresh();reset();fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}finally{dropRollB125=roll;lookOverrideB125=null;closeSheetB100();ranchWorldB100.game=null}};
   const sheetLabels=()=>(ranchWorldB100.sheet?.options||[]).map(o=>o.label);
 
-  test('B125 clearing a tree or shrub drops its snack 10% of the time; feeding it lowers fatigue only',()=>{
+  test('B125 clearing a tree or shrub drops its snack (B130: tree 50%, shrub 70%); feeding it lowers fatigue only',()=>{
     const tree=B106_OBSTACLES.find(o=>o.tree),shrub=B106_OBSTACLES.find(o=>!o.tree);
     fresh({fatigue:0,tools:{axe:true,sickle:true}});dropRollB125=()=>.05;
     assert(clearObstacleB106(tree.id)&&itemCountB104('acorn')===1,'tree did not drop an acorn');
     assert(clearObstacleB106(shrub.id)&&itemCountB104('dewberry')===1,'shrub did not drop a dewberry');
-    fresh({fatigue:0,tools:{axe:true,sickle:true}});dropRollB125=()=>.1;assert(clearObstacleB106(tree.id)&&!itemCountB104('acorn'),'dropped at the 10% line');
+    fresh({fatigue:0,tools:{axe:true,sickle:true}});dropRollB125=()=>.5;assert(clearObstacleB106(tree.id)&&!itemCountB104('acorn'),'dropped at the 50% tree line');
     fresh({fatigue:40,hunger:30});addItemB104('acorn',1);addItemB104('dewberry',1);
     pipSheetB104();const labels=sheetLabels();assert(labels.some(l=>/^Feed 🌰 Sunny Acorn ×1 · −10 fatigue/.test(l))&&labels.some(l=>/^Feed 🫐 Dewberry/.test(l)),'snacks missing from Pip menu: '+labels.join(' | '));
     closeSheetB100();assert(feedB104('acorn')&&ranchB99.fatigue===30&&ranchB99.hunger===30&&!itemCountB104('acorn'),'acorn feed wrong');

@@ -55,7 +55,7 @@ drillBlockB99=function(kind){
 function soloChanceB100(){return clamp(.85-ranchB99.fatigue/200,.35,.85)}
 function payDrillB100(kind){
  if(drillBlockB99(kind))return false;
- ranchB99.hearts-=drillCostB99(kind);ranchB99.fatigue=Math.min(100,ranchB99.fatigue+B99_DRILL_FATIGUE);ranchB99.week++;saveRanchB99();
+ ranchB99.hearts-=drillCostB99(kind);ranchB99.fatigue=Math.min(fatigueMaxB118(),ranchB99.fatigue+B99_DRILL_FATIGUE);ranchB99.week++;saveRanchB99();
  return true;
 }
 function awardDrillB100(kind,bonus){
@@ -150,7 +150,7 @@ function chooseSheetB100(i){const w=ranchWorldB100;const o=w.sheet?.options[i];c
 function levelLineB100(kind){const d=B99_DRILLS[kind],p=ranchB99.points[kind];return`${d.stat} Lv ${ranchB99.stats[kind]}/${d.cap} · ${p%B100_POINTS_PER_LEVEL}/${B100_POINTS_PER_LEVEL} to next`}
 function interactStationB100(st){
  if(st.id==="home"){
-   openSheetB100("Pip's bed",`Fatigue ${ranchB99.fatigue}/100. Resting takes a week and removes ${B99_REST} fatigue.`,[
+   openSheetB100("Pip's bed",`Fatigue ${ranchB99.fatigue}/${fatigueMaxB118()}. Resting takes a week and removes ${B99_REST} fatigue.`,[
      {label:"Rest a week",run:()=>{restB99();pipDoB100("sleep",st,2.2);renderRanchHudB100();ranchToastB100("Pip curls up and naps all week. zZ")}},
      {label:"Not now",quiet:true}]);return;
  }
