@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B155-REFINE-MINIMUM`.
-- Next numbered runtime file: `b21-170.js`.
+- Current release: `B156-AUTO-FUSE`.
+- Next numbered runtime file: `b21-171.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -50,6 +50,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Shop feedback (B150) | `b21-167.js` over `buyItemB104`, `buyToolB105`, `buySnackB118`, `buyArenaDustB126` | Successful buys chime (880→1320 Hz) and pop a '+ icon name' badge over the shop with a gold flash. Restores 'HOLD TO CONFIRM' on merchant Enter/Skip/Leave. | `tests/b150-focused-checks.js` |
 | Refinery upgrade time (B151) | `b21-168.js`; replaces `upgradeRefineryB102`, wraps tick/sanitize/sheet | Upgrade takes the owner's times (Lv2 15, Lv3 20, Lv4 30, Lv5 40, Lv6 60 min; `B151_UPGRADE_MINUTES`) on the real clock; max refinery level is 6 (`B102_REFINERY_MAX` in `b21-90.js`, B152); refining continues at the old level; at the switch, running batches keep their old end time (start shifted; ticks skip while a shifted start is in the future). Stone times 15 min −2 min/level (`B102_REFINE_SECONDS`, B153). `refinery.upgradeTo/upgradeUntil` saved, capped on load; 'ready' toast waits for the ranch (`upgradeNotice`). | `tests/b151-focused-checks.js` |
 | Refine minimum (B155) | `b21-169.js` over `loadHeartsB102` and the refinery sheet | A load must be at least ♥50×2^(level−1) (50/100/200/…/1600); still ♥50 per stone; smaller or unaffordable loads refused; sheet offers the minimum load and Refine all, or says what's needed. | `tests/b155-focused-checks.js` |
+| Auto fuse (B156) | `b21-170.js`; `ranchB99.fuse.startedAt` | Star Dust fuses on its own: ✧5 reserved → ★1 after 15 min (real clock, catches up while away, back to back). Ticks with the refinery and every second in the ranch; completion goes through `fuseStarB102` (stats/analytics). Refinery sheet shows the countdown; instant Fuse removed. | `tests/b156-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
