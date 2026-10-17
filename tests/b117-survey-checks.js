@@ -120,9 +120,9 @@ function runSurveyChecksB117(){
     pipDoB100('drill',stationB100('speed'),2.4,'speed');runs(1);near(statsB117.ranchTrain,1,'training');
     ranchB99.fatigue=0;assert(startGameB100('power'),'together drill refused: '+drillBlockB99('power'));w().game=null;w().pip.state='follow';
     assert(statsB117.drillModes.speed.solo===1&&statsB117.drillModes.power.together===1&&statsB117.drillModes.range.solo===0,'drill modes wrong');
-    near(statsB117.ranch,statsB117.ranchIdle+statsB117.ranchClear+statsB117.ranchFarm+statsB117.ranchTrain,'buckets do not add up');
+    near(statsB117.ranch,statsB117.ranchIdle+statsB117.ranchClear+statsB117.ranchFarm+statsB117.ranchTrain+(statsB117.ranchCare||0),'buckets do not add up');
     saveStatsB117();const r=reload();assert(r.drillModes.power.together===1&&r.ranchClear>0,'ranch detail lost on reload');
-    const txt=statsTextB117();assert(/Ranch time: idle \d+s, clearing obstacles \d+s, farming \d+s, training \d+s/.test(txt)&&txt.includes('Sky Laps 1 solo / 0 together')&&txt.includes('Star Target 0 solo / 1 together'),'report: '+txt);
+    const txt=statsTextB117();assert(/Ranch time: idle \d+s, clearing obstacles \d+s, farming \d+s, (caring for Pip \d+s, )?training \d+s/.test(txt)&&txt.includes('Sky Laps 1 solo / 0 together')&&txt.includes('Star Target 0 solo / 1 together'),'report: '+txt);
   });
 
   return out;
