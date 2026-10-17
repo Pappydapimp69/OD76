@@ -48,7 +48,7 @@ drillBlockB99=function(kind){
  const d=B99_DRILLS[kind];if(!d)return"unknown";
  if(!ranchB99.points)ensurePointsB100(ranchB99);
  if(ranchB99.points[kind]>=d.cap*B100_POINTS_PER_LEVEL)return"capped";
- if(ranchB99.fatigue>=B99_TIRED)return"tired";
+ if(ranchB99.fatigue>=tiredLineB141())return"tired";
  if(ranchB99.hearts<drillCostB99(kind))return"hearts";
  return"";
 };
@@ -156,7 +156,7 @@ function interactStationB100(st){
  }
  if(st.id==="gate"){
    const s=ranchB99.stats;
-   openSheetB100("Arena gate",`Battle test. Pip starts at Heart Sense ${s.range}, Swift ${s.speed}, Star Power ${s.power}, Guardian Glow ${s.guard}.${ranchB99.fatigue>=B99_TIRED?" He's tired, but ready.":""}`,[
+   openSheetB100("Arena gate",`Battle test. Pip starts at Heart Sense ${s.range}, Swift ${s.speed}, Star Power ${s.power}, Guardian Glow ${s.guard}.${ranchB99.fatigue>=tiredLineB141()?" He's tired, but ready.":""}`,[
      {label:"Enter the arena",run:()=>startBattleTestB99()},{label:"Not yet",quiet:true}]);return;
  }
  const kind=st.id,d=B99_DRILLS[kind],g=B100_GAMES[kind],block=drillBlockB99(kind);
@@ -215,12 +215,12 @@ function pipDoB100(state,st,dur,kind){const p=ranchWorldB100.pip;p.state=state;p
 function burstHeartsB100(x,y,n){for(let i=0;i<n;i++)ranchWorldB100.hearts.push({x:x+rr(-10,10),y:y-8,vx:rr(-25,25),vy:rr(-70,-40),t:1.1})}
 function petPipB100(){
  const w=ranchWorldB100,p=w.pip;p.happy=2.2;burstHeartsB100(p.x,p.y,5);
- const lines=ranchB99.fatigue>=B99_TIRED?["mm... sleepy... but I like this.","can we nap soon? stay close."]:ranchB99.fatigue>=40?["that feels nice after all that training.","I'm a little tired, but happy you're here."]:["hehe! again!","I love the ranch with you.","I'm ready for anything today."];
+ const lines=ranchB99.fatigue>=tiredLineB141()?["mm... sleepy... but I like this.","can we nap soon? stay close."]:ranchB99.fatigue>=40?["that feels nice after all that training.","I'm a little tired, but happy you're here."]:["hehe! again!","I love the ranch with you.","I'm ready for anything today."];
  ranchToastB100("Pip: "+lines[Math.floor(Math.random()*lines.length)],2.6);
 }
 function updatePipB100(dt){
  const w=ranchWorldB100,p=w.pip;p.happy=Math.max(0,p.happy-dt);
- const tired=ranchB99.fatigue>=B99_TIRED;
+ const tired=ranchB99.fatigue>=tiredLineB141();
  let tx=w.px-46*(p.face||1),ty=w.py-10,speed=tired?120:200;
  if(p.state==="drill"||p.state==="sleep"){p.t-=dt;tx=p.tx;ty=p.ty;speed=240;if(p.t<=0)p.state="follow"}
  if(w.game&&w.game.type==="collect"){const s=w.game.sparks.find(q=>!q.got);if(s){tx=s.x;ty=s.y;speed=tired?60:90}}
@@ -330,7 +330,7 @@ function drawFarmerB100(t){
  X.fillStyle="#5a5d78";X.fillRect(x-4,y-15+b,2,3);X.fillRect(x+3,y-15+b,2,3);
 }
 function drawPipB100(t){
- const w=ranchWorldB100,p=w.pip,tired=ranchB99.fatigue>=B99_TIRED,sleeping=p.state==="sleep";
+ const w=ranchWorldB100,p=w.pip,tired=ranchB99.fatigue>=tiredLineB141(),sleeping=p.state==="sleep";
  const bob=sleeping?0:Math.sin(t*(p.happy>0?10:4))*(p.happy>0?5:3),x=p.x,y=p.y+bob;
  X.fillStyle="#00000012";X.beginPath();X.ellipse(p.x,p.y+16,11,4,0,0,Math.PI*2);X.fill();
  const glow=X.createRadialGradient(x,y,2,x,y,24);glow.addColorStop(0,"#fff6c8");glow.addColorStop(1,"#fff6c800");X.fillStyle=glow;X.beginPath();X.arc(x,y,24,0,Math.PI*2);X.fill();
