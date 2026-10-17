@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B149-ALL-DONE`.
-- Next numbered runtime file: `b21-167.js`.
+- Current release: `B150-SHOP-FEEDBACK`.
+- Next numbered runtime file: `b21-168.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -47,6 +47,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Analytics batching (B147) | `b21-164.js` replaces `trackB136`; `no_onload:true` in `b21-147.js` | GoatCounter events wait in `pendingB147` and are sent only when an arena run ends (`finish` / `bankRunB99`); no page-load hit; events pending at page close are dropped; 600 cap unchanged. | `tests/b147-focused-checks.js` |
 | Sound Lab bonuses (B148) | `b21-165.js` CSS over B136 | Pip Sound cards show the mix bonus (`.b58Pairing`, up to 3 lines) instead of the flavour line; Mix Layer cards compact, flavour hidden on phones. | `tests/b148-focused-checks.js` |
 | All done here (B149) | `b21-166.js` over `holdButtonB117h`, 200ms decorate tick | Traits/Hearts/Sound Lab/Overdrive with nothing affordable: Continue becomes a tap, 'Nothing left to buy here' banner, cards dimmed, Continue reads 'Tap to continue'. Reverts when something becomes affordable. | `tests/b149-focused-checks.js` |
+| Shop feedback (B150) | `b21-167.js` over `buyItemB104`, `buyToolB105`, `buySnackB118`, `buyArenaDustB126` | Successful buys chime (880→1320 Hz) and pop a '+ icon name' badge over the shop with a gold flash. Restores 'HOLD TO CONFIRM' on merchant Enter/Skip/Leave. | `tests/b150-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
