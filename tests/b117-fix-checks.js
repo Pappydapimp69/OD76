@@ -123,7 +123,7 @@ function runFixChecksB117(){
     const never=()=>.9,t0=1e12;fr({hearts:250});loadHeartsB102(5,t0);const f=ranchB99.refinery;
     tickRefineryB102(t0+899e3,never);assert(f.trayStones===0,'early');tickRefineryB102(t0+900e3,never);assert(f.trayStones===2&&f.queue===3,'Lv1 wave 1');
     tickRefineryB102(t0+1800e3,never);assert(f.trayStones===4&&f.queue===1,'Lv1 wave 2');tickRefineryB102(t0+2700e3,never);assert(f.trayStones===5&&!f.queue,'Lv1 last');
-    fr({hearts:500});ranchB99.refinery.level=5;loadHeartsB102(6,t0);tickRefineryB102(t0+240e3,never);assert(ranchB99.refinery.trayStones===3,'Lv5 not 3 slots');
+    fr({hearts:500});ranchB99.refinery.level=5;loadHeartsB102(6,t0);tickRefineryB102(t0+refineSecondsB102(5)*1000,never);assert(ranchB99.refinery.trayStones===3,'Lv5 not 3 slots');
         fr({hearts:150});loadHeartsB102(1,t0);loadHeartsB102(1,t0+300e3);const g=ranchB99.refinery;assert(g.lag.length===2&&g.lag[1]===300e3,'second load did not start in the free slot');
     tickRefineryB102(t0+900e3,never);assert(g.trayStones===1&&g.queue===1,'first load');tickRefineryB102(t0+1200e3,never);assert(g.trayStones===2&&!g.queue,'second load');
     fr({hearts:150});loadHeartsB102(3,t0);saveRanchB99();assert(loadRanchB99().refinery.lag.length===2,'slots lost on reload');

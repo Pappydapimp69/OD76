@@ -1,9 +1,9 @@
 
 // B151 Refinery upgrades take time. Paying starts the upgrade; it finishes after the owner's set time (Lv 2 15 min,
-// Lv 3 20, Lv 4 30, Lv 5 20, Lv 6 60; the refinery tops out at Lv 6 since B151), on the real clock, so it also finishes while the player is away. The refinery keeps refining
-// at the old speed meanwhile; at the moment the level changes, batches already running keep the share of work they've
-// done and finish the rest at the new speed. One upgrade at a time; the timer is saved and capped on load.
-const B151_UPGRADE_MINUTES={2:15,3:20,4:30,5:20,6:60};
+// Lv 3 20, Lv 4 30, Lv 5 40, Lv 6 60; the refinery tops out at Lv 6 since B151), on the real clock, so it also finishes while the player is away. The refinery keeps refining
+// at the old speed meanwhile; batches already running when the level changes keep the speed they started at
+// (B153); only batches started after use the new speed. One upgrade at a time; the timer is saved and capped on load.
+const B151_UPGRADE_MINUTES={2:15,3:20,4:30,5:40,6:60};
 function upgradeSecondsB151(to){return (B151_UPGRADE_MINUTES[Math.floor(to)]||60)*60}
 function upgradeLabelB151(to){return refineLabelB102({sec:upgradeSecondsB151(to)})}
 function refineryUpgradingB151(f=ranchB99.refinery){return !!(f?.upgradeUntil>0&&f.upgradeTo>f.level)}
@@ -27,11 +27,12 @@ tickRefineryB102=function(now=Date.now(),roll=Math.random){
  if(refineryUpgradingB151(f)&&now>=f.upgradeUntil){
   const B=f.upgradeUntil;done+=tickRefineryBeforeB151(B,roll);
   const told=refineSecondsB102(f.level)*1000,tnew=refineSecondsB102(f.upgradeTo)*1000;
-  storeStartsB117f(f,refineStartsB117f(f,B).map(s=>B-(B-s)*tnew/told)); // keep each batch's done share
+  storeStartsB117f(f,refineStartsB117f(f,B).map(s=>s<B?s+told-tnew:s)); // running batches keep their old end time
   f.level=f.upgradeTo;f.upgradeTo=0;f.upgradeUntil=0;f.upgradeNotice=true;saveRanchB99();
   if(typeof trackB136==='function')trackB136(['refinery','upgrade-done',`lv-${f.level}`]);
  }
  if(f.upgradeNotice&&ranchWorldB100?.active){f.upgradeNotice=false;saveRanchB99();ranchToastB100?.(`Refinery Lv ${f.level} ready · now ${refineLabelB102(f.level)}/stone.`,2.4)}
+ if(f.queue&&f.startedAt>now)return done; // a carried-over batch keeps its old end: B117f would snap a future start back to now
  return done+tickRefineryBeforeB151(now,roll);
 };
 upgradeRefineryB102=function(now=Date.now()){

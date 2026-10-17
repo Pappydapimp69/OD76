@@ -4,7 +4,7 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B152-REFINERY-MAX6`.
+- Current release: `B153-REFINE-TIMES`.
 - Next numbered runtime file: `b21-169.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
@@ -48,7 +48,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Sound Lab bonuses (B148) | `b21-165.js` CSS over B136 | Pip Sound cards show the mix bonus (`.b58Pairing`, up to 3 lines) instead of the flavour line; Mix Layer cards compact, flavour hidden on phones. | `tests/b148-focused-checks.js` |
 | All done here (B149) | `b21-166.js` over `holdButtonB117h`, 200ms decorate tick | Traits/Hearts/Sound Lab/Overdrive with nothing affordable: Continue becomes a tap, 'Nothing left to buy here' banner, cards dimmed, Continue reads 'Tap to continue'. Reverts when something becomes affordable. | `tests/b149-focused-checks.js` |
 | Shop feedback (B150) | `b21-167.js` over `buyItemB104`, `buyToolB105`, `buySnackB118`, `buyArenaDustB126` | Successful buys chime (880→1320 Hz) and pop a '+ icon name' badge over the shop with a gold flash. Restores 'HOLD TO CONFIRM' on merchant Enter/Skip/Leave. | `tests/b150-focused-checks.js` |
-| Refinery upgrade time (B151) | `b21-168.js`; replaces `upgradeRefineryB102`, wraps tick/sanitize/sheet | Upgrade takes the owner's times (Lv2 15, Lv3 20, Lv4 30, Lv5 20, Lv6 60 min; `B151_UPGRADE_MINUTES`) on the real clock; max refinery level is 6 (`B102_REFINERY_MAX` in `b21-90.js`, B152); refining continues at the old level; at the switch running batches keep their done share (starts rebased). `refinery.upgradeTo/upgradeUntil` saved, capped on load; 'ready' toast waits for the ranch (`upgradeNotice`). | `tests/b151-focused-checks.js` |
+| Refinery upgrade time (B151) | `b21-168.js`; replaces `upgradeRefineryB102`, wraps tick/sanitize/sheet | Upgrade takes the owner's times (Lv2 15, Lv3 20, Lv4 30, Lv5 40, Lv6 60 min; `B151_UPGRADE_MINUTES`) on the real clock; max refinery level is 6 (`B102_REFINERY_MAX` in `b21-90.js`, B152); refining continues at the old level; at the switch, running batches keep their old end time (start shifted; ticks skip while a shifted start is in the future). Stone times 15 min −2 min/level (`B102_REFINE_SECONDS`, B153). `refinery.upgradeTo/upgradeUntil` saved, capped on load; 'ready' toast waits for the ranch (`upgradeNotice`). | `tests/b151-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
