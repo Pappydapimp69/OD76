@@ -4,7 +4,7 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B139-ON-SCREEN`.
+- Current release: `B140-SOFT-CHOP`.
 - Next numbered runtime file: `b21-158.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
@@ -37,6 +37,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Drill-site labels (B137) | `b21-155.js`; B106 loop in `b21-94.js` now gated by `siteLabelsInWorldB137()` | Site names draw in world space after the ranch (not inside Pip's B109 swing transform); only the chopped site's label jolts. | `tests/b137-focused-checks.js` |
 | Hold everywhere (B138) | `b21-156.js` | Every acting button between stages (Continue on each step, Equip, Next stage, Return to ranch, shop Enter/Skip/Exit) joins B117h hold; tile pick, More, ?, Show sounds stay taps. Untrusted (code) clicks on those buttons pass, via `window.event`. | `tests/b138-focused-checks.js` |
 | Attacks on screen (B139) | `b21-157.js` | `hitEnemy` ignores player/pip/overdrive/burst/sound hits on enemies with no part in view; `nearestEnemyFrom`/`getAutoTarget` pick only on-screen enemies; player/Pip shots are removed at the screen edge. | `tests/b139-focused-checks.js` |
+| Soft chop (B140) | `b21-141.js` clear fx | Felled tree plays two quiet sines (no square wave); shrub rustle halved. | `tests/b140-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
