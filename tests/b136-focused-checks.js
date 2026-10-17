@@ -7,8 +7,8 @@ function runFocusedChecksB136(){
   open();assert(stepsB136().join()==='Traits,Hearts,Sound Lab,Head out','steps '+stepsB136());
   S.bossRewardPending=true;assert(stepsB136().length===6,'boss steps');S.bossRewardPending=false;S.stage=7;assert(stepsB136().includes('Merchant'),'merchant step');
  });
- test('B136 entering, skipping and leaving the shop are plain taps',()=>{
-  for(const id of ['enterMerchantB126','leaveMerchantB118','exitMerchantB126'])assert(!B117H_IDS.includes(id),id+' still needs a hold');
+ test('B136/B138 shop buttons and purchases all need a hold',()=>{
+  for(const id of ['enterMerchantB126','leaveMerchantB118','exitMerchantB126'])assert(B117H_IDS.includes(id),id+' is a tap (B138: hold everywhere)');
   assert(B117H_IDS.includes('buySnackB118')&&B117H_IDS.includes('eatSnackB118'),'purchases lost their hold');
  });
  test('B136 Sound Lab folds to one line only when nothing is affordable',()=>{

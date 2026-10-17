@@ -39,7 +39,7 @@ function runChecksB124(){
   });
 
   test('B124 the merchant buttons are hold-to-confirm and holds take 0.9s',()=>{
-    assert(B117H_IDS.includes('buySnackB118')&&!B117H_IDS.includes('leaveMerchantB118'),'merchant purchase not held, or skip still held (B136: skip is a tap)');
+    assert(B117H_IDS.includes('buySnackB118')&&B117H_IDS.includes('leaveMerchantB118'),'merchant buttons not in the hold set');
     const b=$('bossReward0');$('stageUp').classList.remove('hidden');S.stagePending=true;const ok=beginHoldB117h(b,'test');const ms=holdB117h.ms;cancelHoldB117h('test');$('stageUp').classList.add('hidden');assert(!ok||ms===900,'hold not 0.9s: '+ms);
   });
 
