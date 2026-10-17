@@ -29,5 +29,6 @@ function runFocusedChecksB151(){
  test('B151 the "ready" toast waits for the ranch',()=>{
   fresh();ranchWorldB100.active=false;const t0=1e12;upgradeRefineryB102(t0);tickRefineryB102(t0+901e3);assert(ranchB99.refinery.upgradeNotice===true,'notice not kept for the ranch');
  });
+ test('B154 each refinery upgrade costs double the last',()=>{assert([1,2,3,4,5].map(refineryUpgradeCostB102).join()==='1,2,4,8,16','costs')});
  return out;
 }

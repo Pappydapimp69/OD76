@@ -59,3 +59,5 @@ refinerySheetB102=function(...a){
  };
  try{return refinerySheetBeforeB151(...a)}finally{openSheetB100=open}
 };
+// B154 Each refinery upgrade costs twice the last: ★1 to Lv 2, then 2, 4, 8, 16 (31 to max).
+refineryUpgradeCostB102=function(lv){return 2**(clamp(Math.floor(lv)||1,1,B102_REFINERY_MAX)-1)};
