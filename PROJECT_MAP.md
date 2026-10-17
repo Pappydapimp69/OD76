@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B141-TIRED-SCALE`.
-- Next numbered runtime file: `b21-159.js`.
+- Current release: `B142-SCENT-SPARKS`.
+- Next numbered runtime file: `b21-160.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -39,6 +39,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Attacks on screen (B139) | `b21-157.js` | `hitEnemy` ignores player/pip/overdrive/burst/sound hits on enemies with no part in view; `nearestEnemyFrom`/`getAutoTarget` pick only on-screen enemies; player/Pip shots are removed at the screen edge. | `tests/b139-focused-checks.js` |
 | Soft chop (B140) | `b21-141.js` clear fx | Felled tree plays two quiet sines (no square wave); shrub rustle halved. | `tests/b140-focused-checks.js` |
 | Ranch tired line (B141) | `b21-158.js`; every `B99_TIRED` check in `b21-88/89/90/94/131.js` now calls `tiredLineB141()` | Tired = 70% of `fatigueMaxB118()` (70 at 100, 98 at 140): drills/tools refused, tired mood, lines, sprite. | `tests/b141-focused-checks.js` |
+| Scent Hunt sparkles (B142) | `b21-159.js` over `drawRanchB100` | Unclaimed sparkles draw on top of the field: bigger, dark-gold outline, pulsing glow, bold pink ✿; decoys unchanged. | `tests/b142-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
