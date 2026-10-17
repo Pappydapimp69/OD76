@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B147-ANALYTICS-RUN-END`.
-- Next numbered runtime file: `b21-165.js`.
+- Current release: `B148-SOUND-BONUS`.
+- Next numbered runtime file: `b21-166.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -45,6 +45,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Scent Hunt speed (B145) | `b21-162.js` over `pipHuntSpeedB125`; tired ×0.6 removed from the collect branch in `b21-131.js` | Speed = (90 + 4·Swift) × fatigue (1 → 0.6 at max) × hunger (1 at Food 60+ → 0.6 at 0). | `tests/b145-focused-checks.js` |
 | Ranch time split (B146) | `b21-163.js` over `ranchBucketB117r` | B109 jobs decide the bucket before Pip's 'drill' state: chop/cut → clearing, till/water/harvest → farming; feed/wash care → new `ranchCare`. B133's `b133Clear` path never fires (menu chops reroute to B109). | `tests/b146-focused-checks.js` |
 | Analytics batching (B147) | `b21-164.js` replaces `trackB136`; `no_onload:true` in `b21-147.js` | GoatCounter events wait in `pendingB147` and are sent only when an arena run ends (`finish` / `bankRunB99`); no page-load hit; events pending at page close are dropped; 600 cap unchanged. | `tests/b147-focused-checks.js` |
+| Sound Lab bonuses (B148) | `b21-165.js` CSS over B136 | Pip Sound cards show the mix bonus (`.b58Pairing`, up to 3 lines) instead of the flavour line; Mix Layer cards compact, flavour hidden on phones. | `tests/b148-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
