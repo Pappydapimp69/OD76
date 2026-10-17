@@ -1,10 +1,10 @@
 
-// B151 Refinery upgrades take time. Paying starts the upgrade; it finishes after (target level − 1) × 2 min (2 min to
-// Lv 2 … 18 min to Lv 10), on the real clock, so it also finishes while the player is away. The refinery keeps refining
+// B151 Refinery upgrades take time. Paying starts the upgrade; it finishes after the owner's set time (Lv 2 15 min,
+// Lv 3 20, Lv 4 30, Lv 5 20, Lv 6 60; the refinery tops out at Lv 6 since B151), on the real clock, so it also finishes while the player is away. The refinery keeps refining
 // at the old speed meanwhile; at the moment the level changes, batches already running keep the share of work they've
 // done and finish the rest at the new speed. One upgrade at a time; the timer is saved and capped on load.
-const B151_STEP_SECONDS=120;
-function upgradeSecondsB151(to){return Math.max(1,(Math.floor(to)-1))*B151_STEP_SECONDS}
+const B151_UPGRADE_MINUTES={2:15,3:20,4:30,5:20,6:60};
+function upgradeSecondsB151(to){return (B151_UPGRADE_MINUTES[Math.floor(to)]||60)*60}
 function upgradeLabelB151(to){return refineLabelB102({sec:upgradeSecondsB151(to)})}
 function refineryUpgradingB151(f=ranchB99.refinery){return !!(f?.upgradeUntil>0&&f.upgradeTo>f.level)}
 const refineLabelBeforeB151=refineLabelB102;
