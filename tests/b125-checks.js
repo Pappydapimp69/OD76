@@ -6,12 +6,12 @@ function runChecksB125(){
   const test=(name,fn)=>{try{fresh();reset();fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}finally{dropRollB125=roll;lookOverrideB125=null;closeSheetB100();ranchWorldB100.game=null}};
   const sheetLabels=()=>(ranchWorldB100.sheet?.options||[]).map(o=>o.label);
 
-  test('B125 clearing a tree or shrub drops its snack 10% of the time; feeding it lowers fatigue only',()=>{
+  test('B125 clearing a tree or shrub drops its snack (B130: tree 50%, shrub 70%); feeding it lowers fatigue only',()=>{
     const tree=B106_OBSTACLES.find(o=>o.tree),shrub=B106_OBSTACLES.find(o=>!o.tree);
     fresh({fatigue:0,tools:{axe:true,sickle:true}});dropRollB125=()=>.05;
     assert(clearObstacleB106(tree.id)&&itemCountB104('acorn')===1,'tree did not drop an acorn');
     assert(clearObstacleB106(shrub.id)&&itemCountB104('dewberry')===1,'shrub did not drop a dewberry');
-    fresh({fatigue:0,tools:{axe:true,sickle:true}});dropRollB125=()=>.1;assert(clearObstacleB106(tree.id)&&!itemCountB104('acorn'),'dropped at the 10% line');
+    fresh({fatigue:0,tools:{axe:true,sickle:true}});dropRollB125=()=>.5;assert(clearObstacleB106(tree.id)&&!itemCountB104('acorn'),'dropped at the 50% tree line');
     fresh({fatigue:40,hunger:30});addItemB104('acorn',1);addItemB104('dewberry',1);
     pipSheetB104();const labels=sheetLabels();assert(labels.some(l=>/^Feed 🌰 Sunny Acorn ×1 · −10 fatigue/.test(l))&&labels.some(l=>/^Feed 🫐 Dewberry/.test(l)),'snacks missing from Pip menu: '+labels.join(' | '));
     closeSheetB100();assert(feedB104('acorn')&&ranchB99.fatigue===30&&ranchB99.hunger===30&&!itemCountB104('acorn'),'acorn feed wrong');
@@ -77,7 +77,8 @@ function runChecksB125(){
   test('B125 a full-charge Nova turns every struck enemy into a star, kills included',()=>{
     reset();S.run=true;S.end=false;S.waveState='active';S.weaponPower=1;W=900;H=600;CAM.x=P.x;CAM.y=P.y;ranchWorldB100.active=false;
     enemies=[0,1,2].map(i=>({type:'chaser',x:P.x+80+i*90,y:P.y+(i%2)*60,r:12,hp:i===0?.5:999,maxHp:999,dead:false,age:1,speed:0}));
-    S.b94NovaWaves=[];releaseNovaB94(1,1);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);
+    {const m=masteryB131('nova')||(S.overUnlocked.add('nova'),masteryB131('nova'));m.t=5;applyMasteryB131(); // B131: full-charge screen hit is level 1 tier 5
+    }S.b94NovaWaves=[];releaseNovaB94(1,1);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);
     assert(enemies[0].dead||enemies[0].hp<=0,'fixture enemy did not die');
     assert(novaConstellationB120&&novaConstellationB120.nodes.length===3,'full Nova made '+(novaConstellationB120?.nodes.length||0)+' stars');
     enemies=Array.from({length:10},(_,i)=>({type:'chaser',x:P.x+40+i*30,y:P.y,r:12,hp:999,maxHp:999,dead:false,age:1,speed:0}));

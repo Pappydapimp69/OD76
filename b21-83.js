@@ -17,7 +17,7 @@ canIgniteOverdriveB38=function(id=S?.overType){
   if(!S||S.over>0||!S.run||S.end||S.waveState==='stage'||S.b94Charge)return false;
   if(id==='storm'&&((S.b93StormCooldown||0)>0||S.b93StormCharge||(S.b93StormClouds?.length||0)>0))return false;
   if(id==='pip')return S.heat>=B94_PIP_IGNITION_PERCENT-1e-9;
-  return S.heat>=B94_IGNITION_PERCENT-1e-9;
+  return S.heat>=igniteThresholdB131(id)-1e-9;
 };
 
 function startChargeB94(id){

@@ -31,7 +31,7 @@ updateWellB94=function(dt){
  }
  if(w.pulse<=0){
   ring(w.x,w.y,'#b388ff',w.radius);particle(w.x,w.y,'#b388ff',14,90);
-  for(const e of [...enemies])if(!e.dead&&hyp(e.x-w.x,e.y-w.y)<w.radius){const alive=!e.dead;hitEnemy(e,(.38+lv*.30)*(1+mass*.06)*(e.type==='boss'&&lv>=4?1.2:1),'overdrive');if(alive&&e.dead&&lv>=3)w.mass=Math.min(20,(w.mass||0)+1)}
+  for(const e of [...enemies])if(!e.dead&&hyp(e.x-w.x,e.y-w.y)<w.radius){const alive=!e.dead;hitEnemy(e,(.38+lv*.30)*(1+mass*.06)*(e.type==='boss'&&lv>=4?1.2:1),'overdrive');if(alive&&e.dead&&lv>=3)w.mass=Math.min(gravityMassCapB131(),(w.mass||0)+1)}
   w.pulse=Math.max(.24,.52-lv*.045);
  }
  if(w.time<=0)collapseGravityB127(false);

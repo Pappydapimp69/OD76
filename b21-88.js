@@ -38,7 +38,7 @@ function trainB99(kind){
  const block=drillBlockB99(kind);
  if(block){ranchNoteB99(block==="tired"?"Pip is too tired to train. Let him rest this week.":block==="capped"?`${B99_DRILLS[kind].stat} is as high as ranch training can take it.`:`Not enough ranch hearts for ${B99_DRILLS[kind].name}.`);renderRanchB99();return false}
  ranchB99.hearts-=drillCostB99(kind);ranchB99.stats[kind]++;
- ranchB99.fatigue=Math.min(100,ranchB99.fatigue+B99_DRILL_FATIGUE);ranchB99.week++;saveRanchB99();
+ ranchB99.fatigue=Math.min(fatigueMaxB118(),ranchB99.fatigue+B99_DRILL_FATIGUE);ranchB99.week++;saveRanchB99();
  ranchNoteB99(`${B99_DRILLS[kind].name} done. ${B99_DRILLS[kind].stat} is now Lv ${ranchB99.stats[kind]} for every battle test.`);
  renderRanchB99();return true;
 }

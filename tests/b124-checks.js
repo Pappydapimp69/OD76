@@ -25,7 +25,8 @@ function runChecksB124(){
   test('B124 a full Nova charge hits every enemy on screen; a partial one keeps its radius',()=>{
     reset();live();S.waveState='active';S.weaponPower=1;W=900;H=600;CAM.x=0;CAM.y=0;
     const far={type:'chaser',x:420,y:250,r:12,hp:99,maxHp:99,dead:false,age:1,speed:0},close={type:'chaser',x:60,y:0,r:12,hp:99,maxHp:99,dead:false,age:1,speed:0};
-    enemies=[far,close];assert(worldVisible(far.x,far.y,30),'fixture enemy not on screen');
+    {const m=masteryB131('nova')||(S.overUnlocked.add('nova'),masteryB131('nova'));m.t=5;applyMasteryB131(); // B131: full-charge screen hit is level 1 tier 5
+    }enemies=[far,close];assert(worldVisible(far.x,far.y,30),'fixture enemy not on screen');
     S.b94NovaWaves=[];releaseNovaB94(1,1);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);assert(far.hp<99&&close.hp<99,'full Nova missed an on-screen enemy');
     far.hp=99;close.hp=99;S.b94NovaWaves=[];releaseNovaB94(.5,1);for(const w of [...S.b94NovaWaves])fireNovaWaveB94(w);assert(far.hp===99&&close.hp<99,'partial Nova reached the far enemy');
   });

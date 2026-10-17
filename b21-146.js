@@ -76,7 +76,7 @@ stageTollB115=function(){
 
 function syncRanchStatusB129(){
  if(!ranchB99)return;
- ranchB99.fatigue=clamp(Math.floor(Number(ranchB99.fatigue)||0),0,B118_BASE_FATIGUE);
+ ranchB99.fatigue=clamp(Math.floor(Number(ranchB99.fatigue)||0),0,fatigueMaxB118());
  ranchB99.hunger=clamp(Math.floor(Number(ranchB99.hunger)||0),0,100);
  ranchB99.hygiene=clamp(Math.floor(Number(ranchB99.hygiene)||0),0,100);
  if(ranchWorldB100?.active)renderRanchHudB100();

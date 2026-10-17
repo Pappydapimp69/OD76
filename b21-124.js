@@ -1,14 +1,14 @@
 // B118 Arena Endurance: new personal-best Pip levels permanently raise the next run's fatigue
 // ceiling. A deterministic between-stage merchant sells three arena-only snacks per run.
-const B118_BASE_FATIGUE=100,B118_LEVEL_ENDURANCE=4,B118_SNACK_HEAL=15;
+const B118_BASE_FATIGUE=100,B118_LEVEL_ENDURANCE=4,B118_SNACK_HEAL=30;
 const B118_SNACK_PRICES=[20,30,45],B118_MERCHANT_FIRST=7,B118_MERCHANT_GAP=5;
 
 function enduranceFieldsB118(r,raw=null){
  const n=(v,lo,hi,fallback)=>Number.isFinite(v)?clamp(Math.floor(v),lo,hi):fallback;
  const best=n(raw?.bestPipLevel??r.bestPipLevel,1,1e5,1);
  r.bestPipLevel=best;r.fatigueMax=B118_BASE_FATIGUE+B118_LEVEL_ENDURANCE*(best-1);
- if(raw&&Number.isFinite(raw.fatigue))r.fatigue=n(raw.fatigue,0,B118_BASE_FATIGUE,r.fatigue||0);
- else r.fatigue=n(r.fatigue,0,B118_BASE_FATIGUE,0);
+ if(raw&&Number.isFinite(raw.fatigue))r.fatigue=n(raw.fatigue,0,r.fatigueMax,r.fatigue||0);
+ else r.fatigue=n(r.fatigue,0,r.fatigueMax,0);
  return r;
 }
 function rawRanchB118(){try{const v=JSON.parse(localStorage.getItem(B99_RANCH_KEY)||'null');return v&&typeof v==='object'?v:null}catch(_){return null}}
@@ -19,11 +19,11 @@ loadRanchB99=function(){return enduranceFieldsB118(loadRanchBeforeB118(),rawRanc
 ranchB99=enduranceFieldsB118(ranchB99,rawRanchB118());saveRanchB99();
 
 function fatigueMaxB118(){return Math.max(B118_BASE_FATIGUE,Math.floor(ranchB99?.fatigueMax||B118_BASE_FATIGUE))}
-function arenaFatigueB118(){return fatigueMaxB118()>B118_BASE_FATIGUE&&Number.isFinite(S?.b118ArenaFatigue)?S.b118ArenaFatigue:Math.max(0,+ranchB99.fatigue||0)}
+function arenaFatigueB118(){return clamp(Math.floor(+ranchB99?.fatigue||0),0,fatigueMaxB118())}
 function setArenaFatigueB118(v){
  const value=clamp(Math.floor(v),0,fatigueMaxB118());
  if(S)S.b118ArenaFatigue=value;
- ranchB99.fatigue=Math.min(B118_BASE_FATIGUE,value);saveRanchB99();return value;
+ ranchB99.fatigue=value;saveRanchB99();return value;
 }
 function freeFatigueB118(){return Math.max(0,fatigueMaxB118()-arenaFatigueB118())}
 
@@ -39,7 +39,7 @@ reset();
 const bankBeforeB118=bankRunB99;
 bankRunB99=function(dead){
  const first=!!(S&&!S.b99Banked),level=Math.max(1,Math.floor(S?.pipLevel||1));
- if(first)ranchB99.fatigue=Math.min(B118_BASE_FATIGUE,arenaFatigueB118());
+ if(first)ranchB99.fatigue=arenaFatigueB118();
  const earned=bankBeforeB118(dead);
  if(!first)return earned;
  const old=Math.max(1,Math.floor(ranchB99.bestPipLevel||1));
