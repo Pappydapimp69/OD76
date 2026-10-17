@@ -5,7 +5,7 @@ function runFocusedChecksB143(){
   fresh();ranchB99.tools.axe=true;addItemB104('pellets',3);addItemB104('acorn',2);bagSheetB104();
   const rows=[...document.querySelectorAll('#bagListB143 li')].map(li=>li.textContent);
   assert($('ranchSheetB100').querySelector('p')===null||!$('ranchSheetB100').querySelector('p').textContent.includes('×'),'old text block still shown');
-  assert(rows.some(r=>r.includes('Axe')&&r.includes('Tool')),'axe row: '+rows);
+  assert(rows.some(r=>r.includes('Axe')&&(r.includes('Tool')||r.includes('/5'))),'axe row: '+rows); // B144 shows uses left
   assert(rows.some(r=>r.includes('Pip Pellets')&&r.includes('×3')&&r.includes('Food +25')),'pellets row: '+rows);
   assert(rows.some(r=>r.includes('Sunny Acorn')&&r.includes('×2')&&r.includes('−10 fatigue')),'acorn row: '+rows);
  });
