@@ -20,7 +20,7 @@ function runQuickFixChecksB126(){
  test('B126 arena merchant supports entry, repeat purchases, Star Dust and exit',()=>{
   fresh({dust:0});reset();S.stage=7;S.stagePending=true;S.heartCurrency=140;const earned=statsB117.dustEarned;openMerchantB118();
   assert($('enterMerchantB126').textContent==='Enter shop'&&$('leaveMerchantB118').textContent==='Skip shop'&&$('buySnackB118').classList.contains('stagehidden'),'merchant entry menu wrong');
-  assert(['enterMerchantB126','buyDustB126','exitMerchantB126'].every(id=>B117H_IDS.includes(id)),'new merchant buttons bypass hold confirmation');
+  assert(B117H_IDS.includes('buyDustB126')&&!['enterMerchantB126','exitMerchantB126'].some(id=>B117H_IDS.includes(id)),'merchant purchases must hold; enter/exit are taps since B136');
   assert(enterArenaShopB126()&&!$('buySnackB118').classList.contains('stagehidden')&&!$('buyDustB126').classList.contains('stagehidden')&&$('merchantTextB118').textContent.includes('♥ 140 available to spend'),'shop did not open');
   assert(resolveMerchantB118(true)&&S.b118Snacks===1&&S.heartCurrency===120&&!$('arenaMerchantB118').classList.contains('stagehidden'),'snack closed shop');
   assert(buyArenaDustB126()&&buyArenaDustB126()&&S.heartCurrency===20&&ranchB99.dust===2&&loadRanchB99().dust===2&&statsB117.dustEarned===earned+2,'repeat Star Dust purchase failed');

@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B134-SKILL-NAMES`.
-- Next numbered runtime file: `b21-153.js`.
+- Current release: `B136-DECLUTTER`.
+- Next numbered runtime file: `b21-155.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -33,6 +33,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Overdrive page (B132) | `b21-150.js` over `#overdriveStep` (old `overChoice*` cards hidden, still rendered) | Tile strip + one detail panel; main button `#b132Main` joins B117h hold-to-confirm (`#b132Why` when not affordable: plain press explains); Equip, More, ? rules, Continue. Keys [ ] / Q E switch skill, Esc closes; pad LB/RB switch, Start continues, Select rules, B closes. Inner classes are all `b132*` (the game owns `.top`). | `tests/b132-focused-checks.js` |
 | Ascension (B133) | `b21-151.js`; Ascend/Ascended UI in `b21-150.js` | Level 5 + 5 tiers → Ascend (★10). Saved in `localStorage['od76-ascension-b133']` = `{v:1,asc:{id:0-5}}`, clamped on load. Each ascension starts the skill unlocked one level higher (`S.b131[id].base`); 5 = starts Ascended, nothing to master. Uses per level by start ascension 10/13-12/14-13/15/30; the asc-4 run doubles tier stars and Ascend (50★). Overrides `nextStepB131`/`masteryStepB131`. | `tests/b133-focused-checks.js` |
 | Skill names on focus (B134) | `b21-152.js` over `b132TileHTML` | Each Overdrive tile carries a `.b134Tip` with its full name, shown on gamepad focus, keyboard focus-visible or mouse hover. | `tests/b134-focused-checks.js` |
+| Between-stage polish (B135-B136) | `b21-153.js`, `b21-154.js` | Snack feed is a hold; Sound Lab auditions hidden. Traits/Hearts/Boss cards compact (2-line effect); eyebrow = step counter (`stepsB136`); Sound Lab chips in title, folds when nothing affordable; shop enter/skip/exit are taps; gate focus starts on Next stage. Shared UI sounds `uiSoundB136(kind)` with per-kind cooldowns. Decoration runs on a 200ms tick. | `tests/b135-focused-checks.js`, `tests/b136-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
