@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B144-TOOL-WEAR`.
-- Next numbered runtime file: `b21-162.js`.
+- Current release: `B145-HUNT-SPEED`.
+- Next numbered runtime file: `b21-163.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -42,6 +42,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Scent Hunt sparkles (B142) | `b21-159.js` over `drawRanchB100` | Unclaimed sparkles draw on top of the field: bigger, dark-gold outline, pulsing glow, bold pink ✿; decoys unchanged. | `tests/b142-focused-checks.js` |
 | Bag list (B143) | `b21-160.js` over `bagSheetB104` | Bag sheet's text line becomes `#bagListB143`: one row per owned tool (first) and item, with icon, name, count and use. | `tests/b143-focused-checks.js` |
 | Tool wear (B144) | `b21-161.js` over `clearObstacleB106`, `buyToolB105`, ranch load/default | Axe and sickle: 5 clears each (`ranchB99.toolUses`), the fifth breaks and discards the tool; buy resets to 5; missing/invalid saved counts load as full; bag shows uses left. | `tests/b144-focused-checks.js` |
+| Scent Hunt speed (B145) | `b21-162.js` over `pipHuntSpeedB125`; tired ×0.6 removed from the collect branch in `b21-131.js` | Speed = (90 + 4·Swift) × fatigue (1 → 0.6 at max) × hunger (1 at Food 60+ → 0.6 at 0). | `tests/b145-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
