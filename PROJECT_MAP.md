@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B138-HOLD-EVERYWHERE`.
-- Next numbered runtime file: `b21-157.js`.
+- Current release: `B139-ON-SCREEN`.
+- Next numbered runtime file: `b21-158.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -36,6 +36,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Between-stage polish (B135-B136) | `b21-153.js`, `b21-154.js` | Snack feed is a hold; Sound Lab auditions hidden. Traits/Hearts/Boss cards compact (2-line effect); eyebrow = step counter (`stepsB136`); Sound Lab chips in title, folds when nothing affordable; shop enter/skip/exit taps (reverted by B138); gate focus starts on Next stage. Shared UI sounds `uiSoundB136(kind)` with per-kind cooldowns. Decoration runs on a 200ms tick. | `tests/b135-focused-checks.js`, `tests/b136-focused-checks.js` |
 | Drill-site labels (B137) | `b21-155.js`; B106 loop in `b21-94.js` now gated by `siteLabelsInWorldB137()` | Site names draw in world space after the ranch (not inside Pip's B109 swing transform); only the chopped site's label jolts. | `tests/b137-focused-checks.js` |
 | Hold everywhere (B138) | `b21-156.js` | Every acting button between stages (Continue on each step, Equip, Next stage, Return to ranch, shop Enter/Skip/Exit) joins B117h hold; tile pick, More, ?, Show sounds stay taps. Untrusted (code) clicks on those buttons pass, via `window.event`. | `tests/b138-focused-checks.js` |
+| Attacks on screen (B139) | `b21-157.js` | `hitEnemy` ignores player/pip/overdrive/burst/sound hits on enemies with no part in view; `nearestEnemyFrom`/`getAutoTarget` pick only on-screen enemies; player/Pip shots are removed at the screen edge. | `tests/b139-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
