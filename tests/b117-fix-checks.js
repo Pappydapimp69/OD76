@@ -150,7 +150,7 @@ function runFixChecksB117(){
     window.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown'}));assert(repeatKeyB117q===null,'other key did not reset');
     hold(love,B117H_MS);moveGamepadMenuFocusB35(0,1);assert(repeatKeyB117q===null,'gamepad move did not reset');
     hold(love,B117H_MS);openStageUpgrade();assert(repeatKeyB117q===null,'new stage did not reset');
-    reset();S.run=true;openStageUpgrade();S.bossRewardPending=true;S.starPoints=99;S.overUnlocked.add('guardian');S.overLevels.guardian=1;
+    reset();S.run=true;openStageUpgrade();S.bossRewardPending=true;S.starPoints=99;S.overUnlocked.add('guardian');S.overLevels.guardian=1;masteryB131('guardian').u=10; // B131: a tier needs uses
     completeOverdriveHoldAction('guardian');assert(repeatKeyB117q==='o:guardian','overdrive repeat not armed');
     beginOverdriveHold('guardian',{pointerId:1,preventDefault(){}});assert(performance.now()-overHold.start>=OVERDRIVE_HOLD_MS-B117Q_REPEAT_MS-5,'overdrive repeat not shortened');cancelOverdriveHold();
   });

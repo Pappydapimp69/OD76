@@ -4,7 +4,7 @@
 // mark; the skill button fills with the whole meter and turns ready once HEAT crosses that mark.
 function heatReadoutB95(){
   const cap=heatCapacityB38(),energy=Math.max(0,heatEnergyB38()),id=S?.overType;
-  const gate=id==='pip'?B94_PIP_IGNITION_PERCENT:B94_IGNITION_PERCENT;
+  const gate=igniteThresholdB131(id);
   return {cap,energy,shown:Math.floor(energy+1e-6),need:Math.ceil(cap*gate/100-1e-6),gate,fill:clamp((S?.heat||0)/100,0,1)};
 }
 
