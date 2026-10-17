@@ -95,7 +95,7 @@ updatePipB100=function(dt){
   const tired=ranchB99.fatigue>=tiredLineB141(),slow=tired?.6:1;
   let tx=w.px-46*(p.face||1),ty=w.py-10,speed=pipFollowSpeedB125()*slow;
   if(p.state==='drill'||p.state==='sleep'){p.t-=dt;tx=p.tx;ty=p.ty;speed=240;if(p.t<=0)p.state='follow'}
-  if(w.game&&w.game.type==='collect'){const s=w.game.sparks.find(q=>!q.got);if(s){tx=s.x;ty=s.y;speed=pipHuntSpeedB125()*slow}}
+  if(w.game&&w.game.type==='collect'){const s=w.game.sparks.find(q=>!q.got);if(s){tx=s.x;ty=s.y;speed=pipHuntSpeedB125()}} // B145: fatigue/hunger inside
   const dx=tx-p.x,dy=ty-p.y,d=hyp(dx,dy);
   if(d>4){const m=Math.min(d,speed*dt);p.x+=dx/d*m;p.y+=dy/d*m;if(Math.abs(dx)>2)p.face=dx>0?1:-1}
   const tr=p.b125Trail||(p.b125Trail=[]);tr.push({x:p.x,y:p.y});if(tr.length>14)tr.shift();

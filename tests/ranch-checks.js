@@ -336,7 +336,7 @@ function runRanchChecksB99(){
     Object.defineProperty(navigator,'getGamepads',{configurable:true,value:()=>[pad]});
     try{
       fresh();addItemB104('pellets',2);openRanchB99();updateRanchB100(.016);assert($('ranchBagB104').textContent==='🎒 Bag · Select','select hint missing');
-      pad.buttons[8].pressed=true;updateRanchB100(.016);assert(ranchWorldB100.sheet?.bag&&$('ranchSheetB100').textContent.includes('Pip Pellets ×2'),'select did not open the bag');
+      pad.buttons[8].pressed=true;updateRanchB100(.016);assert(ranchWorldB100.sheet?.bag&&$('ranchSheetB100').textContent.includes('Pip Pellets')&&$('ranchSheetB100').textContent.includes('×2'),'select did not open the bag'); // B143: bag is a list
       updateRanchB100(.016);assert(ranchWorldB100.sheet?.bag,'held select toggled again');
       pad.buttons[8].pressed=false;updateRanchB100(.016);pad.buttons[8].pressed=true;updateRanchB100(.016);assert(!ranchWorldB100.sheet,'select did not close the bag');
       pad.buttons[8].pressed=false;updateRanchB100(.016);stallSheetB104();pad.buttons[8].pressed=true;updateRanchB100(.016);assert(ranchWorldB100.sheet&&!ranchWorldB100.sheet.bag,'select replaced another menu');
