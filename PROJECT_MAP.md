@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B159-SOUND-LAB-UNFOLD`.
-- Next numbered runtime file: `b21-172.js`.
+- Current release: `B160-STAGE-FIT`.
+- Next numbered runtime file: `b21-173.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -53,6 +53,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Timed fuse (B156-B157) | `b21-170.js`; `ranchB99.fuse={queue,startedAt}` | Player starts fusing at the refinery (Fuse ✧5 or Fuse all); each ★1 comes 15 min after the last (real clock, catches up while away); dust reserved on start; completion via `fuseStarB102` (stats/analytics). Never automatic. | `tests/b156-focused-checks.js` |
 | Refinery cards (B158) | `b21-171.js`; `decorateRefineryB158`, `updateRefineryB158` | Refinery sheet = header (Lv, speed) + wallet + cards (Tray, Hearts → ◆, Dust → ★, Upgrade) holding their own buttons; options sorted by card, labels unchanged, old `<p>` kept hidden. Live bars/timers every 0.25 s; redraws on state change keeping focus. `b158` class removed on every `openSheetB100`. | `tests/b158-focused-checks.js` |
 | Sound Lab unfold (B159) | `b21-154.js` `decorateStageB136` | The empty-fold check removes `b136Empty` before measuring (folded cards have no `offsetParent`, so the lab stayed folded all run once folded). | Browser check only (JSDOM has no layout). |
+| Stage card fit (B160) | `b21-172.js` `fitStageCardB160` | Landscape + coarse pointer only: stage card takes 94vw and CSS `zoom` up to 1.6× while the step fits in 95% of the height (falls back to 1× full width). Re-fits on step/button-count/viewport change. | Browser check only (JSDOM has no layout). |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
