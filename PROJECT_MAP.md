@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B132-OVERDRIVE-PAGE`.
-- Next numbered runtime file: `b21-151.js`.
+- Current release: `B133-ASCENSION`.
+- Next numbered runtime file: `b21-152.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -31,6 +31,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Fatigue scale (B130) | `b21-148.js`, caps in `b21-124.js` (B118 endurance) and farm adders in `b21-88/89/90/92/94/118.js` | Farm and arena share one fatigue number capped at `fatigueMaxB118()`; farm bars fill fatigue/max and grow 1% per 15 over 100; chop drops tree 50% / shrub 70%; arena snacks −30; gate label Fatigue. | `tests/b130-focused-checks.js` |
 | Overdrive mastery (B131) | `b21-149.js`; ignition gate edited in `b21-83.js`/`b21-84.js`, Gravity mass cap in `b21-143.js` | Basic skills: level 1-5 × 5 mastery tiers (uses + stars), level-up ★10. `S.b131[id]={lv,t,u}`; `S.overLevels` now holds the old-kit feature level (L1 tiers → old Lv1-5). Power/reach/flair/signature from L2+ tiers; ignition 25%−(lv−1); regen 3s −0.1s per tier 3. Pip Ascendant unchanged. Interim card text until B132. | `tests/b131-focused-checks.js` |
 | Overdrive page (B132) | `b21-150.js` over `#overdriveStep` (old `overChoice*` cards hidden, still rendered) | Tile strip + one detail panel; main button `#b132Main` joins B117h hold-to-confirm (`#b132Why` when not affordable: plain press explains); Equip, More, ? rules, Continue. Keys [ ] / Q E switch skill, Esc closes; pad LB/RB switch, Start continues, Select rules, B closes. Inner classes are all `b132*` (the game owns `.top`). | `tests/b132-focused-checks.js` |
+| Ascension (B133) | `b21-151.js`; Ascend/Ascended UI in `b21-150.js` | Level 5 + 5 tiers → Ascend (★10). Saved in `localStorage['od76-ascension-b133']` = `{v:1,asc:{id:0-5}}`, clamped on load. Each ascension starts the skill unlocked one level higher (`S.b131[id].base`); 5 = starts Ascended, nothing to master. Uses per level by start ascension 10/13-12/14-13/15/30; the asc-4 run doubles tier stars and Ascend (50★). Overrides `nextStepB131`/`masteryStepB131`. | `tests/b133-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 

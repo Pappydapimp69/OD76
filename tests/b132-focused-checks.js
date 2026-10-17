@@ -1,6 +1,6 @@
 function runFocusedChecksB132(){
  const out=[],assert=(v,m)=>{if(!v)throw Error(m)},test=(name,fn)=>{try{fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}finally{cancelHoldB117h()}};
- const open=(setup)=>{ranchB99=Object.assign(ranchDefaultB99(),{fatigue:0});ensurePointsB100(ranchB99);syncCapsB102();saveRanchB99();reset();S.run=true;S.stage=3;S.starPoints=14;
+ const open=(setup)=>{ranchB99=Object.assign(ranchDefaultB99(),{fatigue:0});ensurePointsB100(ranchB99);syncCapsB102();saveRanchB99();if(typeof ascB133==='object'){ascB133=blankAscB133();saveAscB133()}reset();S.run=true;S.stage=3;S.starPoints=14;
   S.stageEnding=true;openStageUpgrade();S.bossRewardPending=true;openOverdriveStep();stageInputLockB117i=0;if(setup)setup();renderOverdriveStep()};
  const hold=btn=>{assert(btn,'no button to hold');assert(beginHoldB117h(btn,'test'),'hold did not start');tickHoldB117h(performance.now()+5000)};
  test('B132 the Overdrive step shows six tiles, one detail panel and Continue; the old cards are hidden',()=>{

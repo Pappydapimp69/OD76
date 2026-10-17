@@ -1,6 +1,6 @@
 function runFocusedChecksB131(){
  const out=[],assert=(v,m)=>{if(!v)throw Error(m)},near=(a,b,m,eps=1e-6)=>assert(Math.abs(a-b)<=eps,`${m}: ${a} != ${b}`),test=(name,fn)=>{try{fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}};
- const fresh=()=>{ranchB99=Object.assign(ranchDefaultB99(),{fatigue:0});ensurePointsB100(ranchB99);syncCapsB102();saveRanchB99();reset();S.run=true;S.end=false;S.waveState='active'};
+ const fresh=()=>{ranchB99=Object.assign(ranchDefaultB99(),{fatigue:0});ensurePointsB100(ranchB99);syncCapsB102();saveRanchB99();if(typeof ascB133==='object'){ascB133=blankAscB133();saveAscB133()}reset();S.run=true;S.end=false;S.waveState='active'};
  const unlock=id=>{S.overUnlocked.add(id);S.overLevels[id]=1;masteryB131(id);applyMasteryB131()};
  const reward=()=>{S.stagePending=true;S.bossRewardPending=true};
  const ignite=id=>{S.overType=id;S.overdrives=(S.overdrives||0)+1;creditUsesB131()};
@@ -30,7 +30,7 @@ function runFocusedChecksB131(){
   assert(m.t===5&&overLevel('beam')===5,'L1 full mastery = old Lv5 kit');const stars=S.starPoints;
   assert(completeOverdriveHoldAction('beam')&&m.lv===2&&m.t===0&&m.u===0&&S.starPoints===stars-10,'level up');
   assert(overLevel('beam')===5&&igniteThresholdB131('beam')===24,'level 2 kit/ignite');
-  m.lv=5;m.t=5;assert(igniteThresholdB131('beam')===21&&!completeOverdriveHoldAction('beam'),'L5 mastered');
+  m.lv=5;m.t=5;assert(igniteThresholdB131('beam')===21&&nextStepB131('beam').kind==='ascend','L5 mastered offers Ascend (B133)');
   near(powerMultB131('beam'),1.4,'L5 power');near(reachMultB131('beam'),1.15,'L5 reach');assert(bonusB131('beam').sig===4,'L5 signature');
  });
  test('B131 every tier 3 speeds HEAT regen by 0.1s per point',()=>{

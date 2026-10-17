@@ -33,7 +33,7 @@ function b132Afford(id){
  const info=OVERDRIVE_INFO[id];if(!S.overUnlocked.has(id))return S.starPoints>=info.unlock;
  const m=masteryB131(id);
  if(!m)return overLevel(id)<5&&S.starPoints>=overUpgradeCost(id);
- const n=nextStepB131(id);if(n.kind==='b132Done')return false;
+ const n=nextStepB131(id);if(n.kind==='done')return false;
  return S.starPoints>=n.stars&&(n.kind!=='tier'||m.u>=n.uses);
 }
 // The one next step for the selected skill: {label, sub, hold, why}
@@ -42,10 +42,10 @@ function b132Step(id){
  if(!S.overUnlocked.has(id))return S.starPoints>=info.unlock?{label:'HOLD · Unlock',sub:left(info.unlock),hold:true}:need(info.unlock);
  const m=masteryB131(id);
  if(!m){const lv=overLevel(id);if(lv>=5)return null;const c=overUpgradeCost(id);return S.starPoints>=c?{label:`HOLD · Upgrade to Lv ${lv+1}`,sub:left(c),hold:true}:need(c)}
- const n=nextStepB131(id);if(n.kind==='b132Done')return null;
+ const n=nextStepB131(id);if(n.kind==='done')return null;
  if(n.kind==='tier'&&m.u<n.uses){const k=n.uses-m.u;return {label:`Use ${info.name} ${k} more time${k===1?'':'s'}`,sub:S.overType===id?'Earn uses in the next stage':'Equip it to earn uses',hold:false}}
  if(S.starPoints<n.stars)return need(n.stars);
- return {label:n.kind==='tier'?`HOLD · Unlock Tier ${n.tier}`:`HOLD · Level up to ${n.level}`,sub:left(n.stars),hold:true};
+ return {label:n.kind==='tier'?`HOLD · Unlock Tier ${n.tier}`:n.kind==='level'?`HOLD · Level up to ${n.level}`:'HOLD · Ascend',sub:left(n.stars),hold:true};
 }
 
 // ---- markup ----
@@ -95,6 +95,8 @@ function b132Step(id){
 .b132T.b132Done{background:#8fe3b8;border-color:#8fe3b8;color:#062016}.b132T.b132Rd{border-color:#ffd36f;color:#ffd36f;box-shadow:0 0 0 3px #ffd36f22,0 0 14px #ffd36f55}.b132T.b132Wait{border:1.5px dashed #ffd36f88;color:#ffd36faa}
 .b132Next{border:1px solid #ffffff30;background:#ffffff06;border-radius:12px;padding:10px 13px;display:grid;grid-template-columns:1fr auto;gap:2px 14px;align-items:center}
 .b132Next:not(:has(.b132Req)){grid-template-columns:1fr}.b132Next.b132Gold{border-color:#ffd36f66;background:#ffd36f0c}
+.b132Asc{font-size:12px;font-weight:700;color:#c9b6ff;letter-spacing:.04em}.b132Asc b{letter-spacing:2px;margin-right:4px}
+.b132Next.b132AscCard{border-color:#c9b6ff77;background:#c9b6ff10}.b132Next.b132AscCard .b132K{color:#c9b6ff}
 .b132Next .b132K{font-size:11px;letter-spacing:.14em;color:#ffd36f;font-weight:800}.b132Next.b132Plain .b132K{color:#9aa6b8}
 .b132Next .b132B{font-size:15.5px;font-weight:800}.b132Next .b132S{font-size:12.5px;color:#9aa6b8}
 .b132Next .b132Req{grid-row:1/4;grid-column:2;text-align:right;font-size:13px;font-weight:700;white-space:nowrap}.b132Next .b132Ok{color:#8fe3b8}.b132Next .b132Short{color:#ffd36f}
@@ -128,12 +130,13 @@ function b132TileHTML(id){
  let body;
  if(!unlocked)body=`<span class="b132Lock">🔒 ★${info.unlock}</span>`;
  else if(!m)body=`<span class="b132Lv">LV ${overLevel(id)}</span><span class="b132Lock" style="font-size:11px">ECHOES</span>`;
- else{const n=nextStepB131(id),rd=n.kind==='tier'&&m.u>=n.uses;body=`<span class="b132Lv">LV ${m.lv}</span><span class="b132Segs">${[0,1,2,3,4].map(i=>`<i class="${i<m.t?'b132On':i===m.t&&rd?'b132Rd':''}"></i>`).join('')}</span>`}
+ else{const n=nextStepB131(id),rd=n.kind==='tier'&&m.u>=n.uses;body=`<span class="b132Lv">${typeof baseAscB133==='function'&&baseAscB133(m)>=B133_MAX?'ASCENDED':'LV '+m.lv}</span><span class="b132Segs">${[0,1,2,3,4].map(i=>`<i class="${i<m.t?'b132On':i===m.t&&rd?'b132Rd':''}"></i>`).join('')}</span>`}
  return `<span class="b132Top"><span class="b132Ic">${info.icon}</span><span class="b132Nm">${info.name}</span></span>${body}${b132Afford(id)?'<span class="b132Bang">!</span>':''}`;
 }
 function b132DetailHTML(id){
  const info=OVERDRIVE_INFO[id],m=masteryB131(id),unlocked=S.overUnlocked.has(id),eq=S.overType===id,step=b132Step(id);
- const lvTag=!unlocked?'<span class="b132Lock">LOCKED</span>':`<span class="b132Lv">LV ${m?m.lv:overLevel(id)}</span>`;
+ const asc=typeof ascB133==='object'?ascB133[id]||0:0,full=!!(m&&typeof baseAscB133==='function'&&baseAscB133(m)>=B133_MAX);
+ const lvTag=(!unlocked?'<span class="b132Lock">LOCKED</span>':full?'':`<span class="b132Lv">LV ${m?m.lv:overLevel(id)}</span>`)+(asc?`<span class="b132Asc"><b>${'◆'.repeat(asc)}${'◇'.repeat(B133_MAX-asc)}</b>Ascended ${asc}×</span>`:'');
  const sum=b132.more?(id==='pip'?`${info.desc} Ignites at ${B94_PIP_IGNITION_PERCENT}% HEAT; tap once and it drains automatically.`:`${info.desc} Ignites at ${igniteThresholdB131(id)}% HEAT.`):B132_SUMMARY[id];
  let mid='';
  if(!unlocked)mid=`<div class="b132Next b132Plain"><span class="b132K">LOCKED</span><span class="b132B">Unlock ${info.name}</span><span class="b132S">${m===null&&id!=='pip'?'Starts at Lv 1. Tier 1 needs 1 use.':'Joins Pip\'s Echoes once unlocked.'}</span></div>`;
@@ -142,7 +145,9 @@ function b132DetailHTML(id){
   mid=`<div class="b132Ml">Pip's Echoes</div><div class="b132Echo">${rows}</div>`;
  }else{
   const n=nextStepB131(id),track=`<div class="b132Ml">LV ${m.lv} · Tiers</div><div class="b132Track">${[1,2,3,4,5].map(i=>{const c=i<=m.t?'b132Done':i===m.t+1&&n.kind==='tier'?(m.u>=n.uses?'b132Rd':'b132Wait'):'';return `<span class="b132T ${c}">${i<=m.t?'✓':i}</span>`}).join('')}</div>`;
-  if(n.kind==='b132Done')mid=`${track}<div class="b132Next b132Gold"><span class="b132K">MASTERED</span><span class="b132B">Level 5 fully mastered</span><span class="b132S">Nothing left to master this run.</span></div>`;
+  if(n.kind==='done'&&full)mid=`<div class="b132Next b132AscCard"><span class="b132K">COMPLETE</span><span class="b132B">Nothing left to master</span><span class="b132S">Starts every run Ascended.</span></div>`;
+  else if(n.kind==='done')mid=`${track}<div class="b132Next b132AscCard"><span class="b132K">ASCENDED</span><span class="b132B">Ascended ${asc}×</span><span class="b132S">${asc>=B133_MAX?'Future runs start Ascended.':`Future runs start at Lv ${asc+1}.`}</span></div>`;
+  else if(n.kind==='ascend')mid=`${track}<div class="b132Next b132AscCard"><span class="b132K">ASCEND READY</span><span class="b132B">Ascend ${info.name}</span><span class="b132S">${n.next>=B133_MAX?'Future runs start Ascended, fully mastered.':`Future runs start at Lv ${n.next+1}, already unlocked.`}</span></div>`;
   else if(n.kind==='level')mid=`${track}<div class="b132Next b132Gold"><span class="b132K">LEVEL ${n.level} READY</span><span class="b132B">Level up</span><span class="b132S">Ignites at ${igniteThresholdB131(id)-1}% · mastery uses start over</span></div>`;
   else{const b=b132Tier(id,m.lv,n.tier),ok=m.u>=n.uses,short=!ok||S.starPoints<n.stars;
    mid=`${track}<div class="b132Next ${short?'b132Plain':'b132Gold'}"><span class="b132K">TIER ${n.tier} · ${!ok?'NEEDS USES':S.starPoints<n.stars?'NEEDS STARS':'READY'}</span><span class="b132B">${b.name}</span><span class="b132S">${b.desc}</span><span class="b132Req ${ok?'b132Ok':'b132Short'}">${ok?'✓ ':''}${Math.min(m.u,n.uses)}/${n.uses} uses this level</span></div>`}
