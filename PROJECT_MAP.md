@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B136-DECLUTTER`.
-- Next numbered runtime file: `b21-155.js`.
+- Current release: `B137-SITE-LABELS`.
+- Next numbered runtime file: `b21-156.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -34,6 +34,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Ascension (B133) | `b21-151.js`; Ascend/Ascended UI in `b21-150.js` | Level 5 + 5 tiers → Ascend (★10). Saved in `localStorage['od76-ascension-b133']` = `{v:1,asc:{id:0-5}}`, clamped on load. Each ascension starts the skill unlocked one level higher (`S.b131[id].base`); 5 = starts Ascended, nothing to master. Uses per level by start ascension 10/13-12/14-13/15/30; the asc-4 run doubles tier stars and Ascend (50★). Overrides `nextStepB131`/`masteryStepB131`. | `tests/b133-focused-checks.js` |
 | Skill names on focus (B134) | `b21-152.js` over `b132TileHTML` | Each Overdrive tile carries a `.b134Tip` with its full name, shown on gamepad focus, keyboard focus-visible or mouse hover. | `tests/b134-focused-checks.js` |
 | Between-stage polish (B135-B136) | `b21-153.js`, `b21-154.js` | Snack feed is a hold; Sound Lab auditions hidden. Traits/Hearts/Boss cards compact (2-line effect); eyebrow = step counter (`stepsB136`); Sound Lab chips in title, folds when nothing affordable; shop enter/skip/exit are taps; gate focus starts on Next stage. Shared UI sounds `uiSoundB136(kind)` with per-kind cooldowns. Decoration runs on a 200ms tick. | `tests/b135-focused-checks.js`, `tests/b136-focused-checks.js` |
+| Drill-site labels (B137) | `b21-155.js`; B106 loop in `b21-94.js` now gated by `siteLabelsInWorldB137()` | Site names draw in world space after the ranch (not inside Pip's B109 swing transform); only the chopped site's label jolts. | `tests/b137-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 

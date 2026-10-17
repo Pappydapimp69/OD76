@@ -99,7 +99,7 @@ drawStationB100=function(st,t){
 const B106_LABEL_Y={range:90,speed:110,power:70,guard:95};
 const drawPipBeforeB106=drawPipB100;
 drawPipB100=function(t){
- for(const id in B106_LABEL_Y){if(siteOpenB106(id)&&!B106_OBSTACLES.some(o=>o.site===id&&obstacleStandingB106(o)))continue;const st=stationB100(id);labelB100(st.x,st.y-B106_LABEL_Y[id],B100_GAMES[id].title,`${B99_DRILLS[id].stat} Lv ${ranchB99.stats[id]}`)}
+ if(!siteLabelsInWorldB137())for(const id in B106_LABEL_Y){if(siteOpenB106(id)&&!B106_OBSTACLES.some(o=>o.site===id&&obstacleStandingB106(o)))continue;const st=stationB100(id);labelB100(st.x,st.y-B106_LABEL_Y[id],B100_GAMES[id].title,`${B99_DRILLS[id].stat} Lv ${ranchB99.stats[id]}`)}
  drawPipBeforeB106(t);
 };
 // Draw obstacles after the stations they surround so they overlap the site art.
