@@ -14,7 +14,7 @@ function analyticsOnB136(){
 }
 (function loadGoatCounterB136(){
   if(!analyticsOnB136())return;
-  window.goatcounter={no_onload:false,allow_local:false};
+  window.goatcounter={no_onload:true,allow_local:false}; // B147: no page-load hit; events go out at run end
   const s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';
   s.dataset.goatcounter=`https://${B136_CODE}.goatcounter.com/count`;document.head.appendChild(s);
 })();
