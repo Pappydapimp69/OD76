@@ -1,8 +1,8 @@
 
 // B102 Heart Refinery: banked hearts refine into Heart Stones on the real clock.
 // Stones buy drills; star dust fuses into Star Stones, which upgrade the refinery and drill stations.
-const B102_HEARTS_PER_STONE=50,B102_DUST_CHANCE=.1,B102_DUST_PER_STAR=5,B102_REFINERY_MAX=10,B102_STATION_MAX=3,B102_STATION_POINTS=2;
-const B102_REFINE_SECONDS=[900,600,480,300,240,180,120,60,30,10]; // refinery level 1..10
+const B102_HEARTS_PER_STONE=50,B102_DUST_CHANCE=.1,B102_DUST_PER_STAR=5,B102_REFINERY_MAX=6,B102_STATION_MAX=3,B102_STATION_POINTS=2;
+const B102_REFINE_SECONDS=[900,780,660,540,420,300]; // refinery level 1..6: 15 min, then −2 min per level (B153)
 const B102_BASE_CAPS=Object.fromEntries(Object.keys(B99_DRILLS).map(k=>[k,B99_DRILLS[k].cap]));
 function refineSecondsB102(lv){return B102_REFINE_SECONDS[clamp(Math.floor(lv)||1,1,B102_REFINERY_MAX)-1]}
 function refineryUpgradeCostB102(lv){return Math.ceil(lv/3)}
