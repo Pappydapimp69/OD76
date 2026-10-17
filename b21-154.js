@@ -58,7 +58,8 @@ function decorateStageB136(){
   const h=$('pipSoundStep').querySelector(':scope > h2');
   const notes=$('soundLabNotesB53')?.textContent||'0',sc=$('soundLabSoundChoicesB53')?.textContent||'0',mc=$('soundLabMixChoicesB53')?.textContent||'0';
   if(h){let chip=h.querySelector('.b136Chips');if(!chip){chip=document.createElement('span');chip.className='b136Chips';h.appendChild(chip)}const t=`♪ ${notes} · ${sc} sound · ${mc} mix`;if(chip.textContent!==t)chip.textContent=t}
-  const lab=$('pipSoundStep'),buyable=[...lab.querySelectorAll('button[data-sound-hold-kind],#audioStep button[id^="audioChoice"]')].some(b=>!b.classList.contains('b53SoundBlocked')&&b.getAttribute('aria-disabled')!=='true'&&!b.disabled&&b.offsetParent!==null&&!/MAX|ACTIVE|EQUIPPED|OWNED|NEEDS /.test(b.textContent));
+  const lab=$('pipSoundStep');lab.classList.remove('b136Empty'); // B159: unfold to measure; folded cards have no offsetParent, so it never unfolded again
+  const buyable=[...lab.querySelectorAll('button[data-sound-hold-kind],#audioStep button[id^="audioChoice"]')].some(b=>!b.classList.contains('b53SoundBlocked')&&b.getAttribute('aria-disabled')!=='true'&&!b.disabled&&b.offsetParent!==null&&!/MAX|ACTIVE|EQUIPPED|OWNED|NEEDS /.test(b.textContent));
   lab.classList.toggle('b136Empty',!buyable&&!lab.classList.contains('b136ShowAll'));
   let line=$('b136EmptyLine');
   if(!line){line=document.createElement('p');line.id='b136EmptyLine';line.innerHTML='<span>Nothing to buy here yet. Notes arrive as Pip levels up.</span> <button type="button" id="b136ShowSounds">Show sounds</button>';lab.querySelector(':scope > h2').insertAdjacentElement('afterend',line);
