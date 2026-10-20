@@ -7,8 +7,8 @@ function runFocusedChecksB162(){
   assert(localStorage.getItem('od76_movement_settings_v1')==='1'&&localStorage.getItem('other_site_key')==='1','removed too much');
   saveRanchB99();assert(!localStorage.getItem('overdrive76_ranch_v1'),'a later save (pagehide) wrote the ranch back');
  });
- test('B162 the launch screen has the button right after Start, and one tap only arms it',()=>{
-  const b=$('eraseB162');assert(b&&$('begin').nextElementSibling===b,'missing');b.click();assert(b.classList.contains('armed'),'one tap did not arm');
+ test('B162 the launch screen has the button under Start, and one tap only arms it',()=>{
+  const b=$('eraseB162');assert(b&&($('begin').closest('.b75LaunchActions')||$('begin')).nextElementSibling===b,'missing');b.click();assert(b.classList.contains('armed'),'one tap did not arm');
  });
  return out;
 }

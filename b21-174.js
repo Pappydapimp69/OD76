@@ -1,5 +1,5 @@
 
-// B162 Erase all progress from the launch screen. A quiet button under Start; the first tap arms it ("Tap again to erase
+// B162 Erase all progress from the launch screen. A quiet button under Start and Settings; the first tap arms it ("Tap again to erase
 // everything", 4 s), the second wipes every OD76 save on this device (Pip, ranch, hearts, echoes, ascension, playtest
 // notes) and reloads. Control settings (movement, heartfield) stay. Only this game's keys are touched, since every
 // github.io project of the same owner shares one localStorage.
@@ -14,7 +14,7 @@ function eraseProgressB162(){
 (function installEraseB162(){
  const begin=$('begin');if(!begin)return;
  const b=document.createElement('button');b.id='eraseB162';b.type='button';b.textContent='Erase all progress';
- begin.insertAdjacentElement('afterend',b);
+ (begin.closest('.b75LaunchActions')||begin).insertAdjacentElement('afterend',b); // under the Start/Settings pair, not inside it
  let armed=0;
  b.addEventListener('click',e=>{
   e.stopPropagation();
