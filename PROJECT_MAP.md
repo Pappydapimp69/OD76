@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B161-BAG-SCROLL`.
-- Next numbered runtime file: `b21-174.js`.
+- Current release: `B162-ERASE-PROGRESS`.
+- Next numbered runtime file: `b21-175.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -55,6 +55,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Sound Lab unfold (B159) | `b21-154.js` `decorateStageB136` | The empty-fold check removes `b136Empty` before measuring (folded cards have no `offsetParent`, so the lab stayed folded all run once folded). | Browser check only (JSDOM has no layout). |
 | Stage card fit (B160) | `b21-172.js` `fitStageCardB160` | Landscape + coarse pointer only: stage card takes 94vw and CSS `zoom` up to 1.6× while the step fits in 95% of the height (falls back to 1× full width). Re-fits on step/button-count/viewport change. | Browser check only (JSDOM has no layout). |
 | Bag gamepad scroll (B161) | `b21-173.js` `focusSheetB100` wrap | Bag open: nav down scrolls `#bagListB143` a row until the end, then moves focus; nav up on the first button scrolls back. All ranch sheets scroll the focused button into view; short landscape screens get taller sheets/bag list. | Browser check only (JSDOM has no layout). |
+| Erase progress (B162) | `b21-174.js` `eraseProgressB162` | Launch screen button under Start, tap twice (arms 4 s). Removes `overdrive76*`/`od76*` keys except movement/heartfield settings, then reloads. | `tests/b162-focused-checks.js` |
 | Current focused runner | `tests/verify-b129-focused.cjs` | Runs only `tests/b129-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
