@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B167: Arena Ascensions carry into the Colosseum
+
+Every skill you Ascend in the arena now gives Pip a perk in the Colosseum: Beam sharpens Focus, Thunderstorm makes hits arc, Guardian strengthens Guard, Nova powers Ascension, and Gravity Well fills HEAT faster. The Colosseum menu lists what Pip has earned.
+
 ## B166: A fuller Colosseum tutorial
 
 The sparring tutorial now explains the rules as well as the buttons: the HP, HEAT and Guard bars, how HEAT fills, why Focus is wasted on a guard, how guards break and how to punish a broken one, how fights are won, which stats counter which, and how brackets, fatigue and prizes work. It ends with a real knockout. Still skippable and replayable.
