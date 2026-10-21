@@ -1,5 +1,9 @@
 # Pending builds
 
+## B163 Colosseum
+
+Spec: `docs/B163-colosseum.md`. Rival-Pip 1v1 brackets per rank; three owner decisions open at the end of the spec.
+
 ## B127 skill refinements and ranch clarity
 
 ### 1. Gravity Well refinement: Event Horizon
