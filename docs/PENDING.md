@@ -1,5 +1,9 @@
 # Pending builds
 
+## B166 Colosseum tutorial lessons — SHIPPED (in `b21-176.js` / `b21-177.js`)
+
+See `docs/B166-colosseum-lessons.md`.
+
 ## B165 Colosseum look + gamepad — SHIPPED in `b21-177.js`
 
 See `docs/B165-colosseum-iron.md`.

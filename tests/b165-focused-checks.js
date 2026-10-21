@@ -8,6 +8,23 @@ function runFocusedChecksB165(){
  const tap=i=>{hold(i,true);frames(2);hold(i,false);frames(2)};
  const buttons=()=>[...document.querySelectorAll('#ranchSheetB100 button')].map(b=>b.textContent);
  const end=()=>{closeSheetB100();if(colB163.active){colB163={active:false};document.body.classList.remove('colB163')}};
+
+ // Plays the B166 lesson list with one device's inputs; returns the lesson titles in the order they were completed.
+ const driveB166=(press,hold,frames)=>{
+  const done=[];let guard=0;
+  while(colB163.active&&colB163.tutorial&&guard++<400){
+   const tu=colB163.tutorial,s=tu.step,l=B164_STEPS[s];
+   if(colB163.phase!=='fight'){frames(10);continue}
+   frames(25);
+   if(l.kind==='info'||l.title==='Focus')press('focus');
+   else if(l.title==='Ascend')press('ascend');
+   else if(l.title==='Guard'||l.title==='Guard breaks'){hold(true);let k=0;while(colB163.tutorial?.step===s&&k++<1500)frames(1);hold(false)}
+   else if(l.title==='Strike the broken guard'){let k=0;while(!(colB163.fight.b.broken>0)&&k++<1500)frames(1);press('focus')}
+   else {let k=0;while(colB163.tutorial?.step===s&&k++<3600)frames(1)}
+   if(!colB163.tutorial||colB163.tutorial.step!==s)done.push(l.title);else throw Error('stuck on lesson '+(s+1)+': '+l.title);
+  }
+  return done;
+ };
  const fresh=()=>{end();ranchB99.fatigue=0;ranchB99.rankUnlocked=1;colSaveB163.tutorial=true;colSaveB163.revealed=true;keys.clear();for(let i=0;i<17;i++)hold(i,false);pad.axes=[0,0,0,0];enterRanchB100();frames(3)};
  const toFight=()=>{startColosseumB163(0);frames(170);assert(colB163.phase==='fight','not fighting: '+colB163.phase)};
  test('B165 pad A Focus, X Ascend, hold B Guard all reach Pip in a bracket fight',()=>{
@@ -37,12 +54,11 @@ function runFocusedChecksB165(){
   assert(ranchB99.fatigue===Math.max(0,fat-Math.ceil(fatigueMaxB118()*B163_CATCH_BREATH))+fightFatigueB163(),'breath not taken');
   end();
  });
- test('B165 the tutorial completes on a gamepad, and its prompts name pad buttons',()=>{
+ test('B166 the tutorial completes on a gamepad, and its prompts name pad buttons',()=>{
   fresh();colSaveB163.tutorial=false;startTutorialB164();frames(170);
-  assert(/Press A/.test(B164_STEPS[0].say),'prompt: '+B164_STEPS[0].say);tap(0);assert(colB163.tutorial.step===1,'A');
-  assert(/Press X/.test(B164_STEPS[1].say),'prompt 2');tap(2);assert(colB163.tutorial.step===2,'X');
-  hold(1,true);let n=0;while(colB163.tutorial?.step===2&&n++<900)frame();hold(1,false);assert(colB163.tutorial?.step===3,'B');
-  frames(240);assert(!colB163.active&&colSaveB163.tutorial,'not finished');
+  const focus=B164_STEPS.find(l=>l.title==='Focus');assert(/Press A/.test(focus.say),'prompt: '+focus.say);
+  const order=driveB166(k=>tap(k==='focus'?0:2),on=>hold(1,on),frames);
+  assert(!colB163.active&&colSaveB163.tutorial&&order.length===B164_STEPS.length,'not finished: '+order.join(' > '));
   end();
  });
  test('B165 the Colosseum station opens and starts a bracket with the pad',()=>{
@@ -53,8 +69,8 @@ function runFocusedChecksB165(){
   tap(0);assert(colB163.active,'A on the first bracket did not start');end();
  });
  test('B165 prompts follow the last device: keyboard and touch',()=>{
-  window.dispatchEvent(new window.KeyboardEvent('keydown',{key:'Shift'}));assert(/Press Space/.test(B164_STEPS[0].say),B164_STEPS[0].say);
-  const e=new window.Event('pointerdown');e.pointerType='touch';window.dispatchEvent(e);assert(/Tap FOCUS/.test(B164_STEPS[0].say)&&/Hold GUARD/.test(B164_STEPS[2].say),B164_STEPS[0].say);
+  window.dispatchEvent(new window.KeyboardEvent('keydown',{key:'Shift'}));const fl=B164_STEPS.find(l=>l.title==='Focus'),gl=B164_STEPS.find(l=>l.title==='Guard');assert(/Press Space/.test(fl.say),fl.say);
+  const e=new window.Event('pointerdown');e.pointerType='touch';window.dispatchEvent(e);assert(/Tap FOCUS/.test(fl.say)&&/Hold GUARD/.test(gl.say),fl.say);
  });
  test('B165 every phase draws in the new style without errors',()=>{
   fresh();startColosseumB163(0);draw();frames(170);colB163.fight.a.heat=80;tap(2);frames(30);tap(9);draw();tap(9);colB163.fight.b.hp=-1e6;frames(3);draw();assert(colB163.phase==='after','not after: '+colB163.phase+' '+colB163.fight.done+' '+colB163.fight.b.hp);end();

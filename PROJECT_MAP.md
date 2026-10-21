@@ -4,7 +4,7 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B165-COLOSSEUM-IRON`.
+- Current release: `B166-COLOSSEUM-LESSONS`.
 - Next numbered runtime file: `b21-178.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
@@ -59,6 +59,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Colosseum (B163) | `b21-175.js`; wraps `interactStationB100` (gate sheet gets a Colosseum option while `arenaReadyB114()`), `update`/`draw` (own loop while `colB163.active`), `reset` | Rival-Pip 8-entrant brackets per unlocked rank, fold seeding (`B163_FOLD`), seeded fight sim on its own sfc32 stream (`rngB163`); coach A Focus / X Ascend / B Guard (`#ranchGuardB163`, id must start with `ranch`). 4% max fatigue per fight; prizes ◆1/2/4 × rank reward; never unlocks ranks. Tuning in `B163_T`. Save `localStorage['od76-colosseum-b163']={v,seed,wins,best}`. | `tests/b163-focused-checks.js` |
 | Colosseum building + tutorial (B164) | `b21-176.js`; station `colosseum` pushed to `B100_STATIONS`; wraps `interactStationB100` (strips B163's gate option), `nearestInteractB100`, `updateRanchB100` (one-time reveal), `drawStationB100`, `stepFightB163`/`updateColB163`/`drawColB163`/`roundNameB163` for the tutorial | Locked until `ranchB99.rankUnlocked>=1`. Tutorial vs Sprout: Focus → Ascend → Guard, steps pinned to Pip's own commands; no fatigue or prize. Flags `colSaveB163.tutorial/revealed` in the B163 save. B164 also latches coach presses in `b21-175.js` (`c.pendFocus/pendAscend`). | `tests/b164-focused-checks.js` |
 | Colosseum look + gamepad (B165) | `b21-177.js`; replaces `drawColB163`; wraps `updateColB163` (pause phase, button labels), `openSheetB100` (iron style class `b165`, device button names), `toggleBagB110` (off in the ring), `ranchInputB100` (device detection), `PipAudioEngine.prototype.scheduleStep` (war drums while `colB163.active`) | Iron-and-ember renderer with its own fx state (`colB163.fx`); pause via Start / P / `#ranchPauseB165`; prompts from `btnB165()`; shake off under reduced motion. | `tests/b165-focused-checks.js` |
+| Colosseum tutorial lessons (B166) | edited in place: `b21-176.js` (`B164_STEPS` lesson data: `kind` card/drill, `say`, `btn`, `enter`/`each`/`sprout`/`done`, `show`; generic `stepFightB163`/`updateColB163` lesson engine) and `b21-177.js` (card and drill plates, `wrapB165`, ▶ NEXT label) | Twelve lessons; cards freeze the fight and need A after 0.35 s; drills finish on Pip's own state. | `tests/b164-focused-checks.js`, `tests/b165-focused-checks.js` |
 | Current focused runner | `tests/verify-b165-focused.cjs` | Runs only `tests/b165-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 

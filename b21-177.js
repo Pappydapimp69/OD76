@@ -15,15 +15,12 @@ window.addEventListener('keydown',e=>{inputDevB165='keys';if(colB163.active&&!e.
 window.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'||e.pointerType==='pen')inputDevB165='touch';else if(e.pointerType==='mouse')inputDevB165='keys'},true);
 const B165_LABELS={focus:{pad:'A',keys:'Space',touch:'FOCUS'},ascend:{pad:'X',keys:'X',touch:'ASCEND'},guard:{pad:'B',keys:'B',touch:'GUARD'},pause:{pad:'Start',keys:'P',touch:'❚❚'}};
 function btnB165(cmd){return B165_LABELS[cmd][inputDevB165]}
-function pressB165(cmd){return`${inputDevB165==='touch'?'Tap':'Press'} ${btnB165(cmd)}`}
+function pressB165(cmd,lower){const v=inputDevB165==='touch'?'Tap':'Press';return`${lower?v.toLowerCase():v} ${btnB165(cmd)}`}
 function coachLineB165(){return`${btnB165('focus')} Focus, ${btnB165('ascend')} Ascend at 70% HEAT, hold ${btnB165('guard')} Guard, ${btnB165('pause')} pauses`}
 const ranchInputBeforeB165=ranchInputB100;
 ranchInputB100=function(...a){const p=firstPadB165();if(p&&(p.buttons?.some((b,i)=>i<16&&(b.pressed||b.value>.5))||p.axes?.some(v=>Math.abs(v)>.5)))inputDevB165='pad';return ranchInputBeforeB165(...a)};
 function firstPadB165(){for(const p of navigator.getGamepads?navigator.getGamepads():[])if(p&&p.connected)return p;return null}
 function padHeldB165(p,i){return!!(p?.buttons?.[i]?.pressed||p?.buttons?.[i]?.value>.5)}
-Object.defineProperty(B164_STEPS[0],'say',{get:()=>`${pressB165('focus')} to Focus: Pip's next 3 shots home in.`});
-Object.defineProperty(B164_STEPS[1],'say',{get:()=>`HEAT is past 70%. ${pressB165('ascend')} to Ascend!`});
-Object.defineProperty(B164_STEPS[2],'say',{get:()=>`Sprout is Ascending! Hold ${btnB165('guard')} to Guard.`});
 
 // Sheets: Colosseum ones get the iron look and device-correct button names.
 const openSheetBeforeB165=openSheetB100;
@@ -68,7 +65,7 @@ updateColB163=function(dt){
  updateColBeforeB165(dt);
  if(!colB163.active)return;
  const act=$('ranchActB100'),xb=$('ranchPipBtnB109'),gb=$('ranchGuardB163'),f=colB163.fight,ready=!!f&&f.a.heat>=70&&f.a.ascT<=0;
- if(act&&act.classList.contains('on'))act.textContent='◎ FOCUS';
+ if(act&&act.classList.contains('on'))act.textContent=lessonB164()?.kind==='info'&&colB163.phase==='fight'?'▶ NEXT':'◎ FOCUS';
  if(xb&&xb.classList.contains('on')){xb.textContent='✦ ASCEND';xb.classList.toggle('b165Ready',ready)}
  if(gb)gb.textContent='⛨ GUARD';
  const pb=$('ranchPauseB165');if(pb)pb.classList.toggle('on',colB163.phase==='fight'||colB163.phase==='intro');
@@ -103,6 +100,7 @@ PipAudioEngine.prototype.scheduleStep=function(time){
 function ringB165(){const rx=Math.min(W*.44,H*.62,560),ry=Math.min(rx*(W<H?.85:.56),H*.3);return{cx:W/2,cy:H*.57,rx,ry}} // taller bowl on portrait screens
 // Drawing only: the rival circles opposite Pip with a little sway, so the two never bunch up (the sim's angles don't affect results).
 function fighterPosB165(fi,g){const f=colB163.fight,a=fi===f.b?f.a.ang+Math.PI+.35*Math.sin(f.t*.8):fi.ang;return{x:g.cx+Math.cos(a)*g.rx*.55,y:g.cy+Math.sin(a)*g.ry*.55}}
+function wrapB165(text,max){const out=[];let line='';for(const word of String(text).split(' ')){const t=line?line+' '+word:word;if(line&&X.measureText(t).width>max){out.push(line);line=word}else line=t}if(line)out.push(line);return out}
 function spacingB165(px){try{X.letterSpacing=px}catch(_){}}
 function plateB165(x,y,w,h){X.fillStyle='#16110fe8';X.strokeStyle=B165.bronze;X.lineWidth=2;X.beginPath();X.moveTo(x+8,y);X.lineTo(x+w-8,y);X.lineTo(x+w,y+8);X.lineTo(x+w,y+h-8);X.lineTo(x+w-8,y+h);X.lineTo(x+8,y+h);X.lineTo(x,y+h-8);X.lineTo(x,y+8);X.closePath();X.fill();X.stroke()}
 function torchB165(x,y,t,i){
@@ -193,7 +191,20 @@ drawColB163=function(){
  if(c.phase==='after'){const won=f.winner===0,y=g2.cy;X.fillStyle='#000000b0';X.fillRect(0,y-44,W,88);X.fillStyle=won?B165.bronzeHi:'#e0474f';X.font=`700 ${narrow?34:48}px ${B165_SERIF}`;spacingB165('8px');X.fillText(won?'VICTORY':'DEFEAT',W/2,y+14);spacingB165('0px');X.font=`italic ${narrow?13:16}px ${B165_SERIF}`;X.fillStyle=B165.bone;X.fillText(won?`${c.opp.name} yields.`:`Pip falls to ${c.opp.name}.`,W/2,y+36)}
  if(c.phase==='paused'){X.fillStyle='#000000a0';X.fillRect(0,0,W,H);X.fillStyle=B165.bone;X.font=`700 ${narrow?30:42}px ${B165_SERIF}`;spacingB165('8px');X.fillText('PAUSED',W/2,H*.32);spacingB165('0px')}
  const tu=c.tutorial;
- if(tu&&c.phase==='fight'){const s=B164_STEPS[tu.step];if(s){const w=Math.min(560,W-24),x=(W-w)/2,y=H-(narrow?250:180);plateB165(x,y,w,58);X.fillStyle=B165.bronzeHi;X.font=`700 ${narrow?11:12}px ${B165_SERIF}`;spacingB165('3px');X.fillText(`LESSON ${Math.min(tu.step+1,3)} OF 3`,W/2,y+18);spacingB165('0px');X.fillStyle=B165.bone;X.font=`${narrow?14:17}px ${B165_SERIF}`;X.fillText(s.say,W/2,y+42,w-20)}}
+ if(tu&&c.phase==='fight'){const l=B164_STEPS[tu.step];if(l){
+  const n=B164_STEPS.length,head=`LESSON ${Math.min(tu.step+1,n)} OF ${n} · ${l.title.toUpperCase()}`;
+  if(l.kind==='info'){
+   if(l.show==='plates'){X.fillStyle='#000000a8';X.fillRect(0,top+ph+8,W,H);X.strokeStyle=B165.bronzeHi;X.lineWidth=3;const pulse=.5+.5*Math.sin(now*5);X.globalAlpha=.5+.5*pulse;X.strokeRect(6,top-4,pw+8,ph+8);X.strokeRect(W-pw-14,top-4,pw+8,ph+8);X.beginPath();X.arc(mx,my,mr+6,0,Math.PI*2);X.stroke();X.globalAlpha=1}
+   else{X.fillStyle='#000000a8';X.fillRect(0,0,W,H)}
+   const w=Math.min(620,W-24),fs=narrow?15:18;X.font=`${fs}px ${B165_SERIF}`;const lines=wrapB165(l.say,w-36),h=86+lines.length*(fs+8),x=(W-w)/2,y=Math.max(top+ph+20,H*.5-h/2-30);
+   plateB165(x,y,w,h);X.textAlign='center';X.fillStyle=B165.bronzeHi;X.font=`700 ${narrow?11:12}px ${B165_SERIF}`;spacingB165('3px');X.fillText(head,W/2,y+26,w-20);spacingB165('0px');
+   X.fillStyle=B165.bone;X.font=`${fs}px ${B165_SERIF}`;lines.forEach((ln,i)=>X.fillText(ln,W/2,y+56+i*(fs+8)));
+   X.fillStyle=B165.bronzeHi;X.font=`italic 700 ${narrow?12:14}px ${B165_SERIF}`;X.fillText(`${pressB165('focus')} to continue`,W/2,y+h-16);
+  }else{
+   const w=Math.min(620,W-24),fs=narrow?14:16;X.font=`${fs}px ${B165_SERIF}`;const lines=wrapB165(l.say,w-28),h=36+lines.length*(fs+6),x=(W-w)/2,y=H-(narrow?190:140)-h;
+   plateB165(x,y,w,h);X.textAlign='center';X.fillStyle=B165.bronzeHi;X.font=`700 ${narrow?10:11}px ${B165_SERIF}`;spacingB165('3px');X.fillText(head,W/2,y+17,w-20);spacingB165('0px');
+   X.fillStyle=B165.bone;X.font=`${fs}px ${B165_SERIF}`;lines.forEach((ln,i)=>X.fillText(ln,W/2,y+38+i*(fs+6)));
+  }}}
  if(fx.flash>0){X.fillStyle=`rgba(${fx.flashCol},${fx.flash*.55})`;X.fillRect(0,0,W,H)}
 };
 
