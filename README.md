@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B165: The Colosseum looks and sounds like its own game
+
+Inside the Colosseum it's dusk in a torchlit stone bowl: a silhouette crowd that roars, embers, sparks, war drums, iron-and-bronze HUD. Gamepads work throughout: A Focus, X Ascend, hold B Guard, Start pauses, and the d-pad drives every menu. Prompts show the buttons for whatever you're using.
+
 ## B164: The Colosseum gets its own building
 
 The Colosseum now stands on its own south-west of Pip's bed, boarded up until Pip unlocks rank D (clear stage 5 at rank E). When it opens, a short sparring match with Sprout teaches Focus, Ascend and Guard; you can skip it or replay it any time. The Arena gate is back to battle tests only.

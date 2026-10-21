@@ -1,5 +1,9 @@
 # Pending builds
 
+## B165 Colosseum look + gamepad — SHIPPED in `b21-177.js`
+
+See `docs/B165-colosseum-iron.md`.
+
 ## B164 Colosseum building — SHIPPED in `b21-176.js`
 
 See `docs/B164-colosseum-building.md`.
