@@ -2,6 +2,14 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B165: The Colosseum looks and sounds like its own game
+
+Inside the Colosseum it's dusk in a torchlit stone bowl: a silhouette crowd that roars, embers, sparks, war drums, iron-and-bronze HUD. Gamepads work throughout: A Focus, X Ascend, hold B Guard, Start pauses, and the d-pad drives every menu. Prompts show the buttons for whatever you're using.
+
+## B164: The Colosseum gets its own building
+
+The Colosseum now stands on its own south-west of Pip's bed, boarded up until Pip unlocks rank D (clear stage 5 at rank E). When it opens, a short sparring match with Sprout teaches Focus, Ascend and Guard; you can skip it or replay it any time. The Arena gate is back to battle tests only.
+
 ## B163: Colosseum
 
 The Arena gate now offers the **Colosseum**: eight-Pip brackets against rival Pips, one per rank you've unlocked. You don't fly or shoot; you coach. **A** Focus (next three shots home in), **X** Ascend at 70% HEAT, hold **B** Guard (great against a rival's Ascension). Each fight costs a little fatigue; between rounds pick a full heal or a breather. Wins pay Heart Stones by rank. Every stat matters: Star Power punches through Guardian Glow, Guardian Glow shrugs off Swift Pip's small hits, Swift Pip dodges Star Power's big ones, and Heart Sense heals Pip as he lands hits.
