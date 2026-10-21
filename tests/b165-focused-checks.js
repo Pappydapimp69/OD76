@@ -65,7 +65,7 @@ function runFocusedChecksB165(){
   fresh();inputDevB165='keys';const st=B100_STATIONS.find(s=>s.id==='colosseum'),w=ranchWorldB100;w.px=st.x;w.py=st.y+40;frames(2);
   tap(0);assert(/Colosseum/.test($('ranchSheetB100').querySelector('h3')?.textContent||''),'A at the building did not open it');
   assert($('ranchSheetB100').classList.contains('b165'),'sheet not in the Colosseum style');
-  assert(/A Focus, X Ascend/.test($('ranchSheetB100').textContent),'sheet does not name pad buttons');
+  assert(/A Focus · X Ascend · hold B Guard/.test($('ranchSheetB100').textContent),'sheet does not name pad buttons');
   tap(0);assert(colB163.active,'A on the first bracket did not start');end();
  });
  test('B165 prompts follow the last device: keyboard and touch',()=>{

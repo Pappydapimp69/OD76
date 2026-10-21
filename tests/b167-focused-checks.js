@@ -28,8 +28,8 @@ function runFocusedChecksB167(){
  });
  test('B167 the Colosseum sheet lists the perks, or says how to get them',()=>{
   ranchB99.fatigue=0;ranchB99.rankUnlocked=1;colSaveB163.tutorial=true;for(const id in ascB133)ascB133[id]=0;colosseumSheetB164();
-  assert(/Ascend skills in the arena/.test($('ranchSheetB100').textContent),'no hint');closeSheetB100();
-  ascB133.beam=2;ascB133.storm=1;colosseumSheetB164();const t=$('ranchSheetB100').textContent;assert(/Beam ✦2: Focus \+1\.6% damage/.test(t)&&/Thunderstorm ✦1/.test(t),t);closeSheetB100();
+  assert(/none yet/.test($('ranchSheetB100').textContent)&&/Ascend skills in the arena/.test($('ranchSheetB100').textContent),'no hint');closeSheetB100();
+  ascB133.beam=2;ascB133.storm=1;colosseumSheetB164();const t=$('ranchSheetB100').textContent;assert(/Beam ✦2/.test(t)&&/Thunderstorm ✦1/.test(t),t);closeSheetB100();
  });
  test('B167 the tutorial mentions the perks, and arcs draw without errors',()=>{
   assert(/Ascend in the arena give Pip perks/.test(B164_STEPS.find(l=>l.title==='Training matters').say),'tutorial');

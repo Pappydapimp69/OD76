@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B169: A Colosseum menu you can read
+
+The Colosseum menu is now a few labelled rows instead of a paragraph: what a fight costs, what it pays, how to coach, and Pip's edge (Guard from shrubs, Ascension from trees, arena skills, trophies) with progress bars.
+
 ## B168: Ranch work toughens Pip for the Colosseum
 
 Every shrub Pip cuts makes his Guard sturdier in the Colosseum, and every tree he fells makes his Ascension last longer and hit harder. Clears you've already made count. The Colosseum menu and each tree and shrub show what the work is worth.

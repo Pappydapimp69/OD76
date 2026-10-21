@@ -25,7 +25,7 @@ function runFocusedChecksB168(){
  });
  test('B168 shown on the Colosseum sheet, each tree/shrub sheet, and the tutorial',()=>{
   ranchB99.cleared={};clearAll('trees');ranchB99.fatigue=0;ranchB99.rankUnlocked=1;colSaveB163.tutorial=true;colosseumSheetB164();
-  const t=$('ranchSheetB100').textContent;assert(/0\/\d+ shrubs cut/.test(t)&&/(\d+)\/\1 trees felled: Ascension lasts 1\.2 s longer/.test(t),t);closeSheetB100();
+  const t=$('ranchSheetB100').textContent;assert(/Guard\s*0\/60\s*shrubs cut/.test(t)&&/Ascension\s*28\/28\s*trees felled/.test(t),t);closeSheetB100();
   ranchB99.cleared={};const tree=B106_OBSTACLES.find(o=>o.tree),shrub=B106_OBSTACLES.find(o=>!o.tree);
   obstacleSheetB106(tree.id);assert(/Ascension stronger in the Colosseum/.test($('ranchSheetB100').textContent),'tree sheet');closeSheetB100();
   obstacleSheetB106(shrub.id);assert(/Guard sturdier in the Colosseum/.test($('ranchSheetB100').textContent),'shrub sheet');closeSheetB100();
