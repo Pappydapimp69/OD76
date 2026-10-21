@@ -1,4 +1,4 @@
-# B163 Colosseum (spec, decided, not built)
+# B163 Colosseum
 
 ## Problem
 
@@ -18,12 +18,12 @@ Ranch training only pays off as a stronger start in wave runs. The player never 
 - The Arena gate gets a second choice: **Battle test** (unchanged) or **Colosseum**.
 - Same entry rule as battle tests: refused at the B141 tired line, with the fatigue reading shown.
 - One bracket per visit. Your highest unlocked B108 rank decides which Colosseum ranks you can enter.
-- Fatigue is charged **per fight**: 4% of `fatigueMaxB118()` per fight, so a full 3-fight bracket costs about one battle test. Below the tired line between rounds, the bracket ends and Pip goes home (snack first if one is owned).
+- Fatigue is charged **per fight**: 4% of `fatigueMaxB118()` per fight, so a full 3-fight bracket costs about one battle test. At the tired line between rounds, the bracket ends and Pip goes home.
 
 ### Opponents
 - Each rank E–S has a roster of 8 named rival Pips (handler name, colour, temperament line).
 - Each rival's stats are a **vector** over the four ranch stats, not one power number. Rank sets the total budget; each rival spends it differently (glass-cannon Star Power, tanky Guardian, fast Swift, Heart Sense scavenger).
-- Rival budgets are built from the player's own Pip at entry: rank E = 80% of Pip's total, D 90%, C 100%, B 110%, A 120%, S 135%. That keeps the bracket near Pip's level without a fixed curve that drifts easy (the B108 lesson).
+- Rival budgets are **fixed per rank** (ranch levels summed: E 4, D 12, C 24, B 40, A 60, S 84), spread ±15% across the seven rivals. *(Changed from Pip-relative budgets: those would erase the payoff of training, the reason this mode exists.)*
 - Rival Pips own the Pip Ascendant skill at their rank's ascension level (E none, S asc-5).
 
 ### The fight
@@ -40,13 +40,13 @@ Ranch training only pays off as a stronger start in wave runs. The player never 
 ### Bracket
 - Single elimination, 8 entrants: Pip plus 7 rivals from the rank roster.
 - **Fold seeding** (Brain): seeds by stat total, round 1 = 1v8, 4v5, 2v7, 3v6, so the top two can only meet in the final.
-- Between rounds: one free snack choice (B118 snack list) or a full HP heal, not both.
+- Between rounds: **Heal Pip to full**, or **Catch his breath** (−8% of max fatigue, HP carries over), or go home. *(Snacks stay arena-run items.)*
 - Losing ends the bracket. No heart or stone loss; Pip goes home tired.
 
 ### Rewards and ranks
 - Prize by rounds won: Heart Stones 1/2/4 (QF/SF/final win), times the B108 rank multiplier (×1.0–2.0).
 - **Side mode:** brackets never unlock ranks. Only B108's stage-5 clear does, so the Colosseum can't become a shortcut that skips wave runs (Brain: low-stakes container).
-- A trophy shelf at Pip's bed shows each rank's bracket win (cosmetic).
+- Each rank's bracket win is a trophy. Pip's Ascension level in the ring is his trophy count (max 5); a rival's is its rank index.
 
 ### Hype layer (Brain)
 - One-line announcer cards at fight start, at Ascend, at under 25% HP and at the knockout, plus a crowd-noise swell on the shared sound engine (`b21-81.js`).
@@ -55,6 +55,19 @@ Ranch training only pays off as a stronger start in wave runs. The player never 
 ### Determinism
 - The fight sim uses its own seeded PRNG stream (`colosseumRngB163`), seeded per bracket.
 - Fight outcomes are tested by seed: same seed + same command timeline = same winner.
+
+## As built: stats in the ring
+
+Tuned by seeded sweeps (`B163_T` in `b21-175.js`) so that no single drill dominates:
+- **Star Power**: shot damage, and armour pierce in proportion to how Power-heavy the Pip is.
+- **Swift Pip**: fire rate at the same per-level rate Star Power buys damage, plus dodge (ratio-based, strongest against Power-heavy attackers).
+- **Guardian Glow**: armour (`dmg²/(dmg+armour)`, so many small hits suffer most) and extra HP weight.
+- **Heart Sense**: HEAT gain, aim against dodge, longer Ascension, and heals from hits (hearts knocked loose).
+- Stats enter as `2+3√level`: a 10% stat edge wins about 80–90% instead of 100% (Brain tier-ceiling tension).
+- HEAT from hits follows damage share, not hit count, so fast builds don't Ascend more often.
+- Ascended shots pierce half the armour. Guard lasts 4 s of hold, then breaks for 3 s. You can't Guard while Ascended.
+
+Measured at build time: even fights take 24–31 s (median) at every level; adding ~40% to any one stat wins 68–95%; Power > Guard > Swift > Power holds at levels 16–80. Coaching ladder against the toughest (patient) rival at even stats: no input 0%, mashing Focus and Ascend 12%, guarding against their Ascend 27%, full AI-quality play about 50%.
 
 ## Preserved
 
@@ -71,7 +84,7 @@ Battle tests, waves, B108 stage curve and ranks, HEAT ignition rules, B131 maste
 
 - The gate offers Colosseum and refuses at the tired line exactly like battle tests.
 - Fold seeding pairs 1v8, 4v5, 2v7, 3v6, and seeds 1 and 2 can only meet in the final.
-- Rival budgets match the rank percentages against Pip's entry stats.
+- Rival budgets match the rank table and spread.
 - Ascend is refused under 70% HEAT for both Pips.
 - Same seed + command timeline gives the same result; cosmetic rolls don't change it.
 - An even-stat fight lasts 20–40 s over 50 seeds; no first-hit knockouts.
