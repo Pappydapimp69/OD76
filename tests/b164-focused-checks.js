@@ -41,7 +41,7 @@ function runFocusedChecksB164(){
  test('B164 first visit offers the tutorial; skipping opens the brackets with a practice option',()=>{
   fresh();interactStationB100(st());assert(buttons().some(t=>/Start the tutorial/.test(t))&&buttons().some(t=>/Skip/.test(t)),buttons().join('|'));
   [...document.querySelectorAll('#ranchSheetB100 button')].find(b=>/Skip/.test(b.textContent)).click();
-  assert(colSaveB163.tutorial,'skip not saved');assert(buttons().some(t=>/Rank E bracket/.test(t))&&buttons().some(t=>/Practise with Sprout/.test(t)),buttons().join('|'));closeSheetB100();
+  assert(colSaveB163.tutorial,'skip not saved');assert(buttons().some(t=>/Rank E · prizes/.test(t))&&buttons().some(t=>/Practise with Sprout/.test(t)),buttons().join('|'));closeSheetB100();
  });
  test('B166 tutorial: every lesson completes through real keyboard input, and drills wait for Pip',()=>{
   fresh();const fat=ranchB99.fatigue,stones=ranchB99.stones;startTutorialB164();frames(160);
@@ -54,7 +54,7 @@ function runFocusedChecksB164(){
   assert(!colB163.active&&colSaveB163.tutorial,'tutorial did not finish');
   assert(order.length===B164_STEPS.length-2&&order[0]==='Focus'&&order.includes('Strike the broken guard')&&order.includes('Finish it'),order.join(' > '));
   assert(ranchB99.fatigue===fat&&ranchB99.stones===stones,'tutorial cost fatigue or paid stones');
-  assert(buttons().some(t=>/bracket/.test(t)),'brackets not offered after the tutorial');closeSheetB100();
+  assert(buttons().some(t=>/^Rank [A-Z] · prizes/.test(t)),'brackets not offered after the tutorial');closeSheetB100();
  });
  test('B166 tutorial completes through the touch buttons too',()=>{
   fresh();startTutorialB164();const w=ranchWorldB100;frames(160);

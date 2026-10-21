@@ -1,5 +1,9 @@
 # Pending builds
 
+## B169 Colosseum sheet layout — SHIPPED in `b21-180.js`
+
+See `docs/B169-colosseum-sheet.md`.
+
 ## B168 Ranch work → Colosseum — SHIPPED in `b21-179.js`
 
 See `docs/B168-ranch-work.md`.
