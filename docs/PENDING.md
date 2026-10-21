@@ -1,5 +1,9 @@
 # Pending builds
 
+## B170 Colosseum sound — SHIPPED in `b21-181.js` (generated) / `b21-182.js`
+
+See `docs/B170-colosseum-sound.md`.
+
 ## B169 Colosseum sheet layout — SHIPPED in `b21-180.js`
 
 See `docs/B169-colosseum-sheet.md`.
