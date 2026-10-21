@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B166: A fuller Colosseum tutorial
+
+The sparring tutorial now explains the rules as well as the buttons: the HP, HEAT and Guard bars, how HEAT fills, why Focus is wasted on a guard, how guards break and how to punish a broken one, how fights are won, which stats counter which, and how brackets, fatigue and prizes work. It ends with a real knockout. Still skippable and replayable.
+
 ## B165: The Colosseum looks and sounds like its own game
 
 Inside the Colosseum it's dusk in a torchlit stone bowl: a silhouette crowd that roars, embers, sparks, war drums, iron-and-bronze HUD. Gamepads work throughout: A Focus, X Ascend, hold B Guard, Start pauses, and the d-pad drives every menu. Prompts show the buttons for whatever you're using.
