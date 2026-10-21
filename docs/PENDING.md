@@ -1,5 +1,9 @@
 # Pending builds
 
+## B163 Colosseum — SHIPPED in `b21-175.js`
+
+Spec and as-built notes: `docs/B163-colosseum.md`. Playtest question: do matchup counters feel like strategy, and is the coaching ladder learnable?
+
 ## B127 skill refinements and ranch clarity
 
 ### 1. Gravity Well refinement: Event Horizon

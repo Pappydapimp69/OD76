@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B163: Colosseum
+
+The Arena gate now offers the **Colosseum**: eight-Pip brackets against rival Pips, one per rank you've unlocked. You don't fly or shoot; you coach. **A** Focus (next three shots home in), **X** Ascend at 70% HEAT, hold **B** Guard (great against a rival's Ascension). Each fight costs a little fatigue; between rounds pick a full heal or a breather. Wins pay Heart Stones by rank. Every stat matters: Star Power punches through Guardian Glow, Guardian Glow shrugs off Swift Pip's small hits, Swift Pip dodges Star Power's big ones, and Heart Sense heals Pip as he lands hits.
+
 ## B127: Skill refinements and ranch clarity
 
 Gravity Well now forms an orbiting singularity: kills add Mass, loose hearts spiral inward, and a second tap collapses the well. Pip Ascendant cycles unlocked skill Echoes, builds Harmony, emphasizes Pip's strongest bond and ends at level 5 with an Ascendant Finale. The stage-clear meters show their effects in compact chips, the ranch food stall has 25/50/100 Food tiers, and exploration loot, Heart Stones and Star Dust now roll separately on the same 15-kill checkpoint.
