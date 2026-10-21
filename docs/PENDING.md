@@ -2,7 +2,7 @@
 
 ## B163 Colosseum
 
-Spec: `docs/B163-colosseum.md`. Rival-Pip 1v1 brackets per rank; three owner decisions open at the end of the spec.
+Spec: `docs/B163-colosseum.md`. Rival-Pip 1v1 brackets per rank; coach-only, fatigue per fight, side mode (decided). Ready to build.
 
 ## B127 skill refinements and ranch clarity
 

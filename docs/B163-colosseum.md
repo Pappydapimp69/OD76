@@ -1,4 +1,4 @@
-# B163 Colosseum (spec, not built)
+# B163 Colosseum (spec, decided, not built)
 
 ## Problem
 
@@ -17,7 +17,8 @@ Ranch training only pays off as a stronger start in wave runs. The player never 
 ### Entry
 - The Arena gate gets a second choice: **Battle test** (unchanged) or **Colosseum**.
 - Same entry rule as battle tests: refused at the B141 tired line, with the fatigue reading shown.
-- One bracket per visit. A bracket costs a fixed fatigue amount (proposal: 15% of `fatigueMaxB118()`), charged once at entry.
+- One bracket per visit. Your highest unlocked B108 rank decides which Colosseum ranks you can enter.
+- Fatigue is charged **per fight**: 4% of `fatigueMaxB118()` per fight, so a full 3-fight bracket costs about one battle test. Below the tired line between rounds, the bracket ends and Pip goes home (snack first if one is owned).
 
 ### Opponents
 - Each rank E–S has a roster of 8 named rival Pips (handler name, colour, temperament line).
@@ -27,7 +28,7 @@ Ranch training only pays off as a stronger start in wave runs. The player never 
 
 ### The fight
 - Closed round ring, the rank's arena look (B125/B131). No waves and no hearts on the floor.
-- Pip fights on his own using his trained stats. The player coaches instead of shooting:
+- Pip fights on his own using his trained stats. The player **only coaches**: no flying or shooting, so the fight measures Pip's training, not your aim, and his passive bonuses to the player can't stack with his own attacks (Brain, od76#E8):
   - **A** = Focus: Pip's next 3 shots home on the rival.
   - **X** = Ascend: fires Pip Ascendant if HEAT ≥ 70%. Otherwise a short "not yet" buzz.
   - **B** = Guard: Guardian Glow shield up, Pip doesn't attack while it's held.
@@ -44,7 +45,7 @@ Ranch training only pays off as a stronger start in wave runs. The player never 
 
 ### Rewards and ranks
 - Prize by rounds won: Heart Stones 1/2/4 (QF/SF/final win), times the B108 rank multiplier (×1.0–2.0).
-- Winning the bracket at your highest unlocked rank unlocks the next rank. It counts the same as B108's stage-5 clear: either path unlocks.
+- **Side mode:** brackets never unlock ranks. Only B108's stage-5 clear does, so the Colosseum can't become a shortcut that skips wave runs (Brain: low-stakes container).
 - A trophy shelf at Pip's bed shows each rank's bracket win (cosmetic).
 
 ### Hype layer (Brain)
@@ -74,7 +75,9 @@ Battle tests, waves, B108 stage curve and ranks, HEAT ignition rules, B131 maste
 - Ascend is refused under 70% HEAT for both Pips.
 - Same seed + command timeline gives the same result; cosmetic rolls don't change it.
 - An even-stat fight lasts 20–40 s over 50 seeds; no first-hit knockouts.
-- Prizes, rank multiplier and the rank unlock are exact; a loss costs no hearts or stones.
+- Prizes and rank multiplier are exact; a loss costs no hearts or stones; a bracket win never changes unlocked ranks.
+- Fatigue is charged per fight; a full bracket costs 12% of max; falling below the tired line between rounds ends the bracket.
+- Observed coaching rate (Brain: perceived features need an observed-rate test): over 50 seeded fights with a scripted coach, each command visibly changes the outcome or HP curve in at least 1 fight in 3.
 
 ## Open fork (Brain tension, 🔴 open)
 
@@ -84,8 +87,8 @@ Brain's toy roster had the higher tier win 25 of 28 duels even with vector stats
 - Don't show a single "power" number for rivals unless it's monotone in the real stats (0 inversions). Show the four stat bars instead.
 - Playtest question: at even budget, does a matchup counter (Guardian vs Star Power, say) win often enough to feel like strategy? If not, the vector is cosmetic and coaching has to carry it.
 
-## Decisions for the owner
+## Decided (ZaneGPT + Brain)
 
-1. Coach-only (A/X/B), or let the player fly and shoot alongside Pip too?
-2. Fatigue cost per bracket: 15% of max, or per fight?
-3. Should the Colosseum unlock ranks, or stay a side mode (Brain: a low-stakes container)?
+1. **Coach only.** Shooting would make the fight about aim, and it lets Pip's bonuses stack. Risk: it can feel passive, so the observed-rate check above guards it.
+2. **Fatigue per fight**, capped near one battle test. It gives the snack-or-heal pick between rounds a real choice. Draining as you go and paying up front are different tradeoffs; this one was picked on purpose.
+3. **Side mode.** Ranks gate the Colosseum, not the other way round. Revisit after a playtest.
