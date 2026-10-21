@@ -1,5 +1,9 @@
 # Pending builds
 
+## B168 Ranch work → Colosseum — SHIPPED in `b21-179.js`
+
+See `docs/B168-ranch-work.md`.
+
 ## B167 Arena Ascension perks — SHIPPED in `b21-178.js`
 
 See `docs/B167-ascension-perks.md`.

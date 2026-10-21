@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B168: Ranch work toughens Pip for the Colosseum
+
+Every shrub Pip cuts makes his Guard sturdier in the Colosseum, and every tree he fells makes his Ascension last longer and hit harder. Clears you've already made count. The Colosseum menu and each tree and shrub show what the work is worth.
+
 ## B167: Arena Ascensions carry into the Colosseum
 
 Every skill you Ascend in the arena now gives Pip a perk in the Colosseum: Beam sharpens Focus, Thunderstorm makes hits arc, Guardian strengthens Guard, Nova powers Ascension, and Gravity Well fills HEAT faster. The Colosseum menu lists what Pip has earned.
