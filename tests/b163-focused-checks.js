@@ -59,12 +59,7 @@ function runFocusedChecksB163(){
   colB163.fight.done=true;colB163.fight.winner=0;finishPipFightB163();afterFightB163();assert(!colB163.active,'bracket kept going');
   ranchB99.fatigue=0;
  });
- test('B163 the Arena gate offers the Colosseum only when Pip may battle',()=>{
-  const gate=B100_STATIONS.find(s=>s.id==='gate');ranchB99.fatigue=0;interactStationB100(gate);
-  assert([...document.querySelectorAll('#ranchSheetB100 button')].some(b=>/Colosseum/.test(b.textContent)),'no Colosseum option');closeSheetB100();
-  ranchB99.fatigue=B114_ARENA_MAX_FATIGUE+1;interactStationB100(gate);
-  assert(![...document.querySelectorAll('#ranchSheetB100 button')].some(b=>/Colosseum/.test(b.textContent)),'offered while too tired');closeSheetB100();ranchB99.fatigue=0;
- });
+ // B164 moved the Colosseum out of the Arena gate menu; tests/b164-focused-checks.js covers the building.
  test('B163 save loads clamped',()=>{
   localStorage.setItem(B163_KEY,JSON.stringify({v:1,seed:-5,wins:{E:3,D:'x'},best:{E:9,S:2}}));const c=loadColB163();
   assert(c.seed>=1&&c.wins.E===3&&c.wins.D===0&&c.best.E===3&&c.best.S===2,JSON.stringify(c));localStorage.removeItem(B163_KEY);

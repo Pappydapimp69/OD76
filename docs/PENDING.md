@@ -1,5 +1,9 @@
 # Pending builds
 
+## B164 Colosseum building — SHIPPED in `b21-176.js`
+
+See `docs/B164-colosseum-building.md`.
+
 ## B163 Colosseum — SHIPPED in `b21-175.js`
 
 Spec and as-built notes: `docs/B163-colosseum.md`. Playtest question: do matchup counters feel like strategy, and is the coaching ladder learnable?

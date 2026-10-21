@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B163-COLOSSEUM`.
-- Next numbered runtime file: `b21-176.js`.
+- Current release: `B164-COLOSSEUM-BUILDING`.
+- Next numbered runtime file: `b21-177.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -57,7 +57,8 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Bag gamepad scroll (B161) | `b21-173.js` `focusSheetB100` wrap | Bag open: nav down scrolls `#bagListB143` a row until the end, then moves focus; nav up on the first button scrolls back. All ranch sheets scroll the focused button into view; short landscape screens get taller sheets/bag list. | Browser check only (JSDOM has no layout). |
 | Erase progress (B162) | `b21-174.js` `eraseProgressB162` | Launch screen button under Start, tap twice (arms 4 s). Removes `overdrive76*`/`od76*` keys except movement/heartfield settings, then reloads. | `tests/b162-focused-checks.js` |
 | Colosseum (B163) | `b21-175.js`; wraps `interactStationB100` (gate sheet gets a Colosseum option while `arenaReadyB114()`), `update`/`draw` (own loop while `colB163.active`), `reset` | Rival-Pip 8-entrant brackets per unlocked rank, fold seeding (`B163_FOLD`), seeded fight sim on its own sfc32 stream (`rngB163`); coach A Focus / X Ascend / B Guard (`#ranchGuardB163`, id must start with `ranch`). 4% max fatigue per fight; prizes ◆1/2/4 × rank reward; never unlocks ranks. Tuning in `B163_T`. Save `localStorage['od76-colosseum-b163']={v,seed,wins,best}`. | `tests/b163-focused-checks.js` |
-| Current focused runner | `tests/verify-b163-focused.cjs` | Runs only `tests/b163-focused-checks.js`. |
+| Colosseum building + tutorial (B164) | `b21-176.js`; station `colosseum` pushed to `B100_STATIONS`; wraps `interactStationB100` (strips B163's gate option), `nearestInteractB100`, `updateRanchB100` (one-time reveal), `drawStationB100`, `stepFightB163`/`updateColB163`/`drawColB163`/`roundNameB163` for the tutorial | Locked until `ranchB99.rankUnlocked>=1`. Tutorial vs Sprout: Focus → Ascend → Guard, steps pinned to Pip's own commands; no fatigue or prize. Flags `colSaveB163.tutorial/revealed` in the B163 save. B164 also latches coach presses in `b21-175.js` (`c.pendFocus/pendAscend`). | `tests/b164-focused-checks.js` |
+| Current focused runner | `tests/verify-b164-focused.cjs` | Runs only `tests/b164-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority

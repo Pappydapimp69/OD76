@@ -241,8 +241,9 @@ function updateColB163(dt){
  if(xb){xb.classList.add('on');xb.textContent=c.fight.a.heat>=70&&c.fight.a.ascT<=0?'Ascend':'X'}
  gb?.classList.add('on');
  const f=c.fight;c.acc=Math.min(.25,(c.acc||0)+dt);
- let first=true;
- while(c.acc>=B163_DT&&!f.done){c.acc-=B163_DT;stepFightB163(f,{focus:first&&cmd.focus,ascend:first&&cmd.ascend,guard:cmd.guard},null);first=false}
+ // A press latches until a sim step consumes it: a frame can run zero fixed steps, and the press must not be lost.
+ c.pendFocus=c.pendFocus||cmd.focus;c.pendAscend=c.pendAscend||cmd.ascend;
+ while(c.acc>=B163_DT&&!f.done){c.acc-=B163_DT;stepFightB163(f,{focus:c.pendFocus,ascend:c.pendAscend,guard:cmd.guard},null);c.pendFocus=c.pendAscend=false}
  if(cmd.ascend&&f.a.ascT<=0&&f.a.heat<70)uiSoundB136?.('refuse');
  for(;c.seen<f.events.length;c.seen++){const e=f.events[c.seen];if(e.kind==='ascend'){sayB163('ascend');uiSoundB136?.('hold')}else if(e.kind==='low')sayB163('low');else if(e.kind==='end')sayB163(f.ko?'ko':'clock')}
  if(f.done)finishPipFightB163();
@@ -276,14 +277,14 @@ function drawColB163(){
  // HUD: names, HP, HEAT (with the 70% ignition mark), glow
  const bw=Math.min(220,W*.38),top=W<700?62:84; // clear of the ranch HUD pill
  const side=(fi,x,align)=>{
-  X.textAlign=align;X.fillStyle='#fff';X.font='800 14px system-ui';X.fillText(`${fi.src.name}${fi.src.pip?'':` · seed ${fi.src.seed}`}`,align==='left'?x:x+bw,top-8);
+  X.textAlign=align;X.fillStyle='#fff';X.font='800 14px system-ui';X.fillText(`${fi.src.name}${fi.src.seed&&!fi.src.pip?` · seed ${fi.src.seed}`:''}`,align==='left'?x:x+bw,top-8);
   barB163(x,top,bw,10,fi.hp/fi.maxHp,fi.hp<fi.maxHp*.25?'#ff6f7d':'#7ff0a0');
   barB163(x,top+14,bw,6,fi.heat/100,fi.heat>=70?'#ffd36f':'#ff9f4a');X.fillStyle='#fff';X.fillRect(x+bw*.7-1,top+12,2,10);
   barB163(x,top+24,bw,4,fi.glow,fi.broken>0?'#ff9aa6':'#9fe3ff');
  };
  side(f.a,16,'left');side(f.b,W-16-bw,'right');
  X.textAlign='center';X.fillStyle='#fff';X.font='800 20px system-ui';X.fillText(Math.max(0,Math.ceil(B163_CLOCK-f.t)),W/2,top+14);
- X.font='700 12px system-ui';X.fillStyle='#ffffffaa';X.fillText(`RANK ${B108_RANKS[rk].id} · ${roundNameB163(c.br)}`,W/2,top-8);
+ X.font='700 12px system-ui';X.fillStyle='#ffffffaa';X.fillText(c.br.tutorial?roundNameB163(c.br):`RANK ${B108_RANKS[rk].id} · ${roundNameB163(c.br)}`,W/2,top-8);
  if(c.phase==='intro'){
   X.fillStyle='#000a';X.fillRect(0,cy-70,W,140);X.fillStyle='#fff';X.font='900 26px system-ui';X.fillText(`${roundNameB163(c.br)}: Pip vs ${c.opp.name}`,W/2,cy-22);
   X.font='600 14px system-ui';X.fillStyle='#ffd36f';const s=c.opp.stats;X.fillText(`${c.opp.name} ${c.opp.line}. ♥${s.range} ➜${s.speed} ✦${s.power} ◇${s.guard}`,W/2,cy+6);
