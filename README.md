@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B170: The Colosseum sounds like a colosseum
+
+The Colosseum now uses the procedural sound engine: a crowd of synthesized voices that swells and gasps with the fight, Pip's and rivals' cries when they Ascend and fall, sand thuds for every hit, footsteps, and a long stone-bowl reverb around the war drums. Everything is synthesized in the browser; there are no audio files.
+
 ## B169: A Colosseum menu you can read
 
 The Colosseum menu is now a few labelled rows instead of a paragraph: what a fight costs, what it pays, how to coach, and Pip's edge (Guard from shrubs, Ascension from trees, arena skills, trophies) with progress bars.
