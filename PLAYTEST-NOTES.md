@@ -1,3 +1,41 @@
+# Playtest notes (B170 Colosseum Sound, Nick) — item 1 shipped in B173; items 2-3 in B174, 5 in B175, 4 and 6 in B176
+
+1. **Refinery opening tap presses a button** — shipped in B173 (`b21-185.js`).
+
+2. **Star Dust fuses as one load, one timer** (shipped in B174, as dust slots):
+   - Fusing ✧50 starts ★10 at once under a single timer, not ten 15-minute timers back to back.
+   - Works like a heart load: load the dust, one countdown, all the Star Stones land together.
+   - Current B156 behaviour: each ★1 lands 15 min after the last, so Fuse all on ✧50 takes 150 min and reads as "took my dust, gave nothing".
+
+3. **Heart refining batches into slots** (shipped in B174):
+   - A heart load fills a slot as one batch with one timer (Lv 1: 15 min, the refinery's stone time); every stone in the batch lands together.
+   - Slot capacity: ♥300 at Lv 1, doubling each refinery level (600, 1200, 2400, 4800, 9600 at Lv 6).
+   - Example: ♥300 at Lv 1 = one full slot = ◆6 in 15 min.
+   - Slots: 2 at Lv 1-2, then +1 at Lv 3, 4 and 5 (5 slots at Lv 5-6).
+   - A slot always finishes what's in it in one refine time (Lv 1: 15 min); stones drip out evenly. ♥100 = ◆2 → one ◆ every 7.5 min.
+   - Topping up restarts the slot's timer on what's left: halfway through ♥100 (♥50 left), add ♥100 → ♥150 left = ◆3 over 15 min → one ◆ every 5 min.
+   - Loading is per slot: tap a slot to load it (Min or Max), replacing the Refine buttons in the card below. The player picks what goes where.
+   - Min = the B155 level minimum (♥50 at Lv 1, ♥100 at Lv 2, doubling). Max = slot capacity or what the player holds, whichever is less.
+   - Star Dust loads into a slot the same way (one batch, one timer, stones drip evenly); this replaces item 2's separate fuser.
+   - Dust slot: capacity ✧30 at Lv 1 (★6), doubling per level like hearts; min ✧5 at every level; same refine time (15 min at Lv 1). A slot holds hearts or dust, never both.
+   - Refinery sheet: the wallet row (♥ ◆ ✧ ★ inventory) is repurposed to show the slots (fill and timer each).
+
+4. **Survey: fatigue as a percentage** (shipped in B176):
+   - The survey still says "Gate stops at 100 fatigue" (`b21-113.js` lines 94 and 102). Arena fatigue is a % of `fatigueMaxB118()` (100 + 4 per endurance), so 100 is no longer the cap.
+   - Reword to "Gate stops at 100% fatigue"; count stays `exhaustedB115()` (already the real max).
+
+5. **Skip between-stage pages with nothing to buy** (shipped in B175):
+   - Traits / Hearts / Sound Lab / Overdrive / Boss Bond / Merchant: a page with nothing affordable is skipped; the step counter counts only shown pages.
+   - A page that is shown notes what was skipped ("Skipped Traits and Sound Lab, nothing to buy yet").
+   - Head out keeps Pip's Tired (%) / Food / Clean meters and adds "Saving up for": each skipped page with its cheapest cost, a progress bar, how much more is needed, and a Peek button.
+   - Peek opens the page look-only; Back to Head out is a plain tap.
+   - Mockups: https://claude.ai/artifact/CuuhSQTmN2eJuwEucrSh2w
+
+6. **Shorter holds** (shipped in B176):
+   - Continue / Next stage / page moves: 0.4 s (B124 is 0.9 s).
+   - Regular buys: 0.6 s (Overdrive and Sound Lab are 1.8 s).
+   - Big one-way buys (Ascend): keep 1.8 s.
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.

@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B173-TAP-GUARD`.
-- Next numbered runtime file: `b21-186.js`.
+- Current release: `B176-SLOTS-SKIPS-HOLDS`.
+- Next numbered runtime file: `b21-189.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -68,7 +68,10 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Analytics fix (B171) | `b21-183.js`; wraps `bankRunB99` (home bank sends `run/end/home` + `run/skill-uses` via `runEndB171`), `trackB136` (`run/start` drops the skill), flushes `pendingB147` on `pagehide`/hidden | Fall path still reports through the B136 `finish` wrap. | `tests/b171-focused-checks.js` |
 | Wave reached (B172) | `b21-184.js`; wraps `runEndB171` and `finish` to send `run/wave-reached/rank-X/stage-S/wave-W` (wave within the stage, `boss`, or `cleared` at the stage break) once per run end, plus `sess/<id>/run-N/...` and `sess/<id>/start/...` with a random per-page-load id (`sessIdB172`, memory only) | Home, fall and complete all report. | `tests/b172-focused-checks.js` |
 | Sheet tap guard (B173) | `b21-185.js`; wraps `openSheetB100` (stamps a fresh open), capture `click` on `#ranchSheetB100`, capture `pointerdown` on window | A sheet button ignores a pointer click (detail>0) whose pointer went down before the sheet opened, so the opening tap can't hit Back or Fuse all. Redraws while open stay armed; keyboard/gamepad/code clicks pass. | `tests/b173-focused-checks.js` |
-| Current focused runner | `tests/verify-b173-focused.cjs` | Runs only `tests/b173-focused-checks.js`. |
+| Refinery slots (B174) | `b21-186.js`; `ranchB99.slots[5]={kind,n,made,start,dur}`; replaces `loadHeartsB102`/`startFuseB156` (first slot that fits), `refinerySlotsB117f`, `refineryGateTextB107`; wraps `tickRefineryB102`, `updateRanchB100`, `refinerySheetB102`, `openSheetB100`, `chooseSheetB100`, `updateRefineryB158`, `refineSignB158` | Hearts or dust per slot, one timer (`refineSecondsB102`) per load, units drip evenly; top-up restarts the timer on what's left. Cap ♥300/✧30 ×2 per level; Min = B155 minimum (✧5); Max = space or holdings. Slots 2/2/3/4/5/5. Tiles replace the B158 wallet; Refine/Fuse cards hidden; tile → `Refinery · Slot N` sheet (Min/Max; Back / Exit returns to the refinery). Old queues refunded once on load. Supersedes the B155/B156/B158 refine/fuse checks (those now fail by design). | `tests/b174-focused-checks.js` |
+| Skip empty pages (B175) | `b21-187.js`; `B175_PAGES`, MutationObserver on step classes, `S.b175={stage,skipped,peek}`; wraps `openStageUpgrade`, `stepsB136` | Traits/Hearts/Sound Lab/Overdrive (B149 out-of-options) and Merchant (♥ below cheapest snack/dust) are skipped via their own advance functions; shown pages get a `.b175Note`; Head out gets `#b175Saving` (cheapest cost, bar, Peek). Peek = page look-only + `#b175Back`. Checks set `stageInputLockMsB117i=0`. | `tests/b175-focused-checks.js` |
+| Shorter holds + survey (B176) | `b21-188.js`; wraps `beginHoldB117h`, `beginSoundLabHoldB45`, `statsTextB117`, `detailB117` | Nav holds 0.4s, buys 0.6s (Sound Lab too), Ascend (`b132Main` reading Ascend) 1.8s; B117q repeats capped at these. Survey: "100% fatigue". | `tests/b176-focused-checks.js` |
+| Current focused runner | `tests/verify-b176-focused.cjs` | Runs only `tests/b176-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority
