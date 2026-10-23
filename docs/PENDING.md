@@ -1,5 +1,9 @@
 # Pending builds
 
+## B172 Highest wave per run — SHIPPED in `b21-184.js`
+
+Every run end sends `od76/run/wave-reached/wave-N` (overall wave, `S.wave`). Checks: `tests/b172-focused-checks.js`.
+
 ## B171 Analytics fix — SHIPPED in `b21-183.js`
 
 See `docs/B171-analytics-fix.md`.
