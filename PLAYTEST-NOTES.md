@@ -11,6 +11,9 @@
    - A heart load fills a slot as one batch with one timer (Lv 1: 15 min, the refinery's stone time); every stone in the batch lands together.
    - Slot capacity: ♥300 at Lv 1, doubling each refinery level (600, 1200, 2400, 4800, 9600 at Lv 6).
    - Example: ♥300 at Lv 1 = one full slot = ◆6 in 15 min.
+   - Slots: one more slot per refinery level.
+   - A slot always finishes what's in it in one refine time (Lv 1: 15 min); stones drip out evenly. ♥100 = ◆2 → one ◆ every 7.5 min.
+   - Topping up restarts the slot's timer on what's left: halfway through ♥100 (♥50 left), add ♥100 → ♥150 left = ◆3 over 15 min → one ◆ every 5 min.
    - Refinery sheet: the wallet row (♥ ◆ ✧ ★ inventory) is repurposed to show the slots (fill and timer each).
 
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
