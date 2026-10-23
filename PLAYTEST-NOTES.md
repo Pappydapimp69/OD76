@@ -20,6 +20,10 @@
    - Dust slot: capacity ✧30 at Lv 1 (★6), doubling per level like hearts; min ✧5 at every level; same refine time (15 min at Lv 1). A slot holds hearts or dust, never both.
    - Refinery sheet: the wallet row (♥ ◆ ✧ ★ inventory) is repurposed to show the slots (fill and timer each).
 
+4. **Survey: fatigue as a percentage** (pending build):
+   - The survey still says "Gate stops at 100 fatigue" (`b21-113.js` lines 94 and 102). Arena fatigue is a % of `fatigueMaxB118()` (100 + 4 per endurance), so 100 is no longer the cap.
+   - Reword to "Gate stops at 100% fatigue"; count stays `exhaustedB115()` (already the real max).
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.
