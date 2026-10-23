@@ -7,6 +7,12 @@
    - Works like a heart load: load the dust, one countdown, all the Star Stones land together.
    - Current B156 behaviour: each ★1 lands 15 min after the last, so Fuse all on ✧50 takes 150 min and reads as "took my dust, gave nothing".
 
+3. **Heart refining batches into slots** (pending build):
+   - A heart load fills a slot as one batch with one timer (Lv 1: 15 min, the refinery's stone time); every stone in the batch lands together.
+   - Slot capacity: ♥300 at Lv 1, doubling each refinery level (600, 1200, 2400, 4800, 9600 at Lv 6).
+   - Example: ♥300 at Lv 1 = one full slot = ◆6 in 15 min.
+   - Refinery sheet: the wallet row (♥ ◆ ✧ ★ inventory) is repurposed to show the slots (fill and timer each).
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.
