@@ -46,6 +46,12 @@
    - Trait / Heart / Boss Bond cards clamp their effect to 2 lines (B135/B136), so the effect reads "...".
    - Show the full effect of the focused or last-touched card in a detail line under the grid (touch, gamepad focus or hover), so reading never starts a buy.
 
+9. **Colosseum trophies speed up Overdrive mastery** (pending build):
+   - Every Colosseum bracket win earns one trophy for that rank (a spendable count, separate from the B163 "won this rank" trophies that set Pip's ring Ascension).
+   - Trophies are rank locked: rank D trophies can only be spent in rank D arena runs.
+   - Spending one adds 5 skill uses to any unlocked Overdrive skill's current tier progress; it is used up.
+   - The player still unlocks skills and pays ★ for every tier, level-up and Ascend; trophies never grant tiers or levels by themselves.
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.
