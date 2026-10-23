@@ -1,3 +1,12 @@
+# Playtest notes (B170 Colosseum Sound, Nick) — item 1 shipped in B173
+
+1. **Refinery opening tap presses a button** — shipped in B173 (`b21-185.js`).
+
+2. **Star Dust fuses as one load, one timer** (pending build):
+   - Fusing ✧50 starts ★10 at once under a single timer, not ten 15-minute timers back to back.
+   - Works like a heart load: load the dust, one countdown, all the Star Stones land together.
+   - Current B156 behaviour: each ★1 lands 15 min after the last, so Fuse all on ✧50 takes 150 min and reads as "took my dust, gave nothing".
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.
