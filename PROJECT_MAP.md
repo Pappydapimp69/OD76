@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B170-COLOSSEUM-SOUND`.
-- Next numbered runtime file: `b21-183.js`.
+- Current release: `B171-ANALYTICS-FIX`.
+- Next numbered runtime file: `b21-184.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -65,7 +65,8 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Colosseum sheet layout (B169) | `b21-180.js`; outermost `openSheetB100` wrap for the `Colosseum ⚔` bracket sheet: blanks the text, renders `colosseumBodyB169()` rows/tiles into the `<p>` (class `b169`), relabels bracket buttons (`bracketLabelB169`) | Cost / Prize / Coach rows; Pip's edge tiles (Guard, Ascension, Arena skills, Trophies). | `tests/b169-focused-checks.js` |
 | Sound engine DSP (B170) | `b21-181.js`, **generated** by `scripts/vendor-sound-engine.mjs <sound-engine checkout>` from `Pappydapimp69/sound-engine` `src/dsp`; exposes `SoundEngineDSP` | Never hand-edit; re-run the script after changing sound-engine. | `tests/b170-focused-checks.js` |
 | Colosseum sound (B170) | `b21-182.js`; sliced offline renders (`jobsB170`, `pumpB170`), bus + FDN convolver (`connectBusB170`), `playB170`, crowd bed (`bedB170`), event/hit cues (`colSoundTickB170`); wraps `cheerB163`, `update`, `PipAudioEngine` untouched (music bus gets a reverb send while active) | Starts rendering on the first Colosseum sheet/bracket/tutorial; tones stand in until ready. | `tests/b170-focused-checks.js` |
-| Current focused runner | `tests/verify-b170-focused.cjs` | Runs only `tests/b170-focused-checks.js`. |
+| Analytics fix (B171) | `b21-183.js`; wraps `bankRunB99` (home bank sends `run/end/home` + `run/skill-uses` via `runEndB171`), `trackB136` (`run/start` drops the skill), flushes `pendingB147` on `pagehide`/hidden | Fall path still reports through the B136 `finish` wrap. | `tests/b171-focused-checks.js` |
+| Current focused runner | `tests/verify-b171-focused.cjs` | Runs only `tests/b171-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority
