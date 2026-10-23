@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B176-SLOTS-SKIPS-HOLDS`.
-- Next numbered runtime file: `b21-189.js`.
+- Current release: `B178-COLOSSEUM-REWORK`.
+- Next numbered runtime file: `b21-191.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -71,7 +71,9 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Refinery slots (B174) | `b21-186.js`; `ranchB99.slots[5]={kind,n,made,start,dur}`; replaces `loadHeartsB102`/`startFuseB156` (first slot that fits), `refinerySlotsB117f`, `refineryGateTextB107`; wraps `tickRefineryB102`, `updateRanchB100`, `refinerySheetB102`, `openSheetB100`, `chooseSheetB100`, `updateRefineryB158`, `refineSignB158` | Hearts or dust per slot, one timer (`refineSecondsB102`) per load, units drip evenly; top-up restarts the timer on what's left. Cap ♥300/✧30 ×2 per level; Min = B155 minimum (✧5); Max = space or holdings. Slots 2/2/3/4/5/5. Tiles replace the B158 wallet; Refine/Fuse cards hidden; tile → `Refinery · Slot N` sheet (Min/Max; Back / Exit returns to the refinery). Old queues refunded once on load. Supersedes the B155/B156/B158 refine/fuse checks (those now fail by design). | `tests/b174-focused-checks.js` |
 | Skip empty pages (B175) | `b21-187.js`; `B175_PAGES`, MutationObserver on step classes, `S.b175={stage,skipped,peek}`; wraps `openStageUpgrade`, `stepsB136` | Traits/Hearts/Sound Lab/Overdrive (B149 out-of-options) and Merchant (♥ below cheapest snack/dust) are skipped via their own advance functions; shown pages get a `.b175Note`; Head out gets `#b175Saving` (cheapest cost, bar, Peek). Peek = page look-only + `#b175Back`. Checks set `stageInputLockMsB117i=0`. | `tests/b175-focused-checks.js` |
 | Shorter holds + survey (B176) | `b21-188.js`; wraps `beginHoldB117h`, `beginSoundLabHoldB45`, `statsTextB117`, `detailB117` | Nav holds 0.4s, buys 0.6s (Sound Lab too), Ascend (`b132Main` reading Ascend) 1.8s; B117q repeats capped at these. Survey: "100% fatigue". | `tests/b176-focused-checks.js` |
-| Current focused runner | `tests/verify-b176-focused.cjs` | Runs only `tests/b176-focused-checks.js`. |
+| Full upgrade text (B177) | `b21-189.js`; `.b177Detail` under Traits/Hearts/Boss Bond grids; wraps `focusGamepadButtonB35`, `openStageUpgrade`; 200ms decorate | Shows the full effect of the card last touched / focused / hovered (default first card); re-read every tick so levels and costs stay current. | `tests/b177-focused-checks.js` |
+| Colosseum rework (B178) | `b21-190.js`; `B178` tunables; wraps `bracketB163` (archetypes dealt from the bracket seed), `rivalB163` (scaled stats, asc, mirrored perks/labour, `trick`), `aiCmdB163` (Breaker focus-into-guard, Feint wind-up), `landShotB163` (Breaker full damage + crack), `drawPipB165` (wind-up ring) | Middle rival = max(rank budget, Pip total × 0.88); rivals get Pip's trophy Ascension and 75% of his perks/ranch work, so B167/B168 checks asserting bare rivals now fail by design. Feint winds up only while Pip can guard; every other wind-up is fake and breaks a guard raised against it. Sweeps: good scripted coach ~25-37% brackets once scaling applies (QF ~100, SF ~70-75, F ~36-49), none 0%; ranks D/B sit on fixed budgets (~50%). Scripted good vs careless coaches score about the same: tricks need a live playtest. | `tests/b178-focused-checks.js` |
+| Current focused runner | `tests/verify-b178-focused.cjs` | Runs only `tests/b178-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority
