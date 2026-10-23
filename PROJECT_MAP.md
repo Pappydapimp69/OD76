@@ -66,7 +66,7 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Sound engine DSP (B170) | `b21-181.js`, **generated** by `scripts/vendor-sound-engine.mjs <sound-engine checkout>` from `Pappydapimp69/sound-engine` `src/dsp`; exposes `SoundEngineDSP` | Never hand-edit; re-run the script after changing sound-engine. | `tests/b170-focused-checks.js` |
 | Colosseum sound (B170) | `b21-182.js`; sliced offline renders (`jobsB170`, `pumpB170`), bus + FDN convolver (`connectBusB170`), `playB170`, crowd bed (`bedB170`), event/hit cues (`colSoundTickB170`); wraps `cheerB163`, `update`, `PipAudioEngine` untouched (music bus gets a reverb send while active) | Starts rendering on the first Colosseum sheet/bracket/tutorial; tones stand in until ready. | `tests/b170-focused-checks.js` |
 | Analytics fix (B171) | `b21-183.js`; wraps `bankRunB99` (home bank sends `run/end/home` + `run/skill-uses` via `runEndB171`), `trackB136` (`run/start` drops the skill), flushes `pendingB147` on `pagehide`/hidden | Fall path still reports through the B136 `finish` wrap. | `tests/b171-focused-checks.js` |
-| Wave reached (B172) | `b21-184.js`; wraps `runEndB171` and `finish` to send `run/wave-reached/wave-N` (`S.wave`) once per run end | Home, fall and complete all report. | `tests/b172-focused-checks.js` |
+| Wave reached (B172) | `b21-184.js`; wraps `runEndB171` and `finish` to send `run/wave-reached/rank-X/stage-S/wave-W` (wave within the stage, `boss`, or `cleared` at the stage break) once per run end | Home, fall and complete all report. | `tests/b172-focused-checks.js` |
 | Current focused runner | `tests/verify-b172-focused.cjs` | Runs only `tests/b172-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 

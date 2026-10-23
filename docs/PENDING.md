@@ -2,7 +2,7 @@
 
 ## B172 Highest wave per run — SHIPPED in `b21-184.js`
 
-Every run end sends `od76/run/wave-reached/wave-N` (overall wave, `S.wave`). Checks: `tests/b172-focused-checks.js`.
+Every run end sends `od76/run/wave-reached/rank-X/stage-S/wave-W` (`W` is 1-3 within the stage, `boss`, or `cleared` at the stage break). Checks: `tests/b172-focused-checks.js`.
 
 ## B171 Analytics fix — SHIPPED in `b21-183.js`
 
