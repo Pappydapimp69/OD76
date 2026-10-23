@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B172-WAVE-REACHED`.
-- Next numbered runtime file: `b21-185.js`.
+- Current release: `B173-TAP-GUARD`.
+- Next numbered runtime file: `b21-186.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -67,7 +67,8 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Colosseum sound (B170) | `b21-182.js`; sliced offline renders (`jobsB170`, `pumpB170`), bus + FDN convolver (`connectBusB170`), `playB170`, crowd bed (`bedB170`), event/hit cues (`colSoundTickB170`); wraps `cheerB163`, `update`, `PipAudioEngine` untouched (music bus gets a reverb send while active) | Starts rendering on the first Colosseum sheet/bracket/tutorial; tones stand in until ready. | `tests/b170-focused-checks.js` |
 | Analytics fix (B171) | `b21-183.js`; wraps `bankRunB99` (home bank sends `run/end/home` + `run/skill-uses` via `runEndB171`), `trackB136` (`run/start` drops the skill), flushes `pendingB147` on `pagehide`/hidden | Fall path still reports through the B136 `finish` wrap. | `tests/b171-focused-checks.js` |
 | Wave reached (B172) | `b21-184.js`; wraps `runEndB171` and `finish` to send `run/wave-reached/rank-X/stage-S/wave-W` (wave within the stage, `boss`, or `cleared` at the stage break) once per run end, plus `sess/<id>/run-N/...` and `sess/<id>/start/...` with a random per-page-load id (`sessIdB172`, memory only) | Home, fall and complete all report. | `tests/b172-focused-checks.js` |
-| Current focused runner | `tests/verify-b172-focused.cjs` | Runs only `tests/b172-focused-checks.js`. |
+| Sheet tap guard (B173) | `b21-185.js`; wraps `openSheetB100` (stamps a fresh open), capture `click` on `#ranchSheetB100`, capture `pointerdown` on window | A sheet button ignores a pointer click (detail>0) whose pointer went down before the sheet opened, so the opening tap can't hit Back or Fuse all. Redraws while open stay armed; keyboard/gamepad/code clicks pass. | `tests/b173-focused-checks.js` |
+| Current focused runner | `tests/verify-b173-focused.cjs` | Runs only `tests/b173-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority
