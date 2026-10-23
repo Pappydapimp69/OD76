@@ -4,7 +4,7 @@
 
 ## B172: Highest wave per run
 
-Every run now reports how far it got (rank, stage, and wave within the stage or the boss), however it ended.
+Every run now reports how far it got (rank, stage, and wave within the stage or the boss), however it ended, linked to the play session it came from (a random id per page load, nothing stored).
 
 ## B171: Play stats that match play
 

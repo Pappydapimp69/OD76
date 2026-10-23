@@ -1,10 +1,20 @@
 
-// B172 Highest wave per run. Every run end (fall, complete or heading home) also sends
-// run/wave-reached/rank-X/stage-S/wave-W: the rank, the stage, and the wave within that stage (1-3); "boss" when
-// the run ended during the stage's boss fight, "cleared" when it ended at the stage break (heading home).
+// B172 Highest wave per run, linked to its session. Every run end (fall, complete or heading home) sends
+// run/wave-reached/rank-X/stage-S/W, where W is the wave within the stage (wave-1..3), "boss" when the run ended
+// during the stage's boss fight, or "cleared" when it ended at the stage break (heading home).
+// GoatCounter only keeps per-path counts, so a run can't be tied to a session after the fact. Each page load gets a
+// random id (memory only, never stored, no personal data); every run end also sends
+// od76/sess/<id>/run-N/rank-X/stage-S/W, and the session opens with od76/sess/<id>/start/<new|returning>/<device>.
+const sessIdB172=Math.random().toString(36).slice(2,8);let sessRunsB172=0;
+(function sessStartB172(){
+ const s=(analyticsLogB136.find(p=>p.startsWith('od76/session/start/'))||'').split('/'); // B136 session/start/<who>/<device>/…
+ trackB136(['sess',sessIdB172,'start',s[3]||'x',s[4]||'x'],'Session');
+})();
+function stageSpotB172(){return S?.stagePending?'cleared':S?.bossActive?'boss':`wave-${Math.max(1,S?.stageWaveCount||1)}`}
 function waveReachedB172(){
- const w=S?.stagePending?'cleared':S?.bossActive?'boss':`wave-${Math.max(1,S?.stageWaveCount||1)}`;
- trackB136(['run','wave-reached',`rank-${rankB136()}`,`stage-${S?.stage||1}`,w],'Wave reached');
+ const rank=`rank-${rankB136()}`,stage=`stage-${S?.stage||1}`,w=stageSpotB172();
+ trackB136(['run','wave-reached',rank,stage,w],'Wave reached');
+ trackB136(['sess',sessIdB172,`run-${++sessRunsB172}`,rank,stage,w],'Session run');
 }
 const runEndBeforeB172=runEndB171;
 runEndB171=function(...a){const out=runEndBeforeB172(...a);waveReachedB172();return out};

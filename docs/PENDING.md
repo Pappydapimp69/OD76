@@ -2,7 +2,7 @@
 
 ## B172 Highest wave per run — SHIPPED in `b21-184.js`
 
-Every run end sends `od76/run/wave-reached/rank-X/stage-S/wave-W` (`W` is 1-3 within the stage, `boss`, or `cleared` at the stage break). Checks: `tests/b172-focused-checks.js`.
+Every run end sends `od76/run/wave-reached/rank-X/stage-S/wave-W` (`W` is 1-3 within the stage, `boss`, or `cleared` at the stage break). Each run end also sends `od76/sess/<id>/run-N/rank-X/stage-S/W` with a random per-page-load id, and the session opens with `od76/sess/<id>/start/<new|returning>/<device>`. Checks: `tests/b172-focused-checks.js`.
 
 ## B171 Analytics fix — SHIPPED in `b21-183.js`
 

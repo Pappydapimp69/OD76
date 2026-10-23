@@ -16,5 +16,15 @@ function runFocusedChecksB172(){
  test('B172 finishing an already-ended run sends nothing more',()=>{
   live();finish(true);sent.length=0;finish(true);assert(!reached().length,'sent again');
  });
+ test('B172 each run end is linked to this session with a run number',()=>{
+  live();finish(true);live();S.stagePending=true;returnToRanchB99();
+  const r=sent.filter(p=>p.startsWith('od76/sess/'+sessIdB172+'/run-'));
+  assert(r.length===2&&/\/run-\d+\/rank-[a-z]+\/stage-4\/wave-2$/.test(r[0])&&/\/stage-4\/cleared$/.test(r[1]),'session runs: '+r);
+  const n=r.map(p=>+p.match(/run-(\d+)/)[1]);assert(n[1]===n[0]+1,'run numbers '+n);
+ });
+ test('B172 the session id is random, short and not stored',()=>{
+  assert(/^[a-z0-9]{4,6}$/.test(sessIdB172),'id '+sessIdB172);
+  for(let i=0;i<localStorage.length;i++)assert(!String(localStorage.getItem(localStorage.key(i))).includes(sessIdB172),'id stored');
+ });
  return out;
 }
