@@ -11,10 +11,12 @@
    - A heart load fills a slot as one batch with one timer (Lv 1: 15 min, the refinery's stone time); every stone in the batch lands together.
    - Slot capacity: ♥300 at Lv 1, doubling each refinery level (600, 1200, 2400, 4800, 9600 at Lv 6).
    - Example: ♥300 at Lv 1 = one full slot = ◆6 in 15 min.
-   - Slots: one more slot per refinery level.
+   - Slots: 2 at Lv 1-2, then +1 at Lv 3, 4 and 5 (5 slots at Lv 5-6).
    - A slot always finishes what's in it in one refine time (Lv 1: 15 min); stones drip out evenly. ♥100 = ◆2 → one ◆ every 7.5 min.
    - Topping up restarts the slot's timer on what's left: halfway through ♥100 (♥50 left), add ♥100 → ♥150 left = ◆3 over 15 min → one ◆ every 5 min.
    - Loading is per slot: tap a slot to load it (Min or Max), replacing the Refine buttons in the card below. The player picks what goes where.
+   - Min = the B155 level minimum (♥50 at Lv 1, ♥100 at Lv 2, doubling). Max = slot capacity or what the player holds, whichever is less.
+   - Star Dust loads into a slot the same way (one batch, one timer, stones drip evenly); this replaces item 2's separate fuser.
    - Refinery sheet: the wallet row (♥ ◆ ✧ ★ inventory) is repurposed to show the slots (fill and timer each).
 
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
