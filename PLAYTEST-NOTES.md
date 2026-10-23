@@ -36,6 +36,16 @@
    - Regular buys: 0.6 s (Overdrive and Sound Lab are 1.8 s).
    - Big one-way buys (Ascend): keep 1.8 s.
 
+7. **Colosseum too easy: rework** (pending build):
+   - Sim (both sides on AI): Pip at a rank's average rival total wins ~80% per fight; at 1.25x it wins 93-100%. Rival totals are fixed per rank (B163_BUDGET up to 84) while ranch training is uncapped (B113), and Pip's trophy/Ascension/labour bonuses stack with no rival equivalent.
+   - Rivals scale off Pip's stat total but trail it (sublinear), so training still pays and the final stays close.
+   - Rivals with tricks that need coaching (e.g. a feint that baits Guard, punishing a badly timed Ascend): difficulty from decisions, not stats.
+   - Tune with the seeded simulator to a target: good coaching wins ~70% QF / ~55% SF / ~45% final (about a 1-in-5 bracket win); no coaching loses most finals.
+
+8. **Upgrade text cut off between stages** (pending build):
+   - Trait / Heart / Boss Bond cards clamp their effect to 2 lines (B135/B136), so the effect reads "...".
+   - Show the full effect of the focused or last-touched card in a detail line under the grid (touch, gamepad focus or hover), so reading never starts a buy.
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.
