@@ -14,6 +14,7 @@
    - Slots: one more slot per refinery level.
    - A slot always finishes what's in it in one refine time (Lv 1: 15 min); stones drip out evenly. ♥100 = ◆2 → one ◆ every 7.5 min.
    - Topping up restarts the slot's timer on what's left: halfway through ♥100 (♥50 left), add ♥100 → ♥150 left = ◆3 over 15 min → one ◆ every 5 min.
+   - Loading is per slot: tap a slot to load it (Min or Max), replacing the Refine buttons in the card below. The player picks what goes where.
    - Refinery sheet: the wallet row (♥ ◆ ✧ ★ inventory) is repurposed to show the slots (fill and timer each).
 
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
