@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B178-COLOSSEUM-REWORK`.
-- Next numbered runtime file: `b21-191.js`.
+- Current release: `B179-SLOTS-RELOAD`.
+- Next numbered runtime file: `b21-192.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -73,7 +73,8 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Shorter holds + survey (B176) | `b21-188.js`; wraps `beginHoldB117h`, `beginSoundLabHoldB45`, `statsTextB117`, `detailB117` | Nav holds 0.4s, buys 0.6s (Sound Lab too), Ascend (`b132Main` reading Ascend) 1.8s; B117q repeats capped at these. Survey: "100% fatigue". | `tests/b176-focused-checks.js` |
 | Full upgrade text (B177) | `b21-189.js`; `.b177Detail` under Traits/Hearts/Boss Bond grids; wraps `focusGamepadButtonB35`, `openStageUpgrade`; 200ms decorate | Shows the full effect of the card last touched / focused / hovered (default first card); re-read every tick so levels and costs stay current. | `tests/b177-focused-checks.js` |
 | Colosseum rework (B178) | `b21-190.js`; `B178` tunables; wraps `bracketB163` (archetypes dealt from the bracket seed), `rivalB163` (scaled stats, asc, mirrored perks/labour, `trick`), `aiCmdB163` (Breaker focus-into-guard, Feint wind-up), `landShotB163` (Breaker full damage + crack), `drawPipB165` (wind-up ring) | Middle rival = max(rank budget, Pip total × 0.88); rivals get Pip's trophy Ascension and 75% of his perks/ranch work, so B167/B168 checks asserting bare rivals now fail by design. Feint winds up only while Pip can guard; every other wind-up is fake and breaks a guard raised against it. Sweeps: good scripted coach ~25-37% brackets once scaling applies (QF ~100, SF ~70-75, F ~36-49), none 0%; ranks D/B sit on fixed budgets (~50%). Scripted good vs careless coaches score about the same: tricks need a live playtest. | `tests/b178-focused-checks.js` |
-| Current focused runner | `tests/verify-b178-focused.cjs` | Runs only `tests/b178-focused-checks.js`. |
+| Slots survive reload (B179) | `b21-191.js`; `localStorage['od76-refinery-slots-b179']={v:1,slots}`; wraps `saveRanchB99`, `loadRanchB99` | Early modules (b21-124 etc.) save the ranch blob during page load before b21-186 adds `slots`, wiping them; slots now also live under their own key, restored last. Lesson: a field added by a late module must not rely on the shared blob surviving page load. | `tests/b179-focused-checks.js` |
+| Current focused runner | `tests/verify-b179-focused.cjs` | Runs only `tests/b179-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority
