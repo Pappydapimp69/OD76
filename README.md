@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B172: Highest wave per run
+
+Every run now reports how far it got (rank, stage, and wave within the stage or the boss), however it ended, linked to the play session it came from (a random id per page load, nothing stored).
+
 ## B171: Play stats that match play
 
 Runs that end by heading home now report how they ended and which skills Pip used, the run-start stat no longer claims every run is Beam, and stats waiting to send go out when you close or leave the page.
