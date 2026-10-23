@@ -17,6 +17,7 @@
    - Loading is per slot: tap a slot to load it (Min or Max), replacing the Refine buttons in the card below. The player picks what goes where.
    - Min = the B155 level minimum (♥50 at Lv 1, ♥100 at Lv 2, doubling). Max = slot capacity or what the player holds, whichever is less.
    - Star Dust loads into a slot the same way (one batch, one timer, stones drip evenly); this replaces item 2's separate fuser.
+   - Dust slot: capacity ✧30 at Lv 1 (★6), doubling per level like hearts; min ✧5 at every level; same refine time (15 min at Lv 1). A slot holds hearts or dust, never both.
    - Refinery sheet: the wallet row (♥ ◆ ✧ ★ inventory) is repurposed to show the slots (fill and timer each).
 
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
