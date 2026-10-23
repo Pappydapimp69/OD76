@@ -24,6 +24,18 @@
    - The survey still says "Gate stops at 100 fatigue" (`b21-113.js` lines 94 and 102). Arena fatigue is a % of `fatigueMaxB118()` (100 + 4 per endurance), so 100 is no longer the cap.
    - Reword to "Gate stops at 100% fatigue"; count stays `exhaustedB115()` (already the real max).
 
+5. **Skip between-stage pages with nothing to buy** (pending build):
+   - Traits / Hearts / Sound Lab / Overdrive / Boss Bond / Merchant: a page with nothing affordable is skipped; the step counter counts only shown pages.
+   - A page that is shown notes what was skipped ("Skipped Traits and Sound Lab, nothing to buy yet").
+   - Head out keeps Pip's Tired (%) / Food / Clean meters and adds "Saving up for": each skipped page with its cheapest cost, a progress bar, how much more is needed, and a Peek button.
+   - Peek opens the page look-only; Back to Head out is a plain tap.
+   - Mockups: https://claude.ai/artifact/CuuhSQTmN2eJuwEucrSh2w
+
+6. **Shorter holds** (pending build):
+   - Continue / Next stage / page moves: 0.4 s (B124 is 0.9 s).
+   - Regular buys: 0.6 s (Overdrive and Sound Lab are 1.8 s).
+   - Big one-way buys (Ascend): keep 1.8 s.
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.
