@@ -1,5 +1,9 @@
 # Pending builds
 
+## B171 Analytics fix — SHIPPED in `b21-183.js`
+
+See `docs/B171-analytics-fix.md`.
+
 ## B170 Colosseum sound — SHIPPED in `b21-181.js` (generated) / `b21-182.js`
 
 See `docs/B170-colosseum-sound.md`.

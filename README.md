@@ -2,6 +2,10 @@
 
 [Play OD76](https://pappydapimp69.github.io/OD76/)
 
+## B171: Play stats that match play
+
+Runs that end by heading home now report how they ended and which skills Pip used, the run-start stat no longer claims every run is Beam, and stats waiting to send go out when you close or leave the page.
+
 ## B170: The Colosseum sounds like a colosseum
 
 The Colosseum now uses the procedural sound engine: a crowd of synthesized voices that swells and gasps with the fight, Pip's and rivals' cries when they Ascend and fall, sand thuds for every hit, footsteps, and a long stone-bowl reverb around the war drums. Everything is synthesized in the browser; there are no audio files.
