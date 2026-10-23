@@ -1,4 +1,4 @@
-# Playtest notes (B170 Colosseum Sound, Nick) — item 1 shipped in B173; items 2-3 in B174, 5 in B175, 4 and 6 in B176, 8 in B177, 7 in B178
+# Playtest notes (B170 Colosseum Sound, Nick) — item 1 shipped in B173; items 2-3 in B174, 5 in B175, 4 and 6 in B176, 8 in B177, 7 in B178, 9 in B180
 
 1. **Refinery opening tap presses a button** — shipped in B173 (`b21-185.js`).
 
@@ -46,7 +46,7 @@
    - Trait / Heart / Boss Bond cards clamp their effect to 2 lines (B135/B136), so the effect reads "...".
    - Show the full effect of the focused or last-touched card in a detail line under the grid (touch, gamepad focus or hover), so reading never starts a buy.
 
-9. **Colosseum trophies speed up Overdrive mastery** (pending build):
+9. **Colosseum trophies speed up Overdrive mastery** (shipped in B180):
    - Every Colosseum bracket win earns one trophy for that rank (a spendable count, separate from the B163 "won this rank" trophies that set Pip's ring Ascension).
    - Trophies are rank locked: rank D trophies can only be spent in rank D arena runs.
    - Spending one adds 5 skill uses to any unlocked Overdrive skill's current tier progress; it is used up.
