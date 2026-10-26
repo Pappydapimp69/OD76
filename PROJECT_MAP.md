@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B181-TROPHY-COUNTS`.
-- Next numbered runtime file: `b21-194.js`.
+- Current release: `B182-TOUCH-TAP-GUARD`.
+- Next numbered runtime file: `b21-195.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -76,7 +76,8 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Slots survive reload (B179) | `b21-191.js`; `localStorage['od76-refinery-slots-b179']={v:1,slots}`; wraps `saveRanchB99`, `loadRanchB99` | Early modules (b21-124 etc.) save the ranch blob during page load before b21-186 adds `slots`, wiping them; slots now also live under their own key, restored last. Lesson: a field added by a late module must not rely on the shared blob surviving page load. | `tests/b179-focused-checks.js` |
 | Trophy uses (B180) | `b21-192.js`; `localStorage['od76-trophy-spent-b180']={v,spent:{rank:n}}`; trophies left = `colSaveB163.wins[rank]` − spent; wraps `renderB132` (`#b180Trophy`, B117h hold), `stepOutOfOptionsB149` (Overdrive not skipped while a trophy can be spent) | Rank locked to `runRankB108()`; +5 uses on the selected unlocked skill's current tier; ★ costs unchanged. Existing championships count as trophies. | `tests/b180-focused-checks.js` |
 | Trophy counts in the Colosseum (B181) | `b21-193.js`; wraps `colosseumBodyB169` (Trophies tile = spendable total + ranks won), `bracketLabelB169` ('🏆 N won · M to spend'), `endColosseumB163` (champion toast names the new trophy) | B169's label check expecting '🏆 ×N' now fails by design. | `tests/b181-focused-checks.js` |
-| Current focused runner | `tests/verify-b181-focused.cjs` | Runs only `tests/b181-focused-checks.js`. |
+| Touch tap guard (B182) | `b21-194.js`; window capture `click` + `lastInputB182` (pointerdown/keydown) + `staleTapB182` | Real touch: the opening tap's retargeted click has detail 0, which B173 let through; now a trusted click in `#ranchSheetB100` is blocked when the last input was a pointer that went down before the sheet opened. Keyboard and untrusted (gamepad/code) clicks pass. Found by a Brain audit (od76#E22). | `tests/b182-focused-checks.js`; real-touch `tests/b182-touch-browser.cjs` (Playwright) |
+| Current focused runner | `tests/verify-b182-focused.cjs` | Runs only `tests/b182-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority
