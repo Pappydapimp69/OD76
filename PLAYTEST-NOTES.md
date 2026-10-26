@@ -52,7 +52,7 @@
    - Spending one adds 5 skill uses to any unlocked Overdrive skill's current tier progress; it is used up.
    - The player still unlocks skills and pays ★ for every tier, level-up and Ascend; trophies never grant tiers or levels by themselves.
 
-10. **New ranch areas** (pending build; defaults chosen, owner OK'd "sure"):
+10. **New ranch areas** (Old Quarry shipped in B183; Meadow and Training Yard pending; Riverbank and Deep Grove parked until they have a purpose):
    - Travel: a signpost path at the ranch edge; walk up and pick an area. Each area is its own map with Pip and the HUD.
    - Unlock like Garden/Orchard: Riverbank ◆3, Sunny Meadow ◆3, Deep Grove ★1, Old Quarry ★2, Training Yard at Colosseum rank D.
    - Riverbank: wash for a bigger Clean boost; fishing (a timing minigame) for food.
