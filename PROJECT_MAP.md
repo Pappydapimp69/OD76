@@ -4,8 +4,8 @@ Development index only. This file is not loaded by the game.
 
 ## Start here
 
-- Current release: `B182-TOUCH-TAP-GUARD`.
-- Next numbered runtime file: `b21-195.js`.
+- Current release: `B183-OLD-QUARRY`.
+- Next numbered runtime file: `b21-196.js`.
 - Production assembly: `scripts/build.mjs` concatenates `b21-N.js` files in numeric order, then writes `_site/`.
 - Pages deployment: `.github/workflows/pages.yml` calls the same build script.
 - Focused checks are the default. Run the complete suite only when the user explicitly requests it.
@@ -77,7 +77,8 @@ Do not remove historical modules. Add the smallest late override, update this ma
 | Trophy uses (B180) | `b21-192.js`; `localStorage['od76-trophy-spent-b180']={v,spent:{rank:n}}`; trophies left = `colSaveB163.wins[rank]` − spent; wraps `renderB132` (`#b180Trophy`, B117h hold), `stepOutOfOptionsB149` (Overdrive not skipped while a trophy can be spent) | Rank locked to `runRankB108()`; +5 uses on the selected unlocked skill's current tier; ★ costs unchanged. Existing championships count as trophies. | `tests/b180-focused-checks.js` |
 | Trophy counts in the Colosseum (B181) | `b21-193.js`; wraps `colosseumBodyB169` (Trophies tile = spendable total + ranks won), `bracketLabelB169` ('🏆 N won · M to spend'), `endColosseumB163` (champion toast names the new trophy) | B169's label check expecting '🏆 ×N' now fails by design. | `tests/b181-focused-checks.js` |
 | Touch tap guard (B182) | `b21-194.js`; window capture `click` + `lastInputB182` (pointerdown/keydown) + `staleTapB182` | Real touch: the opening tap's retargeted click has detail 0, which B173 let through; now a trusted click in `#ranchSheetB100` is blocked when the last input was a pointer that went down before the sheet opened. Keyboard and untrusted (gamepad/code) clicks pass. Found by a Brain audit (od76#E22). | `tests/b182-focused-checks.js`; real-touch `tests/b182-touch-browser.cjs` (Playwright) |
-| Current focused runner | `tests/verify-b182-focused.cjs` | Runs only `tests/b182-focused-checks.js`. |
+| Old Quarry (B183) | `b21-195.js`; `localStorage['od76-quarry-b183']={v,unlocked,broken:{rockId:ts},total}`; `signpost` station (2300,640); map swap `enterQuarryB183`/`leaveQuarryB183` splices `B100_STATIONS`, `B100_TREES`, `B106_OBSTACLES` in place and sets `B100_WORLD`; wraps `leaveRanchB100`/`enterRanchB100` (restore first), `interactStationB100`, `nearestInteractB100`, `drawStationB100`, `drawRanchB100` (stone ground), `drawSiteLabelsB137` (off in the quarry) | Gated: arena rank D (`B183_RANK`), then ★2. 12 rocks: 10 fatigue each (tool gate), ✧1 always, +✧1 25%, ◆1 10%; regrow 20 min real clock. A future area reuses the swap; any per-frame code that looks up a main-map station needs a quarry guard. | `tests/b183-focused-checks.js` |
+| Current focused runner | `tests/verify-b183-focused.cjs` | Runs only `tests/b183-focused-checks.js`. |
 | Complete regression | `tests/verify-b59.cjs` | Prompt-only. |
 
 ## Arena authority

@@ -52,6 +52,15 @@
    - Spending one adds 5 skill uses to any unlocked Overdrive skill's current tier progress; it is used up.
    - The player still unlocks skills and pays ★ for every tier, level-up and Ascend; trophies never grant tiers or levels by themselves.
 
+10. **New ranch areas** (Old Quarry shipped in B183; Meadow and Training Yard pending; Riverbank and Deep Grove parked until they have a purpose):
+   - Travel: a signpost path at the ranch edge; walk up and pick an area. Each area is its own map with Pip and the HUD.
+   - Unlock like Garden/Orchard: Riverbank ◆3, Sunny Meadow ◆3, Deep Grove ★1, Old Quarry ★2, Training Yard at Colosseum rank D.
+   - Riverbank: wash for a bigger Clean boost; fishing (a timing minigame) for food.
+   - Sunny Meadow: resting here clears fatigue faster; gather wild herbs (food).
+   - Deep Grove: more trees to fell (counts toward Colosseum Ascension like B168) and mushrooms to forage.
+   - Old Quarry: rocks to break; small chance of ✧ Star Dust or ◆ Heart Stones; rocks cleared add Colosseum Power.
+   - Training Yard: free Colosseum practice against Breaker and Feint dummies (no fatigue, no prize).
+
 # Playtest notes (post-B115) — item 1 shipped as a B115 fix; items 2-7 shipped in B116
 
 B114 feedback shipped in B115; see README.
