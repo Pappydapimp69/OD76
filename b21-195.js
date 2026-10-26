@@ -1,11 +1,12 @@
 // B183 Old Quarry, the first ranch area off the main map. Purpose: a steady, active Star Dust source (the B170
-// playtest said Star Dust came too slowly). A signpost at the ranch's east edge leads there once it is unlocked for ★2.
+// playtest said Star Dust came too slowly). A signpost at the ranch's east edge leads there once Pip has reached arena
+// rank D (B183_RANK) and it is unlocked for ★2.
 // Twelve rocks; Pip breaks one for 10 fatigue (the tool-work gate applies) and it always drops ✧1, with a 25% chance of
 // a second ✧ and 10% of a ◆ Heart Stone. A broken rock grows back 20 minutes later on the real clock.
 // The area is a map swap: the ranch's own world size, stations, decor and obstacle lists are swapped in place for the
 // quarry's and restored on the way out, so movement, Pip, the bag, sheets and the HUD all keep working unchanged.
 // Its state lives under its own key (B179: late fields in the ranch save don't survive page load).
-const B183_KEY='od76-quarry-b183',B183_COST_STARS=2,B183_FATIGUE=10,B183_REGROW_MS=20*60e3,B183_EXTRA_DUST=.25,B183_STONE=.1;
+const B183_KEY='od76-quarry-b183',B183_COST_STARS=2,B183_RANK=1,B183_FATIGUE=10,B183_REGROW_MS=20*60e3,B183_EXTRA_DUST=.25,B183_STONE=.1;
 const B183_WORLD={w:1400,h:1000};
 const B183_ROCKS=[[300,260],[520,180],[760,240],[1020,200],[1180,360],[260,520],[560,470],[880,520],[1120,620],[380,780],[700,800],[1000,820]].map(([x,y],i)=>({id:'rock'+i,x,y}));
 function loadQuarryB183(){const q={unlocked:false,broken:{},total:0};try{const v=JSON.parse(localStorage.getItem(B183_KEY)||'null');if(v&&typeof v==='object'){q.unlocked=v.unlocked===true;q.total=clamp(Math.floor(Number(v.total))||0,0,1e7);for(const r of B183_ROCKS){const t=Number(v.broken?.[r.id]);if(Number.isFinite(t)&&t>0)q.broken[r.id]=Math.min(t,Date.now())}}}catch(_){}return q}
@@ -61,6 +62,7 @@ const interactBeforeB183=interactStationB100;
 interactStationB100=function(st,...a){
  if(st.id==='signpost'){
   const q=quarryB183,opts=[];
+  if(!q.unlocked&&(ranchB99.rankUnlocked||0)<B183_RANK)return openSheetB100('Signpost',`A path to the Old Quarry, rich in Star Dust. It opens once Pip reaches rank ${B108_RANKS[B183_RANK].id} in the arena.`,[{label:'OK',quiet:true}]);
   if(q.unlocked)opts.push({label:'Old Quarry · break rocks for Star Dust',run:enterQuarryB183});
   else opts.push({label:`Unlock the Old Quarry · ★ ${B183_COST_STARS}`,run:()=>{if(ranchB99.starStones<B183_COST_STARS){ranchToastB100(`Needs ★ ${B183_COST_STARS} · you have ★ ${ranchB99.starStones}.`);return}ranchB99.starStones-=B183_COST_STARS;q.unlocked=true;saveQuarryB183();saveRanchB99();renderRanchHudB100();if(typeof trackB136==='function')trackB136(['quarry','unlock']);enterQuarryB183()}});
   opts.push({label:'Not now',quiet:true});
@@ -86,7 +88,7 @@ drawStationB100=function(st,t,...a){
  if(st.id==='signpost'||st.id==='quarryExit'){
   X.fillStyle='#c9a77c';X.fillRect(x-4,y-50,8,62);X.fillStyle='#e8cfa6';roundRectB100(x-40,y-62,80,24,6);X.fill();
   X.fillStyle='#5a5d78';X.font='800 12px system-ui';X.textAlign='center';X.fillText(st.id==='signpost'?'Quarry →':'← Ranch',x,y-45);
-  labelB100(x,y-92,st.id==='signpost'?'Signpost':'Path home',st.id==='signpost'&&!quarryB183.unlocked?`★ ${B183_COST_STARS} to unlock`:'');return;
+  labelB100(x,y-92,st.id==='signpost'?'Signpost':'Path home',st.id==='signpost'&&!quarryB183.unlocked?((ranchB99.rankUnlocked||0)<B183_RANK?`🔒 rank ${B108_RANKS[B183_RANK].id}`:`★ ${B183_COST_STARS} to unlock`):'');return;
  }
  if(st.rock){
   const up=rockUpB183(st.rock);

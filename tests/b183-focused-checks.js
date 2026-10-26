@@ -1,6 +1,7 @@
 function runFocusedChecksB183(){
  const out=[],assert=(v,m)=>{if(!v)throw Error(m)},test=(name,fn)=>{try{fn();out.push({name,ok:true})}catch(e){out.push({name,ok:false,error:e.message})}finally{closeSheetB100()}};
- const fresh=()=>{leaveQuarryB183(false);quarryB183={unlocked:false,broken:{},total:0};saveQuarryB183();ranchB99=Object.assign(ranchDefaultB99(),{starStones:3,dust:0,stones:0});ensurePointsB100(ranchB99);syncCapsB102();ranchB99.fatigue=0;saveRanchB99();openRanchB99()};
+ const fresh=()=>{leaveQuarryB183(false);quarryB183={unlocked:false,broken:{},total:0};saveQuarryB183();ranchB99=Object.assign(ranchDefaultB99(),{starStones:3,dust:0,stones:0});ensurePointsB100(ranchB99);syncCapsB102();ranchB99.fatigue=0;ranchB99.rankUnlocked=1;saveRanchB99();openRanchB99()};
+ test('B183 locked until arena rank D',()=>{fresh();ranchB99.rankUnlocked=0;interactStationB100(stationB100('signpost'));assert(/rank D/.test($('ranchSheetB100').textContent)&&ranchWorldB100.sheet.options.length===1,'not gated');chooseSheetB100(0);assert(!quarryB183.unlocked&&ranchB99.starStones===3,'spent')});
  test('B183 the signpost unlocks the quarry for ★2 and takes Pip there',()=>{fresh();const n=B100_STATIONS.length;interactStationB100(stationB100('signpost'));chooseSheetB100(0);
   assert(quarryB183.unlocked&&ranchB99.starStones===1&&inQuarryB183()&&B100_WORLD.w===1400&&B100_STATIONS.some(s=>s.rock)&&!stationB100('refinery'),'enter')});
  test('B183 a rock gives ✧ for 10 fatigue and regrows after 20 min',()=>{const id=B183_ROCKS[0].id,zero=()=>.99;const g=breakRockB183(id,zero);
